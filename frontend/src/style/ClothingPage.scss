@@ -4,16 +4,19 @@
   height: 90vh;
 }
 
-.sub-container {
-  padding: 1rem;
+.comments-container {
+  height: 90vh;
+  .sub-container {
+    padding: 1rem;
+  }
+  .comments-feed {
+    background: fade-out(#f5f5f5, 0.5);
+    height: 50vh;
+  }
 }
 
 // Delete this when profile component is made
 .fake-profile {
   height: 20vh;
   background: fade-out(#c0c0c0, 0.5);
-}
-
-.comments-container {
-  height: 90vh;
 }
