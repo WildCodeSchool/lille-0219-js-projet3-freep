@@ -4,6 +4,9 @@ $main-color: #f8d5c7;
   margin: 5vh 0;
   background: $main-color;
   height: 90vh;
+  h2 {
+    margin: 5vh auto;
+  }
 }
 
 .comments-container {
