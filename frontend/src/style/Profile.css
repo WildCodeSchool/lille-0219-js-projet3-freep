@@ -1,0 +1,18 @@
+* {
+    color: #222
+}
+
+.avatar {
+    padding: 10px;
+    border-radius: 100%;
+    background: linear-gradient( 135deg, #f8d5c7 1%, #f7fab2 100%);
+}
+
+.button {
+    background-color: #f8d5c7 !important;
+    color: #222 !important
+}
+
+.dancingscript {
+    font-family: 'Dancing Script'
+}
