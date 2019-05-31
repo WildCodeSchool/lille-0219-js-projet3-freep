@@ -1,0 +1,19 @@
+.clothing-container {
+  margin: 5vh 0;
+  background: #f8d5c7;
+  height: 90vh;
+}
+
+.sub-container {
+  padding: 1rem;
+}
+
+// Delete this when profile component is made
+.fake-profile {
+  height: 20vh;
+  background: fade-out(#c0c0c0, 0.5);
+}
+
+.comments-container {
+  height: 90vh;
+}
