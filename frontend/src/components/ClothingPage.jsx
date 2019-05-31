@@ -21,6 +21,7 @@ class ClothingPage extends React.Component {
                 {/* <Profile /> */}
                 <div className="fake-profile">Fake Profile</div>
                 <h2>{this.state.commentsNumber} Commentaires</h2>
+                <div className="comments-feed" />
               </div>
             </Col>
           </Row>
