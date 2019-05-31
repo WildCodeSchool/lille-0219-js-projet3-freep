@@ -16,7 +16,7 @@ class ClothingPage extends React.Component {
         <Container className="clothing-container">
           <Row>
             <Col lg="7" />
-            <Col lg="5" className="comments-container border text-center">
+            <Col lg="5" className="comments-container text-center">
               <div className="sub-container">
                 {/* <Profile /> */}
                 <div className="fake-profile">Fake Profile</div>
