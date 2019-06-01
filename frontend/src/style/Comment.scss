@@ -1,9 +1,18 @@
+$bl: #222;
+
+* {
+  color: $bl;
+}
+
 .avatar {
   width: 40px;
   border-radius: 50%;
 }
 
-button {
+.dropdown-btn .btn,
+.dropdown-btn .btn:hover {
   border: transparent;
-  background: transparent;
+  background: transparent !important;
+  color: $bl;
+  box-shadow: 0 0 0 transparent !important;
 }
