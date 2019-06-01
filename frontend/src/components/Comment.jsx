@@ -1,8 +1,30 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
+import {
+  Row,
+  Col,
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
 import "../style/Comment.scss";
 
 class Comment extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      dropdownOpen: false
+    };
+  }
+
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -18,8 +40,22 @@ class Comment extends React.Component {
           <Col xs="7" className="text-left">
             {this.props.comment}
           </Col>
-          <Col xs="1">
-            <button onClick="">...</button>
+          <Col xs="1" className="p-0">
+            <ButtonDropdown
+              direction="right"
+              className="dropdown-btn"
+              isOpen={this.state.btnDropright}
+              toggle={() => {
+                this.setState({ btnDropright: !this.state.btnDropright });
+              }}
+            >
+              <DropdownToggle>...</DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem className="p-1">
+                  <a href="">Signaler un abus</a>
+                </DropdownItem>
+              </DropdownMenu>
+            </ButtonDropdown>
           </Col>
         </Row>
       </React.Fragment>
