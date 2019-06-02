@@ -8,6 +8,7 @@ import {
   DropdownItem
 } from "reactstrap";
 import "../style/Comment.scss";
+import mailtoAddress from "../conf.js";
 
 class Comment extends React.Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class Comment extends React.Component {
               <DropdownToggle>...</DropdownToggle>
               <DropdownMenu>
                 <DropdownItem className="p-1">
-                  <a href="">Signaler un abus</a>
+                  <a href={mailtoAddress}>Signaler un abus</a>
                 </DropdownItem>
               </DropdownMenu>
             </ButtonDropdown>
