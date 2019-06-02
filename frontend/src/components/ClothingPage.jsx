@@ -9,9 +9,12 @@ class ClothingPage extends React.Component {
     super(props);
     this.state = {
       commentsNumber: 35,
-      avatar: "https://randomuser.me/api/portraits/women/90.jpg",
-      username: "Jade",
-      comment: "Super joli! Lorem ipsum dolor sit amet consectblablabla"
+      profileInfo: {
+        id: 1,
+        avatar: "https://randomuser.me/api/portraits/women/90.jpg",
+        username: "Jade",
+        comment: "Super joli! Lorem ipsum dolor sit amet consectblablabla"
+      }
     };
   }
 
@@ -28,16 +31,8 @@ class ClothingPage extends React.Component {
                 <h2>{this.state.commentsNumber} Commentaires</h2>
                 <div className="comments-feed">
                   {/*map comments here */}
-                  <Comment
-                    avatar={this.state.avatar}
-                    username={this.state.username}
-                    comment={this.state.comment}
-                  />
-                  <Comment
-                    avatar={this.state.avatar}
-                    username={this.state.username}
-                    comment={this.state.comment}
-                  />
+                  <Comment info={this.state.profileInfo} />
+                  <Comment info={this.state.profileInfo} />
                 </div>
               </div>
             </Col>
