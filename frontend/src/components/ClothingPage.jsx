@@ -13,7 +13,7 @@ class ClothingPage extends React.Component {
         id: 1,
         avatar: "https://randomuser.me/api/portraits/women/90.jpg",
         username: "Jade",
-        comment: "Super joli! Lorem ipsum dolor sit amet consectblablabla"
+        comment: "Super joli! J'aime beaucoup ce style"
       }
     };
   }
