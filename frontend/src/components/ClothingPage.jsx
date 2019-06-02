@@ -13,7 +13,8 @@ class ClothingPage extends React.Component {
         id: 1,
         avatar: "https://randomuser.me/api/portraits/women/90.jpg",
         username: "Jade",
-        comment: "Super joli! J'aime beaucoup ce style"
+        comment: "Super joli! J'aime beaucoup ce style",
+        isCaution: true
       }
     };
   }
@@ -52,6 +53,9 @@ class ClothingPage extends React.Component {
                     <li className="list-inline-item">#winteriscoming</li>
                   </ul>
                 </div>
+                {this.state.profileInfo.isCaution ? (
+                  <section className="my-3 text-left">Caution demandée</section>
+                ) : null}
                 <h2>{this.state.commentsNumber} Commentaires</h2>
                 <div className="comments-feed">
                   {/*map comments here */}
