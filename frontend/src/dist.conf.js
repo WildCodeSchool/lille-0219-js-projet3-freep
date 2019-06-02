@@ -1,1 +1,1 @@
-const mailtoAdress = "";
+const mailtoAddress = "";
