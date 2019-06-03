@@ -1,31 +1,9 @@
 import React from "react";
-import {
-  Row,
-  Col,
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
 import "../style/Comment.scss";
-import mailtoAddress from "../conf.js";
+import ReportButton from "./ReportButton";
+import { Row, Col } from "reactstrap";
 
 class Comment extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false
-    };
-  }
-
-  toggle() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
-  }
-
   render() {
     const info = this.props.info;
     return (
@@ -39,21 +17,7 @@ class Comment extends React.Component {
             {info.comment}
           </Col>
           <Col xs="1" className="p-0">
-            <ButtonDropdown
-              direction="right"
-              className="dropdown-btn"
-              isOpen={this.state.btnDropright}
-              toggle={() => {
-                this.setState({ btnDropright: !this.state.btnDropright });
-              }}
-            >
-              <DropdownToggle>...</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem className="p-1">
-                  <a href={mailtoAddress}>Signaler un abus</a>
-                </DropdownItem>
-              </DropdownMenu>
-            </ButtonDropdown>
+            <ReportButton />
           </Col>
         </Row>
       </React.Fragment>
