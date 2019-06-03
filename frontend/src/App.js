@@ -1,12 +1,12 @@
 import React from 'react';
-import Navbar from "./components/navbar";
+import NavFreep from "./components/navbar";
 import './style/navbar.css';
 
 function App() {
   return (
     <div className="App">
       <header>
-        <Navbar />
+        <NavFreep />
         <hr className="border-gold" />
       </header>
     </div>
