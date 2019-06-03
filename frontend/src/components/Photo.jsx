@@ -1,5 +1,5 @@
 import React from "react";
-import { Heart, Target } from "react-feather";
+import { Heart, Target, More-horizontal } from "react-feather";
 
 class Photo extends React.Component {
   render() {
@@ -8,6 +8,7 @@ class Photo extends React.Component {
         <img src="" alt="clothes' picture" />
         <Heart />
         <Target />
+        <More-horizontal/>
       </React.Fragment>
     );
   }
