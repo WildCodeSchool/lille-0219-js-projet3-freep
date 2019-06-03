@@ -1,0 +1,9 @@
+.navbar {
+    height: 5rem;
+}
+
+.border-gold {
+    width : 80%;
+    height: 0.1rem;
+    color: gold;
+}
