@@ -7,39 +7,37 @@ class Profile extends React.Component {
     return (
       <React.Fragment>
         <Container>
-          <Row className="text-center">
+          <Row className="text-center align-items-center">
             <Col md="3" className="text-center mx-auto">
               <img
-                src="https://randomuser.me/api/portraits/men/25.jpg"
+                src="https://randomuser.me/api/portraits/women/10.jpg"
                 className="avatar m-3"
+                alt="Avatar"
               />
             </Col>
             <Col md="3">
-              <Col className="h-50">✮✮✮✮✮</Col>
-              <Col className="h-50 dancingscript">Clarisse Noulé</Col>
+              <Col>✮✮✮<span className="starsgrey">✮✮</span></Col>
+              <Col className="dancingscript">Loren Ipsum</Col>
             </Col>
-            <Col className="text-left">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam
-              accusantium commodi voluptatibus, nihil asperiores quis blanditiis
-              obcaecati itaque esse error at ea enim ipsam recusandae aliquam
-              iure voluptate libero corporis!
+            <Col className="text-justify amatic p-3">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo ullam quos dignissimos eveniet nesciunt illo, adipisci, modi quidem assumenda ipsam tempore minus dolore ea quam deleniti itaque necessitatibus reprehenderit cum!
             </Col>
           </Row>
           <Row className="text-center">
-            <Col sm="4" md="2" className="dancingscript">
+            <Col sm="6" md="4" xl="2" className="dancingscript py-3">
               127 Followers
             </Col>
-            <Col sm="4" md="2" className="dancingscript">
+            <Col sm="6" md="4" xl="2" className="dancingscript py-3">
               31 Following
             </Col>
-            <Col sm="4" md="2" className="dancingscript">
+            <Col sm="12" md="4" xl="2" className="dancingscript py-3">
               10 Posts
             </Col>
-            <Col sm="6" md="3">
-              <Button className="button shadow-sm px-5 dancingscript">Éditer</Button>
+            <Col sm="6" xl="3">
+              <Button className="button m-3 amatic">Éditer</Button>
             </Col>
-            <Col sm="6" md="3">
-              <Button className="button shadow-sm px-5 dancingscript">Message</Button>
+            <Col sm="6" xl="3">
+              <Button className="button m-3 amatic">Message</Button>
             </Col>
           </Row>
         </Container>
