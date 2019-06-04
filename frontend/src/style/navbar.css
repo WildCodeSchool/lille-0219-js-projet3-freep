@@ -1,10 +1,13 @@
 .header {
-    margin-left : 10rem;
+    margin-left : 1rem;
+    width : 100%;
+    display: flex;
+    flex-direction: row;
 }
 
 hr {
     width: 80%;
-    height: 4px;
+    height: 0.2rem;
     color : #f7fab2;
     background-color: #f7fab2;
     border : 0;
@@ -23,10 +26,6 @@ ul {
     height:20px;
 }
 
-.menu {
-    display: flex;
-    flex-direction: row;
-}
 
 .list-right {
     text-align: right;
@@ -44,19 +43,18 @@ ul {
 .title {
     width: 13rem;
     margin-top :4rem;
-    padding-left: 1rem;
 }
 
 .recherche {
     margin-top : 5rem;
-    margin-left : 10rem;
+    margin-left : 1rem;
 }
 
 .picto {
-   height: 25px;
-   margin-top : 60px;
+   height: 4rem;
+   margin-top :4rem;
    margin-left : 11rem;
-   width : 200px;
+   width : 20rem;
 }
 
 .img {
