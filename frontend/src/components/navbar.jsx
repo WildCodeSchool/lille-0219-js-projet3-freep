@@ -6,12 +6,10 @@ import {
   Navbar,
   NavLink,
   Nav,
-  NavItem,
-  Badge
 } from "reactstrap";
-import { Link, BrowserRouter as Router } from "react-router-dom";
+import {  BrowserRouter as Router } from "react-router-dom";
 import Routing from "./routing";
-import { Camera, Plus, Mail, Heart, User } from 'react-feather';
+import {  Plus, Mail, Heart, User } from "react-feather";
 import "../style/navbar.css";
 
 class NavFreep extends React.Component {
@@ -28,43 +26,40 @@ class NavFreep extends React.Component {
                     src="https://placekitten.com/100/100"
                     alt=""
                   />
-
-                  <Nav className="d-flex ml-auto picto" horizontal="end" navbar>
-                      <NavLink href="#">
-                          <Plus />
-                      </NavLink>
-                      <NavLink href="#">
-                          <Mail />
-                      </NavLink>
-                      <NavLink href="#">
-                          <Heart />
-                      </NavLink>
-                      <NavLink href="#">
-                          <User />
-                      </NavLink>
-                  </Nav>
                 </Navbar>
-
                 <div className="title">
                   <span>Freep</span>
                   <br />
-                  <span>baseLine</span>
+                  <span>La garde robe qui rapporte</span>
                 </div>
-
-                <form className="recherche">
-                  <InputGroup>
-                    <InputGroupAddon addonType="prepend" />
-                    <Input placeholder="Rechercher un vêtement ou une cliente" />
-                    <Link to="/">
-                      <button className="buto ml-2">Rechercher</button>
-                    </Link>
-                  </InputGroup>
-                </form>
+                  <form className="recherche">
+                    <InputGroup>
+                      <InputGroupAddon addonType="prepend" />
+                      <Input className="search" placeholder="Rechercher un vêtement ou une cliente" />
+                    </InputGroup>
+                  </form>
+                  <div className="picto">
+                <Nav className="d-flex ml-auto" horizontal="end" navbar>
+                  <NavLink href="#">
+                    <Plus className="img" color="black" />
+                  </NavLink>
+                  <NavLink href="#">
+                    <Mail className="img" color="black" />
+                  </NavLink>
+                  <NavLink href="#">
+                    <Heart className="img" color="black" />
+                  </NavLink>
+                  <NavLink href="#">
+                    <User className="img" color="black" />
+                  </NavLink>
+                </Nav>
+                </div>
               </div>
             </Fragment>
             <Routing />
           </div>
         </Router>
+        <hr />
       </Fragment>
     );
   }

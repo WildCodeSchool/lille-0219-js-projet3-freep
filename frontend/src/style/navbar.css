@@ -2,10 +2,16 @@
     margin-left : 10rem;
 }
 
-.border-gold {
-    width : 80%;
-    height: 0.1rem;
-    color: gold;
+hr {
+    width: 80%;
+    height: 4px;
+    color : #f7fab2;
+    background-color: #f7fab2;
+    border : 0;
+}
+
+.logo {
+    border-radius: 50%;
 }
 
 ul {
@@ -14,6 +20,7 @@ ul {
 
 .recherche {
     text-align: center;
+    height:20px;
 }
 
 .menu {
@@ -35,15 +42,23 @@ ul {
 }
 
 .title {
-    width: 10rem;
+    width: 13rem;
     margin-top :4rem;
     padding-left: 1rem;
 }
 
 .recherche {
     margin-top : 5rem;
+    margin-left : 10rem;
 }
 
 .picto {
-    text-align: right;
+   height: 25px;
+   margin-top : 60px;
+   margin-left : 11rem;
+   width : 200px;
+}
+
+.img {
+    padding-left:0.8rem;
 }
