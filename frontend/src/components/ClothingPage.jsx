@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import "../style/ClothingPage.scss";
-// import Profile from "./Profile";
 import Comment from "./Comment";
 
 class ClothingPage extends React.Component {
@@ -58,7 +57,6 @@ class ClothingPage extends React.Component {
                 ) : null}
                 <h2>{this.state.commentsNumber} Commentaires</h2>
                 <div className="comments-feed">
-                  {/*map comments here */}
                   <Comment info={this.state.profileInfo} />
                   <Comment info={this.state.profileInfo} />
                 </div>
