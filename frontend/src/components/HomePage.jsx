@@ -5,64 +5,38 @@ import Photo from "./Photo";
 class HomePage extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        <Row>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-          <Col className="col-5">
-            <Photo />
-          </Col>
-        </Row>
-      </React.Fragment>
+      <Row>
+        <Col sm="6" md="4" lg="3">
+          <Photo />
+        </Col>
+        <Col sm="6" md="4" lg="3">
+          <Photo />
+        </Col>
+        <Col sm="6" md="4" lg="3">
+          <Photo />
+        </Col>
+        <Col sm="6" md="4" lg="3">
+          <Photo />
+        </Col>
+        <Col sm="6" md="4" lg="3">
+          <Photo />
+        </Col>
+        <Col sm="6" md="4" lg="3">
+          <Photo />
+        </Col>
+        <Col sm="6" md="4" lg="3">
+          <Photo />
+        </Col>
+        <Col sm="6" md="4" lg="3">
+          <Photo />
+        </Col>
+        <Col sm="6" md="4" lg="3">
+          <Photo />
+        </Col>
+        <Col sm="6" md="4" lg="3">
+          <Photo />
+        </Col>
+      </Row>
     );
   }
 }

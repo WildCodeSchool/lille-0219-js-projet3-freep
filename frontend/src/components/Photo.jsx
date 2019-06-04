@@ -1,18 +1,18 @@
 import React from "react";
 import { Heart, Target, MoreHorizontal } from "react-feather";
-import { Row, Col } from "reactstrap";
+import { Row } from "reactstrap";
 
 class Photo extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        <img src="https://via.placeholder.com/150" alt="clothes' picture" />
+      <div>
+        <img src="https://via.placeholder.com/150" alt="clothes" />
         <Row>
           <Heart />
           <Target />
           <MoreHorizontal />
         </Row>
-      </React.Fragment>
+      </div>
     );
   }
 }
