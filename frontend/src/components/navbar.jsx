@@ -23,8 +23,8 @@ class NavFreep extends React.Component {
                 <Navbar color="black" light expand="md">
                   <img
                     className="logo"
-                    src="https://placekitten.com/100/100"
-                    alt=""
+                    src="https://via.placeholder.com/100"
+                    alt="logo"
                   />
                 </Navbar>
                 <div className="title">
