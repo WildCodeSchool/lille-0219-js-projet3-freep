@@ -1,39 +1,72 @@
 import React, { Fragment } from "react";
-import { InputGroup, InputGroupAddon, Input, NavbarToggler, Navbar } from "reactstrap";
-import { NavLink, Link } from "react-router-dom";
+import {
+  InputGroup,
+  InputGroupAddon,
+  Input,
+  Navbar,
+  NavLink,
+  Nav,
+  NavItem,
+  Badge
+} from "reactstrap";
+import { Link, BrowserRouter as Router } from "react-router-dom";
+import Routing from "./routing";
+import { Camera, Plus, Mail, Heart, User } from 'react-feather';
 import "../style/navbar.css";
 
 class NavFreep extends React.Component {
   render() {
     return (
       <Fragment>
-           <div className="menu">
-            <Navbar color="black" light expand="md">
-                <ul>
-                  <li><NavLink activeClassName="active" exact to="/">
-                    <img className="logo" src="https://via.placeholder.com/300.png/09f/fff" alt="logo Freep" />
-                  </NavLink></li>
-                </ul>
-              <NavbarToggler color="light" onClick="" />
+        <Router>
+          <div className="header">
+            <Fragment>
+              <div className="menu">
+                <Navbar color="black" light expand="md">
+                  <img
+                    className="logo"
+                    src="https://placekitten.com/100/100"
+                    alt=""
+                  />
 
-                <ul>
-                  <div className="nav-item">
-                  </div>
-                </ul>
+                  <Nav className="d-flex ml-auto picto" horizontal="end" navbar>
+                      <NavLink href="#">
+                          <Plus />
+                      </NavLink>
+                      <NavLink href="#">
+                          <Mail />
+                      </NavLink>
+                      <NavLink href="#">
+                          <Heart />
+                      </NavLink>
+                      <NavLink href="#">
+                          <User />
+                      </NavLink>
+                  </Nav>
                 </Navbar>
+
+                <div className="title">
+                  <span>Freep</span>
+                  <br />
+                  <span>baseLine</span>
+                </div>
+
                 <form className="recherche">
-              <InputGroup>
-                <InputGroupAddon addonType="prepend"></InputGroupAddon>
-                <Input placeholder="Rechercher un vêtement ou un client"
-                  value=""
-                  onChange=""
-                />
-              </InputGroup>
-            </form>
-            </div>
+                  <InputGroup>
+                    <InputGroupAddon addonType="prepend" />
+                    <Input placeholder="Rechercher un vêtement ou une cliente" />
+                    <Link to="/">
+                      <button className="buto ml-2">Rechercher</button>
+                    </Link>
+                  </InputGroup>
+                </form>
+              </div>
+            </Fragment>
+            <Routing />
+          </div>
+        </Router>
       </Fragment>
     );
   }
 }
-
 export default NavFreep;

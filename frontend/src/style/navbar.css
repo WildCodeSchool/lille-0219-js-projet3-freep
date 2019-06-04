@@ -1,9 +1,49 @@
-.navbar {
-    height: 5rem;
+.header {
+    margin-left : 10rem;
 }
 
 .border-gold {
     width : 80%;
     height: 0.1rem;
     color: gold;
+}
+
+ul {
+    list-style: none;
+}
+
+.recherche {
+    text-align: center;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+}
+
+.list-right {
+    text-align: right;
+}
+
+.rightList {
+    display: block;
+    float : right;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+
+}
+
+.title {
+    width: 10rem;
+    margin-top :4rem;
+    padding-left: 1rem;
+}
+
+.recherche {
+    margin-top : 5rem;
+}
+
+.picto {
+    text-align: right;
 }
