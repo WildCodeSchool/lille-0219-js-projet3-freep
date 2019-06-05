@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Dancing Script';
+  src: url('./style/DancingScript-Regular.ttf')
+}
+
 .App {
   text-align: center;
 }
