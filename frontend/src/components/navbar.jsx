@@ -51,7 +51,7 @@ class NavFreep extends React.Component {
                 </Col>
                 <Col xs="4">
                   <div className="picto">
-                    <Nav className="d-flex ml-auto" horizontal="end" navbar>
+                    <Nav className="d-flex ml-auto navhorizontal" navbar>
                       <NavLink href="#">
                         <Plus className="img" color="black" />
                       </NavLink>

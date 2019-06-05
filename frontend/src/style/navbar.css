@@ -52,11 +52,15 @@ ul {
 
 .picto {
    height: 4rem;
-   margin-top :4rem;
-   margin-left : 11rem;
+   margin-top :5rem;
+   margin-left : 3rem;
    width : 20rem;
 }
 
 .img {
     padding-left:0.8rem;
+    width: 50px;
+}
+.navhorizontal {
+    flex-direction: row;
 }
