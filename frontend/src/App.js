@@ -1,14 +1,22 @@
-import React from 'react';
+import React from "react";
+import "./App.css";
+import HomePage from "./components/HomePage";
+import Profile from "./components/Profile";
+import { Container } from 'reactstrap';
+import "./App.css";
 import NavFreep from "./components/navbar";
 import './style/navbar.css';
-
+    
 function App() {
   return (
-    <div className="App">
+    <Container>
       <header>
         <NavFreep />
       </header>
-    </div>
+      <HomePage />
+      <Profile />
+    </Container>
+
   );
 }
 
