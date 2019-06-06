@@ -1,10 +1,7 @@
 .header {
-    margin-left : 1rem;
-    width : 100%;
-    display: flex;
-    flex-direction: row;
+    margin-left : 5rem;
+    width : 80%;
 }
-
 hr {
     width: 80%;
     height: 0.2rem;
@@ -12,55 +9,49 @@ hr {
     background-color: #f7fab2;
     border : 0;
 }
-
 .logo {
     border-radius: 50%;
 }
-
 ul {
     list-style: none;
 }
-
 .recherche {
     text-align: center;
     height:20px;
+    margin-left: 5rem;
+    margin-top : 4rem;
+    width: 20rem;
 }
-
-
 .list-right {
     text-align: right;
 }
-
 .rightList {
     display: block;
     float : right;
     margin: 0;
     padding: 0;
     text-align: right;
-
 }
-
 .title {
     width: 13rem;
     margin-top :4rem;
 }
-
-.recherche {
-    margin-top : 5rem;
-    margin-left : 1rem;
-}
-
 .picto {
    height: 4rem;
-   margin-top :5rem;
-   margin-left : 3rem;
-   width : 20rem;
+   margin-top : 5rem;
 }
 
+.ml-auto {
+    margin-top:4rem;
+}
 .img {
     padding-left:0.8rem;
     width: 50px;
 }
 .navhorizontal {
     flex-direction: row;
+}
+
+.search {
+    width : 15rem;
 }

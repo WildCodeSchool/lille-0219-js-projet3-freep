@@ -7,39 +7,38 @@ import {
   NavLink,
   Nav,
   Form,
-  Container, Row, Col
+  Container, Row, Col,
+NavbarBrand,
+NavbarToggler,
+NavItem,
+Collapse
 } from "reactstrap";
 import { BrowserRouter as Router } from "react-router-dom";
 import Routing from "./routing";
 import { Plus, Mail, Heart, User } from "react-feather";
 import "../style/navbar.css";
 
+
+
 class NavFreep extends React.Component {
   render() {
     return (
-      <Fragment>
-        <Router>
-          <Container>
-            <Row>
-              <div className="header">
-                <Col xs="2">
-                  <Navbar color="black" light expand="md">
+        <div className="header">
+        <Navbar color="light" light expand="md">
+        <Navbar color="black" light>
                     <img
                       className="logo"
                       src="https://via.placeholder.com/100"
                       alt="logo"
                     />
                   </Navbar>
-                </Col>
-                <Col xs="3">
                   <div className="title">
                     <span>Freep</span>
                     <br />
                     <span>La garde robe qui rapporte</span>
                   </div>
-                </Col>
-                <Col xs="4">
-                  <Form className="recherche">
+          <NavbarToggler onClick={this.toggle} />
+          <Form className="recherche">
                     <InputGroup>
                       <InputGroupAddon addonType="prepend" />
                       <Input
@@ -48,10 +47,9 @@ class NavFreep extends React.Component {
                       />
                     </InputGroup>
                   </Form>
-                </Col>
-                <Col xs="4">
-                  <div className="picto">
-                    <Nav className="d-flex ml-auto navhorizontal" navbar>
+          <Collapse navbar>
+            <Nav className="ml-auto" navbar>
+
                       <NavLink href="#">
                         <Plus className="img" color="black" />
                       </NavLink>
@@ -64,17 +62,14 @@ class NavFreep extends React.Component {
                       <NavLink href="#">
                         <User className="img" color="black" />
                       </NavLink>
-                    </Nav>
-                  </div>
-                </Col>
-                <Routing />
-              </div>
-            </Row>
-          </Container>
-        </Router>
+                    
+            </Nav>
+          </Collapse>
+        </Navbar>
         <hr />
-      </Fragment>
+      </div>
     );
   }
 }
+
 export default NavFreep;
