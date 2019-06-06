@@ -7,10 +7,7 @@ import {
   NavLink,
   Nav,
   Form,
-  Container, Row, Col,
-NavbarBrand,
 NavbarToggler,
-NavItem,
 Collapse
 } from "reactstrap";
 import { BrowserRouter as Router } from "react-router-dom";
