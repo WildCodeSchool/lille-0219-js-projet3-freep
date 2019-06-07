@@ -2,11 +2,11 @@ import React from "react";
 import "./App.css";
 import HomePage from "./components/HomePage";
 import Profile from "./components/Profile";
-import { Container } from 'reactstrap';
+import { Container } from "reactstrap";
 import "./App.css";
-import NavFreep from "./components/navbar";
-import './style/navbar.css';
-    
+import NavFreep from "./components/Navbar";
+import "./style/navbar.css";
+
 function App() {
   return (
     <Container>
@@ -16,7 +16,6 @@ function App() {
       <HomePage />
       <Profile />
     </Container>
-
   );
 }
 
