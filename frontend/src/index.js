@@ -3,20 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import HomePage from "./components/HomePage";
-import ClothingPage from "./components/ClothingPage";
-import Profile from "./components/Profile";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 
 const Root = () => (
   <BrowserRouter>
-    <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route path="/article" component={ClothingPage} />
-      <Route path="/article/:articleId" component={ClothingPage} />
-      <Route path="/profil" component={Profile} />
-      <Route path="/profil/:profilId" component={Profile} />
-    </Switch>
+    <App />
   </BrowserRouter>
 );
 
