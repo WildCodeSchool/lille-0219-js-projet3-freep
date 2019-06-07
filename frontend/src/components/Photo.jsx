@@ -7,7 +7,7 @@ class Photo extends React.Component {
   render() {
     return (
       <div>
-        <Link to="/ClothingPage">
+        <Link to="/article/:id">
           <img src="https://via.placeholder.com/150" alt="clothes" />
         </Link>
         <Row>
