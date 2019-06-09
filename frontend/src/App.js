@@ -5,11 +5,15 @@ import Profile from "./components/Profile";
 import { Container } from "reactstrap";
 import { Route, Switch } from "react-router-dom";
 import ClothingPage from "./components/ClothingPage";
-import "./App.css";
+import NavFreep from "./components/Navbar";
+import "./style/navbar.css";
 
 function App() {
   return (
     <Container>
+    <header>
+        <NavFreep />
+      </header>
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/article" component={ClothingPage} />
