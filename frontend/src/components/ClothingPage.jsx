@@ -11,7 +11,7 @@ class ClothingPage extends React.Component {
     this.state = {
       profileInfo: [],
       clothingInfo: [],
-      commentsNumber: [0]
+      commentsNumber: 0
     };
   }
 
@@ -81,7 +81,10 @@ class ClothingPage extends React.Component {
                 {clothing.is_deposit ? (
                   <section className="my-3 text-left">Caution demandée</section>
                 ) : null}
-                <h2>{commentCount} Commentaires</h2>
+                <h2>
+                  {commentCount}
+                  {commentCount >= 2 ? " Commentaires" : " Commentaire"}
+                </h2>
                 <div className="comments-feed">
                   <Comment info={profile} />
                 </div>
