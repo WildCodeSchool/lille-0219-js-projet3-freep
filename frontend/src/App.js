@@ -11,15 +11,13 @@ import "./style/navbar.css";
 function App() {
   return (
     <Container>
-    <header>
+      <header>
         <NavFreep />
       </header>
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/article" component={ClothingPage} />
-        {/* <Route path="/article/:articleId" component={ClothingPage} /> */}
         <Route path="/profil" component={Profile} />
-        {/* <Route path="/profil/:profilId" component={Profile} /> */}
       </Switch>
     </Container>
   );
