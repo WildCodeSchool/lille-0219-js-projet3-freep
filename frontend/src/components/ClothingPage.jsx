@@ -10,7 +10,8 @@ class ClothingPage extends React.Component {
     super(props);
     this.state = {
       profileInfo: [],
-      clothingInfo: []
+      clothingInfo: [],
+      commentsNumber: [0]
     };
   }
 
@@ -26,11 +27,18 @@ class ClothingPage extends React.Component {
         profileInfo: data[0]
       });
     });
+
+    axios.get(`http://localhost:5050/commentsById`).then(({ data }) => {
+      this.setState({
+        commentsNumber: data[0]
+      });
+    });
   }
 
   render() {
     const profile = this.state.profileInfo;
     const clothing = this.state.clothingInfo;
+    const commentCount = this.state.commentsNumber.count;
     return (
       <React.Fragment>
         <Container className="clothing-container">
@@ -73,7 +81,7 @@ class ClothingPage extends React.Component {
                 {clothing.is_deposit ? (
                   <section className="my-3 text-left">Caution demandée</section>
                 ) : null}
-                <h2>{clothing.commentsNumber} Commentaires</h2>
+                <h2>{commentCount} Commentaires</h2>
                 <div className="comments-feed">
                   <Comment info={profile} />
                 </div>
