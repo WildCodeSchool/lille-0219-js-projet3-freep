@@ -31,6 +31,19 @@ app.get("/comments", (req, res) => {
   });
 });
 
+app.get("/commentsById", (req, res) => {
+  db.query(
+    "SELECT COUNT(id_clothing) AS count FROM comment WHERE id_clothing = 1 GROUP BY id_clothing",
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting comments number");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
 app.get("/users", (req, res) => {
   db.query("SELECT * FROM user", (err, rows) => {
     if (err) {
