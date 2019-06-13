@@ -1,10 +1,11 @@
-import react from "react";
+import React from "react";
 import Messaging from "./Messaging";
 
-class MessagingPage extends react.Component {
+class MessagingPage extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <h1>Messagerie</h1>
         <Messaging />
         <Messaging />
         <Messaging />
