@@ -9,49 +9,75 @@ class ClothingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profileInfo: [],
-      clothingInfo: [],
-      commentsNumber: 0
+      profileInfo: {},
+      clothingInfo: {},
+      commentsInfo: {}
     };
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:5050/articles`).then(({ data }) => {
+    const articleId = this.props.match.params.articleId;
+    const userId = this.props.match.params.userId;
+
+    axios
+      .get(`http://localhost:5050/articles/${articleId}`)
+      .then(({ data }) => {
+        this.setState({
+          clothingInfo: data
+        });
+      });
+
+    axios.get(`http://localhost:5050/users/${userId}`).then(({ data }) => {
       this.setState({
-        clothingInfo: data[0]
+        profileInfo: data
       });
     });
 
-    axios.get(`http://localhost:5050/users`).then(({ data }) => {
-      this.setState({
-        profileInfo: data[0]
+    axios
+      .get(`http://localhost:5050/articles/${articleId}/comments`)
+      .then(({ data }) => {
+        this.setState({
+          commentsInfo: data
+        });
       });
-    });
-
-    axios.get(`http://localhost:5050/commentsById`).then(({ data }) => {
-      this.setState({
-        commentsNumber: data[0]
-      });
-    });
   }
 
   render() {
     const profile = this.state.profileInfo;
     const clothing = this.state.clothingInfo;
-    const commentCount = this.state.commentsNumber.count;
+    const comments = this.state.commentsInfo;
     return (
       <React.Fragment>
         <Container className="clothing-container">
-          <Row>
+          <Row className="px-4">
             <Col lg="7" className="justify-content-center">
               <Row className="justify-content-center">
-                <Photo />
-              </Row>
-              <Row className="justify-content-center">
-                <Col xs="5">
+                <Col xs="6">
                   <Photo />
                 </Col>
-                <Col xs="5">
+              </Row>
+              <Row className="justify-content-center">
+                <Col xs="6" md="4">
+                  <Photo />
+                </Col>
+                <Col xs="6" md="4">
+                  <Photo />
+                </Col>
+              </Row>
+              <h2>Elles l'ont porté récemment</h2>
+              <Row className="justify-content-center">
+                <Col xs="6" md="4">
+                  <Photo />
+                </Col>
+                <Col xs="6" md="4">
+                  <Photo />
+                </Col>
+              </Row>
+              <Row className="justify-content-center">
+                <Col xs="6" md="4">
+                  <Photo />
+                </Col>
+                <Col xs="6" md="4">
                   <Photo />
                 </Col>
               </Row>
@@ -59,31 +85,31 @@ class ClothingPage extends React.Component {
             <Col lg="5" className="comments-container">
               <div className="sub-container">
                 <div className="p-4 comments-feed">
-                  <div className="m-3">
+                  <div>
                     <Row className="align-items-center">
-                      <Col xs="4">
+                      <Col xs="3">
                         <img
                           src={profile.avatar}
                           alt={`user-${profile.id}`}
                           className="avatar"
+                          width="70px"
                         />
                       </Col>
-                      <Col xs="8">{profile.nickname}</Col>
+                      <Col xs="9" className="profile-name">
+                        {profile.nickname}
+                      </Col>
                     </Row>
                   </div>
-                  <div className="text-left">{clothing.description}</div>
-                  <ul className="text-left list-unstyled list-inline">
-                    <li className="list-inline-item">#jupe</li>
-                    <li className="list-inline-item">#casual</li>
-                    <li className="list-inline-item">#winteriscoming</li>
-                  </ul>
+                  <div className="pt-4">
+                    <div className="text-left">{clothing.description}</div>
+                  </div>
                 </div>
                 {clothing.is_deposit ? (
                   <section className="my-3 text-left">Caution demandée</section>
                 ) : null}
                 <h2>
-                  {commentCount}
-                  {commentCount >= 2 ? " Commentaires" : " Commentaire"}
+                  {comments.count}
+                  {comments.count >= 2 ? " Commentaires" : " Commentaire"}
                 </h2>
                 <div className="comments-feed">
                   <Comment info={profile} />
