@@ -54,6 +54,79 @@ app.get("/users", (req, res) => {
   });
 });
 
+//Clothing
+
+app.get("/user/", (req, res) => {
+  if (req.query.isUser) {
+    db.query(
+      "SELECT nickname,password,email,phone,firstname,lastname,birthdate,avatar,location,points,is_admin,created_at,id_borrow FROM user",
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("error when getting articles route");
+        }
+        res.status(200).send(rows);
+      }
+    );
+  }
+});
+
+app.get("/vetement/", (req, res) => {
+  if (req.query.idVetement) {
+    db.query(
+      "SELECT id_user,type,brand,size,gender,description,is_deposit,created_at FROM clothing",
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("error when getting articles route");
+        }
+        res.status(200).send(rows);
+      }
+    );
+  }
+});
+
+app.get("/commentaire", (req, res) => {
+  if (req.query.idVetement) {
+    db.query(
+      "SELECT content FROM clothing WHERE id = '1' FROM clothing",
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("error when getting articles route");
+        }
+        res.status(200).send(rows);
+      }
+    );
+  }
+});
+
+app.post("/commentaire", (req, res) => {
+  db.query(
+    "INSERT INTO `comment` (`id_user`,`id_clothing`,`content`,`created_at`) VALUES ('1','1','commentaire de test',NOW())",
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting articles route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+//app.get("/photo?idVetement=:idVetement", (req, res) => {
+app.get("/photo", (req, res) => {
+  if (req.query.idVetement) {
+    db.query("SELECT url FROM picture WHERE id='1", (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting articles route");
+      }
+      res.status(200).send(rows);
+    });
+  }
+});
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
