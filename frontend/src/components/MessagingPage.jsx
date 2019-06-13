@@ -6,16 +6,46 @@ class MessagingPage extends React.Component {
     return (
       <React.Fragment>
         <h1>Messagerie</h1>
-        <Messaging />
-        <Messaging />
-        <Messaging />
-        <Messaging />
-        <Messaging />
-        <Messaging />
-        <Messaging />
-        <Messaging />
-        <Messaging />
-        <Messaging />
+        <Messaging
+          firstname="Ruby"
+          lastname="Rose"
+          avatar="/pictures/Ruby.jpg"
+        />
+        <Messaging
+          firstname="Emma"
+          lastname="Watson"
+          avatar="/pictures/Emma.jpg"
+        />
+        <Messaging
+          firstname="Jennifer"
+          lastname="Lawrence"
+          avatar="/pictures/Jennifer.jpg"
+        />
+        <Messaging
+          firstname="Scarlett"
+          lastname="Johansson"
+          avatar="/pictures/Scarlett.jpg"
+        />
+        <Messaging
+          firstname="Brie"
+          lastname="Larson"
+          avatar="/pictures/Brie.jpg"
+        />
+        <Messaging
+          firstname="Angelina"
+          lastname="Jolie"
+          avatar="/pictures/Angelina.jpg"
+        />
+        <Messaging
+          firstname="Sandra"
+          lastname="Bullock"
+          avatar="/pictures/Sandra.jpeg"
+        />
+        <Messaging
+          firstname="Alexandra"
+          lastname="Dadario"
+          avatar="/pictures/Alexandra.jpeg"
+        />
       </React.Fragment>
     );
   }
