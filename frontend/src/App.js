@@ -7,11 +7,12 @@ import { Route, Switch } from "react-router-dom";
 import ClothingPage from "./components/ClothingPage";
 import NavFreep from "./components/Navbar";
 import "./style/navbar.css";
+import PartnerPage from "./components/PartnerPage";
 
 function App() {
   return (
     <Container>
-    <header>
+      <header>
         <NavFreep />
       </header>
       <Switch>
@@ -20,6 +21,7 @@ function App() {
         <Route path="/article/:articleId" component={ClothingPage} />
         <Route path="/profil" component={Profile} />
         <Route path="/profil/:profilId" component={Profile} />
+        <Route path="/partenaire" component={PartnerPage} />
       </Switch>
     </Container>
   );

@@ -1,0 +1,10 @@
+.cardPoint {
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.point {
+  font-size: 2rem;
+}

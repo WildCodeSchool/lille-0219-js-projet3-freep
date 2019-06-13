@@ -4,13 +4,12 @@ import {
   InputGroupAddon,
   Input,
   Navbar,
-  NavLink,
   Nav,
   Form,
   NavbarToggler,
   Collapse
 } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Plus, Mail, Heart, User } from "react-feather";
 import "../style/navbar.css";
 
