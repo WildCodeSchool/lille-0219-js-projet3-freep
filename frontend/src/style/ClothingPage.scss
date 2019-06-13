@@ -1,9 +1,21 @@
 $main-color: #f8d5c7;
 $white: #f5f5f5;
 $transition: 0.2s;
+$secondary-color: goldenrod;
+
+h2,
+button,
+.profile-name {
+  font-family: "dancing script";
+  color: $secondary-color;
+}
+
+.profile-name {
+  font-size: calc(1rem + 1vw);
+  color: $secondary-color;
+}
 
 .clothing-container {
-  margin: 5vh 0;
   background: $main-color;
   h2 {
     margin: 5vh auto;
@@ -12,15 +24,16 @@ $transition: 0.2s;
 
 .comments-container {
   .sub-container {
-    padding: 1rem;
+    padding: 2rem 0;
   }
   .comments-feed {
-    background: fade-out($white, 0.5);
+    background: #fbf4f1;
     padding: 2vh 0;
   }
 }
+
 #comment-form {
-  background: fade-out($white, 0.5);
+  background: #fbf4f1;
   border: transparent;
   transition: $transition;
   &:focus {
@@ -28,18 +41,21 @@ $transition: 0.2s;
   }
 }
 
-button {
-  background: fade-out($white, 0.5);
-  border: transparent;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  transition: $transition;
-  &:hover,
-  &:focus {
-    box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
-  }
-  &:active,
-  &:focus {
-    margin-top: 2px;
+.comment-form {
+  button {
+    background: #fbf4f1;
+    border: transparent;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    transition: $transition;
+    font-size: 1.3rem;
+    &:hover,
+    &:focus {
+      box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
+    }
+    &:active,
+    &:focus {
+      margin-top: 2px;
+    }
   }
 }
