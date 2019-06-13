@@ -48,7 +48,7 @@ class NavFreep extends React.Component {
               <NavLink to="/">
                 <Plus className="img" color="black" />
               </NavLink>
-              <NavLink top="/messagerie">
+              <NavLink to="/messagerie">
                 <Mail className="img" color="black" />
               </NavLink>
               <NavLink to="/favoris">
