@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, CardBody, CardText } from "reactstrap";
-import { Row } from "reactstrap";
-import "../pictures/Avatar.jpg";
+import { Card, CardBody, CardText, CardImg } from "reactstrap";
+import { Row, Col } from "reactstrap";
+import Avatar from "../pictures/Avatar.jpg";
+import "../style/Messaging.css";
 
 class Messaging extends React.Component {
   render() {
@@ -9,17 +10,30 @@ class Messaging extends React.Component {
       <React.Fragment>
         <Card>
           <CardBody>
-            <img src={Avatar} alt="Avatar" />
+            <CardImg src={Avatar} alt="Avatar" className="imgAvatar" />
             <Row>
-              <p>FirstName LASTNAME</p>
-              <p>Il y a 5 minutes.</p>
+              <CardText>
+                <Row>
+                  <Col lg="4">
+                    <p>FirstName LASTNAME</p>
+                  </Col>
+                  <Col lg="4">
+                    <p>Il y a 5 minutes.</p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg="6">
+                    <p>
+                      LAST MESSAGE. Lorem ipsum dolor sit amet, consectetur
+                      adipiscing elit. Suspendisse aliquam facilisis mollis. Ut
+                      blandit eget turpis eu placerat. Nam ultrices purus quam,
+                      vitae accumsan leo commodo id. Proin non leo quis dui
+                      tincidunt porttitor.
+                    </p>
+                  </Col>
+                </Row>
+              </CardText>
             </Row>
-            <p>
-              LAST MESSAGE. Lorem ipsum dolor sit amet, consectetur adipiscing
-              elit. Suspendisse aliquam facilisis mollis. Ut blandit eget turpis
-              eu placerat. Nam ultrices purus quam, vitae accumsan leo commodo
-              id. Proin non leo quis dui tincidunt porttitor.
-            </p>
           </CardBody>
         </Card>
       </React.Fragment>
