@@ -27,7 +27,7 @@ class Comment extends React.Component {
       <React.Fragment>
         {comments.map((comment, key) => {
           return (
-            <Row className="px-3 py-1" key={key}>
+            <Row className="px-3 py-1 align-items-center" key={key}>
               <Col xs="2">
                 <img
                   src={profile.avatar}
@@ -35,11 +35,16 @@ class Comment extends React.Component {
                   className="avatar"
                 />
               </Col>
-              <Col xs="2">{profile.nickname}</Col>
-              <Col xs="6" key={key}>
+              <Col
+                xs="2"
+                className="align-content-center profile-name comments-profile"
+              >
+                {profile.nickname}
+              </Col>
+              <Col xs="6" className="align-items-center" key={key}>
                 {comment.content}
               </Col>
-              <Col xs="1">
+              <Col xs="1" className="align-items-center">
                 <ReportButton />
               </Col>
             </Row>
