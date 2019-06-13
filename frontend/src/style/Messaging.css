@@ -1,0 +1,15 @@
+.imgAvatar {
+  border-radius: 90%;
+  width: 20%;
+  height: 100%;
+  float: left;
+}
+
+.cardTextMessaging {
+  margin-left: 50px;
+}
+
+.messageDate {
+  position: absolute;
+  left: 85%;
+}
