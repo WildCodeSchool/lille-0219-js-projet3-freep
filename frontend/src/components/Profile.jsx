@@ -29,16 +29,20 @@ class Profile extends React.Component {
             <Col md="3" className="text-center mx-auto">
               <Avatar info={this.state.profileInfo} />
             </Col>
-            <Col md="3">
-              <Col>
-                ✮✮✮<span className="starsgrey">✮✮</span>
-              </Col>
-              <Col>
-                <Nickname info={this.state.profileInfo} />
-              </Col>
-            </Col>
-            <Col className="text-justify amatic p-3">
-              {this.state.profileInfo.description}
+            <Col>
+              <Row>
+                <Col md="12" lg="3" className="d-flex align-items-center">
+                  <Col md="auto">
+                    ✮✮✮<span className="starsgrey">✮✮</span>
+                  </Col>
+                  <Col md="auto">
+                    <Nickname info={this.state.profileInfo} />
+                  </Col>
+                </Col>
+                <Col className="text-justify amatic p-3">
+                  {this.state.profileInfo.description}
+                </Col>
+              </Row>
             </Col>
           </Row>
           <Row className="text-center">
