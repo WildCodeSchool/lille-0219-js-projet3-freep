@@ -5,6 +5,14 @@ class PartnerPage extends React.Component {
     return (
       <React.Fragment>
         <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
       </React.Fragment>
     );
   }
