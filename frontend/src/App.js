@@ -23,7 +23,6 @@ function App() {
         <Route path="/profil/:profilId" component={Profile} />
         <Route path="/partenaire" component={PartnerPage} />
       </Switch>
-      <PartnerPage />
     </Container>
   );
 }
