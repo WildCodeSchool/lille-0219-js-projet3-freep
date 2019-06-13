@@ -23,7 +23,7 @@ function App() {
         <Route path="/profil" component={Profile} />
         <Route path="/profil/:profilId" component={Profile} />
         <Route path="/partenaire" component={PartnerPage} />
-        <Route past="/messagerie" component={MessagingPage} />
+        <Route path="/messagerie" component={MessagingPage} />
       </Switch>
     </Container>
   );
