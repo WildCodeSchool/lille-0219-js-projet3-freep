@@ -1,6 +1,6 @@
 import React from "react";
 import Partner from "./Partner";
-import { Card, CardText, CardBody, Container } from "reactstrap";
+import { Card, CardText, CardBody } from "reactstrap";
 import "../style/PartnerPage.css";
 class PartnerPage extends React.Component {
   render() {
@@ -8,20 +8,24 @@ class PartnerPage extends React.Component {
       <React.Fragment>
         <Card className="cardPoint">
           <CardBody>
-            <CardText>Vous avez N points.</CardText>
+            <CardText>
+              <p className="point">Vous avez N points.</p>
+              <p>
+                5 points = 10% de réduction - 10 points = un vêtement offert -
+                15 points = 20% de réduction
+              </p>
+            </CardText>
           </CardBody>
         </Card>
-        <Container>
-          <Partner />
-          <Partner />
-          <Partner />
-          <Partner />
-          <Partner />
-          <Partner />
-          <Partner />
-          <Partner />
-          <Partner />
-        </Container>
+        <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
+        <Partner />
       </React.Fragment>
     );
   }
