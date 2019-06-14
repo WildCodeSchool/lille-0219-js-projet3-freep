@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, CardText, CardImg } from "reactstrap";
 import { Row } from "reactstrap";
-import "../style/Messaging.css";
+import "../style/Messaging.scss";
 import Ruby from "../pictures/Ruby.jpg";
 import Scarlett from "../pictures/Scarlett.jpg";
 

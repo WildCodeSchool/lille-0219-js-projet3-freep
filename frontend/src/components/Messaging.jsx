@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, CardText, CardImg } from "reactstrap";
 import { Row } from "reactstrap";
-import "../style/Messaging.css";
+import "../style/Messaging.scss";
 import { Link } from "react-router-dom";
 
 class Messaging extends React.Component {
