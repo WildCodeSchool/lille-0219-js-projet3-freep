@@ -3,6 +3,10 @@ const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
 
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(cors());
 
 app.get("/articles", (req, res) => {
