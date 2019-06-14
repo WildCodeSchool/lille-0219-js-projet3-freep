@@ -12,20 +12,22 @@ import MessagingPage from "./components/MessagingPage";
 
 function App() {
   return (
-    <Container>
+    <React.Fragment>
       <header>
         <NavFreep />
       </header>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/article" component={ClothingPage} />
-        <Route path="/article/:articleId" component={ClothingPage} />
-        <Route path="/profil" component={Profile} />
-        <Route path="/profil/:profilId" component={Profile} />
-        <Route path="/partenaire" component={PartnerPage} />
-        <Route path="/messagerie" component={MessagingPage} />
-      </Switch>
-    </Container>
+      <Container>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/article" component={ClothingPage} />
+          <Route path="/article/:articleId" component={ClothingPage} />
+          <Route path="/profil" component={Profile} />
+          <Route path="/profil/:profilId" component={Profile} />
+          <Route path="/partenaire" component={PartnerPage} />
+          <Route path="/messagerie" component={MessagingPage} />
+        </Switch>
+      </Container>
+    </React.Fragment>
   );
 }
 
