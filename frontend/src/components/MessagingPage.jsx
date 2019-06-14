@@ -1,11 +1,12 @@
 import React from "react";
 import Messaging from "./Messaging";
+import "../style/Messaging.scss";
 
 class MessagingPage extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h1>Messagerie</h1>
+        <h1 className="titleMessage">Messagerie</h1>
         <Messaging
           firstname="Ruby"
           lastname="Rose"

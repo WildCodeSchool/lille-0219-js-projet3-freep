@@ -1,8 +1,14 @@
+@font-face {
+  font-family: "DancingScript";
+  src: url("DancingScript-Regular.ttf");
+}
+
 .imgAvatar {
   border-radius: 90%;
   width: 20%;
-  height: 100%;
+  height: 200px;
   float: left;
+  object-fit: cover;
 }
 
 .cardTextMessaging {
@@ -17,11 +23,24 @@
 .imgAvatarRight {
   border-radius: 90%;
   width: 20%;
-  height: 100%;
+  height: 200px;
   float: right;
+  object-fit: cover;
+}
+
+.nameRight {
+  position: relative;
+  left: 70%;
 }
 
 .name {
-  position: absolute;
-  left: 75%;
+  font-size: 2rem;
+  color: goldenrod;
+  font-family: DancingScript;
+}
+
+.titleMessage {
+  font-size: 5rem;
+  color: goldenrod;
+  font-family: DancingScript;
 }

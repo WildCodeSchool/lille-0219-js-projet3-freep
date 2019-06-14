@@ -23,7 +23,7 @@ class Messaging extends React.Component {
               <Row>
                 <CardText className="cardTextMessaging">
                   <Row>
-                    <p>
+                    <p className="name">
                       {this.props.firstname} {this.props.lastname}
                     </p>
                     <p className="messageDate">Il y a 5 minutes.</p>

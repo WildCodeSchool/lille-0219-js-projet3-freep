@@ -15,7 +15,7 @@ class Message extends React.Component {
             <Row>
               <CardText className="cardTextMessaging">
                 <Row>
-                  <p>Ruby Rose</p>
+                  <p className="name">Ruby Rose</p>
                   <p className="messageDate">Il y a 5 minutes.</p>
                 </Row>
                 <Row>
@@ -36,7 +36,7 @@ class Message extends React.Component {
               <CardText className="cardTextMessaging">
                 <Row>
                   <p>Il y a 5 minutes.</p>
-                  <p className="name">Moi</p>
+                  <p className="nameRight name">Moi</p>
                 </Row>
                 <Row>
                   <p>
@@ -55,7 +55,7 @@ class Message extends React.Component {
             <Row>
               <CardText className="cardTextMessaging">
                 <Row>
-                  <p>Ruby Rose</p>
+                  <p className="name">Ruby Rose</p>
                   <p className="messageDate">Il y a 5 minutes.</p>
                 </Row>
                 <Row>
@@ -76,7 +76,7 @@ class Message extends React.Component {
               <CardText className="cardTextMessaging">
                 <Row>
                   <p>Il y a 5 minutes.</p>
-                  <p className="name">Moi</p>
+                  <p className="nameRight name">Moi</p>
                 </Row>
                 <Row>
                   <p>
