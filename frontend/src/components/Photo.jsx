@@ -1,21 +1,30 @@
 import React from "react";
-import { Heart, Target, MoreHorizontal } from "react-feather";
-import { Row } from "reactstrap";
+import { Heart, Target } from "react-feather";
 import { Link } from "react-router-dom";
+import { Row, Card, CardImg } from "reactstrap";
+import ReportButton from "./ReportButton";
 
 class Photo extends React.Component {
   render() {
     return (
-      <div>
-        <Link to="/article/:id">
-          <img src="https://via.placeholder.com/150" alt="clothes" />
-        </Link>
-        <Row>
-          <Heart />
-          <Target />
-          <MoreHorizontal />
-        </Row>
-      </div>
+      <React.Fragment>
+        <Card>
+          <Link to="/article/1">
+            <CardImg
+              src="http://static.wixstatic.com/media/a87a8e_973910fcfb134c43a01f610f9413f529.jpg"
+              alt="clothes"
+              className="Photo"
+            />
+          </Link>
+          <div className="overlay">
+            <Row className="p-0 card-buttons align-items-center">
+              <Heart color="white" />
+              <Target color="white" />
+              <ReportButton />
+            </Row>
+          </div>
+        </Card>
+      </React.Fragment>
     );
   }
 }
