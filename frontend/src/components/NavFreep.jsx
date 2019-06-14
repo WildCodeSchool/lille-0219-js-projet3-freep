@@ -11,7 +11,6 @@ import {
 } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
 import { Plus, Mail, Heart, User } from "react-feather";
-import "../style/navbar.css";
 
 class NavFreep extends React.Component {
   render() {
@@ -36,6 +35,7 @@ class NavFreep extends React.Component {
           <Form className="search-input">
             <InputGroup>
               <InputGroupAddon addonType="prepend" />
+              <button id="loupe" type="submit" class="icone-loupe" />
               <Input
                 className="search"
                 placeholder="Rechercher un vêtement ou une cliente"

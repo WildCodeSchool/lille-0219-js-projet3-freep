@@ -1,30 +1,32 @@
-.header {
-  margin-left: 5rem;
-  width: 80%;
-}
 hr {
-  width: 80%;
   height: 0.2rem;
   color: #f7fab2;
   background-color: #f7fab2;
   border: 0;
 }
+
 .logo {
   border-radius: 50%;
 }
+
+.bg-light {
+  background: white !important;
+}
+
 ul {
   list-style: none;
 }
+
 .search-input {
   text-align: center;
   height: 20px;
-  margin-left: 5rem;
-  margin-top: 4rem;
   width: 20rem;
 }
+
 .list-right {
   text-align: right;
 }
+
 .rightList {
   display: block;
   float: right;
@@ -32,21 +34,26 @@ ul {
   padding: 0;
   text-align: right;
 }
+
 .title {
   width: 13rem;
-  margin-top: 4rem;
 }
+
 .ml-auto {
-  margin-top: 4rem;
 }
+
 .img {
   padding-left: 0.8rem;
   width: 50px;
 }
+
 .navhorizontal {
   flex-direction: row;
 }
 
 .search {
   width: 15rem;
+}
+#loupe {
+  background-color: white;
 }

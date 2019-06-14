@@ -5,8 +5,8 @@ import Profile from "./components/Profile";
 import { Container } from "reactstrap";
 import { Route, Switch } from "react-router-dom";
 import ClothingPage from "./components/ClothingPage";
-import NavFreep from "./components/Navbar";
-import "./style/navbar.css";
+import NavFreep from "./components/NavFreep";
+import "./style/NavFreep.scss";
 import PartnerPage from "./components/PartnerPage";
 import MessagingPage from "./components/MessagingPage";
 
