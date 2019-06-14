@@ -13,3 +13,15 @@
   position: absolute;
   left: 85%;
 }
+
+.imgAvatarRight {
+  border-radius: 90%;
+  width: 20%;
+  height: 100%;
+  float: right;
+}
+
+.name {
+  position: absolute;
+  left: 75%;
+}

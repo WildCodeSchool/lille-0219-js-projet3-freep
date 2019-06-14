@@ -8,10 +8,11 @@ class Messaging extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <React.Fragment>
-        <Card>
+        <Card info={this.props}>
           <Link to="/message">
             <CardBody>
               <CardImg
