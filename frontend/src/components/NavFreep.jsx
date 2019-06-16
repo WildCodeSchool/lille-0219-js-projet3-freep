@@ -35,7 +35,10 @@ class NavFreep extends React.Component {
           <Collapse navbar>
             <form action="">
               <label for="">
-                <input type="text" placeholder="Ma super recherche" />
+                <input
+                  type="text"
+                  placeholder="Chercher un vêtement, un profil..."
+                />
                 <button type="submit">
                   <img src="../pictures/loupe.png" alt="magnifier" />
                 </button>
