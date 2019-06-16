@@ -9,6 +9,7 @@ import NavFreep from "./components/NavFreep";
 import "./style/NavFreep.scss";
 import PartnerPage from "./components/PartnerPage";
 import MessagingPage from "./components/MessagingPage";
+import Message from "./components/Message";
 
 function App() {
   return (

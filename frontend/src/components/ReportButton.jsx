@@ -6,6 +6,8 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+import { MoreHorizontal } from "react-feather";
+import "../style/Photo.scss";
 
 class ReportButton extends React.Component {
   constructor(props) {
@@ -32,9 +34,11 @@ class ReportButton extends React.Component {
           this.setState({ btnDropright: !this.state.btnDropright });
         }}
       >
-        <DropdownToggle>...</DropdownToggle>
+        <DropdownToggle className="dots p-0">
+          <MoreHorizontal color="white" />
+        </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem className="p-1">
+          <DropdownItem className="p-1 report-button">
             <a href={mailtoAddress}>Signaler un abus</a>
           </DropdownItem>
         </DropdownMenu>
