@@ -1,12 +1,19 @@
+.navTitle {
+  font-family: "dancing script";
+  font-size: 2rem;
+}
+
 hr {
   height: 0.2rem;
-  color: #f7fab2;
-  background-color: #f7fab2;
+  color: goldenrod;
+  background-color: goldenrod;
   border: 0;
+  margin: 0 0 1rem 0;
 }
 
 .logo {
   border-radius: 50%;
+  width: 5rem;
 }
 
 .bg-light {
@@ -35,25 +42,53 @@ ul {
   text-align: right;
 }
 
-.title {
+.navText {
   width: 13rem;
 }
 
-.ml-auto {
-}
-
 .img {
-  padding-left: 0.8rem;
   width: 50px;
 }
 
-.navhorizontal {
-  flex-direction: row;
+form {
+  margin: 0 auto;
 }
 
-.search {
-  width: 15rem;
+label,
+input,
+button,
+img {
+  display: block;
+  background-color: transparent;
+  border: none;
 }
-#loupe {
-  background-color: white;
+
+form label {
+  position: relative;
+  width: 25rem;
+}
+
+form label input[type="text"] {
+  width: 100%;
+  padding: 10px 10px 10px 60px;
+  font-size: 15px;
+  font-family: sans-serif;
+  border: 2px solid pink;
+  border-radius: 7px;
+  background-color: lightgray;
+  height: 2rem;
+}
+
+form label button {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+form label button img {
+  width: 15px;
+  opacity: 0.4;
+  margin-left: 5px;
 }
