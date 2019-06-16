@@ -11,7 +11,6 @@ import {
 } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
 import { Plus, Mail, Heart, User } from "react-feather";
-import "../style/navbar.css";
 
 class NavFreep extends React.Component {
   render() {
@@ -27,22 +26,24 @@ class NavFreep extends React.Component {
               />
             </Link>
           </Navbar>
-          <div className="title">
-            <span>Freep</span>
+          <div className="navText">
+            <span className="navTitle">Freep</span>
             <br />
-            <span>La garde robe qui rapporte</span>
+            <span className="navCatch">La garde robe qui rapporte</span>
           </div>
           <NavbarToggler onClick={this.toggle} />
-          <Form className="search-input">
-            <InputGroup>
-              <InputGroupAddon addonType="prepend" />
-              <Input
-                className="search"
-                placeholder="Rechercher un vêtement ou une cliente"
-              />
-            </InputGroup>
-          </Form>
           <Collapse navbar>
+            <form action="">
+              <label for="">
+                <input
+                  type="text"
+                  placeholder="Chercher un vêtement, un profil..."
+                />
+                <button type="submit">
+                  <img src="../pictures/loupe.png" alt="magnifier" />
+                </button>
+              </label>
+            </form>
             <Nav className="ml-auto" navbar>
               <NavLink to="/">
                 <Plus className="img" color="black" />
