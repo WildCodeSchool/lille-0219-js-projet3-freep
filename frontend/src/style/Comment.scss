@@ -16,3 +16,33 @@ $bl: #222;
   color: $bl;
   box-shadow: 0 0 0 transparent !important;
 }
+
+.report-button {
+  background: #fbf4f1;
+  border: transparent;
+  &:hover {
+    background: #fbf4f1;
+  }
+  a {
+    font-size: 0.8rem;
+    font-family: sans-serif;
+    color: fade-out($bl, 0.5);
+    text-decoration: none;
+    &:hover {
+      color: fade-out($bl, 0.2);
+    }
+  }
+}
+
+.dropdown-menu {
+  border: none;
+  background: #fbf4f1;
+}
+
+.comments-profile {
+  font-size: calc(1rem + 0.2vw);
+}
+
+div:nth-child(1) > button:nth-child(1) > svg {
+  stroke: #222;
+}

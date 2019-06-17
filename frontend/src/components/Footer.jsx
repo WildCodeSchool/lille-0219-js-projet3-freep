@@ -7,7 +7,7 @@ class Footer extends React.Component {
 		return (
 			<footer>
 				<NavLink activeClassName="active" className="littleInfo" exact to="/madewith">
-					Made with :cœur:
+					Made with :cœur: by Wild Code School
 				</NavLink>
 				<NavLink activeClassName="active" className="littleInfo" exact to="/CGU">
 					CGU
