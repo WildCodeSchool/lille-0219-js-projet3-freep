@@ -3,11 +3,14 @@
   src: url("DancingScript-Regular.ttf");
 }
 
+@font-face {
+  font-family: "Montserrat";
+  src: url("Montserrat-Regular.ttf");
+}
+
 .imgAvatar {
-  border-radius: 90%;
-  width: 20%;
-  height: 200px;
-  float: left;
+  height: 15vw;
+  width: 15vw;
   object-fit: cover;
 }
 
@@ -16,8 +19,7 @@
 }
 
 .messageDate {
-  position: absolute;
-  left: 85%;
+  text-align: right;
 }
 
 .imgAvatarRight {
@@ -29,8 +31,7 @@
 }
 
 .nameRight {
-  position: relative;
-  left: 70%;
+  text-align: right;
 }
 
 .name {
@@ -40,7 +41,14 @@
 }
 
 .titleMessage {
-  font-size: 5rem;
+  font-size: 3rem;
   color: goldenrod;
   font-family: DancingScript;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+.bodyText {
+  font-family: "Montserrat", sans-serif;
 }
