@@ -3,6 +3,10 @@ const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
 
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.use(cors());
 
 app.get("/articles", (req, res) => {
@@ -92,6 +96,36 @@ app.get("/pictures", (req, res) => {
       }
     );
   }
+});
+
+// Profile page routes
+
+app.get("/profile/:id", (req, res) => {
+  const userId = req.params.id;
+  db.query(
+    `SELECT id, nickname, avatar, description FROM user WHERE id=${userId}`,
+    (err, rowsUser) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("error when getting profile route");
+      }
+      let profileData = {
+        profile: rowsUser[0]
+      };
+      db.query(
+        `SELECT id, id_clothing, url FROM picture WHERE id_user=${userId}`,
+        (err, rowsPics) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).send("error when getting picture route");
+          }
+          profileData.pictures = rowsPics;
+
+          res.status(200).send(profileData);
+        }
+      );
+    }
+  );
 });
 
 app.listen(portNumber, () => {
