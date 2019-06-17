@@ -5,14 +5,16 @@ import axios from "axios";
 class MessagingPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = [
-      (messagingPageInfo = {
-        nickname: "",
-        avatar: "",
-        timeStamp: "",
-        message: ""
-      })
-    ];
+    this.state = {
+      messagingArray: [
+        {
+          nickname: "",
+          avatar: "",
+          timeStamp: "",
+          message: ""
+        }
+      ]
+    };
   }
 
   componentDidMount() {
@@ -22,23 +24,29 @@ class MessagingPage extends React.Component {
       .get(`http://localhost:5050/messagerie/${idReader}`)
       .then(({ data }) => {
         this.setState({
-          nickname: data[0].nickname,
-          avatar: data[0].avatar,
-          timeStamp: data[0].created_at,
-          message: data[0].content
+          messagingArray: data
         });
       });
   }
+
   render() {
     return (
       <React.Fragment>
         <h1>Messagerie</h1>
-        <Messaging
-          nickname={this.state.nickname}
-          avatar={this.state.avatar}
-          timeStamp={this.state.timeStamp}
-          message={this.state.message}
-        />
+        {this.state.messagingArray.map((messaging, i) => {
+          console.log("messaging:" + messaging.nickname);
+          return (
+            messaging && (
+              <Messaging
+                key={i}
+                nickname={messaging.nickname}
+                avatar={messaging.avatar}
+                timeStamp={messaging.created_at}
+                message={messaging.content}
+              />
+            )
+          );
+        })}
       </React.Fragment>
     );
   }
