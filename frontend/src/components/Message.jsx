@@ -26,7 +26,9 @@ class Message extends React.Component {
                         <p className="name">Ruby Rose</p>
                       </Col>
                       <Col>
-                        <p className="messageDate">Il y a 5 minutes.</p>
+                        <p className="messageDate timeStamp">
+                          Il y a 5 minutes.
+                        </p>
                       </Col>
                     </Row>
                     <Row>
@@ -50,7 +52,7 @@ class Message extends React.Component {
                   <CardText className="m-5">
                     <Row className="d-flex">
                       <Col>
-                        <p>Il y a 5 minutes.</p>
+                        <p className="timeStamp">Il y a 5 minutes.</p>
                       </Col>
                       <Col>
                         <p className="name nameRight">Moi</p>
@@ -94,7 +96,9 @@ class Message extends React.Component {
                         <p className="name">Ruby Rose</p>
                       </Col>
                       <Col>
-                        <p className="messageDate">Il y a 5 minutes.</p>
+                        <p className="messageDate timeStamp">
+                          Il y a 5 minutes.
+                        </p>
                       </Col>
                     </Row>
                     <Row>
@@ -118,7 +122,7 @@ class Message extends React.Component {
                   <CardText className="m-5">
                     <Row className="d-flex">
                       <Col>
-                        <p>Il y a 5 minutes.</p>
+                        <p className="timeStamp">Il y a 5 minutes.</p>
                       </Col>
                       <Col>
                         <p className="name nameRight">Moi</p>

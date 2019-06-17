@@ -33,7 +33,9 @@ class Messaging extends React.Component {
                           </p>
                         </Col>
                         <Col>
-                          <p className="messageDate">Il y a 5 minutes.</p>
+                          <p className="messageDate timeStamp">
+                            Il y a 5 minutes.
+                          </p>
                         </Col>
                       </Row>
                       <Row>
