@@ -1,3 +1,9 @@
 .littleInfo {
-	color: #daa520;
+	color: #222;
+}
+footer {
+	display: flex;
+	justify-content: space-evenly;
+	border-top: 2px solid goldenrod;
+	padding: 2vh 0;
 }
