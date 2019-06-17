@@ -17,6 +17,7 @@ function App() {
       <header>
         <NavFreep />
       </header>
+    
       <Container>
         <Switch>
           <Route exact path="/" component={HomePage} />
