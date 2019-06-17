@@ -91,13 +91,11 @@ class ClothingPage extends React.Component {
     const articleId = this.props.match.params.articleId;
     const userId = this.props.match.params.userId;
 
-    axios
-      .get(`http://localhost:5050/users/1/clothing`) // How to pass the userId ??? (for now it's undefined)
-      .then(({ data }) => {
-        this.setState({
-          profileInfo: data
-        });
+    axios.get(`http://localhost:5050/users/1/clothing`).then(({ data }) => {
+      this.setState({
+        profileInfo: data
       });
+    });
 
     axios
       .get(`http://localhost:5050/articles/${articleId}`)
@@ -106,15 +104,6 @@ class ClothingPage extends React.Component {
           clothingInfo: data
         });
       });
-
-    // // ouat ?!
-    // axios
-    //   .get(`http://localhost:5050/articles/${articleId}/pictures`)
-    //   .then(({ data }) => {
-    //     this.setState({
-    //       pics: data
-    //     });
-    //   });
   }
 
   componentWillMount() {
@@ -133,10 +122,6 @@ class ClothingPage extends React.Component {
     const profile = this.state.profileInfo;
     const clothing = this.state.clothingInfo;
     const comments = this.state.commentsInfo;
-    // const pics = this.state.pics;
-    // console.log(profile);
-    // const page = this.props.page;
-    // console.log(page);
 
     const { width } = this.state;
     const isMobile = width <= 640;
@@ -201,7 +186,6 @@ class ClothingPage extends React.Component {
                         <Col xs="6">
                           <Photo picture="https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901" />
                         </Col>
-                        {/* <Photo picture={pics.url} /> */}
                       </Row>
                       <Row className="justify-content-center">
                         <Col xs="6" md="4">
@@ -273,7 +257,6 @@ class ClothingPage extends React.Component {
                 </div>
               ) : null}
               <div className="comments-feed">
-                {/* <Comment profileInfo={profile} commentsInfo={comments} /> */}
                 {comments.map((comment, key) => {
                   return <Comment key={key} comment={comment} />;
                 })}
