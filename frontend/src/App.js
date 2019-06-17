@@ -19,7 +19,7 @@ function App() {
       </header>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/article" component={ClothingPage} />
+        <Route exact path="/article" component={ClothingPage} />
         <Route path="/article/:articleId" component={ClothingPage} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/profile/:profileId" component={Profile} />
