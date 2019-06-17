@@ -96,11 +96,11 @@ app.get("/pictures", (req, res) => {
 
 //Messaging
 
-app.get("/messagerie", (req, res) => {
-  if (req.query.id_reader) {
+app.get("/messagerie/:id_reader", (req, res) => {
+  if (req.params.id_reader) {
     db.query(
       `SELECT content, message.created_at, nickname, avatar FROM message INNER JOIN user ON user.id = message.id_author WHERE id_reader=${
-        req.query.id_reader
+        req.params.id_reader
       }`,
       (err, rows) => {
         if (err) {

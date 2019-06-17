@@ -1,50 +1,43 @@
 import React from "react";
 import Messaging from "./Messaging";
+import axios from "axios";
 
 class MessagingPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = [
+      (messagingPageInfo = {
+        nickname: "",
+        avatar: "",
+        timeStamp: "",
+        message: ""
+      })
+    ];
+  }
+
+  componentDidMount() {
+    const idReader = this.props.match.params.idReader;
+
+    axios
+      .get(`http://localhost:5050/messagerie/${idReader}`)
+      .then(({ data }) => {
+        this.setState({
+          nickname: data[0].nickname,
+          avatar: data[0].avatar,
+          timeStamp: data[0].created_at,
+          message: data[0].content
+        });
+      });
+  }
   render() {
     return (
       <React.Fragment>
         <h1>Messagerie</h1>
         <Messaging
-          firstname="Ruby"
-          lastname="Rose"
-          avatar="/pictures/Ruby.jpg"
-        />
-        <Messaging
-          firstname="Emma"
-          lastname="Watson"
-          avatar="/pictures/Emma.jpg"
-        />
-        <Messaging
-          firstname="Jennifer"
-          lastname="Lawrence"
-          avatar="/pictures/Jennifer.jpg"
-        />
-        <Messaging
-          firstname="Scarlett"
-          lastname="Johansson"
-          avatar="/pictures/Scarlett.jpg"
-        />
-        <Messaging
-          firstname="Brie"
-          lastname="Larson"
-          avatar="/pictures/Brie.jpg"
-        />
-        <Messaging
-          firstname="Angelina"
-          lastname="Jolie"
-          avatar="/pictures/Angelina.jpg"
-        />
-        <Messaging
-          firstname="Sandra"
-          lastname="Bullock"
-          avatar="/pictures/Sandra.jpeg"
-        />
-        <Messaging
-          firstname="Alexandra"
-          lastname="Dadario"
-          avatar="/pictures/Alexandra.jpeg"
+          nickname={this.state.nickname}
+          avatar={this.state.avatar}
+          timeStamp={this.state.timeStamp}
+          message={this.state.message}
         />
       </React.Fragment>
     );
