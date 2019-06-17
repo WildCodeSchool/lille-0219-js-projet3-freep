@@ -19,10 +19,10 @@ function App() {
       </header>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/article" component={ClothingPage} />
         <Route path="/article/:articleId" component={ClothingPage} />
         <Route path="/profil" component={Profile} />
         <Route path="/profil/:profilId" component={Profile} />
+        <Route path="/users/:userId" component={ClothingPage} /> {/* ??? */}
         <Route path="/partenaire" component={PartnerPage} />
         <Route path="/messagerie" component={MessagingPage} />
         <Route path="/message" component={Message} />
