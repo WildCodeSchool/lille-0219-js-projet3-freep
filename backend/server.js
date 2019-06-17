@@ -94,6 +94,25 @@ app.get("/pictures", (req, res) => {
   }
 });
 
+//Messaging
+
+app.get("/messagerie", (req, res) => {
+  if (req.query.id_reader) {
+    db.query(
+      `SELECT content, message.created_at, nickname, avatar FROM message INNER JOIN user ON user.id = message.id_author WHERE id_reader=${
+        req.query.id_reader
+      }`,
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("error when getting messagerie route");
+        }
+        res.status(200).send(rows);
+      }
+    );
+  }
+});
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
