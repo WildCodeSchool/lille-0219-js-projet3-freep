@@ -52,7 +52,7 @@ app.get("/articles/:id/pictures", (req, res) => {
     db.query(
       `SELECT p.url FROM picture AS p JOIN clothing AS cl ON p.id_clothing=${
         req.params.id
-      }`, // works fine enough (with id=1), but why would it return 4 times ?
+      }`,
       (err, rows) => {
         console.log(rows);
         if (err) {
@@ -69,10 +69,6 @@ app.get("/articles/:id/pictures", (req, res) => {
     );
   }
 });
-
-//////////////////////////////////////////////////////////////// 4 proof-pictures => order by created_at desc, limit 4
-
-// could work if I could pass the id of the user as props - always gets user #1
 
 app.get("/users/:id/clothing", (req, res) => {
   if (req.params.id) {
