@@ -4,6 +4,6 @@
 footer {
 	display: flex;
 	justify-content: space-evenly;
-	border-top: 2px solid goldenrod;
+	border-top: 2px solid #f7fab2;
 	padding: 2vh 0;
 }
