@@ -6,4 +6,9 @@ footer {
 	justify-content: space-evenly;
 	border-top: 2px solid #f7fab2;
 	padding: 2vh 0;
+	background-color: white;
+}
+body {
+	padding-bottom: 5vh;
+	min-height: 100%;
 }

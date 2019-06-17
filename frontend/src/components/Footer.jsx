@@ -5,10 +5,8 @@ import '../style/Footer.css';
 class Footer extends React.Component {
 	render() {
 		return (
-			<footer>
-				<NavLink activeClassName="active" className="littleInfo" exact to="/madewith">
-					Made with love by Wild Code School
-				</NavLink>
+			<footer className="fixed-bottom">
+				<NavLink className="littleInfo">Made with love by Wild Code School</NavLink>
 				<NavLink activeClassName="active" className="littleInfo" exact to="/CGU">
 					CGU
 				</NavLink>
