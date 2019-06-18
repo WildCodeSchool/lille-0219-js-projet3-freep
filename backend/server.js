@@ -13,7 +13,7 @@ app.use(cors());
 
 app.get("/articles/", (req, res) => {
   db.query(
-    `SELECT id, id_clothing, id_user, is_proof, created_at, url FROM picture`,
+    `SELECT id, id_clothing, id_user, is_proof, created_at, url FROM picture ORDER BY created_at DESC`,
     (err, rows) => {
       if (err) {
         console.log(err);
