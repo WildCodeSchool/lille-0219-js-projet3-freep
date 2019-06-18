@@ -99,9 +99,16 @@ app.get("/pictures", (req, res) => {
 app.get("/messagerie/:id_reader", (req, res) => {
   if (req.params.id_reader) {
     db.query(
-      `SELECT content, DATEDIFF(NOW(), message.created_at) AS date_diff, TIMEDIFF( message.created_at,NOW()) As time_diff, TIME(message.created_at) as hour_send,nickname, avatar FROM message INNER JOIN user ON user.id = message.id_author WHERE id_reader=${
+      `SELECT content, 
+      DATEDIFF(NOW(), message.created_at) AS date_diff,
+      TIME(message.created_at) as hour_send,
+      nickname, 
+      avatar
+      FROM message
+      INNER JOIN user ON user.id = message.id_author
+      WHERE (id_author=${req.params.id_reader} OR id_reader=${
         req.params.id_reader
-      } ORDER BY message.created_at DESC LIMIT 1`,
+      }) AND isLast=1;`,
       (err, rows) => {
         if (err) {
           console.log(err);
