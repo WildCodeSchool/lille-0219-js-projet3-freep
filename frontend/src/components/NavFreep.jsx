@@ -25,7 +25,7 @@ class NavFreep extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse navbar>
             <form action="">
-              <label for="">
+              <label for="clothe-profile-search">
                 <input
                   type="text"
                   placeholder="Chercher un vêtement, un profil..."
