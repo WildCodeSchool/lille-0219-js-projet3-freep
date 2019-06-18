@@ -1,8 +1,17 @@
+@font-face {
+  font-family: "DancingScript";
+  src: url("DancingScript-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("Montserrat-Regular.ttf");
+}
+
 .imgAvatar {
-  border-radius: 90%;
-  width: 20%;
-  height: 100%;
-  float: left;
+  height: 15vw;
+  width: 15vw;
+  object-fit: cover;
 }
 
 .cardTextMessaging {
@@ -10,18 +19,39 @@
 }
 
 .messageDate {
-  position: absolute;
-  left: 85%;
+  text-align: right;
 }
 
 .imgAvatarRight {
   border-radius: 90%;
   width: 20%;
-  height: 100%;
+  height: 200px;
   float: right;
+  object-fit: cover;
+}
+
+.nameRight {
+  text-align: right;
 }
 
 .name {
-  position: absolute;
-  left: 75%;
+  font-size: 2rem;
+  color: goldenrod;
+  font-family: DancingScript;
+}
+
+.titleMessage {
+  font-size: 3rem;
+  color: goldenrod;
+  font-family: DancingScript;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+.bodyText {
+  font-family: "Montserrat", sans-serif;
+}
+.timeStamp {
+  font-family: "Montserrat", sans-serif;
 }
