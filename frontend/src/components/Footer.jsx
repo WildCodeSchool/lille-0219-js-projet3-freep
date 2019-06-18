@@ -6,33 +6,26 @@ class Footer extends React.Component {
   render() {
     return (
       <footer className="fixed-bottom">
-        <NavLink className="littleInfo">
-          Made with love by Wild Code School
-        </NavLink>
-        <NavLink
-          activeClassName="active"
-          className="littleInfo"
-          exact
-          to="/CGU"
-        >
+        <p className="littleInfo">Made with love by Wild Code School</p>
+        <p activeClassName="active" className="littleInfo" exact to="/CGU">
           CGU
-        </NavLink>
-        <NavLink
+        </p>
+        <p
           activeClassName="active"
           className="littleInfo"
           exact
           to="/nouscontacter"
         >
           Nous contacter
-        </NavLink>
-        <NavLink
-          activeClassName="active"
+        </p>
+        <p
+          activelassName="active"
           className="littleInfo"
           exact
           to="/quisommesnous"
         >
           Qui sommes-nous ?
-        </NavLink>
+        </p>
       </footer>
     );
   }
