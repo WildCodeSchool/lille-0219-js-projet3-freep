@@ -10,14 +10,14 @@ import "./style/NavFreep.scss";
 import PartnerPage from "./components/PartnerPage";
 import MessagingPage from "./components/MessagingPage";
 import Message from "./components/Message";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <React.Fragment>
       <header>
         <NavFreep />
-      </header>
-    
+      </header>    
       <Container>
         <Switch>
           <Route exact path="/" component={HomePage} />
