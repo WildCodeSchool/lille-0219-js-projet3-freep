@@ -25,7 +25,11 @@ class HomePage extends React.Component {
         {pictures.map((picture, key) => {
           return (
             <Col sm="6" md="4" lg="3" key={key}>
-              <Photo picture={picture.url} link={picture.id_clothing} />
+              <Photo
+                picture={picture}
+                link={picture.id_clothing}
+                pictureId={picture.id}
+              />
             </Col>
           );
         })}
