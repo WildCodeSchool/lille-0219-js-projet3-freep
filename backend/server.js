@@ -3,6 +3,17 @@ const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
 
+app.use(cors());
+
+app.get("/articles", (req, res) => {
+  db.query("SELECT description, is_deposit FROM clothing", (err, rows) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("error when getting articles route");
+    }
+    res.status(200).send(rows);
+  });
+  
 const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: false }));
