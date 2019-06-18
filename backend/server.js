@@ -25,65 +25,24 @@ app.get("/articles/", (req, res) => {
       res.status(200).send(rows);
     }
   );
-
-  if (req.params.id) {
-    db.query(
-      `SELECT id, id_user, type, brand, size, gender, description, is_deposit, created_at FROM clothing`,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send("error when getting articles route");
-        }
-        if (!rows) {
-          return res.status(404).send("No articles found");
-        }
-        res.status(200).send(rows[0]);
-      }
-    );
-  }
 });
 
 app.get("/articles/:id", (req, res) => {
-  if (req.params.id) {
-    db.query(
-      `SELECT id, id_user, type, brand, size, gender, description, is_deposit, created_at FROM clothing WHERE id=${
-        req.params.id
-      }`,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send("error when getting articles route");
-        }
-        if (!rows) {
-          return res.status(404).send("No articles found");
-        }
-        res.status(200).send(rows[0]);
+  db.query(
+    `SELECT id, id_user, type, brand, size, gender, description, is_deposit, created_at FROM clothing WHERE id=${
+      req.params.id
+    }`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("error when getting articles route");
       }
-    );
-  }
-});
-
-app.get("/articles/:id/pictures", (req, res) => {
-  if (req.params.id) {
-    db.query(
-      `SELECT p.url FROM picture AS p JOIN clothing AS cl ON p.id_clothing=${
-        req.params.id
-      }`,
-      (err, rows) => {
-        console.log(rows);
-        if (err) {
-          console.log(err);
-          return res
-            .status(500)
-            .send("error when getting pictures-by-article route");
-        }
-        if (!rows) {
-          return res.status(404).send("No pictures found");
-        }
-        res.status(200).send(rows);
+      if (!rows) {
+        return res.status(404).send("No articles found");
       }
-    );
-  }
+      res.status(200).send(rows[0]);
+    }
+  );
 });
 
 app.get("/users/:id/clothing", (req, res) => {
@@ -121,49 +80,6 @@ app.get("/user/:id", (req, res) => {
           return res.status(404).send("No users found");
         }
         res.status(200).send(rows[0]);
-      }
-    );
-  }
-});
-
-app.get("/comments/:id", (req, res) => {
-  if (req.params.id) {
-    db.query(
-      `SELECT content FROM comment WHERE id_clothing=${req.params.id}`,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          res.status(500).send("error when getting comments route");
-        }
-        res.status(200).send(rows);
-      }
-    );
-  }
-});
-
-app.post("/comments", (req, res) => {
-  db.query(
-    "INSERT INTO `comment` (`id_user`,`id_clothing`,`content`,`created_at`) VALUES ('1','1','commentaire de test',NOW())",
-    (err, rows) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("error when getting comments route");
-      }
-      res.status(200).send(rows);
-    }
-  );
-});
-
-app.get("/pictures", (req, res) => {
-  if (req.query.idVetement) {
-    db.query(
-      `SELECT url FROM picture WHERE id=${req.query.idVetement}`,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          res.status(500).send("error when getting picture route");
-        }
-        res.status(200).send(rows);
       }
     );
   }
