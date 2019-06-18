@@ -1,0 +1,94 @@
+.navTitle {
+  font-family: "dancing script";
+  font-size: 2rem;
+}
+
+hr {
+  height: 0.2rem;
+  color: goldenrod;
+  background-color: goldenrod;
+  border: 0;
+  margin: 0 0 1rem 0;
+}
+
+.logo {
+  border-radius: 50%;
+  width: 5rem;
+}
+
+.bg-light {
+  background: white !important;
+}
+
+ul {
+  list-style: none;
+}
+
+.search-input {
+  text-align: center;
+  height: 20px;
+  width: 20rem;
+}
+
+.list-right {
+  text-align: right;
+}
+
+.rightList {
+  display: block;
+  float: right;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+}
+
+.navText {
+  width: 13rem;
+}
+
+.img {
+  width: 50px;
+}
+
+form {
+  margin: 0 auto;
+}
+
+label,
+input,
+button,
+img {
+  display: block;
+  background-color: transparent;
+  border: none;
+}
+
+form label {
+  position: relative;
+  width: 25rem;
+}
+
+form label input[type="text"] {
+  width: 100%;
+  padding: 10px 10px 10px 60px;
+  font-size: 15px;
+  font-family: sans-serif;
+  border: 2px solid #f8d5c7;
+  border-radius: 7px;
+  background-color: lightgray;
+  height: 2rem;
+}
+
+form label input {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+form label input[type="submit"] {
+  font-size: 1rem;
+  margin-left: 5px;
+  color: black;
+}
