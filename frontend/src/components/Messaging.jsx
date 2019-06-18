@@ -25,31 +25,13 @@ class Messaging extends React.Component {
                 </Col>
                 <Col xs="9" sm="9" md="9">
                   <Row>
-                    <CardText className="m-5">
-                      <Row className="d-flex">
-                        <Col>
-                          <p className="name">
-                            {this.props.firstname} {this.props.lastname}
-                          </p>
-                        </Col>
-                        <Col>
-                          <p className="messageDate timeStamp">
-                            Il y a 5 minutes.
-                          </p>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <p className="bodyText text-justify">
-                          LAST MESSAGE. Lorem ipsum dolor sit amet, consectetur
-                          adipiscing elit. Suspendisse aliquam facilisis mollis.
-                          Ut blandit eget turpis eu placerat. Nam ultrices purus
-                          quam, vitae accumsan leo commodo id. Proin non leo
-                          quis dui tincidunt porttitor.
-                        </p>
-                      </Row>
-                    </CardText>
+                    <p>{this.props.nickname}</p>
+                    <p className="messageDate">{this.props.timeStamp}</p>
                   </Row>
-                </Col>
+                  <Row>
+                    <p>{this.props.message}</p>
+                  </Row>
+                </CardText>
               </Row>
             </CardBody>
           </Link>

@@ -96,6 +96,32 @@ app.get("/user/:id", (req, res) => {
   }
 });
 
+//Messaging
+
+app.get("/messagerie/:id_reader", (req, res) => {
+  if (req.params.id_reader) {
+    db.query(
+      `SELECT content, 
+      DATEDIFF(NOW(), message.created_at) AS date_diff,
+      TIME(message.created_at) as hour_send,
+      nickname, 
+      avatar
+      FROM message
+      INNER JOIN user ON user.id = message.id_author
+      WHERE (id_author=${req.params.id_reader} OR id_reader=${
+        req.params.id_reader
+      }) AND isLast=1;`,
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("error when getting messagerie route");
+        }
+        res.status(200).send(rows);
+      }
+    );
+  }
+});
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
