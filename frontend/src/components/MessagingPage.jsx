@@ -1,6 +1,8 @@
 import React from "react";
 import Messaging from "./Messaging";
 import axios from "axios";
+import "../style/Messaging.scss";
+
 
 class MessagingPage extends React.Component {
   constructor(props) {

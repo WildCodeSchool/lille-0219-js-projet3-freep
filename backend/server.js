@@ -13,6 +13,51 @@ app.get("/articles", (req, res) => {
     }
     res.status(200).send(rows);
   });
+  
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cors());
+
+// Articles
+
+app.get("/articles/", (req, res) => {
+  if (req.params.id) {
+    db.query(
+      `SELECT id, id_user, type, brand, size, gender, description, is_deposit, created_at FROM clothing`,
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("error when getting articles route");
+        }
+        if (!rows) {
+          return res.status(404).send("No articles found");
+        }
+        res.status(200).send(rows[0]);
+      }
+    );
+  }
+});
+
+app.get("/articles/:id", (req, res) => {
+  if (req.params.id) {
+    db.query(
+      `SELECT id, id_user, type, brand, size, gender, description, is_deposit, created_at FROM clothing WHERE id=${
+        req.params.id
+      }`,
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("error when getting articles route");
+        }
+        if (!rows) {
+          return res.status(404).send("No articles found");
+        }
+        res.status(200).send(rows[0]);
+      }
+    );
+  }
 });
 
 //Clothing
