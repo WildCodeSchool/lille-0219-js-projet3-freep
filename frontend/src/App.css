@@ -6,3 +6,8 @@
 body {
   background: #fbf4f1;
 }
+
+::selection {
+  background: goldenrod;
+  color: white;
+}
