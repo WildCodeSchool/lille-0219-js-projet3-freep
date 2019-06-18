@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
-import { Plus, Mail, Heart, User } from "react-feather";
+import { Plus, Mail, Heart, User, Search } from "react-feather";
 
 class NavFreep extends React.Component {
   render() {
@@ -30,9 +30,7 @@ class NavFreep extends React.Component {
                   type="text"
                   placeholder="Chercher un vêtement, un profil..."
                 />
-                <button type="submit">
-                  <img src="../pictures/loupe.png" alt="magnifier" />
-                </button>
+                <input type="submit" value="&#x1F50E;" />
               </label>
             </form>
             <Nav className="ml-auto" navbar>

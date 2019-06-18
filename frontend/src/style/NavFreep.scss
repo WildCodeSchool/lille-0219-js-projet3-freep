@@ -79,7 +79,7 @@ form label input[type="text"] {
   height: 2rem;
 }
 
-form label button {
+form label input {
   position: absolute;
   left: 0;
   top: 50%;
@@ -87,8 +87,8 @@ form label button {
   cursor: pointer;
 }
 
-form label button img {
-  width: 15px;
-  opacity: 0.4;
+form label input[type="submit"] {
+  font-size: 1rem;
   margin-left: 5px;
+  color: black;
 }
