@@ -82,33 +82,63 @@ app.get("/comments/:id", (req, res) => {
   }
 });
 
-app.post("/comments", (req, res) => {
+app.post("/social/:pictureId", (req, res) => {
   db.query(
-    "INSERT INTO `comment` (`id_user`,`id_clothing`,`content`,`created_at`) VALUES ('1','1','commentaire de test',NOW())",
+    `INSERT INTO social (id_user, content_type, id_content, created_at ) VALUES ('1', 'like', ${
+      req.params.pictureId
+    }, NOW())`
+  ),
     (err, rows) => {
       if (err) {
         console.log(err);
-        res.status(500).send("error when getting comments route");
+        res.status(500).send("error when liking picture");
       }
       res.status(200).send(rows);
-    }
-  );
+    };
 });
 
-app.get("/pictures", (req, res) => {
-  if (req.query.idVetement) {
-    db.query(
-      `SELECT url FROM picture WHERE id=${req.query.idVetement}`,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          res.status(500).send("error when getting picture route");
-        }
-        res.status(200).send(rows);
+app.delete("/social/:pictureId", (req, res) => {
+  db.query(
+    `DELETE FROM social WHERE id_user = 1 AND id_content = ${
+      req.params.pictureId
+    }`
+  ),
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when liking picture");
       }
-    );
-  }
+      res.status(200).send(rows);
+    };
 });
+
+// app.post("/comments", (req, res) => {
+//   db.query(
+//     "INSERT INTO `comment` (`id_user`,`id_clothing`,`content`,`created_at`) VALUES ('1','1','commentaire de test',NOW())",
+//     (err, rows) => {
+//       if (err) {
+//         console.log(err);
+//         res.status(500).send("error when getting comments route");
+//       }
+//       res.status(200).send(rows);
+//     }
+//   );
+// });
+
+// app.get("/pictures", (req, res) => {
+//   if (req.query.idVetement) {
+//     db.query(
+//       `SELECT url FROM picture WHERE id=${req.query.idVetement}`,
+//       (err, rows) => {
+//         if (err) {
+//           console.log(err);
+//           res.status(500).send("error when getting picture route");
+//         }
+//         res.status(200).send(rows);
+//       }
+//     );
+//   }
+// });
 
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
