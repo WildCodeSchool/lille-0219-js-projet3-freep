@@ -7,10 +7,11 @@ import ReportButton from "./ReportButton";
 class Photo extends React.Component {
   render() {
     const picture = this.props.picture;
+    const link = this.props.link;
     return (
       <React.Fragment>
         <Card>
-          <Link to="/article/1">
+          <Link to={`/article/${link}`}>
             <CardImg src={picture} alt="clothes" className="Photo" />
           </Link>
           <div className="overlay">
