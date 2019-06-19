@@ -10,15 +10,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get("/articles", (req, res) => {
-  db.query("SELECT description, is_deposit FROM clothing", (err, rows) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("error when getting articles route");
-    }
-    res.status(200).send(rows);
-  });
-});
+// Homepage
 
 app.get("/articles/", (req, res) => {
   db.query(
@@ -36,62 +28,54 @@ app.get("/articles/", (req, res) => {
   );
 });
 
-app.get("/articles/:id", (req, res) => {
+// ClothingPage
+
+app.get("/articles/:id/", (req, res) => {
+  const articleId = req.params.id;
+
   db.query(
-    `SELECT id, id_user, type, brand, size, gender, description, is_deposit, created_at FROM clothing WHERE id=${
-      req.params.id
-    }`,
-    (err, rows) => {
+    `SELECT id, id_user, type, size, gender, description, is_deposit, created_at FROM clothing WHERE id=${articleId}`,
+    (err, rowsArticle) => {
       if (err) {
         console.log(err);
         return res.status(500).send("error when getting articles route");
       }
-      if (!rows) {
-        return res.status(404).send("No articles found");
-      }
-      res.status(200).send(rows[0]);
+      let clothingData = {
+        clothing: rowsArticle[0]
+      };
+      db.query(
+        `SELECT id, id_clothing, url FROM picture WHERE id_clothing=${articleId}`,
+        (err, rowsPics) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).send("error when getting picture route");
+          }
+          clothingData.pictures = rowsPics;
+        }
+      );
+      db.query(
+        `SELECT user.id, user.avatar, user.nickname FROM user INNER JOIN clothing ON clothing.id_user=user.id WHERE clothing.id=${articleId}`,
+        (err, rowsUser) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).send("error when getting user route");
+          }
+          clothingData.user = rowsUser[0];
+        }
+      );
+      db.query(
+        `SELECT id, id_user, id_clothing, content, created_at FROM comment WHERE id_clothing=${articleId}`,
+        (err, rowsComments) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).send("error when getting comment route");
+          }
+          clothingData.comment = rowsComments;
+          res.status(200).send(clothingData);
+        }
+      );
     }
   );
-});
-
-app.get("/users/:id/clothing", (req, res) => {
-  if (req.params.id) {
-    db.query(
-      `SELECT u.id, u.nickname, u.avatar FROM user AS u JOIN clothing AS cl ON u.id = cl.id_user WHERE u.id=${
-        req.params.id
-      } `,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send("error when getting users route");
-        }
-        if (!rows) {
-          return res.status(404).send("No users found");
-        }
-        res.status(200).send(rows[0]);
-      }
-    );
-  }
-});
-
-app.get("/user/:id", (req, res) => {
-  if (req.params.id) {
-    db.query(
-      `SELECT nickname,password,email,phone,firstname,lastname,birthdate,avatar,location,points,is_admin,created_at,id_borrow FROM user WHERE id=${
-        req.params.id
-      } `,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send("error when getting users route");
-        }
-        if (!rows) {
-          return res.status(404).send("No users found");
-        }
-        res.status(200).send(rows[0]);
-      }
-    );
-  }
 });
 
 //Messaging
@@ -124,6 +108,7 @@ app.get("/messagerie/:id_reader", (req, res) => {
 
 app.get("/profile/:id", (req, res) => {
   const userId = req.params.id;
+
   db.query(
     `SELECT id, nickname, avatar, description FROM user WHERE id=${userId}`,
     (err, rowsUser) => {
@@ -134,6 +119,7 @@ app.get("/profile/:id", (req, res) => {
       let profileData = {
         profile: rowsUser[0]
       };
+
       db.query(
         `SELECT id, id_clothing, url FROM picture WHERE id_user=${userId}`,
         (err, rowsPics) => {
