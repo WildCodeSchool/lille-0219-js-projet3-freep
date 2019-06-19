@@ -52,7 +52,7 @@ class Profile extends React.Component {
                   <Col md="auto">
                     ✮✮✮<span className="starsgrey">✮✮</span>
                   </Col>
-                  <Col className="nick">
+                  <Col md="auto" className="nick">
                     <Nickname info={user} />
                   </Col>
                 </Col>
