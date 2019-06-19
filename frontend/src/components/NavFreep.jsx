@@ -4,6 +4,19 @@ import { Link, NavLink } from "react-router-dom";
 import { Plus, Mail, Heart, User } from "react-feather";
 
 class NavFreep extends React.Component {
+  constructor(props) {
+    super(props);
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
+  }
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+
   render() {
     return (
       <div className="header">
@@ -23,7 +36,7 @@ class NavFreep extends React.Component {
             <span className="navCatch">La garde robe qui rapporte</span>
           </div>
           <NavbarToggler onClick={this.toggle} />
-          <Collapse navbar>
+          <Collapse isOpen={this.state.isOpen} navbar>
             <form action="">
               <label htmlFor="clothe-profile-search">
                 <input
