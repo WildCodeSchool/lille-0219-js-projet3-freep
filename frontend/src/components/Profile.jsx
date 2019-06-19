@@ -80,10 +80,10 @@ class Profile extends React.Component {
             </Col>
           </Row>
           <Row>
-            {pictures.map((profile, idx) => {
+            {pictures.map((picture, idx) => {
               return (
                 <Col sm="6" md="4" lg="3" xl="2" key={idx}>
-                  <Photo info={profile.url} link={profile.id_clothing} />
+                  <Photo picture={picture.url} link={picture.id_clothing} />
                 </Col>
               );
             })}
