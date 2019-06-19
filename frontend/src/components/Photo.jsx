@@ -6,7 +6,7 @@ import ReportButton from "./ReportButton";
 
 class Photo extends React.Component {
   render() {
-    const picture = this.props.info;
+    const picture = this.props.picture;
     const link = this.props.link;
     return (
       <React.Fragment>

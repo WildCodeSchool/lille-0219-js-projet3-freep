@@ -31,7 +31,6 @@ function App() {
         <Footer />
       </Container>
     </React.Fragment>
-
   );
 }
 
