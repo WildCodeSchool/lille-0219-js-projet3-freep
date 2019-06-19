@@ -3,31 +3,48 @@ import { Container, Row, Col, Button } from "reactstrap";
 import Avatar from "./Avatar";
 import Nickname from "./Nickname";
 import Photo from "./Photo";
+import axios from "axios";
 import "../style/Profile.css";
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profileInfo: {
+      user: {
         id: 1,
         avatar: "https://randomuser.me/api/portraits/women/90.jpg",
-        username: "Jade",
+        nickname: "Jade",
         description: `Qu'est-ce que le Lorem Ipsum ?
         Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.`,
         followers: 127,
         following: 31,
         posts: 10
-      }
+      },
+      pictures: []
     };
   }
+
+  componentDidMount() {
+    const profileId = this.props.match.params.profileId;
+
+    axios.get(`http://localhost:5050/profile/${profileId}`).then(({ data }) => {
+      this.setState({
+        user: data.profile,
+        pictures: data.pictures
+      });
+    });
+  }
+
   render() {
+    const user = this.state.user;
+    const pictures = this.state.pictures;
+
     return (
       <React.Fragment>
         <Container>
           <Row className="text-center align-items-center">
             <Col md="3" className="text-center mx-auto">
-              <Avatar info={this.state.profileInfo} />
+              <Avatar info={user} />
             </Col>
             <Col>
               <Row>
@@ -36,24 +53,24 @@ class Profile extends React.Component {
                     ✮✮✮<span className="starsgrey">✮✮</span>
                   </Col>
                   <Col md="auto">
-                    <Nickname info={this.state.profileInfo} />
+                    <Nickname info={user} />
                   </Col>
                 </Col>
                 <Col className="text-justify amatic p-3">
-                  {this.state.profileInfo.description}
+                  {user.description}
                 </Col>
               </Row>
             </Col>
           </Row>
           <Row className="text-center">
             <Col sm="6" md="4" xl="2" className="dancingscript py-3">
-              {this.state.profileInfo.followers} Followers
+              {user.followers} Followers
             </Col>
             <Col sm="6" md="4" xl="2" className="dancingscript py-3">
-              {this.state.profileInfo.following} Following
+              {user.following} Following
             </Col>
             <Col sm="12" md="4" xl="2" className="dancingscript py-3">
-              {this.state.profileInfo.posts} Posts
+              {user.posts} Posts
             </Col>
             <Col sm="6" xl="3">
               <Button className="button m-3 amatic">Éditer</Button>
@@ -63,51 +80,13 @@ class Profile extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
-            <Col sm="6" md="4" lg="3" xl="2">
-              <Photo />
-            </Col>
+            {pictures.map((profile, idx) => {
+              return (
+                <Col sm="6" md="4" lg="3" xl="2" key={idx}>
+                  <Photo info={profile.url} link={profile.id_clothing} />
+                </Col>
+              );
+            })}
           </Row>
         </Container>
       </React.Fragment>

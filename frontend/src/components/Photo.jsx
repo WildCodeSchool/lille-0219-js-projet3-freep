@@ -8,7 +8,6 @@ class Photo extends React.Component {
   render() {
     const picture = this.props.picture;
     const link = this.props.link;
-
     return (
       <React.Fragment>
         <Card>
