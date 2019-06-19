@@ -52,11 +52,14 @@ class Profile extends React.Component {
                   <Col md="auto">
                     ✮✮✮<span className="starsgrey">✮✮</span>
                   </Col>
-                  <Col md="auto">
+                  <Col md="auto" className="nick">
                     <Nickname info={user} />
                   </Col>
                 </Col>
-                <Col className="text-justify amatic p-3">
+                <Col
+                  md="8 offset-1"
+                  className="text-justify amatic p-3 description"
+                >
                   {user.description}
                 </Col>
               </Row>
@@ -80,10 +83,10 @@ class Profile extends React.Component {
             </Col>
           </Row>
           <Row>
-            {pictures.map((profile, idx) => {
+            {pictures.map((picture, idx) => {
               return (
                 <Col sm="6" md="4" lg="3" xl="2" key={idx}>
-                  <Photo info={profile.url} link={profile.id_clothing} />
+                  <Photo picture={picture.url} link={picture.id_clothing} />
                 </Col>
               );
             })}

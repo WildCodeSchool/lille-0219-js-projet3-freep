@@ -5,21 +5,10 @@ const { portNumber, db } = require("./conf");
 
 app.use(cors());
 
-app.get("/articles", (req, res) => {
-  db.query("SELECT description, is_deposit FROM clothing", (err, rows) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("error when getting articles route");
-    }
-    res.status(200).send(rows);
-  });
-  
 const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.use(cors());
 
 app.get("/articles/", (req, res) => {
   db.query(
@@ -123,10 +112,10 @@ app.get("/messagerie/:id_reader", (req, res) => {
 
 // Profile page routes
 
-app.get("/profile/:id", (req, res) => {
-  const userId = req.params.id;
+app.get("/profile/:profileId", (req, res) => {
+  const profileId = req.params.profileId;
   db.query(
-    `SELECT id, nickname, avatar, description FROM user WHERE id=${userId}`,
+    `SELECT id, nickname, avatar, description FROM user WHERE id=${profileId}`,
     (err, rowsUser) => {
       if (err) {
         console.log(err);
@@ -136,7 +125,7 @@ app.get("/profile/:id", (req, res) => {
         profile: rowsUser[0]
       };
       db.query(
-        `SELECT id, id_clothing, url FROM picture WHERE id_user=${userId}`,
+        `SELECT id, id_clothing, url FROM picture WHERE id_user=${profileId}`,
         (err, rowsPics) => {
           if (err) {
             console.log(err);

@@ -24,14 +24,24 @@ class Messaging extends React.Component {
                   />
                 </Col>
                 <Col xs="9" sm="9" md="9">
-                  <Row>
-                    <p>{this.props.nickname}</p>
-                    <p className="messageDate">{this.props.timeStamp}</p>
-                  </Row>
-                  <Row>
-                    <p>{this.props.message}</p>
-                  </Row>
-                </CardText>
+                  <CardText className="m-5">
+                    <Row className="d-flex">
+                      <Col>
+                        <p className="name">{this.props.nickname}</p>
+                      </Col>
+                      <Col>
+                        <p className="messageDate timeStamp">
+                          {this.props.timeStamp}
+                        </p>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <p className="bodyText text-justify">
+                        {this.props.message}
+                      </p>
+                    </Row>
+                  </CardText>
+                </Col>
               </Row>
             </CardBody>
           </Link>

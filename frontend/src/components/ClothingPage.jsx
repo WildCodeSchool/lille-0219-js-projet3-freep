@@ -89,7 +89,6 @@ class ClothingPage extends React.Component {
 
   componentDidMount() {
     const articleId = this.props.match.params.articleId;
-    const userId = this.props.match.params.userId;
 
     axios.get(`http://localhost:5050/users/1/clothing`).then(({ data }) => {
       this.setState({
@@ -226,7 +225,7 @@ class ClothingPage extends React.Component {
                 <div className="p-4 comments-feed">
                   <div>
                     <Row className="align-items-center">
-                      <Col xs="3">
+                      <Col xs="6" md="5">
                         <img
                           src={profile.avatar}
                           alt={`user-${profile.id}`}
@@ -234,7 +233,7 @@ class ClothingPage extends React.Component {
                           width="70px"
                         />
                       </Col>
-                      <Col xs="9" className="profile-name">
+                      <Col xs="6" md="7" className="profile-name">
                         {profile.nickname}
                       </Col>
                     </Row>
