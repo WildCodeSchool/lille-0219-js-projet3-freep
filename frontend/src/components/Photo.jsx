@@ -6,15 +6,13 @@ import ReportButton from "./ReportButton";
 
 class Photo extends React.Component {
   render() {
+    const picture = this.props.info;
+    const link = this.props.link;
     return (
       <React.Fragment>
         <Card>
-          <Link to="/article/1">
-            <CardImg
-              src="http://static.wixstatic.com/media/a87a8e_973910fcfb134c43a01f610f9413f529.jpg"
-              alt="clothes"
-              className="Photo"
-            />
+          <Link to={`/article/${link}`}>
+            <CardImg src={picture} alt="clothes" className="Photo" />
           </Link>
           <div className="overlay">
             <Row className="p-0 card-buttons align-items-center">
