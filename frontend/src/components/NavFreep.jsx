@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
-import { Plus, Mail, Heart, User, Search } from "react-feather";
+import { Plus, Mail, Heart, User } from "react-feather";
 
 class NavFreep extends React.Component {
   render() {

@@ -16,21 +16,23 @@ class Messaging extends React.Component {
           <Link to="/message" className="link">
             <CardBody>
               <Row>
-                <Col xs="3" sm="3" md="3">
-                  <CardImg
-                    src={this.props.avatar}
-                    alt="Avatar"
-                    className="imgAvatar rounded-circle"
-                  />
-                </Col>
-                <Col xs="9" sm="9" md="9">
-                  <Row>
-                    <p>{this.props.nickname}</p>
-                    <p className="messageDate">{this.props.timeStamp}</p>
-                  </Row>
-                  <Row>
-                    <p>{this.props.message}</p>
-                  </Row>
+                <CardText>
+                  <Col xs="3" sm="3" md="3">
+                    <CardImg
+                      src={this.props.avatar}
+                      alt="Avatar"
+                      className="imgAvatar rounded-circle"
+                    />
+                  </Col>
+                  <Col xs="9" sm="9" md="9">
+                    <Row>
+                      <p>{this.props.nickname}</p>
+                      <p className="messageDate">{this.props.timeStamp}</p>
+                    </Row>
+                    <Row>
+                      <p>{this.props.message}</p>
+                    </Row>
+                  </Col>
                 </CardText>
               </Row>
             </CardBody>

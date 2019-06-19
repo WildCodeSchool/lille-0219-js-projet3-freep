@@ -89,7 +89,6 @@ class ClothingPage extends React.Component {
 
   componentDidMount() {
     const articleId = this.props.match.params.articleId;
-    const userId = this.props.match.params.userId;
 
     axios.get(`http://localhost:5050/users/1/clothing`).then(({ data }) => {
       this.setState({

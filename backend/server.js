@@ -5,6 +5,11 @@ const { portNumber, db } = require("./conf");
 
 app.use(cors());
 
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.get("/articles", (req, res) => {
   db.query("SELECT description, is_deposit FROM clothing", (err, rows) => {
     if (err) {
@@ -13,13 +18,7 @@ app.get("/articles", (req, res) => {
     }
     res.status(200).send(rows);
   });
-  
-const bodyParser = require("body-parser");
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-app.use(cors());
+});
 
 app.get("/articles/", (req, res) => {
   db.query(
