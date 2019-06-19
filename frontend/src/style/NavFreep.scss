@@ -101,10 +101,10 @@ form label input[type="submit"] {
 @media screen and (max-width: 430px) {
   form label input[type="text"] {
     width: 85%;
+    margin-left: -0.5rem;
   }
   .search-input {
     width: 10rem;
-    margin-right: 1rem;
   }
   .collapse {
     margin-top: 1rem;
