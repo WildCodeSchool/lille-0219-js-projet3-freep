@@ -17,7 +17,7 @@ function App() {
     <React.Fragment>
       <header>
         <NavFreep />
-      </header>    
+      </header>
       <Container>
         <Switch>
           <Route exact path="/" component={HomePage} />
@@ -25,7 +25,7 @@ function App() {
           <Route path="/profil/:profileId" component={Profile} />
           <Route path="/users/:userId" component={ClothingPage} />
           <Route path="/partenaire" component={PartnerPage} />
-          <Route path="/messagerie" component={MessagingPage} />
+          <Route path="/messagerie/:idReader" component={MessagingPage} />
           <Route path="/message" component={Message} />
         </Switch>
         <Footer />
