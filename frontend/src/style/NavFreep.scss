@@ -97,3 +97,16 @@ form label input[type="submit"] {
   margin-left: 5px;
   color: black;
 }
+
+@media screen and (max-width: 430px) {
+  form label input[type="text"] {
+    width: 85%;
+  }
+  .search-input {
+    width: 10rem;
+    margin-right: 1rem;
+  }
+  .collapse {
+    margin-top: 1rem;
+  }
+}
