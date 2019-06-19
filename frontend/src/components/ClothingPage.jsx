@@ -89,12 +89,13 @@ class ClothingPage extends React.Component {
 
   componentDidMount() {
     const articleId = this.props.match.params.articleId;
+    const userId = this.props.link.id_clothing;
 
-    axios.get(`http://localhost:5050/users/1/clothing`).then(({ data }) => {
-      this.setState({
-        profileInfo: data
-      });
-    });
+    // axios.get(`http://localhost:5050/users/1/clothing`).then(({ data }) => {
+    //   this.setState({
+    //     profileInfo: data
+    //   });
+    // });
 
     axios
       .get(`http://localhost:5050/articles/${articleId}`)
@@ -118,9 +119,10 @@ class ClothingPage extends React.Component {
   };
 
   render() {
-    const profile = this.state.profileInfo;
+    // const profile = this.state.profileInfo;
     const clothing = this.state.clothingInfo;
-    const comments = this.state.commentsInfo;
+    console.log(clothing);
+    // const comments = this.state.commentsInfo;
 
     const { width } = this.state;
     const isMobile = width <= 640;
