@@ -246,9 +246,11 @@ class ClothingPage extends React.Component {
                   </div>
                 </div>
               </section>
-              {clothing.is_deposit ? (
-                <section className="my-3 text-left">Caution demandée</section>
-              ) : null}
+              <div className="comments-feed my-4 text-center">
+                {clothing.is_deposit ? (
+                  <h4 className="p-0">Caution demandée</h4>
+                ) : null}
+              </div>
               <h2>
                 {comments.length} Commentaire
                 {comments.length >= 2 ? "s" : ""}
