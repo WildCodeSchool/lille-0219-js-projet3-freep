@@ -2,55 +2,33 @@ import React from "react";
 import "../style/Comment.scss";
 import ReportButton from "./ReportButton";
 import { Row, Col } from "reactstrap";
-import axios from "axios";
 
 class Comment extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      commentInfo: []
-    };
-  }
-
-  componentDidMount() {
-    axios.get(`http://localhost:5050/comments`).then(({ data }) => {
-      this.setState({
-        commentInfo: data
-      });
-    });
-  }
-
   render() {
-    const comments = this.state.commentInfo;
-    const profile = this.props.info;
+    const comment = this.props.comment;
+    const profile = this.props.profile;
     return (
-      <React.Fragment>
-        {comments.map((comment, key) => {
-          return (
-            <Row className="px-3 py-1 align-items-center" key={key}>
-              <Col xs="2">
-                <img
-                  src={profile.avatar}
-                  alt={`user-${profile.id}`}
-                  className="avatar"
-                />
-              </Col>
-              <Col
-                xs="2"
-                className="align-content-center profile-name comments-profile"
-              >
-                {profile.nickname}
-              </Col>
-              <Col xs="6" className="align-items-center" key={key}>
-                {comment.content}
-              </Col>
-              <Col xs="1" className="align-items-center">
-                <ReportButton />
-              </Col>
-            </Row>
-          );
-        })}
-      </React.Fragment>
+      <Row className="px-3 py-1 align-items-center">
+        <Col xs="2">
+          <img
+            src={profile.avatar}
+            alt={`user-${profile.id}`}
+            className="avatar"
+          />
+        </Col>
+        <Col
+          xs="2"
+          className="align-content-center profile-name comments-profile"
+        >
+          {profile.nickname}
+        </Col>
+        <Col xs="6" className="align-items-center">
+          {comment.content}
+        </Col>
+        <Col xs="1" className="align-items-center">
+          <ReportButton />
+        </Col>
+      </Row>
     );
   }
 }
