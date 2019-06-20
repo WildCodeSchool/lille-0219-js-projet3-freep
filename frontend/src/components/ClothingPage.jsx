@@ -131,14 +131,12 @@ class ClothingPage extends React.Component {
     const isMobile = width <= 640;
     const { activeIndex } = this.state;
     const clothing = this.state.backendData.clothing;
-    // const users = this.state.backendData.users;
+    const users = this.state.backendData.users;
     const pictures = this.state.backendData.pictures;
     const comments = this.state.backendData.comments;
-    console.log(clothing.id_user);
-    console.log(pictures);
 
     const auth = this.getUser(clothing.id_user);
-    // console.log(auth);
+    // console.log(auth.nickname);
 
     return (
       <Container className="clothing-container">
@@ -246,11 +244,11 @@ class ClothingPage extends React.Component {
                   </div>
                 </div>
               </section>
-              <div className="comments-feed my-4 text-center">
-                {clothing.is_deposit ? (
+              {clothing.is_deposit ? (
+                <div className="comments-feed my-4 text-center">
                   <h4 className="p-0">Caution demandée</h4>
-                ) : null}
-              </div>
+                </div>
+              ) : null}
               <h2>
                 {comments.length} Commentaire
                 {comments.length >= 2 ? "s" : ""}
@@ -273,7 +271,12 @@ class ClothingPage extends React.Component {
                   <h2>Et toi, qu'en penses-tu?</h2>
                 </Label>
                 <Col xs="9" lg="12" className="offset-3 offset-lg-0 p-0">
-                  <Input type="text" name="text" id="comment-form" />
+                  <Input
+                    type="text"
+                    name="text"
+                    id="comment-form"
+                    placeholder="Tape ton message ici"
+                  />
                   <Row className="justify-content-end p-3">
                     <button>Envoyer</button>
                   </Row>
