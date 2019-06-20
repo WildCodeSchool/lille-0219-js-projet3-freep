@@ -28,7 +28,7 @@ class MessagingPage extends React.Component {
       <React.Fragment>
         <h1 className="titleMessage">Messagerie</h1>
         {this.state.messagingArray.length === 0 ? (
-          <p>Vous n'avez pas de conversation.</p>
+          <p>Vous n'avez pas de conversation en cours.</p>
         ) : (
           ""
         )}
