@@ -33,45 +33,61 @@ app.get("/articles/", (req, res) => {
 app.get("/articles/:id/", (req, res) => {
   const articleId = req.params.id;
 
+  let answer = {};
   db.query(
-    `SELECT id, id_user, type, size, gender, description, is_deposit, created_at FROM clothing WHERE id=${articleId}`,
+    `SELECT id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
     (err, rowsArticle) => {
       if (err) {
         console.log(err);
         return res.status(500).send("error when getting articles route");
       }
-      let clothingData = {
-        clothing: rowsArticle[0]
-      };
+      answer.clothing = rowsArticle[0];
+
       db.query(
-        `SELECT id, id_clothing, url FROM picture WHERE id_clothing=${articleId}`,
+        `SELECT id, id_clothing, id_user, url FROM picture WHERE id_clothing=${articleId}`,
         (err, rowsPics) => {
           if (err) {
             console.log(err);
             return res.status(500).send("error when getting picture route");
           }
-          clothingData.pictures = rowsPics;
-        }
-      );
-      db.query(
-        `SELECT user.id, user.avatar, user.nickname FROM user INNER JOIN clothing ON clothing.id_user=user.id WHERE clothing.id=${articleId}`,
-        (err, rowsUser) => {
-          if (err) {
-            console.log(err);
-            return res.status(500).send("error when getting user route");
-          }
-          clothingData.user = rowsUser[0];
-        }
-      );
-      db.query(
-        `SELECT id, id_user, id_clothing, content, created_at FROM comment WHERE id_clothing=${articleId}`,
-        (err, rowsComments) => {
-          if (err) {
-            console.log(err);
-            return res.status(500).send("error when getting comment route");
-          }
-          clothingData.comment = rowsComments;
-          res.status(200).send(clothingData);
+          answer.pictures = rowsPics;
+
+          const picUsers = rowsPics.map(pic => {
+            return pic.id_user;
+          });
+
+          db.query(
+            `SELECT id, id_user, id_clothing, content, created_at FROM comment WHERE id_clothing=${articleId}`,
+            (err, rowsComments) => {
+              if (err) {
+                console.log(err);
+                return res.status(500).send("error when getting comment route");
+              }
+              answer.comments = rowsComments;
+              const commUsers = rowsComments.map(comm => {
+                return comm.id_user;
+              });
+
+              let listeUsers = picUsers.concat(commUsers);
+              listeUsers.push(rowsArticle[0].id_user);
+
+              const uniqUsers = Array.from(new Set(listeUsers));
+
+              db.query(
+                `SELECT id, nickname, avatar FROM user WHERE id IN (${uniqUsers})`,
+                (err, rowsUsers) => {
+                  if (err) {
+                    console.log(err);
+                    return res
+                      .status(500)
+                      .send("error when getting comment route");
+                  }
+                  answer.users = rowsUsers;
+                  res.status(200).send(answer);
+                }
+              );
+            }
+          );
         }
       );
     }
