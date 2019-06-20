@@ -33,11 +33,6 @@ class MessagingPage extends React.Component {
           ""
         )}
         {this.state.messagingArray.map((messaging, i) => {
-          console.log("id: " + messaging.id);
-          console.log("idAuthor: " + messaging.id_author);
-          console.log("idReader: " + messaging.id_reader);
-          console.log("content: " + messaging.content);
-
           return (
             messaging && (
               <Messaging
@@ -46,8 +41,8 @@ class MessagingPage extends React.Component {
                 avatar={messaging.avatar}
                 timeStamp={
                   messaging.date_diff >= 1
-                    ? "Il y a " + messaging.date_diff + " jours."
-                    : "Envoyé à " + messaging.hour_send + "."
+                    ? "Il y a " + messaging.date_diff + " jours"
+                    : "Envoyé à " + messaging.hour_send
                 }
                 message={messaging.content}
               />
