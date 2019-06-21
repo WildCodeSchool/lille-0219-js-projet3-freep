@@ -18,27 +18,6 @@ import Comment from "./Comment";
 import Photo from "./Photo";
 import axios from "axios";
 
-const items = [
-  {
-    src:
-      "https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901",
-    altText: "Slide 1",
-    caption: "Slide 1"
-  },
-  {
-    src:
-      "https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901",
-    altText: "Slide 2",
-    caption: "Slide 2"
-  },
-  {
-    src:
-      "https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901",
-    altText: "Slide 3",
-    caption: "Slide 3"
-  }
-];
-
 class ClothingPage extends React.Component {
   constructor(props) {
     super(props);
@@ -59,30 +38,13 @@ class ClothingPage extends React.Component {
     this.onExiting = this.onExiting.bind(this);
     this.onExited = this.onExited.bind(this);
   }
+
   onExiting() {
     this.animating = true;
   }
 
   onExited() {
     this.animating = false;
-  }
-
-  next() {
-    if (this.animating) return;
-    const nextIndex =
-      this.state.activeIndex === items.length - 1
-        ? 0
-        : this.state.activeIndex + 1;
-    this.setState({ activeIndex: nextIndex });
-  }
-
-  previous() {
-    if (this.animating) return;
-    const nextIndex =
-      this.state.activeIndex === 0
-        ? items.length - 1
-        : this.state.activeIndex - 1;
-    this.setState({ activeIndex: nextIndex });
   }
 
   goToIndex(newIndex) {
@@ -105,6 +67,26 @@ class ClothingPage extends React.Component {
           }
         });
       });
+  }
+
+  next() {
+    const pictures = this.state.backendData.pictures;
+    if (this.animating) return;
+    const nextIndex =
+      this.state.activeIndex === pictures.length - 1
+        ? 0
+        : this.state.activeIndex + 1;
+    this.setState({ activeIndex: nextIndex });
+  }
+
+  previous() {
+    const pictures = this.state.backendData.pictures;
+    if (this.animating) return;
+    const nextIndex =
+      this.state.activeIndex === 0
+        ? pictures.length - 1
+        : this.state.activeIndex - 1;
+    this.setState({ activeIndex: nextIndex });
   }
 
   componentWillMount() {
@@ -131,12 +113,10 @@ class ClothingPage extends React.Component {
     const isMobile = width <= 640;
     const { activeIndex } = this.state;
     const clothing = this.state.backendData.clothing;
-    const users = this.state.backendData.users;
     const pictures = this.state.backendData.pictures;
     const comments = this.state.backendData.comments;
 
     const auth = this.getUser(clothing.id_user);
-    // console.log(auth.nickname);
 
     return (
       <Container className="clothing-container">
@@ -150,16 +130,12 @@ class ClothingPage extends React.Component {
                       <CarouselItem
                         onExiting={this.onExiting}
                         onExited={this.onExited}
-                        // key={pictures.src + key}
                       >
                         <Photo
+                          key={key}
                           picture={picture.url}
                           alt={picture.altText}
                           caption={picture.caption}
-                        />
-                        <CarouselCaption
-                          captionText={picture.caption}
-                          captionHeader={picture.caption}
                         />
                       </CarouselItem>
                     );
@@ -172,7 +148,7 @@ class ClothingPage extends React.Component {
                       previous={this.previous}
                     >
                       <CarouselIndicators
-                        items={items}
+                        items={pictures}
                         activeIndex={activeIndex}
                         onClickHandler={this.goToIndex}
                       />
@@ -227,15 +203,14 @@ class ClothingPage extends React.Component {
                     <Row className="align-items-center">
                       <Col xs="3">
                         <img
-                          // src={auth.avatar}
-                          // alt={`user-${filteredUser}`}
-                          alt="cook"
+                          src={auth && auth.avatar}
+                          alt={`user-${auth && auth.id}`}
                           className="avatar"
                           width="70px"
                         />
                       </Col>
                       <Col xs="9" className="profile-name">
-                        {/* {auth.ni} */}
+                        {auth && auth.nickname}
                       </Col>
                     </Row>
                   </div>
