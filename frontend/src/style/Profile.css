@@ -1,18 +1,18 @@
 * {
-    color: #222
+  color: #222;
 }
 
 .button {
-    background-color: #f8d5c7 !important;
-    color: #222 !important;
-    width: 150px
+  background-color: #f8d5c7 !important;
+  color: #222 !important;
+  width: 150px;
 }
 
 .dancingscript {
-    font-family: 'Dancing Script';
-    font-size: 1.5rem
+  font-family: "Dancing Script";
+  font-size: 1.5rem;
 }
 
 .starsgrey {
-    color: #CCC
+  color: #ccc;
 }

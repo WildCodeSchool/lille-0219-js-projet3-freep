@@ -122,11 +122,10 @@ app.get("/messagerie/:id_reader", (req, res) => {
 
 // Profile page routes
 
-app.get("/profile/:id", (req, res) => {
-  const userId = req.params.id;
-
+app.get("/profile/:profileId", (req, res) => {
+  const profileId = req.params.profileId;
   db.query(
-    `SELECT id, nickname, avatar, description FROM user WHERE id=${userId}`,
+    `SELECT id, nickname, avatar, description FROM user WHERE id=${profileId}`,
     (err, rowsUser) => {
       if (err) {
         console.log(err);
@@ -137,7 +136,7 @@ app.get("/profile/:id", (req, res) => {
       };
 
       db.query(
-        `SELECT id, id_clothing, url FROM picture WHERE id_user=${userId}`,
+        `SELECT id, id_clothing, url FROM picture WHERE id_user=${profileId}`,
         (err, rowsPics) => {
           if (err) {
             console.log(err);

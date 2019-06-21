@@ -10,8 +10,7 @@ import {
   Carousel,
   CarouselItem,
   CarouselControl,
-  CarouselIndicators,
-  CarouselCaption
+  CarouselIndicators
 } from "reactstrap";
 import "../style/ClothingPage.scss";
 import Comment from "./Comment";
@@ -201,7 +200,7 @@ class ClothingPage extends React.Component {
                 <div className="p-4 comments-feed">
                   <div>
                     <Row className="align-items-center">
-                      <Col xs="3">
+                      <Col xs="6" md="5">
                         <img
                           src={auth && auth.avatar}
                           alt={`user-${auth && auth.id}`}
@@ -209,7 +208,7 @@ class ClothingPage extends React.Component {
                           width="70px"
                         />
                       </Col>
-                      <Col xs="9" className="profile-name">
+                      <Col xs="6" className="profile-name">
                         {auth && auth.nickname}
                       </Col>
                     </Row>
