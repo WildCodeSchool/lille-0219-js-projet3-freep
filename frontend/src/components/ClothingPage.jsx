@@ -16,6 +16,7 @@ import "../style/ClothingPage.scss";
 import Comment from "./Comment";
 import Photo from "./Photo";
 import axios from "axios";
+import Loader from "./Loader";
 
 class ClothingPage extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class ClothingPage extends React.Component {
         pictures: [],
         comments: []
       },
+      loading: true,
       width: window.innerWidth,
       activeIndex: 0
     };
@@ -63,7 +65,8 @@ class ClothingPage extends React.Component {
             users: data.users,
             pictures: data.pictures,
             comments: data.comments
-          }
+          },
+          loading: false
         });
       });
   }
@@ -116,151 +119,156 @@ class ClothingPage extends React.Component {
     const comments = this.state.backendData.comments;
 
     const auth = this.getUser(clothing.id_user);
-
-    return (
-      <Container className="clothing-container">
-        <Row className="px-4">
-          <Col lg="7" className="justify-content-center">
-            <section>
-              {(() => {
-                if (isMobile) {
-                  const slides = pictures.map((picture, key) => {
-                    return (
-                      <CarouselItem
-                        onExiting={this.onExiting}
-                        onExited={this.onExited}
-                      >
-                        <Photo
-                          key={key}
-                          picture={picture.url}
-                          alt={picture.altText}
-                          caption={picture.caption}
-                        />
-                      </CarouselItem>
-                    );
-                  });
-
-                  return (
-                    <Carousel
-                      activeIndex={activeIndex}
-                      next={this.next}
-                      previous={this.previous}
-                    >
-                      <CarouselIndicators
-                        items={pictures}
-                        activeIndex={activeIndex}
-                        onClickHandler={this.goToIndex}
-                      />
-                      {slides}
-                      <CarouselControl
-                        direction="prev"
-                        directionText="Previous"
-                        onClickHandler={this.previous}
-                      />
-                      <CarouselControl
-                        direction="next"
-                        directionText="Next"
-                        onClickHandler={this.next}
-                      />
-                    </Carousel>
-                  );
-                } else {
-                  return (
-                    <React.Fragment>
-                      <Row className="justify-content-center">
-                        {pictures.map((picture, key) => {
-                          return (
-                            <Col xs="6" md="4" key={key}>
-                              <Photo picture={picture.url} />
-                            </Col>
-                          );
-                        })}
-                      </Row>
-                    </React.Fragment>
-                  );
-                }
-              })()}
-            </section>
-            <section>
-              <h2 className="text-center">Elles l'ont porté récemment</h2>
-              <Row className="justify-content-center">
-                {pictures.map((picture, key) => {
-                  return (
-                    <Col xs="6" md="4" key={key}>
-                      <Photo picture={picture.url} />
-                    </Col>
-                  );
-                })}
-              </Row>
-            </section>
-          </Col>
-          <Col lg="5" className="comments-container">
-            <div className="sub-container">
+    if (this.state.loading) {
+      return <Loader />;
+    } else {
+      return (
+        <Container className="clothing-container">
+          <Row className="px-4">
+            <Col lg="7" className="justify-content-center">
               <section>
-                <div className="p-4 comments-feed">
-                  <div>
-                    <Row className="align-items-center">
-                      <Col xs="6" md="5">
-                        <img
-                          src={auth && auth.avatar}
-                          alt={`user-${auth && auth.id}`}
-                          className="avatar"
-                          width="70px"
+                {(() => {
+                  if (isMobile) {
+                    const slides = pictures.map((picture, key) => {
+                      return (
+                        <CarouselItem
+                          onExiting={this.onExiting}
+                          onExited={this.onExited}
+                        >
+                          <Photo
+                            key={key}
+                            picture={picture.url}
+                            alt={picture.altText}
+                            caption={picture.caption}
+                          />
+                        </CarouselItem>
+                      );
+                    });
+
+                    return (
+                      <Carousel
+                        activeIndex={activeIndex}
+                        next={this.next}
+                        previous={this.previous}
+                      >
+                        <CarouselIndicators
+                          items={pictures}
+                          activeIndex={activeIndex}
+                          onClickHandler={this.goToIndex}
                         />
-                      </Col>
-                      <Col xs="6" className="profile-name">
-                        {auth && auth.nickname}
-                      </Col>
-                    </Row>
-                  </div>
-                  <div className="pt-4">
-                    <div>{clothing.description}</div>
-                  </div>
-                </div>
+                        {slides}
+                        <CarouselControl
+                          direction="prev"
+                          directionText="Previous"
+                          onClickHandler={this.previous}
+                        />
+                        <CarouselControl
+                          direction="next"
+                          directionText="Next"
+                          onClickHandler={this.next}
+                        />
+                      </Carousel>
+                    );
+                  } else {
+                    return (
+                      <React.Fragment>
+                        <Row className="justify-content-center">
+                          {pictures.map((picture, key) => {
+                            return (
+                              <Col xs="6" md="4" key={key}>
+                                <Photo picture={picture.url} />
+                              </Col>
+                            );
+                          })}
+                        </Row>
+                      </React.Fragment>
+                    );
+                  }
+                })()}
               </section>
-              {clothing.is_deposit ? (
-                <div className="comments-feed my-4 text-center">
-                  <h4 className="p-0">Caution demandée</h4>
-                </div>
-              ) : null}
-              <h2>
-                {comments.length} Commentaire
-                {comments.length >= 2 ? "s" : ""}
-              </h2>
-              <div className="comments-feed">
-                {comments.length === 0 ? (
-                  <div className="text-center">
-                    Sois la première à laisser un commentaire !
+              <section>
+                <h2 className="text-center">Elles l'ont porté récemment</h2>
+                <Row className="justify-content-center">
+                  {pictures.map((picture, key) => {
+                    return (
+                      <Col xs="6" md="4" key={key}>
+                        <Photo picture={picture.url} />
+                      </Col>
+                    );
+                  })}
+                </Row>
+              </section>
+            </Col>
+            <Col lg="5" className="comments-container">
+              <div className="sub-container">
+                <section>
+                  <div className="p-4 comments-feed">
+                    <div>
+                      <Row className="align-items-center">
+                        <Col xs="6" md="5">
+                          <img
+                            src={auth && auth.avatar}
+                            alt={`user-${auth && auth.id}`}
+                            className="avatar"
+                            width="70px"
+                          />
+                        </Col>
+                        <Col xs="6" className="profile-name">
+                          {auth && auth.nickname}
+                        </Col>
+                      </Row>
+                    </div>
+                    <div className="pt-4">
+                      <div>{clothing.description}</div>
+                    </div>
+                  </div>
+                </section>
+                {clothing.is_deposit ? (
+                  <div className="comments-feed my-4 text-center">
+                    <h4 className="p-0">Caution demandée</h4>
                   </div>
                 ) : null}
-                {comments.map((comment, key) => {
-                  const user = this.getUser(comment.id_user);
-                  return <Comment key={key} comment={comment} profile={user} />;
-                })}
+                <h2>
+                  {comments.length} Commentaire
+                  {comments.length >= 2 ? "s" : ""}
+                </h2>
+                <div className="comments-feed">
+                  {comments.length === 0 ? (
+                    <div className="text-center">
+                      Sois la première à laisser un commentaire !
+                    </div>
+                  ) : null}
+                  {comments.map((comment, key) => {
+                    const user = this.getUser(comment.id_user);
+                    return (
+                      <Comment key={key} comment={comment} profile={user} />
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-            <Form className="comment-form">
-              <FormGroup>
-                <Label>
-                  <h2>Et toi, qu'en penses-tu?</h2>
-                </Label>
-                <Col xs="9" lg="12" className="offset-3 offset-lg-0 p-0">
-                  <Input
-                    type="text"
-                    name="text"
-                    id="comment-form"
-                    placeholder="Tape ton message ici"
-                  />
-                  <Row className="justify-content-end p-3">
-                    <button>Envoyer</button>
-                  </Row>
-                </Col>
-              </FormGroup>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    );
+              <Form className="comment-form">
+                <FormGroup>
+                  <Label>
+                    <h2>Et toi, qu'en penses-tu?</h2>
+                  </Label>
+                  <Col xs="9" lg="12" className="offset-3 offset-lg-0 p-0">
+                    <Input
+                      type="text"
+                      name="text"
+                      id="comment-form"
+                      placeholder="Tape ton message ici"
+                    />
+                    <Row className="justify-content-end p-3">
+                      <button>Envoyer</button>
+                    </Row>
+                  </Col>
+                </FormGroup>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      );
+    }
   }
 }
 

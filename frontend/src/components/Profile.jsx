@@ -5,6 +5,7 @@ import Nickname from "./Nickname";
 import Photo from "./Photo";
 import axios from "axios";
 import "../style/Profile.css";
+import Loader from "./Loader";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -20,7 +21,8 @@ class Profile extends React.Component {
         following: 31,
         posts: 10
       },
-      pictures: []
+      pictures: [],
+      loading: true
     };
   }
 
@@ -30,7 +32,8 @@ class Profile extends React.Component {
     axios.get(`http://localhost:5050/profile/${profileId}`).then(({ data }) => {
       this.setState({
         user: data.profile,
-        pictures: data.pictures
+        pictures: data.pictures,
+        loading: false
       });
     });
   }
@@ -38,9 +41,10 @@ class Profile extends React.Component {
   render() {
     const user = this.state.user;
     const pictures = this.state.pictures;
-
-    return (
-      <React.Fragment>
+    if (this.state.loading) {
+      return <Loader />;
+    } else {
+      return (
         <Container>
           <Row className="text-center align-items-center">
             <Col md="3" className="text-center mx-auto">
@@ -92,8 +96,8 @@ class Profile extends React.Component {
             })}
           </Row>
         </Container>
-      </React.Fragment>
-    );
+      );
+    }
   }
 }
 
