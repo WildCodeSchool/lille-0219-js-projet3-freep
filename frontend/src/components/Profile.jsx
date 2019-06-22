@@ -6,6 +6,7 @@ import Photo from "./Photo";
 import axios from "axios";
 import "../style/Profile.css";
 import Loader from "./Loader";
+import LazyLoad from "react-lazyload";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -90,7 +91,9 @@ class Profile extends React.Component {
             {pictures.map((picture, idx) => {
               return (
                 <Col sm="6" md="4" lg="3" xl="2" key={idx}>
-                  <Photo picture={picture.url} link={picture.id_clothing} />
+                  <LazyLoad height={100} offset={-200}>
+                    <Photo picture={picture.url} link={picture.id_clothing} />
+                  </LazyLoad>
                 </Col>
               );
             })}
