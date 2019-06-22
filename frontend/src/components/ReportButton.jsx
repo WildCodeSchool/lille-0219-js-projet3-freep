@@ -1,5 +1,5 @@
 import React from "react";
-//import mailtoAddress from "../conf.js";
+import mailtoAddress from "../conf.js";
 import {
   ButtonDropdown,
   DropdownToggle,
@@ -39,7 +39,7 @@ class ReportButton extends React.Component {
         </DropdownToggle>
         <DropdownMenu>
           <DropdownItem className="p-1 report-button">
-            <a href="mailto:signalement@freep.com">Signaler un abus</a>
+            <a href={mailtoAddress}>Signaler un abus</a>
           </DropdownItem>
         </DropdownMenu>
       </ButtonDropdown>
