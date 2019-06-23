@@ -22,10 +22,10 @@ class HomePage extends React.Component {
   render() {
     const pictures = this.state.picturesInfo;
     return (
-      <Masonry>
+      <Masonry style={{ marginTop: 87 }}>
         {pictures.map((picture, key) => {
           return (
-            <Col sm="6" md="4" lg="3" key={key}>
+            <Col sm="6" md="4" lg="3" key={key} className="px-0">
               <Photo picture={picture.url} link={picture.id_clothing} />
             </Col>
           );
