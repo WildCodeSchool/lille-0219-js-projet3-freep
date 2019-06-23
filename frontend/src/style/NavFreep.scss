@@ -1,3 +1,16 @@
+.navbar {
+  border-bottom: 2px solid goldenrod;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 200;
+}
+
+.bg-light {
+  background: white !important;
+}
+
 .navbar-nav {
   flex-direction: row;
   margin-top: 2em;
@@ -8,21 +21,8 @@
   font-size: 2rem;
 }
 
-hr {
-  height: 0.2rem;
-  color: goldenrod;
-  background-color: goldenrod;
-  border: 0;
-  margin: 0 0 1rem 0;
-}
-
 .logo {
   border-radius: 50%;
-  width: 5rem;
-}
-
-.bg-light {
-  background: white !important;
 }
 
 ul {
@@ -80,7 +80,6 @@ form label input[type="text"] {
   font-family: sans-serif;
   border: 2px solid #f8d5c7;
   border-radius: 7px;
-  background-color: lightgray;
   height: 2rem;
 }
 
