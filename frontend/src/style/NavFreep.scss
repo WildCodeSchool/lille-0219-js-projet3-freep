@@ -19,6 +19,8 @@ hr {
 .logo {
   border-radius: 50%;
   width: 5rem;
+  position: relative;
+  left: -1rem;
 }
 
 .bg-light {
@@ -75,7 +77,7 @@ form label {
 
 form label input[type="text"] {
   width: 100%;
-  padding: 10px 10px 10px 60px;
+  padding: 10px 10px 10px 40px;
   font-size: 15px;
   font-family: sans-serif;
   border: 2px solid #f8d5c7;
@@ -89,16 +91,37 @@ form label input {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
 }
 
 form label input[type="submit"] {
   font-size: 1rem;
   margin-left: 5px;
   color: black;
+  cursor: pointer;
+}
+form {
+  margin-top: 2.5rem;
+}
+@media screen and (max-width: 1025px) {
+  .img {
+    width: 25px;
+  }
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 800px) {
+  .img {
+    width: 25px;
+  }
+  form label input[type="text"] {
+    margin-left: 2.5rem;
+    width: 85%;
+  }
+  input {
+    padding-left: 3rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
   form label input[type="text"] {
     width: 85%;
     margin-left: -0.5rem;
@@ -108,5 +131,17 @@ form label input[type="submit"] {
   }
   .collapse {
     margin-top: 1rem;
+  }
+  .img {
+    width: 25px;
+  }
+  input {
+    padding-left: 5px;
+  }
+  .navText {
+    width: 13rem;
+  }
+  form {
+    margin-top: 0;
   }
 }

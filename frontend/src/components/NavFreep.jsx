@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
-import { Plus, Mail, Heart, User } from "react-feather";
+import { Plus, Mail, Heart, User, Tag } from "react-feather";
 
 class NavFreep extends React.Component {
   constructor(props) {
@@ -49,6 +49,9 @@ class NavFreep extends React.Component {
             <Nav className="ml-auto" navbar>
               <NavLink to="/">
                 <Plus className="img" color="black" />
+              </NavLink>
+              <NavLink to="/partenaire">
+                <Tag className="img" color="black" />
               </NavLink>
               <NavLink to="/messagerie">
                 <Mail className="img" color="black" />
