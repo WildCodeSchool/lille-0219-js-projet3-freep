@@ -1,16 +1,16 @@
 * {
   color: #222;
+  /* background-color: rgba(34, 34, 34, 0.1); */
 }
 
 .button {
   background-color: #f8d5c7 !important;
   color: #222 !important;
-  width: 150px;
 }
 
-.dancingscript {
+.primaryfont {
   font-family: "Dancing Script";
-  font-size: 1.5rem;
+  font-size: calc(.8rem + 1vw);
 }
 
 .starsgrey {
