@@ -41,6 +41,7 @@ class MessagingPage extends React.Component {
                 nickname={messaging.nickname}
                 avatar={messaging.avatar}
                 id_author={messaging.id_author}
+                id_reader={messaging.id_reader}
                 timeStamp={
                   messaging.date_diff >= 1
                     ? "Il y a " + messaging.date_diff + " jours."

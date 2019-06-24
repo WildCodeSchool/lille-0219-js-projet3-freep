@@ -14,7 +14,10 @@ class Messaging extends React.Component {
     return (
       <React.Fragment>
         <Card>
-          <Link to={"/message/" + this.props.id_author} className="link">
+          <Link
+            to={"/message/" + this.props.id_author + "/" + this.props.id_reader}
+            className="link"
+          >
             <CardBody>
               <Row>
                 <Col xs="3" sm="3" md="3">
