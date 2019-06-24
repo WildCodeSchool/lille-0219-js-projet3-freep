@@ -11,3 +11,7 @@ body {
   background: goldenrod;
   color: white;
 }
+
+.container {
+  margin-bottom: 2rem;
+}
