@@ -1,6 +1,6 @@
 //composant pour 1 message
 import React from "react";
-import { Card, CardBody, CardText, CardImg, Row, Col } from "reactstrap";
+import { Card, CardBody, CardImg, Row, Col } from "reactstrap";
 import "../style/Messaging.scss";
 import { Link } from "react-router-dom";
 
@@ -28,7 +28,7 @@ class Messaging extends React.Component {
                   />
                 </Col>
                 <Col xs="9" sm="9" md="9">
-                  <CardText className="m-5">
+                  <div className="m-5">
                     <Row className="d-flex">
                       <Col>
                         <p className="name">{this.props.nickname}</p>
@@ -44,7 +44,7 @@ class Messaging extends React.Component {
                         {this.props.message}
                       </p>
                     </Row>
-                  </CardText>
+                  </div>
                 </Col>
               </Row>
             </CardBody>

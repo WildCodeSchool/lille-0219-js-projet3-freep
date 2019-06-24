@@ -27,13 +27,11 @@ class NavFreep extends React.Component {
     return (
       <div className="header">
         <Navbar color="light" light expand="md">
-          <Link to="/">
-            <img
-              className="logo mr-3"
-              src="https://via.placeholder.com/70"
-              alt="logo"
-            />
-          </Link>
+          <Navbar color="black" light>
+            <Link to="/">
+              <img className="logo" src="../pictures/logo.png" alt="logo" />
+            </Link>
+          </Navbar>
           <div className="navText">
             <span className="navTitle">Freep</span>
             <br />
@@ -56,6 +54,9 @@ class NavFreep extends React.Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                   <Uploader />
                 </Modal>
+              </NavLink>
+              <NavLink to="/partenaire">
+                <Tag className="img" color="black" />
               </NavLink>
               <NavLink to="/messagerie/2">
                 <Mail className="img" color="black" />
