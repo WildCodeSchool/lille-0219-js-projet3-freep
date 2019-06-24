@@ -10,6 +10,8 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Homepage
+
 app.get("/articles/", (req, res) => {
   db.query(
     `SELECT id, id_clothing, id_user, is_proof, created_at, url FROM picture ORDER BY created_at DESC`,
@@ -26,62 +28,70 @@ app.get("/articles/", (req, res) => {
   );
 });
 
-app.get("/articles/:id", (req, res) => {
+// ClothingPage
+
+app.get("/articles/:id/", (req, res) => {
+  const articleId = req.params.id;
+
+  let answer = {};
   db.query(
-    `SELECT id, id_user, type, brand, size, gender, description, is_deposit, created_at FROM clothing WHERE id=${
-      req.params.id
-    }`,
-    (err, rows) => {
+    `SELECT id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
+    (err, rowsArticle) => {
       if (err) {
         console.log(err);
         return res.status(500).send("error when getting articles route");
       }
-      if (!rows) {
-        return res.status(404).send("No articles found");
-      }
-      res.status(200).send(rows[0]);
+      answer.clothing = rowsArticle[0];
+
+      db.query(
+        `SELECT id, id_clothing, id_user, url FROM picture WHERE id_clothing=${articleId}`,
+        (err, rowsPics) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).send("error when getting picture route");
+          }
+          answer.pictures = rowsPics;
+
+          const picUsers = rowsPics.map(pic => {
+            return pic.id_user;
+          });
+
+          db.query(
+            `SELECT id, id_user, id_clothing, content, created_at FROM comment WHERE id_clothing=${articleId}`,
+            (err, rowsComments) => {
+              if (err) {
+                console.log(err);
+                return res.status(500).send("error when getting comment route");
+              }
+              answer.comments = rowsComments;
+              const commUsers = rowsComments.map(comm => {
+                return comm.id_user;
+              });
+
+              let listeUsers = picUsers.concat(commUsers);
+              listeUsers.push(rowsArticle[0].id_user);
+
+              const uniqUsers = Array.from(new Set(listeUsers));
+
+              db.query(
+                `SELECT id, nickname, avatar FROM user WHERE id IN (${uniqUsers})`,
+                (err, rowsUsers) => {
+                  if (err) {
+                    console.log(err);
+                    return res
+                      .status(500)
+                      .send("error when getting comment route");
+                  }
+                  answer.users = rowsUsers;
+                  res.status(200).send(answer);
+                }
+              );
+            }
+          );
+        }
+      );
     }
   );
-});
-
-app.get("/users/:id/clothing", (req, res) => {
-  if (req.params.id) {
-    db.query(
-      `SELECT u.id, u.nickname, u.avatar FROM user AS u JOIN clothing AS cl ON u.id = cl.id_user WHERE u.id=${
-        req.params.id
-      } `,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send("error when getting users route");
-        }
-        if (!rows) {
-          return res.status(404).send("No users found");
-        }
-        res.status(200).send(rows[0]);
-      }
-    );
-  }
-});
-
-app.get("/user/:id", (req, res) => {
-  if (req.params.id) {
-    db.query(
-      `SELECT nickname,password,email,phone,firstname,lastname,birthdate,avatar,location,points,is_admin,created_at,id_borrow FROM user WHERE id=${
-        req.params.id
-      } `,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send("error when getting users route");
-        }
-        if (!rows) {
-          return res.status(404).send("No users found");
-        }
-        res.status(200).send(rows[0]);
-      }
-    );
-  }
 });
 
 //Messaging
@@ -124,6 +134,7 @@ app.get("/profile/:profileId", (req, res) => {
       let profileData = {
         profile: rowsUser[0]
       };
+
       db.query(
         `SELECT id, id_clothing, url FROM picture WHERE id_user=${profileId}`,
         (err, rowsPics) => {

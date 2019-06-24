@@ -10,42 +10,23 @@ import {
   Carousel,
   CarouselItem,
   CarouselControl,
-  CarouselIndicators,
-  CarouselCaption
+  CarouselIndicators
 } from "reactstrap";
 import "../style/ClothingPage.scss";
 import Comment from "./Comment";
 import Photo from "./Photo";
 import axios from "axios";
 
-const items = [
-  {
-    src:
-      "https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901",
-    altText: "Slide 1",
-    caption: "Slide 1"
-  },
-  {
-    src:
-      "https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901",
-    altText: "Slide 2",
-    caption: "Slide 2"
-  },
-  {
-    src:
-      "https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901",
-    altText: "Slide 3",
-    caption: "Slide 3"
-  }
-];
-
 class ClothingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profileInfo: {},
-      clothingInfo: {},
-      commentsInfo: [],
+      backendData: {
+        clothing: {},
+        users: [],
+        pictures: [],
+        comments: []
+      },
       width: window.innerWidth,
       activeIndex: 0
     };
@@ -56,30 +37,13 @@ class ClothingPage extends React.Component {
     this.onExiting = this.onExiting.bind(this);
     this.onExited = this.onExited.bind(this);
   }
+
   onExiting() {
     this.animating = true;
   }
 
   onExited() {
     this.animating = false;
-  }
-
-  next() {
-    if (this.animating) return;
-    const nextIndex =
-      this.state.activeIndex === items.length - 1
-        ? 0
-        : this.state.activeIndex + 1;
-    this.setState({ activeIndex: nextIndex });
-  }
-
-  previous() {
-    if (this.animating) return;
-    const nextIndex =
-      this.state.activeIndex === 0
-        ? items.length - 1
-        : this.state.activeIndex - 1;
-    this.setState({ activeIndex: nextIndex });
   }
 
   goToIndex(newIndex) {
@@ -90,19 +54,38 @@ class ClothingPage extends React.Component {
   componentDidMount() {
     const articleId = this.props.match.params.articleId;
 
-    axios.get(`http://localhost:5050/users/1/clothing`).then(({ data }) => {
-      this.setState({
-        profileInfo: data
-      });
-    });
-
     axios
       .get(`http://localhost:5050/articles/${articleId}`)
       .then(({ data }) => {
         this.setState({
-          clothingInfo: data
+          backendData: {
+            clothing: data.clothing,
+            users: data.users,
+            pictures: data.pictures,
+            comments: data.comments
+          }
         });
       });
+  }
+
+  next() {
+    const pictures = this.state.backendData.pictures;
+    if (this.animating) return;
+    const nextIndex =
+      this.state.activeIndex === pictures.length - 1
+        ? 0
+        : this.state.activeIndex + 1;
+    this.setState({ activeIndex: nextIndex });
+  }
+
+  previous() {
+    const pictures = this.state.backendData.pictures;
+    if (this.animating) return;
+    const nextIndex =
+      this.state.activeIndex === 0
+        ? pictures.length - 1
+        : this.state.activeIndex - 1;
+    this.setState({ activeIndex: nextIndex });
   }
 
   componentWillMount() {
@@ -117,15 +100,22 @@ class ClothingPage extends React.Component {
     this.setState({ width: window.innerWidth });
   };
 
-  render() {
-    const profile = this.state.profileInfo;
-    const clothing = this.state.clothingInfo;
-    const comments = this.state.commentsInfo;
+  getUser = id => {
+    const users = this.state.backendData.users.filter(user => {
+      return user.id === id;
+    });
+    return users[0];
+  };
 
+  render() {
     const { width } = this.state;
     const isMobile = width <= 640;
-
     const { activeIndex } = this.state;
+    const clothing = this.state.backendData.clothing;
+    const pictures = this.state.backendData.pictures;
+    const comments = this.state.backendData.comments;
+
+    const auth = this.getUser(clothing.id_user);
 
     return (
       <Container className="clothing-container">
@@ -134,21 +124,17 @@ class ClothingPage extends React.Component {
             <section>
               {(() => {
                 if (isMobile) {
-                  const slides = items.map((item, key) => {
+                  const slides = pictures.map((picture, key) => {
                     return (
                       <CarouselItem
                         onExiting={this.onExiting}
                         onExited={this.onExited}
-                        key={item.src + key}
                       >
                         <Photo
-                          picture="https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901"
-                          alt={item.altText}
-                          caption={item.caption}
-                        />
-                        <CarouselCaption
-                          captionText={item.caption}
-                          captionHeader={item.caption}
+                          key={key}
+                          picture={picture.url}
+                          alt={picture.altText}
+                          caption={picture.caption}
                         />
                       </CarouselItem>
                     );
@@ -161,7 +147,7 @@ class ClothingPage extends React.Component {
                       previous={this.previous}
                     >
                       <CarouselIndicators
-                        items={items}
+                        items={pictures}
                         activeIndex={activeIndex}
                         onClickHandler={this.goToIndex}
                       />
@@ -182,17 +168,13 @@ class ClothingPage extends React.Component {
                   return (
                     <React.Fragment>
                       <Row className="justify-content-center">
-                        <Col xs="6">
-                          <Photo picture="https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901" />
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-center">
-                        <Col xs="6" md="4">
-                          <Photo picture="https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901" />
-                        </Col>
-                        <Col xs="6" md="4">
-                          <Photo picture="https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901" />
-                        </Col>
+                        {pictures.map((picture, key) => {
+                          return (
+                            <Col xs="6" md="4" key={key}>
+                              <Photo picture={picture.url} />
+                            </Col>
+                          );
+                        })}
                       </Row>
                     </React.Fragment>
                   );
@@ -202,20 +184,13 @@ class ClothingPage extends React.Component {
             <section>
               <h2 className="text-center">Elles l'ont porté récemment</h2>
               <Row className="justify-content-center">
-                <Col xs="6" md="4">
-                  <Photo picture="https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901" />
-                </Col>
-                <Col xs="6" md="4">
-                  <Photo picture="https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901" />
-                </Col>
-              </Row>
-              <Row className="justify-content-center">
-                <Col xs="6" md="4">
-                  <Photo picture="https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901" />
-                </Col>
-                <Col xs="6" md="4">
-                  <Photo picture="https://scstylecaster.files.wordpress.com/2014/12/london-moc-a-rs15-9467.jpg?w=600&h=901" />
-                </Col>
+                {pictures.map((picture, key) => {
+                  return (
+                    <Col xs="6" md="4" key={key}>
+                      <Photo picture={picture.url} />
+                    </Col>
+                  );
+                })}
               </Row>
             </section>
           </Col>
@@ -227,14 +202,14 @@ class ClothingPage extends React.Component {
                     <Row className="align-items-center">
                       <Col xs="6" md="5">
                         <img
-                          src={profile.avatar}
-                          alt={`user-${profile.id}`}
+                          src={auth && auth.avatar}
+                          alt={`user-${auth && auth.id}`}
                           className="avatar"
                           width="70px"
                         />
                       </Col>
-                      <Col xs="6" md="7" className="profile-name">
-                        {profile.nickname}
+                      <Col xs="6" className="profile-name">
+                        {auth && auth.nickname}
                       </Col>
                     </Row>
                   </div>
@@ -244,20 +219,23 @@ class ClothingPage extends React.Component {
                 </div>
               </section>
               {clothing.is_deposit ? (
-                <section className="my-3 text-left">Caution demandée</section>
+                <div className="comments-feed my-4 text-center">
+                  <h4 className="p-0">Caution demandée</h4>
+                </div>
               ) : null}
               <h2>
                 {comments.length} Commentaire
                 {comments.length >= 2 ? "s" : ""}
               </h2>
-              {comments.length === 0 ? (
-                <div className="alert text-center alert-info">
-                  Sois la première à laisser un commentaire !
-                </div>
-              ) : null}
               <div className="comments-feed">
+                {comments.length === 0 ? (
+                  <div className="text-center">
+                    Sois la première à laisser un commentaire !
+                  </div>
+                ) : null}
                 {comments.map((comment, key) => {
-                  return <Comment key={key} comment={comment} />;
+                  const user = this.getUser(comment.id_user);
+                  return <Comment key={key} comment={comment} profile={user} />;
                 })}
               </div>
             </div>
@@ -267,7 +245,12 @@ class ClothingPage extends React.Component {
                   <h2>Et toi, qu'en penses-tu?</h2>
                 </Label>
                 <Col xs="9" lg="12" className="offset-3 offset-lg-0 p-0">
-                  <Input type="text" name="text" id="comment-form" />
+                  <Input
+                    type="text"
+                    name="text"
+                    id="comment-form"
+                    placeholder="Tape ton message ici"
+                  />
                   <Row className="justify-content-end p-3">
                     <button>Envoyer</button>
                   </Row>
