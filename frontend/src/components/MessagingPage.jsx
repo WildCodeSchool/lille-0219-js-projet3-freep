@@ -1,3 +1,5 @@
+// Page messagerie de base
+
 import React from "react";
 import Messaging from "./Messaging";
 import axios from "axios";
@@ -22,7 +24,6 @@ class MessagingPage extends React.Component {
         });
       });
   }
-
   render() {
     return (
       <React.Fragment>
@@ -33,11 +34,6 @@ class MessagingPage extends React.Component {
           ""
         )}
         {this.state.messagingArray.map((messaging, i) => {
-          console.log("id: " + messaging.id);
-          console.log("idAuthor: " + messaging.id_author);
-          console.log("idReader: " + messaging.id_reader);
-          console.log("content: " + messaging.content);
-
           return (
             messaging && (
               <Messaging

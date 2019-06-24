@@ -1,3 +1,4 @@
+//composant pour 1 message
 import React from "react";
 import { Card, CardBody, CardText, CardImg, Row, Col } from "reactstrap";
 import "../style/Messaging.scss";

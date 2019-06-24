@@ -147,7 +147,6 @@ app.get("/message/:id_reader/:id_author", (req, res) => {
 });
 
 // Profile page routes
-
 app.get("/profile/:profileId", (req, res) => {
   const profileId = req.params.profileId;
   db.query(
