@@ -60,27 +60,25 @@ class Message extends React.Component {
                     />
                   </Col>
                   <Col xs="9" sm="9" md="9">
-                    <Row>
-                      <CardText className="m-5">
-                        <Row className="d-flex">
-                          <Col>
-                            <p className="name">{message.nickname}</p>
-                          </Col>
-                          <Col>
-                            <p className="messageDate timeStamp">
-                              {message.date_diff >= 1
-                                ? "Il y a " + message.date_diff + " jours."
-                                : "Envoyé à " + message.hour_send + "."}
-                            </p>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <p className="bodyText text-justify">
-                            {message.content}
+                    <CardText className="m-5">
+                      <Row className="d-flex">
+                        <Col>
+                          <p className="name">{message.nickname}</p>
+                        </Col>
+                        <Col>
+                          <p className="messageDate timeStamp">
+                            {message.date_diff >= 1
+                              ? "Il y a " + message.date_diff + " jours."
+                              : "Envoyé à " + message.hour_send + "."}
                           </p>
-                        </Row>
-                      </CardText>
-                    </Row>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <p className="bodyText text-justify">
+                          {message.content}
+                        </p>
+                      </Row>
+                    </CardText>
                   </Col>
                 </Row>
               </CardBody>
