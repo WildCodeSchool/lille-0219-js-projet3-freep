@@ -13,7 +13,6 @@ import {
 import { ArrowLeft } from "react-feather";
 import { Link } from "react-router-dom";
 import "../style/Messaging.scss";
-import MessagingPage from "./MessagingPage";
 
 class Message extends React.Component {
   constructor(props) {
@@ -37,17 +36,16 @@ class Message extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {/* {this.state.messagingArray.length === 0 ? (
-          <p>Vous n'avez pas de conversation.</p>
-        ) : (
-          ""
-        )}
-        {this.state.messagingArray.map((messaging, i) => { */}
-        <Link to="/messaging">
+        <Link to="/messagerie/2">
           <Button>
             <ArrowLeft />
           </Button>
         </Link>
+        {this.state.messageArray.length === 0 ? (
+          <p>Vous n'avez pas de message.</p>
+        ) : (
+          ""
+        )}
         {this.state.messageArray.map((message, i) => {
           console.log("message => " + message.data);
           return (
