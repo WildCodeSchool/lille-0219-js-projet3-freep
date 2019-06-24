@@ -1,8 +1,19 @@
 // Page des conversations
 import React from "react";
 import axios from "axios";
-import { Card, CardBody, CardText, CardImg, Row, Col } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardText,
+  CardImg,
+  Row,
+  Col,
+  Button
+} from "reactstrap";
+import { ArrowLeft } from "react-feather";
+import { Link } from "react-router-dom";
 import "../style/Messaging.scss";
+import MessagingPage from "./MessagingPage";
 
 class Message extends React.Component {
   constructor(props) {
@@ -32,6 +43,11 @@ class Message extends React.Component {
           ""
         )}
         {this.state.messagingArray.map((messaging, i) => { */}
+        <Link to="/messaging">
+          <Button>
+            <ArrowLeft />
+          </Button>
+        </Link>
         {this.state.messageArray.map((message, i) => {
           console.log("message => " + message.data);
           return (
