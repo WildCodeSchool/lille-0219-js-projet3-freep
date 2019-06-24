@@ -99,7 +99,7 @@ app.get("/articles/:id/", (req, res) => {
 app.get("/messagerie/:id_reader", (req, res) => {
   if (req.params.id_reader) {
     db.query(
-      `SELECT content, 
+      `SELECT id_author, content, 
       DATEDIFF(NOW(), message.created_at) AS date_diff,
       TIME(message.created_at) as hour_send,
       nickname, 

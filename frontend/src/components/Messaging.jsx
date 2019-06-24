@@ -7,14 +7,14 @@ import { Link } from "react-router-dom";
 class Messaging extends React.Component {
   constructor(props) {
     super(props);
-    this.state = [];
+    this.state = {};
   }
 
   render() {
     return (
       <React.Fragment>
         <Card>
-          <Link to="/message" className="link">
+          <Link to={"/message/" + this.props.id_author} className="link">
             <CardBody>
               <Row>
                 <Col xs="3" sm="3" md="3">
