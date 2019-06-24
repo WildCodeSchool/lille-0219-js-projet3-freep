@@ -1,0 +1,54 @@
+.uploader-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 5vh;
+  form input,
+  .form-control {
+    border: none;
+    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.05);
+  }
+  .fileContainer,
+  .fileContainer .image-upload-button {
+    border-radius: 0.25rem;
+  }
+  .btn {
+    background: #3f4257;
+    &:hover {
+      background: #545972;
+    }
+  }
+}
+
+.fileContainer input {
+  z-index: 0;
+  top: 70%;
+  left: 20%;
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 20%);
+  background: #fff8fff6;
+  box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.3);
+}
+
+.modal-dialog {
+  max-width: 70vw;
+}
+
+.modal-backdrop {
+  background: #1b001b;
+}
+
+.modal-backdrop .show {
+  opacity: 0.99 !important;
+}
+
+@media (max-width: 640px) {
+  .modal-dialog {
+    max-width: 100vw;
+  }
+}
