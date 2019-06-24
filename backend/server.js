@@ -122,7 +122,7 @@ app.get("/messagerie/:id_reader", (req, res) => {
 
 // Profile page routes
 
-app.get("/profile/:profileId", (req, res) => {
+app.get("/profil/:profileId", (req, res) => {
   const profileId = req.params.profileId;
   db.query(
     `SELECT id, nickname, avatar, description FROM user WHERE id=${profileId}`,
@@ -136,7 +136,7 @@ app.get("/profile/:profileId", (req, res) => {
       };
 
       db.query(
-        `SELECT id, id_clothing, url FROM picture WHERE id_user=${profileId}`,
+        `SELECT id, id_clothing, url FROM picture WHERE id_user=${profileId} ORDER BY created_at DESC`,
         (err, rowsPics) => {
           if (err) {
             console.log(err);
@@ -144,7 +144,45 @@ app.get("/profile/:profileId", (req, res) => {
           }
           profileData.pictures = rowsPics;
 
-          res.status(200).send(profileData);
+          db.query(
+            `SELECT COUNT(id) AS nbFollowers FROM social WHERE content_type = "follow" AND id_content=${profileId} GROUP BY id_content`,
+            (err, rowsFollowers) => {
+              if (err) {
+                console.log(err);
+                return res.status(500).send("error when getting social route");
+              }
+              profileData.social = [];
+
+              profileData.social.push(rowsFollowers[0]);
+
+              db.query(
+                `SELECT COUNT(id) AS nbFollowing FROM social WHERE content_type = "follow" AND id_user=${profileId} GROUP BY id_content`,
+                (err, rowsFollowing) => {
+                  if (err) {
+                    console.log(err);
+                    return res
+                      .status(500)
+                      .send("error when getting social route");
+                  }
+                  profileData.social.push(rowsFollowing[0]);
+
+                  db.query(
+                    `SELECT COUNT(*) AS nbPosts FROM picture WHERE id_user = ${profileId} GROUP BY id_user`,
+                    (err, rowsPosts) => {
+                      if (err) {
+                        console.log(err);
+                        return res
+                          .status(500)
+                          .send("error when getting clothing route");
+                      }
+                      profileData.social.push(rowsPosts[0]);
+                      res.status(200).send(profileData);
+                    }
+                  );
+                }
+              );
+            }
+          );
         }
       );
     }
