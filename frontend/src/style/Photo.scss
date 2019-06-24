@@ -7,6 +7,7 @@ $secondary-color: goldenrod;
   border-radius: 20px;
   padding: 5px;
   background: linear-gradient(135deg, #f8d5c7 0%, #f7fab2 100%);
+  animation: 0.5s appear;
 }
 
 .overlay {
@@ -33,4 +34,13 @@ $secondary-color: goldenrod;
 
 svg {
   margin: 0 1vw;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

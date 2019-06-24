@@ -11,6 +11,7 @@ import PartnerPage from "./components/PartnerPage";
 import MessagingPage from "./components/MessagingPage";
 import Message from "./components/Message";
 import Footer from "./components/Footer";
+import Loader from "./components/Loader";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/partenaire" component={PartnerPage} />
           <Route path="/messagerie/:idReader" component={MessagingPage} />
           <Route path="/message" component={Message} />
+          <Route path="/loader" component={Loader} />
         </Switch>
         <Footer />
       </Container>
