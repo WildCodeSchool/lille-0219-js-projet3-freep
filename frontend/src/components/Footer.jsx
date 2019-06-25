@@ -1,18 +1,19 @@
 import React from "react";
 import "../style/Footer.scss";
 import { Row, Col } from "reactstrap";
+import { breakStatement } from "@babel/types";
 
 class Footer extends React.Component {
   render() {
     return (
       <footer className="fixed-bottom">
         <Row>
-          <Col xs="12" md="6" className="littleInfo">
-            Made with love by Wild Code School
+          <Col xs="12" md="4" className="littleInfo">
+            Qui sommes-nous ?
           </Col>
           <Col
             xs="12"
-            md="6"
+            md="4"
             activeClassName="active"
             className="littleInfo"
             exact
@@ -22,7 +23,7 @@ class Footer extends React.Component {
           </Col>
           <Col
             xs="12"
-            md="6"
+            md="4"
             activeClassName="active"
             className="littleInfo"
             exact
@@ -32,13 +33,13 @@ class Footer extends React.Component {
           </Col>
           <Col
             xs="12"
-            md="6"
+            md="4"
             activelassName="active"
             className="littleInfo"
             exact
-            to="/quisommesnous"
+            to="/MadewithlovebuWildCodeSchool"
           >
-            Qui sommes-nous ?
+            Made with love by Wild Code School
           </Col>
         </Row>
       </footer>

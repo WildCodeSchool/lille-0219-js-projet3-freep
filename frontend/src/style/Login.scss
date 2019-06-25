@@ -1,0 +1,26 @@
+@media all and (min-width: 480px) {
+  .Login {
+    padding: 60px 0;
+  }
+
+  .Login form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}
+input[type="email"] {
+  background-color: transparent;
+  border-color: goldenrod;
+}
+
+input[type="password"] {
+  background-color: transparent;
+  border-color: goldenrod;
+}
+
+input[type="email"]:focus {
+  border: 3px solid goldenrod;
+}
+input[type="password"]:focus {
+  border: 3px solid goldenrod;
+}
