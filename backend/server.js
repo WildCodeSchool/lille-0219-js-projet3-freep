@@ -130,9 +130,9 @@ app.post(`/comment/:id`, (req, res) => {
     (err, rows, fields) => {
       if (err) throw err;
       console.log("Comment recorded !");
+      res.status(200).send(rows);
     }
   );
-  res.status(200).send(res);
 });
 
 //Details messaging
