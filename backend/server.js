@@ -35,7 +35,7 @@ app.get("/articles/:id/", (req, res) => {
 
   let answer = {};
   db.query(
-    `SELECT id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
+    `SELECT id, id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
     (err, rowsArticle) => {
       if (err) {
         console.log(err);
