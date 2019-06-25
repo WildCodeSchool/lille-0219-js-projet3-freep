@@ -146,6 +146,44 @@ app.get("/message/:id_reader/:id_author", (req, res) => {
   );
 });
 
+//Update message
+app.put("/message/:id_reader/:id_author", (req, res) => {
+  const P1 = req.params.id_reader;
+  const P2 = req.params.id_author;
+  db.query(
+    `UPDATE
+    message
+    SET isLast=0
+    WHERE
+    (id_author = ${P1} OR id_reader = ${P1})
+    AND (id_author = ${P2} OR id_reader = ${P2});`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when update message route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+//Post message
+app.post("/message/:id_reader/:id_author", (req, res) => {
+  const P1 = req.params.id_reader;
+  const P2 = req.params.id_author;
+  db.query(
+    `INSERT INTO message(id_author,id_reader,content,created_at,isLast) 
+    VALUES(${P1},${P2},"Message 4 de 3 à 2",NOW(),1);`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when post new message");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
 // Profile page routes
 app.get("/profile/:profileId", (req, res) => {
   const profileId = req.params.profileId;
