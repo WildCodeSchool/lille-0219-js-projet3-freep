@@ -17,6 +17,7 @@ import Comment from "./Comment";
 import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
+import CommentForm from "./CommentForm";
 
 class ClothingPage extends React.Component {
   constructor(props) {
@@ -246,24 +247,7 @@ class ClothingPage extends React.Component {
                   })}
                 </div>
               </div>
-              <Form className="comment-form">
-                <FormGroup>
-                  <Label>
-                    <h2>Et toi, qu'en penses-tu?</h2>
-                  </Label>
-                  <Col xs="9" lg="12" className="offset-3 offset-lg-0 p-0">
-                    <Input
-                      type="text"
-                      name="text"
-                      id="comment-form"
-                      placeholder="Tape ton message ici"
-                    />
-                    <Row className="justify-content-end p-3">
-                      <button>Envoyer</button>
-                    </Row>
-                  </Col>
-                </FormGroup>
-              </Form>
+              <CommentForm article={clothing.id} />
             </Col>
           </Row>
         </Container>
