@@ -123,16 +123,18 @@ app.get("/messagerie/:id_reader", (req, res) => {
 // Commenting
 
 app.post(`/comment/:id`, (req, res) => {
-  db.query(
-    `INSERT INTO comment ( id_user, id_clothing, content, created_at)
+  if (req.body.content !== "") {
+    db.query(
+      `INSERT INTO comment ( id_user, id_clothing, content, created_at)
       VALUES ( '4', ${req.params.id}, '${req.body.content}', NOW());
   `,
-    (err, rows, fields) => {
-      if (err) throw err;
-      console.log("Comment recorded !");
-      res.status(200).send(rows);
-    }
-  );
+      (err, rows, fields) => {
+        if (err) throw err;
+        console.log("Comment recorded !");
+        res.status(200).send(rows);
+      }
+    );
+  }
 });
 
 //Details messaging
