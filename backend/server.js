@@ -173,7 +173,7 @@ app.post("/message/:id_reader/:id_author", (req, res) => {
   const P2 = req.params.id_author;
   db.query(
     `INSERT INTO message(id_author,id_reader,content,created_at,isLast) 
-    VALUES(${P1},${P2},"Message 4 de 3 à 2",NOW(),1);`,
+    VALUES(${P1},${P2},"Hello",NOW(),1);`,
     (err, rows) => {
       if (err) {
         console.log(err);
