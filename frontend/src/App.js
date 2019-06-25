@@ -27,7 +27,7 @@ function App() {
           <Route path="/users/:userId" component={ClothingPage} />
           <Route path="/partenaire" component={PartnerPage} />
           <Route path="/messagerie/:idReader" component={MessagingPage} />
-          <Route path="/message" component={Message} />
+          <Route path="/message/:P1/:P2" component={Message} />
           <Route path="/loader" component={Loader} />
         </Switch>
         <Footer />

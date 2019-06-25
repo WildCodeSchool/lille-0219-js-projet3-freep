@@ -1,3 +1,5 @@
+// Page messagerie de base
+
 import React from "react";
 import Messaging from "./Messaging";
 import axios from "axios";
@@ -25,7 +27,6 @@ class MessagingPage extends React.Component {
         });
       });
   }
-
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -50,6 +51,8 @@ class MessagingPage extends React.Component {
                   key={i}
                   nickname={messaging.nickname}
                   avatar={messaging.avatar}
+                  id_author={messaging.id_author}
+                  id_reader={messaging.id_reader}
                   timeStamp={
                     messaging.date_diff >= 1
                       ? "Il y a " + messaging.date_diff + " jours."

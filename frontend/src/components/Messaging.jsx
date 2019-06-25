@@ -1,3 +1,4 @@
+//composant pour 1 message
 import React from "react";
 import { Card, CardBody, CardImg, Row, Col } from "reactstrap";
 import "../style/Messaging.scss";
@@ -13,7 +14,10 @@ class Messaging extends React.Component {
     return (
       <React.Fragment>
         <Card>
-          <Link to="/message" className="link">
+          <Link
+            to={"/message/" + this.props.id_author + "/" + this.props.id_reader}
+            className="link"
+          >
             <CardBody>
               <Row>
                 <Col xs="3" sm="3" md="3">
