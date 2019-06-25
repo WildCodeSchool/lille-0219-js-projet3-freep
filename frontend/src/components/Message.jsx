@@ -1,15 +1,7 @@
 // Page des conversations
 import React from "react";
 import axios from "axios";
-import {
-  Card,
-  CardBody,
-  CardText,
-  CardImg,
-  Row,
-  Col,
-  Button
-} from "reactstrap";
+import { Card, CardBody, CardImg, Row, Col, Button } from "reactstrap";
 import { ArrowLeft } from "react-feather";
 import { Link } from "react-router-dom";
 import "../style/Messaging.scss";
@@ -47,7 +39,6 @@ class Message extends React.Component {
           ""
         )}
         {this.state.messageArray.map((message, i) => {
-          console.log("message => " + message.data);
           return (
             <Card>
               <CardBody>
@@ -60,7 +51,7 @@ class Message extends React.Component {
                     />
                   </Col>
                   <Col xs="9" sm="9" md="9">
-                    <CardText className="m-5">
+                    <div className="m-5">
                       <Row className="d-flex">
                         <Col>
                           <p className="name">{message.nickname}</p>
@@ -78,7 +69,7 @@ class Message extends React.Component {
                           {message.content}
                         </p>
                       </Row>
-                    </CardText>
+                    </div>
                   </Col>
                 </Row>
               </CardBody>
