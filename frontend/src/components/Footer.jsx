@@ -33,7 +33,7 @@ class Footer extends React.Component {
           <Col
             xs="12"
             md="6"
-            activelassName="active"
+            activeClassName="active"
             className="littleInfo"
             exact
             to="/quisommesnous"
