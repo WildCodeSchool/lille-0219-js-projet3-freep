@@ -14,5 +14,23 @@ body {
 
 .container {
   margin-bottom: 2rem;
-  margin-top: 7.5rem;
+  margin-top: 7rem;
+}
+
+@media screen and (max-width: 808px) {
+  .container {
+    margin-top: 10.5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    margin-top: 6.5rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .container {
+    margin-top: 8.5rem;
+  }
 }
