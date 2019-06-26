@@ -1,19 +1,23 @@
+//composant pour 1 message
 import React from "react";
-import { Card, CardBody, CardText, CardImg, Row, Col } from "reactstrap";
+import { Card, CardBody, CardImg, Row, Col } from "reactstrap";
 import "../style/Messaging.scss";
 import { Link } from "react-router-dom";
 
 class Messaging extends React.Component {
   constructor(props) {
     super(props);
-    this.state = [];
+    this.state = {};
   }
 
   render() {
     return (
       <React.Fragment>
         <Card>
-          <Link to="/message" className="link">
+          <Link
+            to={"/message/" + this.props.id_author + "/" + this.props.id_reader}
+            className="link"
+          >
             <CardBody>
               <Row>
                 <Col xs="3" sm="3" md="3">
@@ -24,7 +28,7 @@ class Messaging extends React.Component {
                   />
                 </Col>
                 <Col xs="9" sm="9" md="9">
-                  <CardText className="m-5">
+                  <div className="m-5">
                     <Row className="d-flex">
                       <Col>
                         <p className="name">{this.props.nickname}</p>
@@ -40,7 +44,7 @@ class Messaging extends React.Component {
                         {this.props.message}
                       </p>
                     </Row>
-                  </CardText>
+                  </div>
                 </Col>
               </Row>
             </CardBody>

@@ -1,3 +1,19 @@
+.header {
+  display: inline-block;
+  position: fixed;
+  top: 0;
+  border-bottom: 2px solid goldenrod;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
+  width: 101vw;
+  height: auto;
+  z-index: 200;
+  margin-bottom: 10rem;
+}
+
+.bg-light {
+  background: white !important;
+}
+
 .navbar-nav {
   flex-direction: row;
   margin-top: 2em;
@@ -14,11 +30,14 @@ hr {
   background-color: goldenrod;
   border: 0;
   margin: 0 0 1rem 0;
+  left: 0;
+  right: 0;
 }
 
 .logo {
   border-radius: 50%;
-  width: 5rem;
+  width: 7rem;
+  left: -1rem;
 }
 
 .bg-light {
@@ -75,12 +94,11 @@ form label {
 
 form label input[type="text"] {
   width: 100%;
-  padding: 10px 10px 10px 60px;
+  padding: 10px 10px 10px 40px;
   font-size: 15px;
   font-family: sans-serif;
   border: 2px solid #f8d5c7;
   border-radius: 7px;
-  background-color: lightgray;
   height: 2rem;
 }
 
@@ -89,24 +107,72 @@ form label input {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
 }
 
 form label input[type="submit"] {
   font-size: 1rem;
   margin-left: 5px;
   color: black;
+  cursor: pointer;
+}
+form {
+  margin-top: 2.5rem;
+}
+@media screen and (max-width: 1025px) {
+  .img {
+    width: 25px;
+  }
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 808px) {
+  form label input[type="text"] {
+    margin-left: 2.5rem;
+    width: 70%;
+    font-size: 0.8rem;
+  }
+  input {
+    padding-left: 3rem;
+  }
+  .img {
+    width: 25px;
+    position: relative;
+    right: 3.5rem;
+  }
+}
+
+@media screen and (max-width: 766px) {
   form label input[type="text"] {
     width: 85%;
     margin-left: -0.5rem;
+    font-size: 0.6rem;
   }
   .search-input {
     width: 10rem;
   }
   .collapse {
     margin-top: 1rem;
+  }
+  .img {
+    width: 25px;
+    right: 0;
+  }
+  input {
+    padding-left: 5px;
+  }
+  .navText {
+    width: 13rem;
+  }
+  form {
+    margin-top: 0;
+  }
+}
+
+@media screen and (max-width: 352px) {
+  form label input[type="text"] {
+    width: 60%;
+    margin-left: -0.5rem;
+  }
+  .search-input {
+    width: 6rem;
   }
 }
