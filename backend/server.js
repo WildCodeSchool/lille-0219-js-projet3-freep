@@ -99,7 +99,7 @@ app.get("/articles/:id/", (req, res) => {
 app.get("/messagerie/:id_reader", (req, res) => {
   if (req.params.id_reader) {
     db.query(
-      `SELECT content, 
+      `SELECT id_author, id_reader, content, 
       DATEDIFF(NOW(), message.created_at) AS date_diff,
       TIME(message.created_at) as hour_send,
       nickname, 
@@ -118,6 +118,32 @@ app.get("/messagerie/:id_reader", (req, res) => {
       }
     );
   }
+});
+
+//Details messaging
+app.get("/message/:id_reader/:id_author", (req, res) => {
+  const P1 = req.params.id_reader;
+  const P2 = req.params.id_author;
+  db.query(
+    `SELECT content, 
+    DATEDIFF(NOW(), message.created_at) AS date_diff,
+    TIME(message.created_at) as hour_send,
+    nickname, 
+    avatar
+    FROM message
+    INNER JOIN user ON user.id = message.id_author
+      WHERE
+      (id_author = ${P1} OR id_reader = ${P1})
+      AND (id_author = ${P2} OR id_reader = ${P2})
+      ORDER BY message.created_at DESC;`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting message route");
+      }
+      res.status(200).send(rows);
+    }
+  );
 });
 
 // Profile page routes
@@ -145,29 +171,25 @@ app.get("/profil/:profileId", (req, res) => {
           profileData.pictures = rowsPics;
 
           db.query(
-            `SELECT COUNT(id) AS nbFollowers FROM social WHERE content_type = "follow" AND id_content=${profileId} GROUP BY id_content`,
+            `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_content=${profileId} `,
             (err, rowsFollowers) => {
               if (err) {
                 console.log(err);
                 return res.status(500).send("error when getting social route");
               }
-              profileData.social = [];
-
-              profileData.social.push(rowsFollowers[0]);
+              profileData.followers = rowsFollowers;
 
               db.query(
-                `SELECT COUNT(id) AS nbFollowing FROM social WHERE content_type = "follow" AND id_user=${profileId} GROUP BY id_content`,
-                (err, rowsFollowing) => {
+                `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
+                (err, rowsFollowings) => {
                   if (err) {
                     console.log(err);
-                    return res
-                      .status(500)
-                      .send("error when getting social route");
+                    return res.status(500);
                   }
-                  profileData.social.push(rowsFollowing[0]);
+                  profileData.followings = rowsFollowings;
 
                   db.query(
-                    `SELECT COUNT(*) AS nbPosts FROM picture WHERE id_user = ${profileId} GROUP BY id_user`,
+                    `SELECT id FROM clothing WHERE id_user = ${profileId}`,
                     (err, rowsPosts) => {
                       if (err) {
                         console.log(err);
@@ -175,7 +197,7 @@ app.get("/profil/:profileId", (req, res) => {
                           .status(500)
                           .send("error when getting clothing route");
                       }
-                      profileData.social.push(rowsPosts[0]);
+                      profileData.posts = rowsPosts;
                       res.status(200).send(profileData);
                     }
                   );
@@ -185,6 +207,61 @@ app.get("/profil/:profileId", (req, res) => {
           );
         }
       );
+    }
+  );
+});
+
+// Profile follow routes
+
+app.get("/follow/:followId", (req, res) => {
+  const followId = req.params.followId;
+  db.query(
+    `SELECT id_user FROM social WHERE id_content = ${followId}`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting social route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+app.post("/follow/:followId", (req, res) => {
+  const followId = req.params.followId;
+  const authorId = req.body.idAuthor;
+  db.query(
+    `INSERT INTO social (id_user, content_type, id_content, created_at) VALUES (${authorId}, 'follow', ${followId}, NOW())`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting social route");
+      }
+      db.query(
+        `SELECT DISTINCT(id_user) FROM social WHERE id_content = ${followId}`,
+        (err, rows) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("error when getting social route");
+          }
+          res.status(200).send(rows);
+        }
+      );
+    }
+  );
+});
+
+app.delete("/follow/:followId", (req, res) => {
+  const followId = req.params.followId;
+  const authorId = req.body.idAuthor;
+  db.query(
+    `DELETE FROM social WHERE id_user=${authorId} AND content_type="follow" AND id_content=${followId}`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting social route");
+      }
+      res.status(200).send(rows);
     }
   );
 });
