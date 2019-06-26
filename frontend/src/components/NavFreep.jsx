@@ -44,7 +44,7 @@ class NavFreep extends React.Component {
               <label htmlFor="clothe-profile-search">
                 <input
                   type="text"
-                  placeholder="Chercher un vêtement, un profil..."
+                  placeholder="Cherche un vêtement ou un profil..."
                 />
                 <input type="submit" />
                 <img className="magnifier" src="../pictures/loupe.png" />
