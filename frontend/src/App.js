@@ -24,6 +24,7 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route path="/article/:articleId" component={ClothingPage} />
           <Route path="/profil/:profileId" component={Profile} />
+          <Route path="/follow/:followId" />
           <Route path="/users/:userId" component={ClothingPage} />
           <Route path="/partenaire" component={PartnerPage} />
           <Route path="/messagerie/:idReader" component={MessagingPage} />
