@@ -46,7 +46,8 @@ class NavFreep extends React.Component {
                   type="text"
                   placeholder="Chercher un vêtement, un profil..."
                 />
-                <input type="submit" value="&#x1F50E;" />
+                <input type="submit" />
+                <img className="magnifier" src="../pictures/loupe.png" />
               </label>
             </form>
             <Nav className="ml-auto" navbar>
