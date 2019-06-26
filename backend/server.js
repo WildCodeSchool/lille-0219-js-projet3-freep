@@ -152,10 +152,6 @@ app.post("/message/:P1/:P2", (req, res) => {
   const P1 = req.params.P1;
   const P2 = req.params.P2;
   const content = req.body.content;
-  let date_diff = "";
-  let hour_send = "";
-  let nickname = "";
-  let avatar = "";
   console.log(req.body);
   db.query(
     `UPDATE
