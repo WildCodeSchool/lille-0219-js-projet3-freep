@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
 import { Tag, PlusCircle, Mail, Heart, User } from "react-feather";
-import { Modal } from "reactstrap";
+import { Modal, ModalHeader } from "reactstrap";
 import Uploader from "./Upload";
 
 class NavFreep extends React.Component {
@@ -57,7 +57,8 @@ class NavFreep extends React.Component {
                   color="black"
                   onClick={this.toggleModal}
                 />
-                <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
+                  <ModalHeader toggle={this.toggleModal} className="pr-5" />
                   <Uploader />
                 </Modal>
               </NavLink>
