@@ -110,17 +110,33 @@ form label input {
 }
 
 form label input[type="submit"] {
-  font-size: 1rem;
-  margin-left: 5px;
-  color: black;
+  color: transparent;
   cursor: pointer;
+  width: 30px;
+  margin-right: 10px;
 }
 form {
   margin-top: 2.5rem;
 }
+
+.magnifier {
+  width: 20px;
+  margin-left: 15px;
+  color: black;
+  cursor: pointer;
+  opacity: 0.5;
+}
 @media screen and (max-width: 1025px) {
   .img {
     width: 25px;
+  }
+  .magnifier {
+    width: 20px;
+    margin-left: 13px;
+  }
+  form label input[type="submit"] {
+    margin-right: 3px;
+    width: 38px;
   }
 }
 
@@ -137,6 +153,15 @@ form {
     width: 25px;
     position: relative;
     right: 3.5rem;
+  }
+  .magnifier {
+    width: 20px;
+    margin-left: 50px;
+  }
+  form label input[type="submit"] {
+    width: 2px;
+    margin-right: 0;
+    margin-left: 20px;
   }
 }
 
@@ -164,6 +189,15 @@ form {
   }
   form {
     margin-top: 0;
+  }
+  .magnifier {
+    width: 20px;
+    margin-left: 8px;
+  }
+  form label input[type="submit"] {
+    width: 28px;
+    margin-right: 33px;
+    margin-left: 0;
   }
 }
 

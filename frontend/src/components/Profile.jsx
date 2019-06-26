@@ -88,9 +88,9 @@ class Profile extends React.Component {
             </Col>
           </Row>
           <Row>
-            {pictures.map((picture, idx) => {
+            {pictures.map((picture, key) => {
               return (
-                <Col sm="6" md="4" lg="3" xl="2" key={idx}>
+                <Col sm="6" md="4" lg="3" key={key}>
                   <LazyLoad height={100} offset={-200}>
                     <Photo picture={picture.url} link={picture.id_clothing} />
                   </LazyLoad>
