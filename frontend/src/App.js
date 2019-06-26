@@ -29,6 +29,7 @@ function App() {
           <Route path="/messagerie/:idReader" component={MessagingPage} />
           <Route path="/message/:P1/:P2" component={Message} />
           <Route path="/loader" component={Loader} />
+          <Route path="/emprunt/:userId" component={BorrowPage} />
         </Switch>
         <Footer />
       </Container>
