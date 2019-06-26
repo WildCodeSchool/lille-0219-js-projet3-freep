@@ -13,6 +13,7 @@ import Message from "./components/Message";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
+import Loader from "./components/Loader";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
       <header>
         <NavFreep />
       </header>
-      <Container>
+      <Container className="container">
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/article/:articleId" component={ClothingPage} />
@@ -28,9 +29,10 @@ function App() {
           <Route path="/users/:userId" component={ClothingPage} />
           <Route path="/partenaire" component={PartnerPage} />
           <Route path="/messagerie/:idReader" component={MessagingPage} />
-          <Route path="/message" component={Message} />
           <Route path="/login" exact component={Login} />
           <Route path="/registration" exact component={Registration} />
+          <Route path="/message/:P1/:P2" component={Message} />
+          <Route path="/loader" component={Loader} />
         </Switch>
         <Footer />
       </Container>

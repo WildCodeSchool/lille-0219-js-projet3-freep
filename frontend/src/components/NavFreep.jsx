@@ -1,68 +1,82 @@
 import React from "react";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
-import { Plus, Mail, Heart, User } from "react-feather";
+import { Tag, PlusCircle, Mail, Heart, User } from "react-feather";
+import { Modal, ModalHeader } from "reactstrap";
+import Uploader from "./Upload";
 
 class NavFreep extends React.Component {
   constructor(props) {
     super(props);
-    this.toggle = this.toggle.bind(this);
+    this.toggleBurger = this.toggleBurger.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      modal: false
     };
   }
-  toggle() {
+  toggleBurger() {
     this.setState({
       isOpen: !this.state.isOpen
     });
+  }
+  toggleModal() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
   }
 
   render() {
     return (
       <div className="header">
         <Navbar color="light" light expand="md">
-          <Navbar color="black" light>
-            <Link to="/">
-              <img
-                className="logo"
-                src="https://via.placeholder.com/100"
-                alt="logo"
-              />
-            </Link>
-          </Navbar>
+          <Link to="/">
+            <img className="logo" src="../pictures/logo.png" alt="logo" />
+          </Link>
           <div className="navText">
             <span className="navTitle">Freep</span>
             <br />
             <span className="navCatch">La garde robe qui rapporte</span>
           </div>
-          <NavbarToggler onClick={this.toggle} />
+          <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <form action="">
               <label htmlFor="clothe-profile-search">
                 <input
                   type="text"
-                  placeholder="Chercher un vêtement, un profil..."
+                  placeholder="Cherche un vêtement ou un profil..."
                 />
-                <input type="submit" value="&#x1F50E;" />
+                <input type="submit" />
+                <img className="magnifier" src="../pictures/loupe.png" />
               </label>
             </form>
             <Nav className="ml-auto" navbar>
-              <NavLink to="/">
-                <Plus className="img" color="black" />
+              <NavLink title="Propose ton vêtement !">
+                <PlusCircle
+                  className="img"
+                  color="black"
+                  onClick={this.toggleModal}
+                />
+                <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
+                  <ModalHeader toggle={this.toggleModal} className="pr-5" />
+                  <Uploader />
+                </Modal>
               </NavLink>
-              <NavLink to="/messagerie">
+              <NavLink to="/partenaire" title="Découvre nos partenaires !">
+                <Tag className="img" color="black" />
+              </NavLink>
+              <NavLink to="/messagerie/2" title="Parle avec nos Freepeuses">
                 <Mail className="img" color="black" />
               </NavLink>
-              <NavLink to="/favoris">
+              <NavLink to="/favoris" title="Retrouve tes favoris">
                 <Heart className="img" color="black" />
               </NavLink>
-              <NavLink to="/profil">
+              <NavLink to="/profil/1" title="Accède à ton profil">
                 <User className="img" color="black" />
               </NavLink>
             </Nav>
           </Collapse>
         </Navbar>
-        <hr />
       </div>
     );
   }
