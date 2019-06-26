@@ -121,9 +121,9 @@ app.get("/messagerie/:id_reader", (req, res) => {
 });
 
 //Details messaging
-app.get("/message/:id_reader/:id_author", (req, res) => {
-  const P1 = req.params.id_reader;
-  const P2 = req.params.id_author;
+app.get("/message/:P1/:P2", (req, res) => {
+  const P1 = req.params.P1;
+  const P2 = req.params.P2;
   db.query(
     `SELECT content, 
     DATEDIFF(NOW(), message.created_at) AS date_diff,
@@ -147,9 +147,15 @@ app.get("/message/:id_reader/:id_author", (req, res) => {
 });
 
 //Update message
-app.put("/message/:id_reader/:id_author", (req, res) => {
-  const P1 = req.params.id_reader;
-  const P2 = req.params.id_author;
+app.post("/message/:P1/:P2", (req, res) => {
+  const P1 = req.params.P1;
+  const P2 = req.params.P2;
+  const content = req.body.content;
+  let date_diff = "";
+  let hour_send = "";
+  let nickname = "";
+  let avatar = "";
+  console.log(req.body);
   db.query(
     `UPDATE
     message
@@ -162,25 +168,44 @@ app.put("/message/:id_reader/:id_author", (req, res) => {
         console.log(err);
         res.status(500).send("error when update message route");
       }
-      res.status(200).send(rows);
-    }
-  );
-});
-
-//Post message
-app.post("/message/:id_reader/:id_author", (req, res) => {
-  const P1 = req.params.id_reader;
-  const P2 = req.params.id_author;
-  const content = req.body.content;
-  db.query(
-    `INSERT INTO message(id_author,id_reader,content,created_at,isLast) 
-    VALUES(${P1},${P2},${content},NOW(),1);`,
-    (err, rows) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("error when post new message");
-      }
-      res.status(200).send(rows);
+      db.query(
+        `INSERT INTO message(id_author,id_reader,content,created_at,isLast) 
+        VALUES(${P1},${P2},'${content}',NOW(),1);`,
+        (err, rows) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("error when post new message");
+          }
+          db.query(
+            `SELECT content, 
+            DATEDIFF(NOW(), message.created_at) AS date_diff,
+            TIME(message.created_at) as hour_send,
+            nickname, 
+            avatar 
+            FROM message
+            INNER JOIN user ON user.id = message.id_author
+              WHERE
+              (id_author = ${P1} OR id_reader = ${P1})
+              AND (id_author = ${P2} OR id_reader = ${P2})
+              ORDER BY message.created_at DESC;`,
+            (err, rows) => {
+              if (err) {
+                console.log(err);
+                res.status(500).send("error when getting message route");
+              }
+              const newMess = {
+                content: content,
+                date_diff: rows.date_diff,
+                hour_send: rows.hour_send,
+                nickname: rows.nickname,
+                avatar: rows.avatar
+              };
+              res.status(200).send(newMess);
+              console.log(newMess + rows);
+            }
+          );
+        }
+      );
     }
   );
 });

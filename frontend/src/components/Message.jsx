@@ -21,7 +21,8 @@ class Message extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messageArray: [{}]
+      messageArray: [{}],
+      content_form: ""
     };
   }
 
@@ -34,23 +35,41 @@ class Message extends React.Component {
         messageArray: data
       });
     });
-    console.log("message:" + this.state.messageArray);
+  }
+
+  handleChange(e) {
+    const { value } = e.target;
+    this.setState({
+      content_form: value
+    });
   }
 
   handleSubmit(e) {
     e.preventDefault();
     const P1 = this.props.match.params.P1;
     const P2 = this.props.match.params.P2;
-    const content_form = e.target.value;
+    const { content_form } = this.state;
+
     axios
-      .put(`http://localhost:5050/message/${P1}/${P2}`)
       .post(`http://localhost:5050/message/${P1}/${P2}`, {
         content: content_form
       })
       .then(({ data }) => {
-        this.setState({
-          messageArray: data
-        });
+        console.log(data);
+        let messages = this.state.messageArray;
+        messages.unshift(data);
+        this.setState(
+          {
+            content_form: "",
+            messageArray: messages
+          },
+          () => {
+            console.log(this.state.messageArray);
+          }
+        );
+      })
+      .catch(err => {
+        console.log(`Nope! ${err}`);
       });
   }
 
@@ -62,17 +81,23 @@ class Message extends React.Component {
             <ArrowLeft />
           </Button>
         </Link>
-        <Form>
+        <Form
+          onSubmit={e => {
+            this.handleSubmit(e);
+          }}
+        >
           <FormGroup>
             <Label for="exampleText">Nouveau Message</Label>
-            <Input type="textarea" name="text" id="exampleText" />
-            <Button
-              onSubmit={e => {
-                this.handleSubmit(e);
+            <Input
+              type="textarea"
+              name="content_form"
+              id="content_field"
+              value={this.state.content_form}
+              onChange={e => {
+                this.handleChange(e);
               }}
-            >
-              Envoyer
-            </Button>
+            />
+            <Button>Envoyer</Button>
           </FormGroup>
         </Form>
         {this.state.messageArray.length === 0 ? (
