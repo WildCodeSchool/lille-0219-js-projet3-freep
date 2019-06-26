@@ -7,6 +7,7 @@ $secondary-color: goldenrod;
   border-radius: 20px;
   padding: 5px;
   background: linear-gradient(135deg, #f8d5c7 0%, #f7fab2 100%);
+  animation: 0.5s appear;
 }
 
 .overlay {
@@ -18,19 +19,31 @@ $secondary-color: goldenrod;
   border: none;
   margin: 3vh auto;
   &:hover .overlay {
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 15px 15px;
     transition: 0.8s;
     position: absolute;
-    background: rgba(#222, 0.7);
+    background: rgba(34, 34, 34, 0.35);
     top: 85%;
     left: 0;
     bottom: 0;
     right: 0;
     display: flex;
     justify-content: center;
+    width: 95%;
+    height: 13%;
+    margin: 0 auto 65% auto;
   }
 }
 
 svg {
   margin: 0 1vw;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

@@ -35,7 +35,7 @@ app.get("/articles/:id/", (req, res) => {
 
   let answer = {};
   db.query(
-    `SELECT id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
+    `SELECT id, id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
     (err, rowsArticle) => {
       if (err) {
         console.log(err);
@@ -99,7 +99,7 @@ app.get("/articles/:id/", (req, res) => {
 app.get("/messagerie/:id_reader", (req, res) => {
   if (req.params.id_reader) {
     db.query(
-      `SELECT content, 
+      `SELECT id_author, id_reader, content, 
       DATEDIFF(NOW(), message.created_at) AS date_diff,
       TIME(message.created_at) as hour_send,
       nickname, 
@@ -120,8 +120,50 @@ app.get("/messagerie/:id_reader", (req, res) => {
   }
 });
 
-// Profile page routes
+// Commenting
 
+app.post(`/comment/:id`, (req, res) => {
+  if (req.body.content !== "") {
+    db.query(
+      `INSERT INTO comment ( id_user, id_clothing, content, created_at)
+      VALUES ( '4', ${req.params.id}, '${req.body.content}', NOW());
+  `,
+      (err, rows, fields) => {
+        if (err) throw err;
+        console.log("Comment recorded !");
+        res.status(200).send(rows);
+      }
+    );
+  }
+});
+
+//Details messaging
+app.get("/message/:id_reader/:id_author", (req, res) => {
+  const P1 = req.params.id_reader;
+  const P2 = req.params.id_author;
+  db.query(
+    `SELECT content, 
+    DATEDIFF(NOW(), message.created_at) AS date_diff,
+    TIME(message.created_at) as hour_send,
+    nickname, 
+    avatar
+    FROM message
+    INNER JOIN user ON user.id = message.id_author
+      WHERE
+      (id_author = ${P1} OR id_reader = ${P1})
+      AND (id_author = ${P2} OR id_reader = ${P2})
+      ORDER BY message.created_at DESC;`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting message route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+// Profile page routes
 app.get("/profile/:profileId", (req, res) => {
   const profileId = req.params.profileId;
   db.query(
