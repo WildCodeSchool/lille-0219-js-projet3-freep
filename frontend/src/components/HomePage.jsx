@@ -22,7 +22,7 @@ class HomePage extends React.Component {
   render() {
     const pictures = this.state.picturesInfo;
     return (
-      <Masonry style={{ marginTop: 87 }}>
+      <Masonry>
         {pictures.map((picture, key) => {
           return (
             <Col sm="6" md="4" lg="3" key={key} className="px-0">
