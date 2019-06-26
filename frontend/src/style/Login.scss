@@ -1,10 +1,21 @@
 @media all and (min-width: 480px) {
   .Login {
     padding: 60px 0;
+    background-image: "src/pictures/Login.jpg";
   }
 
   .Login form {
     margin: 0 auto;
     max-width: 320px;
   }
+}
+
+.titleConnect {
+  font-size: 35px;
+  color: goldenrod;
+  font-family: DancingScript;
+  text-align: center;
+}
+.Login.Button {
+  color: black;
 }

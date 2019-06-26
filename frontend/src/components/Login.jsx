@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
+import LoginBackground from "../pictures/Login.jpg";
 
 class Login extends Component {
   constructor(props) {
@@ -29,8 +30,24 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="Login">
-        <Form onSubmit={this.handleSubmit}>
+      <div
+        className="Login"
+        style={{
+          backgroundImage: `url(${LoginBackground})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          height: "100vh"
+        }}
+      >
+        <Form
+          onSubmit={this.handleSubmit}
+          style={{
+            background: "#f5f5f5",
+            padding: "5vh",
+            borderRadius: "10px",
+            boxShadow: ".5rem 1rem 1rem rgba(0,0,0,.2)"
+          }}
+        >
           <h1 className="titleConnect">Prête pour de nouvelles aventures ? </h1>
           <Form.Group controlId="email" bsSize="large">
             <label for="email">E-mail</label>
@@ -59,7 +76,7 @@ class Login extends Component {
             <label For="checkbox1">Se souvenir de moi</label>
           </div>
           <Button
-            class="Button"
+            className="myButton"
             block
             bsSize="large"
             disabled={!this.validateForm()}

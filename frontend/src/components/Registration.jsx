@@ -97,7 +97,7 @@ class Registration extends Component {
             />
           </Form.Group>
           <Button
-            class="Button"
+            className="myButton"
             block
             bsSize="large"
             disabled={!this.validateForm()}
