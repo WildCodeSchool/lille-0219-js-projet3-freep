@@ -3,6 +3,6 @@
   padding: 5px;
   background: linear-gradient(135deg, #f8d5c7 0%, #f7fab2 100%);
   object-fit: cover;
-  height: 128px !important;
-  width: 128px !important;
+  height: 128px;
+  width: 128px;
 }
