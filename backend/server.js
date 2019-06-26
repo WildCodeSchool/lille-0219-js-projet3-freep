@@ -193,6 +193,43 @@ app.get("/profile/:profileId", (req, res) => {
   );
 });
 
+//Borrow
+app.get("/emprunt/:userId", (req, res) => {
+  const userId = req.params.userId;
+  db.query(
+    `SELECT borrow.id_clothing, url 
+    FROM borrow 
+    INNER JOIN picture ON picture.id= borrow.id_picture
+    INNER JOIN clothing on clothing.id = borrow.id_clothing
+    INNER JOIN user on user.id = borrow.id_user
+    WHERE borrow.id_user = ${userId}`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when getting emprunt route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+//Delete a Borrow
+app.delete(`/emprunt/:userId/:borrowId`, (req, res) => {
+  const userId = req.params.userId;
+  const borrowId = req.params.borrowId;
+  db.query(
+    `DELETE FROM borrow
+    WHERE id_user=${userId}
+    AND id=${borrowId}`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("error when delete borrow");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
