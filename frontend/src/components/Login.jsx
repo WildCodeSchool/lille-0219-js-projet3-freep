@@ -31,7 +31,7 @@ class Login extends Component {
     return (
       <div className="Login">
         <Form onSubmit={this.handleSubmit}>
-          <h1 className="titleConnect">Connexion</h1>
+          <h1 className="titleConnect">Prête pour de nouvelles aventures ? </h1>
           <Form.Group controlId="email" bsSize="large">
             <label for="email">E-mail</label>
             <Form.Control
@@ -65,7 +65,7 @@ class Login extends Component {
             disabled={!this.validateForm()}
             type="submit"
           >
-            Se connecter
+            Connecte toi !
           </Button>
         </Form>
       </div>

@@ -12,7 +12,6 @@ class Registration extends Component {
       lastName: "",
       username: "",
       email: "",
-      confirmEmail: "",
       password: "",
       confirmPassword: ""
     };
@@ -23,7 +22,7 @@ class Registration extends Component {
       this.state.firstName.length > 0 &&
       this.state.lastName.length > 0 &&
       this.state.username.length > 0 &&
-      this.state.email === this.state.confirmEmail &&
+      this.state.email.length > 0 &&
       this.state.password === this.state.confirmPassword
     );
   }
@@ -42,13 +41,12 @@ class Registration extends Component {
     return (
       <div className="Registration">
         <Form onSubmit={this.handleSubmit}>
-          <h1 className="titleConnect"> Inscription à Freep </h1>
+          <h1 className="titleConnect"> Rejoins la communauté Freep </h1>
 
           <Form.Group controlId="firstName" bsSize="large">
             <label for="firstName"> Prénom </label>
             <Form.Control
               autoFocus
-              // placeholder="firstName (required)"
               type="text"
               value={this.state.firstName}
               onChange={this.handleChange}
@@ -105,7 +103,7 @@ class Registration extends Component {
             disabled={!this.validateForm()}
             type="submit"
           >
-            Se connecter
+            Rejoins nous !
           </Button>
         </Form>
       </div>
