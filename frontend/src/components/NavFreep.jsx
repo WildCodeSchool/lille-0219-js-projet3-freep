@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
-import { Tag, Upload, Mail, Heart, User } from "react-feather";
+import { Tag, PlusCircle, Mail, Heart, User } from "react-feather";
 import { Modal, ModalHeader } from "reactstrap";
 import Uploader from "./Upload";
 
@@ -44,14 +44,15 @@ class NavFreep extends React.Component {
               <label htmlFor="clothe-profile-search">
                 <input
                   type="text"
-                  placeholder="Chercher un vêtement, un profil..."
+                  placeholder="Cherche un vêtement ou un profil..."
                 />
-                <input type="submit" value="&#x1F50E;" />
+                <input type="submit" />
+                <img className="magnifier" src="../pictures/loupe.png" />
               </label>
             </form>
             <Nav className="ml-auto" navbar>
               <NavLink title="Propose ton vêtement !">
-                <Upload
+                <PlusCircle
                   className="img"
                   color="black"
                   onClick={this.toggleModal}
@@ -61,16 +62,16 @@ class NavFreep extends React.Component {
                   <Uploader />
                 </Modal>
               </NavLink>
-              <NavLink to="/partenaire">
+              <NavLink to="/partenaire" title="Découvre nos partenaires !">
                 <Tag className="img" color="black" />
               </NavLink>
-              <NavLink to="/messagerie/2">
+              <NavLink to="/messagerie/2" title="Parle avec nos Freepeuses">
                 <Mail className="img" color="black" />
               </NavLink>
-              <NavLink to="/favoris">
+              <NavLink to="/favoris" title="Retrouve tes favoris">
                 <Heart className="img" color="black" />
               </NavLink>
-              <NavLink to="/profil/1">
+              <NavLink to="/profil/1" title="Accède à ton profil">
                 <User className="img" color="black" />
               </NavLink>
             </Nav>
