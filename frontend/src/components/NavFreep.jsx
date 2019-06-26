@@ -12,9 +12,18 @@ class NavFreep extends React.Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.state = {
       isOpen: false,
-      modal: false
+      modal: false,
+      search: ""
     };
+    this.onChange = this.onChange.bind(this);
   }
+
+  onChange(e) {
+    this.setState({
+      search: e.target.value
+    });
+  }
+
   toggleBurger() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -24,6 +33,10 @@ class NavFreep extends React.Component {
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value });
   }
 
   render() {
@@ -45,8 +58,12 @@ class NavFreep extends React.Component {
                 <input
                   type="text"
                   placeholder="Chercher un vêtement, un profil..."
+                  value={this.state.search}
+                  onChange={this.onChange}
                 />
-                <input type="submit" value="&#x1F50E;" />
+                <Link to={`/search/${this.state.search}`}>
+                  <input type="submit" value="&#x1F50E;" />
+                </Link>
               </label>
             </form>
             <Nav className="ml-auto" navbar>

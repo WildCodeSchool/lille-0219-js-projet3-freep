@@ -176,6 +176,39 @@ app.get("/profile/:profileId", (req, res) => {
   );
 });
 
+//Search
+
+app.get("/search/", (req, res) => {
+  db.query(
+    `SELECT clothing.type, clothing.description FROM clothing WHERE clothing.type LIKE "%ro%" OR clothing.description LIKE "%ro%"`,
+    (err, ResultClothing) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(500)
+          .send("error when getting search route on clothes");
+      }
+      let SearchResult = {
+        Results: ResultClothing[0]
+      };
+      db.query(
+        `SELECT user.nickname FROM user 
+        WHERE user.nickname LIKE "%ro%" `,
+        (err, ResultUsers) => {
+          if (err) {
+            console.log(err);
+            return res
+              .status(500)
+              .send("error when getting search route on users");
+          }
+          SearchResult.ResultUsers = ResultUsers;
+          res.status(200).send(SearchResult);
+        }
+      );
+    }
+  );
+});
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
