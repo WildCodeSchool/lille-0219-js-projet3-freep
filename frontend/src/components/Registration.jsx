@@ -8,7 +8,7 @@ class Registration extends Component {
     super(props);
 
     this.state = {
-      fistName: "",
+      firstName: "",
       lastName: "",
       username: "",
       email: "",
@@ -19,12 +19,13 @@ class Registration extends Component {
   }
 
   validateForm() {
-    return;
-    this.state.firstName.length > 0,
-      this.state.lastName.length > 0,
-      this.state.username.length > 0,
-      this.state.email === this.state.confirmEmail,
-      this.state.password === this.state.confirmPassword;
+    return (
+      this.state.firstName.length > 0 &&
+      this.state.lastName.length > 0 &&
+      this.state.username.length > 0 &&
+      this.state.email === this.state.confirmEmail &&
+      this.state.password === this.state.confirmPassword
+    );
   }
 
   handleChange = event => {
