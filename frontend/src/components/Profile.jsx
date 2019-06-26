@@ -6,6 +6,8 @@ import Nickname from "./Nickname";
 import Photo from "./Photo";
 import axios from "axios";
 import "../style/Profile.css";
+import Loader from "./Loader";
+import LazyLoad from "react-lazyload";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -19,44 +21,67 @@ class Profile extends React.Component {
         Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.`
       },
       pictures: [],
-      social: [
-        {
-          nbFollowers: 23333
-        },
-        {
-          nbFollowing: 313445
-        },
-        {
-          nbPosts: 10923
-        }
-      ]
+      followers: [],
+      followings: [],
+      posts: []
     };
   }
+
+  // handleClick = () => {
+  //   const profileId = this.props.match.params.profileId;
+
+  //   this.setState(state => ({
+  //     isFollowed: !state.isFollowed
+  //   }));
+  //   if (!this.state.isFollowed) {
+  //     axios
+  //       .post(`http://localhost:5050/follow/${profileId}`, {
+  //         idAuthor: 1 // ;_;
+  //       })
+  //       .then(({ data }) => {
+  //         console.log(this.state);
+  //         this.setState({
+  //           socialNew: { followers: data }
+  //         });
+  //       });
+  //   } else {
+  //     axios
+  //       .delete(`http://localhost:5050/follow/${profileId}`, {
+  //         idAuthor: 1 // ;_;
+  //       })
+  //       .then(({ data }) => {
+  //         this.setState({
+  //           socialNew: { followers: data }
+  //         });
+  //       });
+  //   }
+  // };
 
   componentDidMount() {
     const profileId = this.props.match.params.profileId;
 
     axios.get(`http://localhost:5050/profil/${profileId}`).then(({ data }) => {
-      this.setState(
-        {
-          user: data.profile,
-          pictures: data.pictures,
-          social: data.social
-        },
-        () => {
-          console.log(data.social);
-        }
-      );
+      this.setState({
+        user: data.profile,
+        pictures: data.pictures,
+        followers: data.followers,
+        followings: data.followings,
+        posts: data.posts
+      });
     });
   }
 
   render() {
     const user = this.state.user;
     const pictures = this.state.pictures;
-    const social = this.state.social;
+    const followers = this.state.followers.length;
+    const followings = this.state.followings.length;
+    const posts = this.state.posts.length;
 
-    return (
-      <React.Fragment>
+    if (this.state.loading) {
+      return <Loader />;
+    } else {
+      return (
         <Container>
           <Row>
             <Col xs="12" sm="6">
@@ -80,36 +105,36 @@ class Profile extends React.Component {
           </Row>
           <Row className="text-center">
             <Col xs="4" xl="2" className="primaryfont p-0">
-              {social[0]
-                ? social[0].nbFollowers > 9999
-                  ? (social[0].nbFollowers / 1000).toPrecision(3) +
-                    "K Followers"
-                  : social[0].nbFollowers < 2
-                  ? social[0].nbFollowers + " Follower"
-                  : social[0].nbFollowers + " Followers"
+              {followers
+                ? followers > 9999
+                  ? (followers / 1000).toPrecision(3) + "K Followers"
+                  : followers < 2
+                  ? followers + " Follower"
+                  : followers + " Followers"
                 : 0 + " Follower"}
             </Col>
             <Col xs="4" xl="2" className="primaryfont p-0">
-              {social[1]
-                ? social[1].nbFollowing > 9999
-                  ? (social[1].nbFollowing / 1000).toPrecision(3) +
-                    "K Followers"
-                  : social[1].nbFollowing < 2
-                  ? social[1].nbFollowing + " Following"
-                  : social[1].nbFollowing + " Followings"
+              {followings
+                ? followings > 9999
+                  ? (followings / 1000).toPrecision(3) + "K Followers"
+                  : followings < 2
+                  ? followings + " Following"
+                  : followings + " Followings"
                 : 0 + " Following"}
             </Col>
             <Col xs="4" xl="2" className="primaryfont p-0">
-              {social[2]
-                ? social[2].nbPosts > 9999
-                  ? (social[2].nbPosts / 1000).toPrecision(3) + "K Posts"
-                  : social[2].nbPosts < 2
-                  ? social[2].nbPosts + " Post"
-                  : social[2].nbPosts + " Posts"
+              {posts
+                ? posts > 9999
+                  ? (posts / 1000).toPrecision(3) + "K Posts"
+                  : posts < 2
+                  ? posts + " Post"
+                  : posts + " Posts"
                 : 0 + " Post"}
             </Col>
             <Col>
-              <Button className="button primaryfont">Suivre</Button>
+              <Button onClick={this.handleClick} className="button primaryfont">
+                {this.state.isFollowed ? "Suivie ✓" : "Suivre"}
+              </Button>
             </Col>
             <Col>
               <Link to="/message">
@@ -120,15 +145,17 @@ class Profile extends React.Component {
           <Row>
             {pictures.map((picture, idx) => {
               return (
-                <Col md="6" lg="3" key={idx}>
-                  <Photo picture={picture.url} link={picture.id_clothing} />
+                <Col sm="6" md="4" lg="3" xl="2" key={idx}>
+                  <LazyLoad height={100} offset={-200}>
+                    <Photo picture={picture.url} link={picture.id_clothing} />
+                  </LazyLoad>
                 </Col>
               );
             })}
           </Row>
         </Container>
-      </React.Fragment>
-    );
+      );
+    }
   }
 }
 
