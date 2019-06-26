@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
 import LoginBackground from "../pictures/Login.jpg";
+import { NavLink } from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -50,7 +51,16 @@ class Login extends Component {
         >
           <h1 className="titleConnect">Prête pour de nouvelles aventures ? </h1>
           <Form.Group controlId="email" bsSize="large">
-            <label for="email">E-mail</label>
+            <h1
+              style={{
+                fontSize: "20px",
+                color: "goldenrod",
+                fontFamily: "DancingScript"
+              }}
+              for="email"
+            >
+              E-mail
+            </h1>
             <Form.Control
               autoFocus
               type="email"
@@ -59,7 +69,16 @@ class Login extends Component {
             />
           </Form.Group>
           <Form.Group controlId="password" bsSize="large">
-            <label for="pwd">Mot de passe </label>
+            <h1
+              style={{
+                fontSize: "20px",
+                color: "goldenrod",
+                fontFamily: "DancingScript"
+              }}
+              for="pwd"
+            >
+              Mot de passe{" "}
+            </h1>
             <Form.Control
               value={this.state.password}
               onChange={this.handleChange}
@@ -73,17 +92,36 @@ class Login extends Component {
               id="checkbox1"
               type="checkbox"
             />
-            <label For="checkbox1">Se souvenir de moi</label>
+            <h1
+              style={{
+                fontSize: "20px",
+                color: "goldenrod",
+                fontFamily: "DancingScript"
+              }}
+              For="checkbox1"
+            >
+              Se souvenir de moi
+            </h1>
           </div>
+
           <Button
-            className="myButton"
+            class="myButton"
             block
             bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
+            style={{ border: " 1px solid black" }}
           >
-            Connecte toi !
+            > Connecte toi !
           </Button>
+          <NavLink
+            activeClassName="active"
+            className="littleInfo"
+            exact
+            to="/Registration"
+          >
+            Inscrit toi ! ❀
+          </NavLink>
         </Form>
       </div>
     );

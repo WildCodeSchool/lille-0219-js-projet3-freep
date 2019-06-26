@@ -1,7 +1,6 @@
 @media all and (min-width: 480px) {
   .Login {
     padding: 60px 0;
-    background-image: "src/pictures/Login.jpg";
   }
 
   .Login form {
@@ -15,7 +14,12 @@
   color: goldenrod;
   font-family: DancingScript;
   text-align: center;
+  font-weight: bold;
 }
 .Login.Button {
   color: black;
+}
+.littleInfo {
+  font-size: 15px;
+  color: goldenrod;
 }

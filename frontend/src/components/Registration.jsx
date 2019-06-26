@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
+import LoginBackground from "../pictures/Login.jpg";
 
 class Registration extends Component {
   constructor(props) {
@@ -39,12 +40,40 @@ class Registration extends Component {
 
   render() {
     return (
-      <div className="Registration">
-        <Form onSubmit={this.handleSubmit}>
+      <div
+        className="Registration"
+        style={{
+          backgroundImage: `url(${LoginBackground})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          height: "100vh"
+        }}
+      >
+        <Form
+          onSubmit={this.handleSubmit}
+          style={{
+            text: "center",
+            background: "#f5f5f5",
+            padding: "5vh",
+            margin: "50px",
+            borderRadius: "10px",
+            boxShadow: ".5rem 1rem 1rem rgba(0,0,0,.2)"
+          }}
+        >
           <h1 className="titleConnect"> Rejoins la communauté Freep </h1>
 
           <Form.Group controlId="firstName" bsSize="large">
-            <label for="firstName"> Prénom </label>
+            <h1
+              style={{
+                fontSize: "20px",
+                color: "goldenrod",
+                fontFamily: "DancingScript"
+              }}
+              for="firstName"
+            >
+              {" "}
+              Prénom{" "}
+            </h1>
             <Form.Control
               autoFocus
               type="text"
@@ -53,7 +82,17 @@ class Registration extends Component {
             />
           </Form.Group>
           <Form.Group controlId="lastName" bsSize="large">
-            <label for="lastName"> Nom </label>
+            <h1
+              style={{
+                fontSize: "20px",
+                color: "goldenrod",
+                fontFamily: "DancingScript"
+              }}
+              for="lastName"
+            >
+              {" "}
+              Nom{" "}
+            </h1>
             <Form.Control
               autoFocus
               type="text"
@@ -62,7 +101,17 @@ class Registration extends Component {
             />
           </Form.Group>
           <Form.Group controlId="username" bsSize="large">
-            <label for="username"> Nom d'utilisateur </label>
+            <h1
+              style={{
+                fontSize: "20px",
+                color: "goldenrod",
+                fontFamily: "DancingScript"
+              }}
+              for="username"
+            >
+              {" "}
+              Nom d'utilisateur{" "}
+            </h1>
             <Form.Control
               autoFocus
               type="text"
@@ -72,7 +121,16 @@ class Registration extends Component {
           </Form.Group>
 
           <Form.Group controlId="email" bsSize="large">
-            <label for="email">E-mail</label>
+            <h1
+              style={{
+                fontSize: "20px",
+                color: "goldenrod",
+                fontFamily: "DancingScript"
+              }}
+              for="email"
+            >
+              E-mail
+            </h1>
             <Form.Control
               autoFocus
               type="email"
@@ -81,7 +139,16 @@ class Registration extends Component {
             />
           </Form.Group>
           <Form.Group controlId="password" bsSize="large">
-            <label for="pwd">Mot de passe </label>
+            <h1
+              style={{
+                fontSize: "20px",
+                color: "goldenrod",
+                fontFamily: "DancingScript"
+              }}
+              for="pwd"
+            >
+              Mot de passe{" "}
+            </h1>
             <Form.Control
               value={this.state.password}
               onChange={this.handleChange}
@@ -89,7 +156,16 @@ class Registration extends Component {
             />
           </Form.Group>
           <Form.Group controlId="confirmPassword" bsSize="large">
-            <label for="pwd">Confirme ton mot de passe </label>
+            <h1
+              style={{
+                fontSize: "20px",
+                color: "goldenrod",
+                fontFamily: "DancingScript"
+              }}
+              for="pwd"
+            >
+              Confirme ton mot de passe{" "}
+            </h1>
             <Form.Control
               value={this.state.confirmPassword}
               onChange={this.handleChange}
@@ -97,6 +173,7 @@ class Registration extends Component {
             />
           </Form.Group>
           <Button
+            style={{ border: " 1px solid black" }}
             className="myButton"
             block
             bsSize="large"
