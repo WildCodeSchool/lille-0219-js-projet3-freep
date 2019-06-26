@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import "../style/Login.scss";
 
 class Registration extends Component {
   constructor(props) {
@@ -18,12 +19,12 @@ class Registration extends Component {
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
-    // this.state.firstName.length > 0 &&
-    // this.state.lastName.length > 0 &&
-    // this.state.username.length > 0 &&
-    // this.state.email.lengt === this.state.confirmEmail
-    // this.state.password.lengt === this.state.confirmPassword
+    return;
+    this.state.firstName.length > 0,
+      this.state.lastName.length > 0,
+      this.state.username.length > 0,
+      this.state.email === this.state.confirmEmail,
+      this.state.password === this.state.confirmPassword;
   }
 
   handleChange = event => {
@@ -46,6 +47,7 @@ class Registration extends Component {
             <label for="firstName"> Prénom </label>
             <Form.Control
               autoFocus
+              // placeholder="firstName (required)"
               type="text"
               value={this.state.firstName}
               onChange={this.handleChange}
