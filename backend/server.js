@@ -2,10 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
+const bodyParser = require("body-parser");
 
 app.use(cors());
-
-const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -29,10 +28,8 @@ app.get("/articles/", (req, res) => {
 });
 
 // ClothingPage
-
 app.get("/articles/:id/", (req, res) => {
   const articleId = req.params.id;
-
   let answer = {};
   db.query(
     `SELECT id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
@@ -159,7 +156,6 @@ app.get("/profile/:profileId", (req, res) => {
       let profileData = {
         profile: rowsUser[0]
       };
-
       db.query(
         `SELECT id, id_clothing, url FROM picture WHERE id_user=${profileId}`,
         (err, rowsPics) => {
@@ -168,7 +164,6 @@ app.get("/profile/:profileId", (req, res) => {
             return res.status(500).send("error when getting picture route");
           }
           profileData.pictures = rowsPics;
-
           res.status(200).send(profileData);
         }
       );
@@ -177,10 +172,11 @@ app.get("/profile/:profileId", (req, res) => {
 });
 
 //Search
-
-app.get("/search/", (req, res) => {
+app.post("/search", (req, res) => {
+  const keyword = req.body.keyword;
   db.query(
-    `SELECT clothing.type, clothing.description FROM clothing WHERE clothing.type LIKE "%ro%" OR clothing.description LIKE "%ro%"`,
+    "SELECT clothing.type, clothing.description FROM clothing WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
+    ["%" + keyword + "%", "%" + keyword + "%"],
     (err, ResultClothing) => {
       if (err) {
         console.log(err);
@@ -189,11 +185,11 @@ app.get("/search/", (req, res) => {
           .send("error when getting search route on clothes");
       }
       let SearchResult = {
-        Results: ResultClothing[0]
+        Results: ResultClothing
       };
       db.query(
-        `SELECT user.nickname FROM user 
-        WHERE user.nickname LIKE "%ro%" `,
+        "SELECT user.nickname FROM user WHERE user.nickname LIKE ?",
+        "%" + keyword,
         (err, ResultUsers) => {
           if (err) {
             console.log(err);

@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Tag, Upload, Mail, Heart, User } from "react-feather";
 import { Modal } from "reactstrap";
 import Uploader from "./Upload";
+import Search from "./Search";
 
 class NavFreep extends React.Component {
   constructor(props) {
@@ -15,13 +16,7 @@ class NavFreep extends React.Component {
       modal: false,
       search: ""
     };
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onChange(e) {
-    this.setState({
-      search: e.target.value
-    });
+    // this.onChange = this.onChange.bind(this);
   }
 
   toggleBurger() {
@@ -33,10 +28,6 @@ class NavFreep extends React.Component {
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
-  }
-
-  handleChange(event) {
-    this.setState({ value: event.target.value });
   }
 
   render() {
@@ -53,19 +44,7 @@ class NavFreep extends React.Component {
           </div>
           <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <form action="">
-              <label htmlFor="clothe-profile-search">
-                <input
-                  type="text"
-                  placeholder="Chercher un vêtement, un profil..."
-                  value={this.state.search}
-                  onChange={this.onChange}
-                />
-                <Link to={`/search/${this.state.search}`}>
-                  <input type="submit" value="&#x1F50E;" />
-                </Link>
-              </label>
-            </form>
+            <Search />
             <Nav className="ml-auto" navbar>
               <NavLink title="Propose ton vêtement !">
                 <Upload

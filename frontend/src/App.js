@@ -30,7 +30,7 @@ function App() {
           <Route path="/messagerie/:idReader" component={MessagingPage} />
           <Route path="/message/:P1/:P2" component={Message} />
           <Route path="/loader" component={Loader} />
-          <Route path="/search/:search" component={Search} />
+          <Route path="/search/:res" component={Search} />
         </Switch>
         <Footer />
       </Container>

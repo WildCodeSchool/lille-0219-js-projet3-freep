@@ -1,41 +1,51 @@
 import React from "react";
 import axios from "axios";
+import "../style/NavFreep.scss";
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      res: []
+      searchResult: ""
     };
+    //this.onSubmit = this.onSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-  componentDidMount() {
-    this.getData();
-  }
-  getData() {
-    const query = this.props.match.params.search;
-    axios
-      .get(
-        `
-    SELECT clothing.type, clothing.description FROM clothing WHERE clothing.type LIKE '%${res}%' OR clothing.description LIKE '%${res}%' 
-    `
-      )
-      .then(response => {
-        this.setState({
-          res: response.data.results
+
+  handleChange = e => {
+    const toto = e.target.value;
+    this.setState({ searchResult: toto }, () => {
+      axios
+        .post(`http://localhost:5050/search`, {
+          keyword: this.state.searchResult
+        })
+        .then(({ data }) => {
+          console.log("test keyword : " + this.state.searchResult);
+        })
+        .catch(err => {
+          console.log("Error :" + err);
+          // console.log("searchfield : " + keyword);
         });
-      });
-  }
+    });
+  };
+
   render() {
     return (
-      <div className="container-fluid mt-5">
-        <div className="row ">
-          <div className="gallery-type">
-            {this.state.movies.map((film, idx) => {
-              return <div className="m-1" />;
-            })}
-          </div>
-        </div>
-      </div>
+      <React.Fragment>
+        <form>
+          <label htmlFor="clothe-profile-search">
+            <input
+              id="searchfield"
+              name="searchname"
+              type="text"
+              placeholder="Chercher un vêtement, un profil..."
+              value={this.state.searchResult}
+              onChange={this.handleChange}
+            />
+            <input type="submit" value="&#x1F50E;" />
+          </label>
+        </form>
+      </React.Fragment>
     );
   }
 }
