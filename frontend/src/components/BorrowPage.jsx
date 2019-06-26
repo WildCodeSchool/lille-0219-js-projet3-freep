@@ -17,7 +17,8 @@ class BorrowPage extends React.Component {
 
     axios.get(`http://localhost:5050/emprunt/${userId}`).then(({ data }) => {
       this.setState({
-        borrowArray: data
+        borrowArray: data,
+        loading: false
       });
     });
   }
@@ -38,8 +39,8 @@ class BorrowPage extends React.Component {
               borrow && (
                 <Borrow
                   key={i}
-                  pictureId={borrow.id_picture}
-                  ownerClothe={borrow.id_user}
+                  pictureUrl={borrow.url}
+                  clothePage={borrow.id_clothing}
                 />
               )
             );
