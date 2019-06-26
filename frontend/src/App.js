@@ -12,6 +12,7 @@ import MessagingPage from "./components/MessagingPage";
 import Message from "./components/Message";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
+import BorrowPage from "./components/BorrowPage";
 
 function App() {
   return (
