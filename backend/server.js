@@ -125,9 +125,10 @@ app.get("/message/:P1/:P2", (req, res) => {
   const P1 = req.params.P1;
   const P2 = req.params.P2;
   db.query(
-    `SELECT content, 
+    `SELECT 
+    TIME(DATE_ADD(message.created_at,INTERVAL 2 hour)) as hour_send,
+    content, 
     DATEDIFF(NOW(), message.created_at) AS date_diff,
-    TIME(message.created_at) as hour_send,
     nickname, 
     avatar
     FROM message
@@ -177,17 +178,7 @@ app.post("/message/:P1/:P2", (req, res) => {
             res.status(500).send("error when post new message");
           }
           db.query(
-            `SELECT content, 
-            DATEDIFF(NOW(), message.created_at) AS date_diff,
-            TIME(message.created_at) as hour_send,
-            nickname, 
-            avatar 
-            FROM message
-            INNER JOIN user ON user.id = message.id_author
-              WHERE
-              (id_author = ${P1} OR id_reader = ${P1})
-              AND (id_author = ${P2} OR id_reader = ${P2})
-              ORDER BY message.created_at DESC;`,
+            `SELECT nickname, avatar FROM user WHERE id=${P1}`,
             (err, rows) => {
               if (err) {
                 console.log(err);
@@ -195,13 +186,11 @@ app.post("/message/:P1/:P2", (req, res) => {
               }
               const newMess = {
                 content: content,
-                date_diff: rows.date_diff,
-                hour_send: rows.hour_send,
-                nickname: rows.nickname,
-                avatar: rows.avatar
+                date_diff: 0,
+                nickname: rows[0].nickname,
+                avatar: rows[0].avatar
               };
               res.status(200).send(newMess);
-              console.log(newMess + rows);
             }
           );
         }

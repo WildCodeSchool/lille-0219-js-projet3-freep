@@ -57,6 +57,7 @@ class Message extends React.Component {
       .then(({ data }) => {
         console.log(data);
         let messages = this.state.messageArray;
+        data.hour_send = "l'instant";
         messages.unshift(data);
         this.setState(
           {
