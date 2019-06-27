@@ -23,7 +23,7 @@ class Profile extends React.Component {
       pictures: [],
       followers: [],
       followings: [],
-      posts: []
+      posts: [],
       loading: true
     };
   }
