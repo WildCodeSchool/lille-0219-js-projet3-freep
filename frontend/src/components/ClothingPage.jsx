@@ -15,6 +15,7 @@ import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
 import CommentForm from "./CommentForm";
+import { Link } from "react-router-dom";
 
 class ClothingPage extends React.Component {
   constructor(props) {
@@ -111,7 +112,7 @@ class ClothingPage extends React.Component {
   handleAdd(e) {
     const userId = 1;
     const clothingId = this.state.backendData.clothing.id;
-    const pictureId = this.state.backendData.pictures.id;
+    const pictureId = this.state.backendData.pictures[0].id;
     axios
       .post(
         `http://localhost:5050/emprunt/${userId}/${clothingId}/${pictureId}`

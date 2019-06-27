@@ -35,7 +35,7 @@ class BorrowPage extends React.Component {
     } else {
       return (
         <React.Fragment>
-          <h1>Souhait d'emprunt de vêtement</h1>
+          <h1>Ce que je veux emprunter</h1>
           {this.state.borrowArray.length === 0 ? (
             <p>Vous n'avez pas d'emprunt en cours.</p>
           ) : (
