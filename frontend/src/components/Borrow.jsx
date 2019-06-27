@@ -1,6 +1,15 @@
 //composant pour 1 emprunt
 import React from "react";
-import { Card, CardBody, CardImg, Row, Col, Button } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardImg,
+  Row,
+  Col,
+  Button,
+  Form,
+  Input
+} from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../style/Borrow.scss";
@@ -41,7 +50,14 @@ class Borrow extends React.Component {
             >
               Annuler l'emprunt
             </Button>
-            <Button>J'ai emprunté le vêtement</Button>
+            <Form
+              method="POST"
+              enctype="multipart/form-data"
+              action="uploaddufichier"
+            >
+              <Input type="file" name="monfichier" />
+              <Button> J'ai emprunté ce vêtement </Button>
+            </Form>
           </CardBody>
         </Card>
       </div>
