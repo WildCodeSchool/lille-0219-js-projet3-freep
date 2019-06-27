@@ -11,7 +11,8 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      id: ""
     };
   }
 
@@ -28,6 +29,7 @@ class Login extends Component {
   handleSubmit = event => {
     event.preventDefault();
     let { email, password } = this.state;
+    const { history } = this.props;
     axios
       .post(`http://localhost:5050/auth/login`, {
         email,
@@ -35,8 +37,11 @@ class Login extends Component {
       })
       .then(({ data }) => {
         this.setState({
-          login: { email: data.email, password: data.password }
+          login: { email: data.email, password: data.password, id: data.id }
         });
+        console.log(data);
+        localStorage.setItem("user", JSON.stringify(data));
+        history.push("/accueil");
       });
   };
 
@@ -122,7 +127,7 @@ class Login extends Component {
             type="submit"
             style={{ border: " 1px solid black" }}
           >
-            > Connecte toi !
+            Connecte toi !
           </Button>
           <Button
             href="https://fr-fr.facebook.com/login/"
@@ -130,13 +135,21 @@ class Login extends Component {
             role="button"
             title="Lien"
             style={{
-              fontSize: "12px",
-              background: "#5F8CA3"
+              fontSize: "15px"
             }}
           >
             inscris toi avec ton compte Facebook
           </Button>
-
+          <div>
+            <NavLink
+              activeClassName="active"
+              className="littleInfo"
+              exact
+              to=""
+            >
+              Mot de passe oublié ?
+            </NavLink>
+          </div>
           <NavLink
             activeClassName="active"
             className="littleInfo"
@@ -145,11 +158,6 @@ class Login extends Component {
           >
             Inscris-toi ! ❀
           </NavLink>
-          <div>
-            <NavLink activeClassName="active" className="little" exact to="">
-              Mot de passe oublié ?
-            </NavLink>
-          </div>
         </Form>
       </div>
     );
