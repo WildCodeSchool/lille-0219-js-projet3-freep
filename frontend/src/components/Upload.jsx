@@ -1,7 +1,16 @@
 import React from "react";
 import ImageUploader from "react-images-upload";
 import "../style/Upload.scss";
-import { Row, Col, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import {
+  Row,
+  Col,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  CustomInput
+} from "reactstrap";
 
 class Uploader extends React.Component {
   constructor(props) {
@@ -68,14 +77,14 @@ class Uploader extends React.Component {
                 Taille
               </Label>
               <Col sm={10}>
-                <Input type="select" name="select" id="size">
+                <CustomInput type="select" name="select" id="size">
                   <option>S</option>
                   <option>M</option>
                   <option>L</option>
                   <option>XL</option>
                   <option>XXL</option>
                   <option>XXXL+</option>
-                </Input>
+                </CustomInput>
               </Col>
             </FormGroup>
             <FormGroup row>

@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
+const passport = require("passport");
 
 app.use(cors());
 
@@ -9,6 +10,9 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+
+app.use("/auth", require("./auth"));
 
 // Homepage
 
@@ -35,7 +39,7 @@ app.get("/articles/:id/", (req, res) => {
 
   let answer = {};
   db.query(
-    `SELECT id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
+    `SELECT id, id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
     (err, rowsArticle) => {
       if (err) {
         console.log(err);
@@ -114,6 +118,23 @@ app.get("/messagerie/:id_reader", (req, res) => {
           console.log(err);
           res.status(500).send("error when getting messagerie route");
         }
+        res.status(200).send(rows);
+      }
+    );
+  }
+});
+
+// Commenting
+
+app.post(`/comment/:id`, (req, res) => {
+  if (req.body.content !== "") {
+    db.query(
+      `INSERT INTO comment ( id_user, id_clothing, content, created_at)
+      VALUES ( '4', ${req.params.id}, '${req.body.content}', NOW());
+  `,
+      (err, rows, fields) => {
+        if (err) throw err;
+        console.log("Comment recorded !");
         res.status(200).send(rows);
       }
     );
