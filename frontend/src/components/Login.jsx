@@ -4,14 +4,15 @@ import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
 import LoginBackground from "../pictures/Login.jpg";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 class Login extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      id: ""
     };
   }
 
@@ -27,6 +28,21 @@ class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    let { email, password } = this.state;
+    const { history } = this.props;
+    axios
+      .post(`http://localhost:5050/auth/login`, {
+        email,
+        password
+      })
+      .then(({ data }) => {
+        this.setState({
+          login: { email: data.email, password: data.password, id: data.id }
+        });
+        console.log(data);
+        localStorage.setItem("user", JSON.stringify(data));
+        history.push("/accueil");
+      });
   };
 
   render() {
@@ -103,7 +119,6 @@ class Login extends Component {
               Se souvenir de moi
             </h1>
           </div>
-
           <Button
             class="myButton"
             block
@@ -112,15 +127,36 @@ class Login extends Component {
             type="submit"
             style={{ border: " 1px solid black" }}
           >
-            > Connecte toi !
+            Connecte toi !
           </Button>
+          <Button
+            href="https://fr-fr.facebook.com/login/"
+            class="btn btn-primary btn-lg disabled"
+            role="button"
+            title="Lien"
+            style={{
+              fontSize: "15px"
+            }}
+          >
+            inscris toi avec ton compte Facebook
+          </Button>
+          <div>
+            <NavLink
+              activeClassName="active"
+              className="littleInfo"
+              exact
+              to=""
+            >
+              Mot de passe oublié ?
+            </NavLink>
+          </div>
           <NavLink
             activeClassName="active"
             className="littleInfo"
             exact
             to="/Registration"
           >
-            Inscrit toi ! ❀
+            Inscris-toi ! ❀
           </NavLink>
         </Form>
       </div>
