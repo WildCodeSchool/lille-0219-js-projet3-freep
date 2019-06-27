@@ -76,7 +76,7 @@ ul {
 
 form {
   margin: 1.5vh auto;
-  width: 70%;
+  width: 30%;
 }
 
 label,
@@ -215,15 +215,16 @@ form label input[type="submit"] {
   }
 }
 
-$count: pink, purple, red, blue, orange;
+$count: rgba(255, 192, 203, 0.1), rgba(255, 192, 203, 0.3),
+  rgba(255, 192, 203, 0.5), rgba(255, 192, 203, 0.7), rgba(255, 192, 203, 0.9);
 
 @media (max-width: 740px) {
   @for $i from 1 through length($count) {
     ul a:nth-of-type(#{length($count)}n + #{$i}) {
-      background-color: lighten(nth($count, $i), 20%);
+      background-color: nth($count, $i);
     }
   }
-  .show {
+  .navbar-collapse {
     height: 100vh;
     ul {
       display: flex;
@@ -231,9 +232,15 @@ $count: pink, purple, red, blue, orange;
       align-items: center;
       a {
         padding: 3vh 0 !important;
-        text-align: center;
         width: 100%;
+        text-decoration: none;
+        &:hover {
+          color: rgba(34, 34, 34, 0.596);
+        }
       }
     }
+  }
+  form {
+    width: 70%;
   }
 }
