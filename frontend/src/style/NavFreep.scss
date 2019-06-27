@@ -51,7 +51,7 @@ ul {
 .search-input {
   text-align: center;
   height: 20px;
-  width: 20rem;
+  // width: 20rem;
 }
 
 .list-right {
@@ -75,7 +75,8 @@ ul {
 }
 
 form {
-  margin: 0 auto;
+  margin: 1.5vh auto;
+  width: 70%;
 }
 
 label,
@@ -89,7 +90,7 @@ img {
 
 form label {
   position: relative;
-  width: 25rem;
+  // width: 25rem;
 }
 
 form label input[type="text"] {
@@ -100,28 +101,31 @@ form label input[type="text"] {
   border: 2px solid #f8d5c7;
   border-radius: 7px;
   height: 2rem;
+  position: absolute;
 }
 
 form label input {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  // position: absolute;
+  // left: 0;
+  // top: 50%;
+  // transform: translateY(-50%);
 }
 
 form label input[type="submit"] {
   color: transparent;
   cursor: pointer;
   width: 30px;
-  margin-right: 10px;
+  margin-right: 15px;
+  position: absolute;
 }
-form {
-  margin-top: 2.5rem;
-}
+// form {
+//   margin-top: 2.5rem;
+// }
 
 .magnifier {
   width: 20px;
   margin-left: 15px;
+  padding-top: 5px;
   color: black;
   cursor: pointer;
   opacity: 0.5;
@@ -142,22 +146,22 @@ form {
 
 @media screen and (max-width: 808px) {
   form label input[type="text"] {
-    margin-left: 2.5rem;
-    width: 70%;
+    // margin-left: 2.5rem;
+    // width: 70%;
     font-size: 0.8rem;
   }
-  input {
-    padding-left: 3rem;
-  }
+  // input {
+  //   padding-left: 3rem;
+  // }
   .img {
     width: 25px;
     position: relative;
     right: 3.5rem;
   }
-  .magnifier {
-    width: 20px;
-    margin-left: 50px;
-  }
+  // .magnifier {
+  //   width: 20px;
+  //   margin-left: 50px;
+  // }
   form label input[type="submit"] {
     width: 2px;
     margin-right: 0;
@@ -167,13 +171,13 @@ form {
 
 @media screen and (max-width: 766px) {
   form label input[type="text"] {
-    width: 85%;
-    margin-left: -0.5rem;
+    // width: 85%;
+    // margin-left: -0.5rem;
     font-size: 0.6rem;
   }
-  .search-input {
-    width: 10rem;
-  }
+  // .search-input {
+  //   width: 10rem;
+  // }
   .collapse {
     margin-top: 1rem;
   }
@@ -187,17 +191,17 @@ form {
   .navText {
     width: 13rem;
   }
-  form {
-    margin-top: 0;
-  }
-  .magnifier {
-    width: 20px;
-    margin-left: 8px;
-  }
+  // form {
+  //   margin-top: 0;
+  // }
+  // .magnifier {
+  //   width: 20px;
+  //   margin-left: 8px;
+  // }
   form label input[type="submit"] {
-    width: 28px;
-    margin-right: 33px;
-    margin-left: 0;
+    // width: 28px;
+    // margin-right: 33px;
+    // margin-left: 0;
   }
 }
 
@@ -208,5 +212,18 @@ form {
   }
   .search-input {
     width: 6rem;
+  }
+}
+
+.show {
+  height: 100vh;
+  ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    a {
+      padding: 5vh auto;
+      text-align: center;
+    }
   }
 }

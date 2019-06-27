@@ -30,7 +30,7 @@ class NavFreep extends React.Component {
     return (
       <div className="header">
         <Navbar color="light" light expand="md">
-          <Link to="/">
+          <Link to="/" onClick={this.toggleBurger}>
             <img className="logo" src="../pictures/logo.png" alt="logo" />
           </Link>
           <div className="navText">
@@ -40,7 +40,7 @@ class NavFreep extends React.Component {
           </div>
           <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <form action="">
+            <form>
               <label htmlFor="clothe-profile-search">
                 <input
                   type="text"
@@ -51,28 +51,77 @@ class NavFreep extends React.Component {
               </label>
             </form>
             <Nav className="ml-auto" navbar>
-              <NavLink title="Propose ton vêtement !">
+              <NavLink
+                onClick={this.toggleModal}
+                title="Propose ton vêtement !"
+                style={{
+                  padding: "3vh 0",
+                  backgroundColor: "rgba(255, 192, 203, .1)",
+                  width: "100%"
+                }}
+              >
                 <PlusCircle
                   className="img"
                   color="black"
                   onClick={this.toggleModal}
                 />
+                <p>Upload</p>
                 <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
                   <ModalHeader toggle={this.toggleModal} className="pr-5" />
                   <Uploader />
                 </Modal>
               </NavLink>
-              <NavLink to="/partenaire" title="Découvre nos partenaires !">
+              <NavLink
+                onClick={this.toggleBurger}
+                to="/partenaire"
+                title="Découvre nos partenaires !"
+                style={{
+                  padding: "3vh 0",
+                  backgroundColor: "rgba(255, 192, 203, .3)",
+                  width: "100%"
+                }}
+              >
                 <Tag className="img" color="black" />
+                <p>Partenaires</p>
               </NavLink>
-              <NavLink to="/messagerie/2" title="Parle avec nos Freepeuses">
+              <NavLink
+                onClick={this.toggleBurger}
+                to="/messagerie/2"
+                title="Parle avec nos Freepeuses"
+                style={{
+                  padding: "3vh 0",
+                  backgroundColor: "rgba(255, 192, 203, .5)",
+                  width: "100%"
+                }}
+              >
                 <Mail className="img" color="black" />
+                <p>Messagerie</p>
               </NavLink>
-              <NavLink to="/favoris" title="Retrouve tes favoris">
+              <NavLink
+                onClick={this.toggleBurger}
+                to="/favoris"
+                title="Retrouve tes favoris"
+                style={{
+                  padding: "3vh 0",
+                  backgroundColor: "rgba(255, 192, 203, .7)",
+                  width: "100%"
+                }}
+              >
                 <Heart className="img" color="black" />
+                <p>Favoris</p>
               </NavLink>
-              <NavLink to="/profil/1" title="Accède à ton profil">
+              <NavLink
+                onClick={this.toggleBurger}
+                to="/profil/1"
+                title="Accède à ton profil"
+                style={{
+                  padding: "3vh 0",
+                  backgroundColor: "rgba(255, 192, 203, .9)",
+                  width: "100%"
+                }}
+              >
                 <User className="img" color="black" />
+                <p>Profil</p>
               </NavLink>
             </Nav>
           </Collapse>
