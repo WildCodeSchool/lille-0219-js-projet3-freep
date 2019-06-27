@@ -9,7 +9,8 @@ class BorrowPage extends React.Component {
     this.state = {
       userId: null,
       borrowArray: [{}],
-      loading: true
+      loading: true,
+      modal: false
     };
   }
 
@@ -29,6 +30,13 @@ class BorrowPage extends React.Component {
         });
       });
   }
+
+  toggleModalBorrow() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  }
+
   render() {
     if (this.state.loading) {
       return <Loader />;
@@ -51,6 +59,7 @@ class BorrowPage extends React.Component {
                   borrowId={borrow.id}
                   userId={this.props.match.params.userId}
                   listRefresh={this.refresh}
+                  toggleModalBorrow={this.toggleModalBorrow}
                 />
               )
             );
