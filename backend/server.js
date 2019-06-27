@@ -142,13 +142,14 @@ app.post(`/comment/:id`, (req, res) => {
 });
 
 //Details messaging
-app.get("/message/:id_reader/:id_author", (req, res) => {
-  const P1 = req.params.id_reader;
-  const P2 = req.params.id_author;
+app.get("/message/:P1/:P2", (req, res) => {
+  const P1 = req.params.P1;
+  const P2 = req.params.P2;
   db.query(
-    `SELECT content, 
+    `SELECT 
+    TIME(DATE_ADD(message.created_at,INTERVAL 2 hour)) as hour_send,
+    content, 
     DATEDIFF(NOW(), message.created_at) AS date_diff,
-    TIME(message.created_at) as hour_send,
     nickname, 
     avatar
     FROM message
@@ -163,6 +164,54 @@ app.get("/message/:id_reader/:id_author", (req, res) => {
         res.status(500).send("error when getting message route");
       }
       res.status(200).send(rows);
+    }
+  );
+});
+
+//Update message
+app.post("/message/:P1/:P2", (req, res) => {
+  const P1 = req.params.P1;
+  const P2 = req.params.P2;
+  const content = req.body.content;
+  console.log(req.body);
+  db.query(
+    `UPDATE
+    message
+    SET isLast=0
+    WHERE
+    (id_author = ${P1} OR id_reader = ${P1})
+    AND (id_author = ${P2} OR id_reader = ${P2});`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when update message route");
+      }
+      db.query(
+        `INSERT INTO message(id_author,id_reader,content,created_at,isLast) 
+        VALUES(${P1},${P2},"${content}",NOW(),1);`,
+        (err, rows) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("error when post new message");
+          }
+          db.query(
+            `SELECT nickname, avatar FROM user WHERE id=${P1}`,
+            (err, rows) => {
+              if (err) {
+                console.log(err);
+                res.status(500).send("error when getting message route");
+              }
+              const newMess = {
+                content: content,
+                date_diff: 0,
+                nickname: rows[0].nickname,
+                avatar: rows[0].avatar
+              };
+              res.status(200).send(newMess);
+            }
+          );
+        }
+      );
     }
   );
 });
