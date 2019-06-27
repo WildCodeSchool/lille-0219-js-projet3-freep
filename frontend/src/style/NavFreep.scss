@@ -74,10 +74,6 @@ ul {
   width: 50px;
 }
 
-form {
-  margin: 0 auto;
-}
-
 label,
 input,
 button,
@@ -116,7 +112,7 @@ form label input[type="submit"] {
   margin-right: 10px;
 }
 form {
-  margin-top: 2.5rem;
+  margin: 2.5rem auto 0 auto;
 }
 
 .magnifier {
@@ -126,6 +122,7 @@ form {
   cursor: pointer;
   opacity: 0.5;
 }
+
 @media screen and (max-width: 1025px) {
   .img {
     width: 25px;
@@ -198,6 +195,11 @@ form {
     width: 28px;
     margin-right: 33px;
     margin-left: 0;
+  }
+  .logo {
+    border-radius: 50%;
+    width: 5rem;
+    left: -1rem;
   }
 }
 

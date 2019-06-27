@@ -4,6 +4,7 @@ const app = express();
 const { portNumber, db } = require("./conf");
 const multer = require("multer");
 const upload = multer({ dest: "tmp/" });
+const passport = require("passport");
 
 app.use(cors());
 
@@ -11,6 +12,9 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+
+app.use("/auth", require("./auth"));
 
 // Homepage
 
@@ -140,13 +144,14 @@ app.post(`/comment/:id`, (req, res) => {
 });
 
 //Details messaging
-app.get("/message/:id_reader/:id_author", (req, res) => {
-  const P1 = req.params.id_reader;
-  const P2 = req.params.id_author;
+app.get("/message/:P1/:P2", (req, res) => {
+  const P1 = req.params.P1;
+  const P2 = req.params.P2;
   db.query(
-    `SELECT content, 
+    `SELECT 
+    TIME(DATE_ADD(message.created_at,INTERVAL 2 hour)) as hour_send,
+    content, 
     DATEDIFF(NOW(), message.created_at) AS date_diff,
-    TIME(message.created_at) as hour_send,
     nickname, 
     avatar
     FROM message
@@ -165,8 +170,57 @@ app.get("/message/:id_reader/:id_author", (req, res) => {
   );
 });
 
+//Update message
+app.post("/message/:P1/:P2", (req, res) => {
+  const P1 = req.params.P1;
+  const P2 = req.params.P2;
+  const content = req.body.content;
+  console.log(req.body);
+  db.query(
+    `UPDATE
+    message
+    SET isLast=0
+    WHERE
+    (id_author = ${P1} OR id_reader = ${P1})
+    AND (id_author = ${P2} OR id_reader = ${P2});`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when update message route");
+      }
+      db.query(
+        `INSERT INTO message(id_author,id_reader,content,created_at,isLast) 
+        VALUES(${P1},${P2},"${content}",NOW(),1);`,
+        (err, rows) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("error when post new message");
+          }
+          db.query(
+            `SELECT nickname, avatar FROM user WHERE id=${P1}`,
+            (err, rows) => {
+              if (err) {
+                console.log(err);
+                res.status(500).send("error when getting message route");
+              }
+              const newMess = {
+                content: content,
+                date_diff: 0,
+                nickname: rows[0].nickname,
+                avatar: rows[0].avatar
+              };
+              res.status(200).send(newMess);
+            }
+          );
+        }
+      );
+    }
+  );
+});
+
 // Profile page routes
-app.get("/profile/:profileId", (req, res) => {
+
+app.get("/profil/:profileId", (req, res) => {
   const profileId = req.params.profileId;
   db.query(
     `SELECT id, nickname, avatar, description FROM user WHERE id=${profileId}`,
@@ -180,7 +234,7 @@ app.get("/profile/:profileId", (req, res) => {
       };
 
       db.query(
-        `SELECT id, id_clothing, url FROM picture WHERE id_user=${profileId}`,
+        `SELECT id, id_clothing, url FROM picture WHERE id_user=${profileId} ORDER BY created_at DESC`,
         (err, rowsPics) => {
           if (err) {
             console.log(err);
@@ -188,7 +242,41 @@ app.get("/profile/:profileId", (req, res) => {
           }
           profileData.pictures = rowsPics;
 
-          res.status(200).send(profileData);
+          db.query(
+            `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_content=${profileId} `,
+            (err, rowsFollowers) => {
+              if (err) {
+                console.log(err);
+                return res.status(500).send("error when getting social route");
+              }
+              profileData.followers = rowsFollowers;
+
+              db.query(
+                `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
+                (err, rowsFollowings) => {
+                  if (err) {
+                    console.log(err);
+                    return res.status(500);
+                  }
+                  profileData.followings = rowsFollowings;
+
+                  db.query(
+                    `SELECT id FROM clothing WHERE id_user = ${profileId}`,
+                    (err, rowsPosts) => {
+                      if (err) {
+                        console.log(err);
+                        return res
+                          .status(500)
+                          .send("error when getting clothing route");
+                      }
+                      profileData.posts = rowsPosts;
+                      res.status(200).send(profileData);
+                    }
+                  );
+                }
+              );
+            }
+          );
         }
       );
     }
