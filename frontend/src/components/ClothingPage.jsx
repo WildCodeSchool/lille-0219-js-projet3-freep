@@ -121,6 +121,9 @@ class ClothingPage extends React.Component {
         data.id_user = userId;
         data.id_clothing = clothingId;
         data.id_picture = pictureId;
+        this.props.history.push(
+          `/message/1/${this.state.backendData.users[0].id}`
+        );
       })
       .catch(err => {
         console.log(`Nope! ${err}`);
