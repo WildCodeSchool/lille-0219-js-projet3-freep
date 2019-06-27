@@ -122,6 +122,7 @@ form {
   cursor: pointer;
   opacity: 0.5;
 }
+
 @media screen and (max-width: 1025px) {
   .img {
     width: 25px;
@@ -194,6 +195,11 @@ form {
     width: 28px;
     margin-right: 33px;
     margin-left: 0;
+  }
+  .logo {
+    border-radius: 50%;
+    width: 5rem;
+    left: -1rem;
   }
 }
 
