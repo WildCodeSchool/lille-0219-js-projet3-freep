@@ -8,7 +8,9 @@ import {
   Col,
   Button,
   Form,
-  Input
+  Input,
+  Modal,
+  ModalHeader
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -18,8 +20,16 @@ class Borrow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hidden: false
+      hidden: false,
+      isOpen: false,
+      modal: false
     };
+  }
+
+  toggleModalBorrow() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
   }
 
   handleDelete(e) {
@@ -50,14 +60,25 @@ class Borrow extends React.Component {
             >
               Annuler l'emprunt
             </Button>
-            <Form
-              method="POST"
-              enctype="multipart/form-data"
-              action="uploaddufichier"
+
+            <Button
+              onClick={() => {
+                this.toggleModalBorrow();
+              }}
             >
-              <Input type="file" name="monfichier" />
-              <Button> J'ai emprunté ce vêtement </Button>
-            </Form>
+              J'ai emprunté ce vêtement
+            </Button>
+            <Modal isOpen={this.state.modal} toggle={this.toggleModalBorrow}>
+              <ModalHeader toggle={this.toggleModalBorrow} className="pr-5" />
+              <Form
+                method="POST"
+                enctype="multipart/form-data"
+                action="uploaddufichier"
+              >
+                <Input type="file" name="monfichier" />
+                <Button>Envoyer</Button>
+              </Form>
+            </Modal>
           </CardBody>
         </Card>
       </div>

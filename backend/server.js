@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
+const multer = require("multer");
+const upload = multer({ dest: "tmp/" });
 
 app.use(cors());
 
@@ -253,6 +255,16 @@ app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
   );
 });
 
+// Upload a proof-picture
+app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
+  fs.rename(req.file.path, "public/pictures/" + req.file.originalname, err => {
+    if (err) {
+      res.send("error during the move");
+    } else {
+      res.send("File upload");
+    }
+  });
+});
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
