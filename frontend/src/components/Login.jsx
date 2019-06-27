@@ -4,11 +4,11 @@ import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
 import LoginBackground from "../pictures/Login.jpg";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 class Login extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       email: "",
       password: ""
@@ -27,6 +27,17 @@ class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    let { email, password } = this.state;
+    axios
+      .post(`http://localhost:5050/auth/login`, {
+        email,
+        password
+      })
+      .then(({ data }) => {
+        this.setState({
+          login: { email: data.email, password: data.password }
+        });
+      });
   };
 
   render() {
