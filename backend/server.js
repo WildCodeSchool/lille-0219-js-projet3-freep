@@ -168,7 +168,8 @@ app.get("/message/:id_reader/:id_author", (req, res) => {
 });
 
 // Profile page routes
-app.get("/profile/:profileId", (req, res) => {
+
+app.get("/profil/:profileId", (req, res) => {
   const profileId = req.params.profileId;
   db.query(
     `SELECT id, nickname, avatar, description FROM user WHERE id=${profileId}`,
@@ -182,7 +183,7 @@ app.get("/profile/:profileId", (req, res) => {
       };
 
       db.query(
-        `SELECT id, id_clothing, url FROM picture WHERE id_user=${profileId}`,
+        `SELECT id, id_clothing, url FROM picture WHERE id_user=${profileId} ORDER BY created_at DESC`,
         (err, rowsPics) => {
           if (err) {
             console.log(err);
@@ -190,7 +191,41 @@ app.get("/profile/:profileId", (req, res) => {
           }
           profileData.pictures = rowsPics;
 
-          res.status(200).send(profileData);
+          db.query(
+            `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_content=${profileId} `,
+            (err, rowsFollowers) => {
+              if (err) {
+                console.log(err);
+                return res.status(500).send("error when getting social route");
+              }
+              profileData.followers = rowsFollowers;
+
+              db.query(
+                `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
+                (err, rowsFollowings) => {
+                  if (err) {
+                    console.log(err);
+                    return res.status(500);
+                  }
+                  profileData.followings = rowsFollowings;
+
+                  db.query(
+                    `SELECT id FROM clothing WHERE id_user = ${profileId}`,
+                    (err, rowsPosts) => {
+                      if (err) {
+                        console.log(err);
+                        return res
+                          .status(500)
+                          .send("error when getting clothing route");
+                      }
+                      profileData.posts = rowsPosts;
+                      res.status(200).send(profileData);
+                    }
+                  );
+                }
+              );
+            }
+          );
         }
       );
     }
