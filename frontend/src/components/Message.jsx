@@ -40,6 +40,7 @@ class Message extends React.Component {
   handlePrev(e) {
     e.preventDefault();
     this.props.history.goBack();
+  }
   handleChange(e) {
     const { value } = e.target;
     this.setState({
