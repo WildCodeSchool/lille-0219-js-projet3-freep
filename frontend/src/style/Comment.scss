@@ -36,7 +36,7 @@ $bl: #222;
 
 .comments-profile {
   font-size: calc(1rem + 0.2vw);
-  margin-left: 2rem;
+  margin-left: 2.25rem;
 }
 
 div:nth-child(1) > button:nth-child(1) > svg {
@@ -48,6 +48,22 @@ div:nth-child(1) > button:nth-child(1) > svg {
   height: 80px;
   margin-right: 2rem;
   border-radius: 50%;
+}
+
+@media screen and (max-width: 1024px) {
+  .comment-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 2.5rem;
+  }
+  .comments-profile {
+    font-size: calc(0.7rem + 0.3vw);
+    margin-left: 1.5rem;
+  }
+  .comment {
+    font-size: calc(0.7rem + 0.3vw);
+    margin-left: 0.25rem;
+  }
 }
 
 @media screen and (max-width: 766px) {
@@ -83,5 +99,6 @@ div:nth-child(1) > button:nth-child(1) > svg {
   }
   .comment {
     font-size: calc(0.5rem + 0.3vw);
+    margin-left: 0;
   }
 }
