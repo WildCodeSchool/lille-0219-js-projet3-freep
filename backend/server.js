@@ -167,7 +167,7 @@ app.post("/message/:P1/:P2", (req, res) => {
       }
       db.query(
         `INSERT INTO message(id_author,id_reader,content,created_at,isLast) 
-        VALUES(${P1},${P2},'${content}',NOW(),1);`,
+        VALUES(${P1},${P2},"${content}",NOW(),1);`,
         (err, rows) => {
           if (err) {
             console.log(err);
