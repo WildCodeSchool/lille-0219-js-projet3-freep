@@ -197,7 +197,7 @@ app.get("/profile/:profileId", (req, res) => {
 app.get("/emprunt/:userId", (req, res) => {
   const userId = req.params.userId;
   db.query(
-    `SELECT borrow.id_clothing, url 
+    `SELECT borrow.id_clothing, url, borrow.id
     FROM borrow 
     INNER JOIN picture ON picture.id= borrow.id_picture
     INNER JOIN clothing on clothing.id = borrow.id_clothing
@@ -224,6 +224,24 @@ app.delete(`/emprunt/:userId/:borrowId`, (req, res) => {
       if (err) {
         console.log(err);
         return res.status(500).send("error when delete borrow");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+// Add a Borrow
+app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
+  const userId = req.params.userId;
+  const clothingId = req.params.clothingId;
+  const pictureId = req.params.pictureId;
+  db.query(
+    `INSERT INTO borrow (id_user, id_clothing, id_picture) VALUES (${userId}, ${clothingId}, ${pictureId});
+    `,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("error when post borrow");
       }
       res.status(200).send(rows);
     }
