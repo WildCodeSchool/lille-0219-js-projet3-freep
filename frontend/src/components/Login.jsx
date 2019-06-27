@@ -103,7 +103,6 @@ class Login extends Component {
               Se souvenir de moi
             </h1>
           </div>
-
           <Button
             class="myButton"
             block
@@ -114,14 +113,32 @@ class Login extends Component {
           >
             > Connecte toi !
           </Button>
+          <Button
+            href="https://fr-fr.facebook.com/login/"
+            class="btn btn-primary btn-lg disabled"
+            role="button"
+            title="Lien"
+            style={{
+              fontSize: "12px",
+              background: "#5F8CA3"
+            }}
+          >
+            inscris toi avec ton compte Facebook
+          </Button>
+
           <NavLink
             activeClassName="active"
             className="littleInfo"
             exact
             to="/Registration"
           >
-            Inscrit toi ! ❀
+            Inscris-toi ! ❀
           </NavLink>
+          <div>
+            <NavLink activeClassName="active" className="little" exact to="">
+              Mot de passe oublié ?
+            </NavLink>
+          </div>
         </Form>
       </div>
     );
