@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
 import Loader from "./components/Loader";
+import BorrowPage from "./components/BorrowPage";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/registration" exact component={Registration} />
           <Route path="/message/:P1/:P2" component={Message} />
           <Route path="/loader" component={Loader} />
+          <Route path="/emprunt/:userId" component={BorrowPage} />
         </Switch>
         <Footer />
       </Container>

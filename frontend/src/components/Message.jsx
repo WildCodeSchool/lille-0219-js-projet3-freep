@@ -37,6 +37,9 @@ class Message extends React.Component {
     });
   }
 
+  handlePrev(e) {
+    e.preventDefault();
+    this.props.history.goBack();
   handleChange(e) {
     const { value } = e.target;
     this.setState({
@@ -78,7 +81,11 @@ class Message extends React.Component {
     return (
       <React.Fragment>
         <Link to="/messagerie/2">
-          <Button>
+          <Button
+            onClick={e => {
+              this.handlePrev(e);
+            }}
+          >
             <ArrowLeft />
           </Button>
         </Link>

@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
+const multer = require("multer");
+const upload = multer({ dest: "tmp/" });
 const passport = require("passport");
 
 app.use(cors());
@@ -281,6 +283,76 @@ app.get("/profil/:profileId", (req, res) => {
   );
 });
 
+//Borrow
+app.get("/emprunt/:userId", (req, res) => {
+  const userId = req.params.userId;
+  db.query(
+    `SELECT borrow.id_clothing, url, borrow.id
+    FROM borrow 
+    INNER JOIN picture ON picture.id= borrow.id_picture
+    INNER JOIN clothing on clothing.id = borrow.id_clothing
+    INNER JOIN user on user.id = borrow.id_user
+    WHERE borrow.id_user = ${userId}`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when getting emprunt route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+//Delete a Borrow
+app.delete(`/emprunt/:userId/:borrowId`, (req, res) => {
+  const userId = req.params.userId;
+  const borrowId = req.params.borrowId;
+  db.query(
+    `DELETE FROM borrow
+    WHERE id_user=${userId}
+    AND id=${borrowId}`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("error when delete borrow");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+// Add a Borrow
+app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
+  const userId = req.params.userId;
+  const clothingId = req.params.clothingId;
+  const pictureId = req.params.pictureId;
+  db.query(
+    `INSERT INTO borrow (id_user, id_clothing, id_picture) VALUES (${userId}, ${clothingId}, ${pictureId});
+    `,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("error when post borrow");
+      }
+      const newBorrow = {
+        id_user: userId,
+        id_clothing: clothingId,
+        id_picture: pictureId
+      };
+      res.status(200).send(newBorrow);
+    }
+  );
+});
+
+// Upload a proof-picture
+app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
+  fs.rename(req.file.path, "public/pictures/" + req.file.originalname, err => {
+    if (err) {
+      res.send("error during the move");
+    } else {
+      res.send("File upload");
+    }
+  });
+});
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
