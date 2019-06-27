@@ -243,7 +243,12 @@ app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
         console.log(err);
         return res.status(500).send("error when post borrow");
       }
-      res.status(200).send(rows);
+      const newBorrow = {
+        id_user: userId,
+        id_clothing: clothingId,
+        id_picture: pictureId
+      };
+      res.status(200).send(newBorrow);
     }
   );
 });

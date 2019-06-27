@@ -31,7 +31,7 @@ class Borrow extends React.Component {
       <div className={this.state.hidden ? "hidden" : ""}>
         <Card>
           <CardBody>
-            <Link to="" className="link">
+            <Link to={`/article/${this.props.clothePage}`} className="link">
               <CardImg src={this.props.pictureUrl} alt="borrowClothe" />
             </Link>
             <Button

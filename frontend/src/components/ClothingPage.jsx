@@ -108,7 +108,23 @@ class ClothingPage extends React.Component {
     return users[0];
   };
 
-  handleAdd(e) {}
+  handleAdd(e) {
+    const userId = 1;
+    const clothingId = this.state.backendData.clothing.id;
+    const pictureId = this.state.backendData.pictures.id;
+    axios
+      .post(
+        `http://localhost:5050/emprunt/${userId}/${clothingId}/${pictureId}`
+      )
+      .then(({ data }) => {
+        data.id_user = userId;
+        data.id_clothing = clothingId;
+        data.id_picture = pictureId;
+      })
+      .catch(err => {
+        console.log(`Nope! ${err}`);
+      });
+  }
 
   render() {
     const { width } = this.state;
