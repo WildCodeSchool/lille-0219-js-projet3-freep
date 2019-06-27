@@ -1,0 +1,25 @@
+@media all and (min-width: 480px) {
+  .Login {
+    padding: 60px 0;
+  }
+
+  .Login form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}
+
+.titleConnect {
+  font-size: 35px;
+  color: goldenrod;
+  font-family: DancingScript;
+  text-align: center;
+  font-weight: bold;
+}
+.Login.Button {
+  color: black;
+}
+.littleInfo {
+  font-size: 15px;
+  color: goldenrod;
+}

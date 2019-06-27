@@ -11,6 +11,8 @@ import PartnerPage from "./components/PartnerPage";
 import MessagingPage from "./components/MessagingPage";
 import Message from "./components/Message";
 import Footer from "./components/Footer";
+import Login from "./components/Login";
+import Registration from "./components/Registration";
 import Loader from "./components/Loader";
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
           <Route path="/users/:userId" component={ClothingPage} />
           <Route path="/partenaire" component={PartnerPage} />
           <Route path="/messagerie/:idReader" component={MessagingPage} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/registration" exact component={Registration} />
           <Route path="/message/:P1/:P2" component={Message} />
           <Route path="/loader" component={Loader} />
         </Switch>
