@@ -22,7 +22,6 @@ passport.use(
           if (!user) return done(null, false, { message: "User not found!" });
           bcrypt.compare(password, user.password, (errBcrypt, result) => {
             if (errBcrypt) return done(errBcrypt);
-            console.log("DEBUG (again)");
             console.log(result);
             if (!result)
               return done(null, false, { message: "Incorrect password!" });
