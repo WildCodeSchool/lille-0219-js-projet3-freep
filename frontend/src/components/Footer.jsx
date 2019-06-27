@@ -9,7 +9,7 @@ class Footer extends React.Component {
       <footer className="row fixed-bottom p-1 justify-content-center m-0">
         <Col xs="12" sm="3" className="text-center">
           Made with
-          <span role="img" aria-label="">
+          <span role="img" aria-label="" className="px-2">
             ❤️
           </span>
           by Wild Code School
