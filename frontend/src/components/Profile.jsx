@@ -24,6 +24,7 @@ class Profile extends React.Component {
       followers: [],
       followings: [],
       posts: []
+      loading: true
     };
   }
 
@@ -36,7 +37,8 @@ class Profile extends React.Component {
         pictures: data.pictures,
         followers: data.followers,
         followings: data.followings,
-        posts: data.posts
+        posts: data.posts,
+        loading: false
       });
     });
   }
@@ -47,7 +49,6 @@ class Profile extends React.Component {
     const followers = this.state.followers.length;
     const followings = this.state.followings.length;
     const posts = this.state.posts.length;
-
     if (this.state.loading) {
       return <Loader />;
     } else {
@@ -113,9 +114,9 @@ class Profile extends React.Component {
             </Col>
           </Row>
           <Row>
-            {pictures.map((picture, idx) => {
+            {pictures.map((picture, key) => {
               return (
-                <Col sm="6" md="4" lg="3" xl="2" key={idx}>
+                <Col sm="6" md="4" lg="3" key={key}>
                   <LazyLoad height={100} offset={-200}>
                     <Photo picture={picture.url} link={picture.id_clothing} />
                   </LazyLoad>
