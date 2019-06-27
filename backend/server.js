@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
+const passport = require("passport");
 
 app.use(cors());
 
@@ -9,6 +10,9 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+
+app.use("/auth", require("./auth"));
 
 // Homepage
 

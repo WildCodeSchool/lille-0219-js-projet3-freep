@@ -74,10 +74,6 @@ ul {
   width: 50px;
 }
 
-form {
-  margin: 0 auto;
-}
-
 label,
 input,
 button,
@@ -116,7 +112,7 @@ form label input[type="submit"] {
   margin-right: 10px;
 }
 form {
-  margin-top: 2.5rem;
+  margin: 2.5rem auto 0 auto;
 }
 
 .magnifier {
