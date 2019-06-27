@@ -47,11 +47,16 @@ class NavFreep extends React.Component {
                   placeholder="Cherche un vêtement ou un profil..."
                 />
                 <input type="submit" />
-                <img className="magnifier" src="../pictures/loupe.png" />
+                <img
+                  className="magnifier"
+                  src="../pictures/loupe.png"
+                  alt="magnifier"
+                />
               </label>
             </form>
-            <Nav className="ml-auto" navbar>
+            <Nav className="ml-auto text-center" navbar>
               <NavLink
+                to=""
                 onClick={this.toggleModal}
                 title="Propose ton vêtement !"
               >
