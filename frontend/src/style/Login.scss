@@ -10,11 +10,10 @@
 }
 
 .titleConnect {
-  font-size: 35px;
-  color: goldenrod;
+  font-size: 30px;
+  color: black;
   font-family: DancingScript;
   text-align: center;
-  font-weight: bold;
 }
 .Login.Button {
   color: black;
@@ -22,4 +21,13 @@
 .littleInfo {
   font-size: 15px;
   color: goldenrod;
+}
+.btn-primary {
+  background-color: #f8bbd0 !important;
+  border-color: goldenrod !important;
+  font-size: 20px;
+  font-family: aria;
+}
+input[type="checkbox"] {
+  padding-bottom: 3vh !important;
 }
