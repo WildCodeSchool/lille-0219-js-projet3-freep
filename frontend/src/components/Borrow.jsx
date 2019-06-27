@@ -3,27 +3,32 @@ import React from "react";
 import { Card, CardBody, CardImg, Row, Col, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import "../style/Borrow.scss";
 
 class Borrow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      hidden: false
+    };
   }
 
   handleDelete(e) {
     e.preventDefault();
-    const userId = this.props.match.params.userId;
-    const borrowId = this.props.match.params.borrowId;
+    const userId = this.props.userId;
+    const borrowId = this.props.borrowId;
     axios
       .delete(`http://localhost:5050/emprunt/${userId}/${borrowId}`)
       .then(({ data }) => {
-        this.props.borrowArray = data;
+        this.setState({
+          hidden: true
+        });
       });
   }
 
   render() {
     return (
-      <React.Fragment>
+      <div className={this.state.hidden ? "hidden" : ""}>
         <Card>
           <CardBody>
             <Link to="" className="link">
@@ -39,7 +44,7 @@ class Borrow extends React.Component {
             <Button>J'ai emprunté le vêtement</Button>
           </CardBody>
         </Card>
-      </React.Fragment>
+      </div>
     );
   }
 }

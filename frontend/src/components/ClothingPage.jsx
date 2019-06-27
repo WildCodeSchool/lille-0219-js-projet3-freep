@@ -6,7 +6,8 @@ import {
   Carousel,
   CarouselItem,
   CarouselControl,
-  CarouselIndicators
+  CarouselIndicators,
+  Button
 } from "reactstrap";
 import "../style/ClothingPage.scss";
 import Comment from "./Comment";
@@ -106,6 +107,8 @@ class ClothingPage extends React.Component {
     });
     return users[0];
   };
+
+  handleAdd(e) {}
 
   render() {
     const { width } = this.state;
@@ -225,6 +228,13 @@ class ClothingPage extends React.Component {
                     <h4 className="p-0">Caution demandée</h4>
                   </div>
                 ) : null}
+                <Button
+                  onClick={e => {
+                    this.handleAdd(e);
+                  }}
+                >
+                  Tu veux emprunter ce vêtement? Contacte-moi!
+                </Button>
                 <h2>
                   {comments.length} Commentaire
                   {comments.length >= 2 ? "s" : ""}

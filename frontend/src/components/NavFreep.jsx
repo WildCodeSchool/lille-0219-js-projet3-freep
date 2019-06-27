@@ -69,7 +69,7 @@ class NavFreep extends React.Component {
                 <Mail className="img" color="black" />
               </NavLink>
               <NavLink
-                to="/emprunt/:userId"
+                to="/emprunt/1"
                 title="Retrouve les vêtements que tu souhaites emprunter"
               >
                 <Heart className="img" color="black" />

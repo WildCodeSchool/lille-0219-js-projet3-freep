@@ -7,20 +7,27 @@ class BorrowPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: null,
       borrowArray: [{}],
       loading: true
     };
   }
 
   componentDidMount() {
-    const userId = this.props.match.params.userId;
-
-    axios.get(`http://localhost:5050/emprunt/${userId}`).then(({ data }) => {
-      this.setState({
-        borrowArray: data,
-        loading: false
-      });
+    this.refresh();
+  }
+  refresh() {
+    this.setState({
+      userId: this.props.match.params.userId
     });
+    axios
+      .get(`http://localhost:5050/emprunt/${this.props.match.params.userId}`)
+      .then(({ data }) => {
+        this.setState({
+          borrowArray: data,
+          loading: false
+        });
+      });
   }
   render() {
     if (this.state.loading) {
@@ -41,6 +48,9 @@ class BorrowPage extends React.Component {
                   key={i}
                   pictureUrl={borrow.url}
                   clothePage={borrow.id_clothing}
+                  borrowId={borrow.id}
+                  userId={this.props.match.params.userId}
+                  listRefresh={this.refresh}
                 />
               )
             );
