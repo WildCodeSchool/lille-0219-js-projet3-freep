@@ -54,11 +54,6 @@ class NavFreep extends React.Component {
               <NavLink
                 onClick={this.toggleModal}
                 title="Propose ton vêtement !"
-                style={{
-                  padding: "3vh 0",
-                  backgroundColor: "rgba(255, 192, 203, .1)",
-                  width: "100%"
-                }}
               >
                 <PlusCircle
                   className="img"
@@ -75,11 +70,6 @@ class NavFreep extends React.Component {
                 onClick={this.toggleBurger}
                 to="/partenaire"
                 title="Découvre nos partenaires !"
-                style={{
-                  padding: "3vh 0",
-                  backgroundColor: "rgba(255, 192, 203, .3)",
-                  width: "100%"
-                }}
               >
                 <Tag className="img" color="black" />
                 <p>Partenaires</p>
@@ -88,11 +78,6 @@ class NavFreep extends React.Component {
                 onClick={this.toggleBurger}
                 to="/messagerie/2"
                 title="Parle avec nos Freepeuses"
-                style={{
-                  padding: "3vh 0",
-                  backgroundColor: "rgba(255, 192, 203, .5)",
-                  width: "100%"
-                }}
               >
                 <Mail className="img" color="black" />
                 <p>Messagerie</p>
@@ -101,11 +86,6 @@ class NavFreep extends React.Component {
                 onClick={this.toggleBurger}
                 to="/favoris"
                 title="Retrouve tes favoris"
-                style={{
-                  padding: "3vh 0",
-                  backgroundColor: "rgba(255, 192, 203, .7)",
-                  width: "100%"
-                }}
               >
                 <Heart className="img" color="black" />
                 <p>Favoris</p>
@@ -114,11 +94,6 @@ class NavFreep extends React.Component {
                 onClick={this.toggleBurger}
                 to="/profil/1"
                 title="Accède à ton profil"
-                style={{
-                  padding: "3vh 0",
-                  backgroundColor: "rgba(255, 192, 203, .9)",
-                  width: "100%"
-                }}
               >
                 <User className="img" color="black" />
                 <p>Profil</p>
