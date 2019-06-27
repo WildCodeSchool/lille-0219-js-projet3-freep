@@ -4,8 +4,6 @@ import {
   Card,
   CardBody,
   CardImg,
-  Row,
-  Col,
   Button,
   Form,
   Input,
@@ -20,16 +18,8 @@ class Borrow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hidden: false,
-      isOpen: false,
-      modal: false
+      hidden: false
     };
-  }
-
-  toggleModalBorrow() {
-    this.setState(prevState => ({
-      modal: !prevState.modal
-    }));
   }
 
   handleDelete(e) {
@@ -51,7 +41,11 @@ class Borrow extends React.Component {
         <Card>
           <CardBody>
             <Link to={`/article/${this.props.clothePage}`} className="link">
-              <CardImg src={this.props.pictureUrl} alt="borrowClothe" />
+              <CardImg
+                src={this.props.pictureUrl}
+                alt="borrowClothe"
+                className="borrowPicture"
+              />
             </Link>
             <Button
               onClick={e => {
@@ -63,13 +57,19 @@ class Borrow extends React.Component {
 
             <Button
               onClick={() => {
-                this.toggleModalBorrow();
+                this.props.toggleModalBorrow();
               }}
             >
               J'ai emprunté ce vêtement
             </Button>
-            <Modal isOpen={this.state.modal} toggle={this.toggleModalBorrow}>
-              <ModalHeader toggle={this.toggleModalBorrow} className="pr-5" />
+            <Modal
+              isOpen={this.props.modal}
+              toggle={this.props.toggleModalBorrow}
+            >
+              <ModalHeader
+                toggle={this.props.toggleModalBorrow}
+                className="pr-5"
+              />
               <Form
                 method="POST"
                 enctype="multipart/form-data"
