@@ -215,15 +215,25 @@ form label input[type="submit"] {
   }
 }
 
-.show {
-  height: 100vh;
-  ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    a {
-      padding: 5vh auto;
-      text-align: center;
+$count: pink, purple, red, blue, orange;
+
+@media (max-width: 740px) {
+  @for $i from 1 through length($count) {
+    ul a:nth-of-type(#{length($count)}n + #{$i}) {
+      background-color: lighten(nth($count, $i), 20%);
+    }
+  }
+  .show {
+    height: 100vh;
+    ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      a {
+        padding: 3vh 0 !important;
+        text-align: center;
+        width: 100%;
+      }
     }
   }
 }
