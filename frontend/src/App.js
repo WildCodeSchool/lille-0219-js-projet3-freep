@@ -23,7 +23,8 @@ function App() {
       </header>
       <Container className="container">
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/" component={Login} />
+          <Route path="/accueil" component={HomePage} />
           <Route path="/article/:articleId" component={ClothingPage} />
           <Route path="/profil/:profileId" component={Profile} />
           <Route path="/users/:userId" component={ClothingPage} />
