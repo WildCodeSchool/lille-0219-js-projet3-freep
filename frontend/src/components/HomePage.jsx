@@ -3,7 +3,6 @@ import { Row, Col } from "reactstrap";
 import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
-import LazyLoad from "react-lazyload";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -32,9 +31,7 @@ class HomePage extends React.Component {
           {pictures.map((picture, key) => {
             return (
               <Col sm="6" md="4" lg="3" key={key}>
-                <LazyLoad height={100} offset={-200}>
-                  <Photo picture={picture.url} link={picture.id_clothing} />
-                </LazyLoad>
+                <Photo picture={picture.url} link={picture.id_clothing} />
               </Col>
             );
           })}
