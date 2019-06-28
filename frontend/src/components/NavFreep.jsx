@@ -30,7 +30,7 @@ class NavFreep extends React.Component {
     return (
       <div className="header">
         <Navbar color="light" light expand="md">
-          <Link to="/">
+          <Link to="/accueil">
             <img className="logo" src="../pictures/logo.png" alt="logo" />
           </Link>
           <div className="navText">
@@ -68,7 +68,10 @@ class NavFreep extends React.Component {
               <NavLink to="/messagerie/2" title="Parle avec nos Freepeuses">
                 <Mail className="img" color="black" />
               </NavLink>
-              <NavLink to="/favoris" title="Retrouve tes favoris">
+              <NavLink
+                to="/emprunt/1"
+                title="Retrouve les vêtements que tu souhaites emprunter"
+              >
                 <Heart className="img" color="black" />
               </NavLink>
               <NavLink to="/profil/1" title="Accède à ton profil">

@@ -6,7 +6,8 @@ import {
   Carousel,
   CarouselItem,
   CarouselControl,
-  CarouselIndicators
+  CarouselIndicators,
+  Button
 } from "reactstrap";
 import "../style/ClothingPage.scss";
 import Comment from "./Comment";
@@ -14,6 +15,7 @@ import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
 import CommentForm from "./CommentForm";
+import { Link } from "react-router-dom";
 
 class ClothingPage extends React.Component {
   constructor(props) {
@@ -107,6 +109,27 @@ class ClothingPage extends React.Component {
     return users[0];
   };
 
+  handleAdd(e) {
+    const userId = 1;
+    const clothingId = this.state.backendData.clothing.id;
+    const pictureId = this.state.backendData.pictures[0].id;
+    axios
+      .post(
+        `http://localhost:5050/emprunt/${userId}/${clothingId}/${pictureId}`
+      )
+      .then(({ data }) => {
+        data.id_user = userId;
+        data.id_clothing = clothingId;
+        data.id_picture = pictureId;
+        this.props.history.push(
+          `/message/1/${this.state.backendData.users[0].id}`
+        );
+      })
+      .catch(err => {
+        console.log(`Nope! ${err}`);
+      });
+  }
+
   render() {
     const { width } = this.state;
     const isMobile = width <= 640;
@@ -188,7 +211,7 @@ class ClothingPage extends React.Component {
                 <Row className="justify-content-center">
                   {pictures.map((picture, key) => {
                     return (
-                      <Col xs="6" md="4" key={key}>
+                      <Col xs="6" md="6" key={key}>
                         <Photo picture={picture.url} />
                       </Col>
                     );
@@ -225,6 +248,13 @@ class ClothingPage extends React.Component {
                     <h4 className="p-0">Caution demandée</h4>
                   </div>
                 ) : null}
+                <Button
+                  onClick={e => {
+                    this.handleAdd(e);
+                  }}
+                >
+                  Tu veux emprunter ce vêtement? Contacte-moi!
+                </Button>
                 <h2>
                   {comments.length} Commentaire
                   {comments.length >= 2 ? "s" : ""}

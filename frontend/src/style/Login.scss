@@ -1,0 +1,33 @@
+@media all and (min-width: 480px) {
+  .Login {
+    padding: 60px 0;
+  }
+
+  .Login form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}
+
+.titleConnect {
+  font-size: 30px;
+  color: black;
+  font-family: DancingScript;
+  text-align: center;
+}
+.Login.Button {
+  color: black;
+}
+.littleInfo {
+  font-size: 15px;
+  color: goldenrod;
+}
+.btn-primary {
+  background-color: #f8bbd0 !important;
+  border-color: goldenrod !important;
+  font-size: 20px;
+  font-family: aria;
+}
+input[type="checkbox"] {
+  padding-bottom: 3vh !important;
+}
