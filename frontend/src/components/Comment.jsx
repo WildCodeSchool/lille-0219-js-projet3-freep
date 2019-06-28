@@ -6,24 +6,24 @@ import { Row, Col } from "reactstrap";
 const Comment = props => {
   return (
     <Row className="px-3 py-1 align-items-center">
-      <Col xs="2">
+      <Col md="2" xs="1">
         <img
           src={props.profile.avatar}
           alt={`user-${props.profile.id}`}
-          className="avatar"
-          width="20"
+          className="comment-avatar"
         />
       </Col>
       <Col
-        xs="2"
+        md="2"
+        xs="1"
         className="align-content-center profile-name comments-profile"
       >
         {props.profile.nickname}
       </Col>
-      <Col xs="6" className="align-items-center">
+      <Col xs="5" md="5" className="align-items-center comment">
         {props.comment.content}
       </Col>
-      <Col xs="1" className="align-items-center">
+      <Col xs="1" className="align-items-left">
         <ReportButton />
       </Col>
     </Row>

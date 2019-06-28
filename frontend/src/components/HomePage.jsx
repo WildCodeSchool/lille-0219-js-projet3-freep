@@ -1,8 +1,9 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
+import { Col } from "reactstrap";
 import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
+import Masonry from "react-masonry-component";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class HomePage extends React.Component {
       return <Loader />;
     } else {
       return (
-        <Row>
+        <Masonry>
           {pictures.map((picture, key) => {
             return (
               <Col sm="6" md="4" lg="3" key={key}>
@@ -35,7 +36,7 @@ class HomePage extends React.Component {
               </Col>
             );
           })}
-        </Row>
+        </Masonry>
       );
     }
   }

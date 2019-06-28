@@ -5,7 +5,7 @@ class Nickname extends React.Component {
     const info = this.props.info;
     return (
       <React.Fragment>
-        <p className="dancingscript">{info.nickname}</p>
+        <span className="primaryfont m-3">{info.nickname}</span>
       </React.Fragment>
     );
   }

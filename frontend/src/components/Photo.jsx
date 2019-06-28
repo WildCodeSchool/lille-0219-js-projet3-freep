@@ -10,7 +10,7 @@ class Photo extends React.Component {
     const link = this.props.link;
     return (
       <React.Fragment>
-        <Card>
+        <Card className="m-2">
           <Link to={`/article/${link}`}>
             <CardImg src={picture} alt="clothes" className="Photo" />
           </Link>

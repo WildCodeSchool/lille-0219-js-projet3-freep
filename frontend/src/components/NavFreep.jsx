@@ -30,7 +30,7 @@ class NavFreep extends React.Component {
     return (
       <div className="header">
         <Navbar color="light" light expand="md">
-          <Link to="/" onClick={this.toggleBurger}>
+          <Link to="/accueil">
             <img className="logo" src="../pictures/logo.png" alt="logo" />
           </Link>
           <div className="navText">
@@ -88,9 +88,8 @@ class NavFreep extends React.Component {
                 <p>Messagerie</p>
               </NavLink>
               <NavLink
-                onClick={this.toggleBurger}
-                to="/favoris"
-                title="Retrouve tes favoris"
+                to="/emprunt/1"
+                title="Retrouve les vêtements que tu souhaites emprunter"
               >
                 <Heart className="img" color="black" />
                 <p>Favoris</p>

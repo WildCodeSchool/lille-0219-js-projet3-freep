@@ -24,15 +24,15 @@
   font-size: 2rem;
 }
 
-hr {
-  height: 0.2rem;
-  color: goldenrod;
-  background-color: goldenrod;
-  border: 0;
-  margin: 0 0 1rem 0;
-  left: 0;
-  right: 0;
-}
+// hr {
+//   height: 0.2rem;
+//   color: goldenrod;
+//   background-color: goldenrod;
+//   border: 0;
+//   margin: 0 0 1rem 0;
+//   left: 0;
+//   right: 0;
+// }
 
 .logo {
   border-radius: 50%;
@@ -104,12 +104,12 @@ form label input[type="text"] {
   position: absolute;
 }
 
-form label input {
-  // position: absolute;
-  // left: 0;
-  // top: 50%;
-  // transform: translateY(-50%);
-}
+// form label input {
+//   position: absolute;
+//   left: 0;
+//   top: 50%;
+//   transform: translateY(-50%);
+// }
 
 form label input[type="submit"] {
   color: transparent;
@@ -130,6 +130,7 @@ form label input[type="submit"] {
   cursor: pointer;
   opacity: 0.5;
 }
+
 @media screen and (max-width: 1025px) {
   .img {
     width: 25px;
@@ -198,10 +199,15 @@ form label input[type="submit"] {
   //   width: 20px;
   //   margin-left: 8px;
   // }
-  form label input[type="submit"] {
-    // width: 28px;
-    // margin-right: 33px;
-    // margin-left: 0;
+  // form label input[type="submit"] {
+  //   width: 28px;
+  //   margin-right: 33px;
+  //   margin-left: 0;
+  // }
+  .logo {
+    border-radius: 50%;
+    width: 5rem;
+    left: -1rem;
   }
 }
 
