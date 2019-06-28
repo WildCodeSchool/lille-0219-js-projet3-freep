@@ -19,7 +19,7 @@ router.post("/users", (req, res) => {
       `INSERT INTO user (nickname, email, password, firstname, lastname, avatar, created_at) VALUES ('${
         user.nickname
       }', '${user.email}', '${user.password}', '${user.firstname}', '${
-        user.lastName
+        user.lastname
       }', "https://cdn2.vectorstock.com/i/1000x1000/20/86/viking-horned-helmet-ancient-costume-vector-15462086.jpg", NOW())`,
       user,
       (err, rows, fields) => {
