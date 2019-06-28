@@ -16,7 +16,6 @@ class NavFreep extends React.Component {
       modal: false,
       search: ""
     };
-    // this.onChange = this.onChange.bind(this);
   }
 
   toggleBurger() {
@@ -42,9 +41,9 @@ class NavFreep extends React.Component {
             <br />
             <span className="navCatch">La garde robe qui rapporte</span>
           </div>
+          <Search />
           <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Search />
             <Nav className="ml-auto" navbar>
               <NavLink title="Propose ton vêtement !">
                 <Upload

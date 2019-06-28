@@ -32,6 +32,7 @@ function App() {
           <Route path="/loader" component={Loader} />
           <Route path="/search/:res" component={Search} />
         </Switch>
+
         <Footer />
       </Container>
     </React.Fragment>

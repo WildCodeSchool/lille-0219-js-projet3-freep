@@ -175,7 +175,7 @@ app.get("/profile/:profileId", (req, res) => {
 app.post("/search", (req, res) => {
   const keyword = req.body.keyword;
   db.query(
-    "SELECT clothing.type, clothing.description FROM clothing WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
+    "SELECT id, clothing.type, clothing.description FROM clothing WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
     ["%" + keyword + "%", "%" + keyword + "%"],
     (err, ResultClothing) => {
       if (err) {
