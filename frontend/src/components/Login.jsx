@@ -39,7 +39,6 @@ class Login extends Component {
         this.setState({
           login: { email: data.email, password: data.password, id: data.id }
         });
-        console.log(data);
         localStorage.setItem("user", JSON.stringify(data));
         history.push("/accueil");
       });
