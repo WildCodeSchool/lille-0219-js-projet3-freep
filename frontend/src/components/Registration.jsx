@@ -37,30 +37,38 @@ class Registration extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    let { firstname, lastname, nickname, email, password } = this.state;
+    let {
+      firstname,
+      lastname,
+      nickname,
+      email,
+      password,
+      confirmPassword
+    } = this.state;
     const { history } = this.props;
-    axios
-      .post("http://localhost:5050/auth/users", {
-        firstname,
-        lastname,
-        nickname,
-        email,
-        password
-      })
-      .then(({ data }) => {
-        this.setState({
-          firstname: data.firstname,
-          lastname: data.lastname,
-          nickname: data.nickname,
-          email: data.email,
-          password: data.password
+    if (password === confirmPassword) {
+      axios
+        .post("http://localhost:5050/auth/users", {
+          firstname,
+          lastname,
+          nickname,
+          email,
+          password
+        })
+        .then(({ data }) => {
+          this.setState({
+            firstname: data.firstname,
+            lastname: data.lastname,
+            nickname: data.nickname,
+            email: data.email,
+            password: data.password
+          });
+          history.push("/accueil");
         });
-        history.push("/accueil");
-      });
+    }
   };
 
   render() {
-    console.log(this.state);
     return (
       <div
         className="Registration"
@@ -183,7 +191,7 @@ class Registration extends Component {
               }}
               for="pwd"
             >
-              Confirme ton mot de passe{" "}
+              Confirme ton mot de passe
             </h1>
             <Form.Control
               value={this.state.confirmPassword}
@@ -196,7 +204,7 @@ class Registration extends Component {
             className="myButton"
             block
             bsSize="large"
-            // disabled={!this.validateForm()}
+            disabled={!this.validateForm()}
             type="submit"
           >
             Rejoins-nous !
