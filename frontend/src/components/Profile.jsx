@@ -30,6 +30,7 @@ class Profile extends React.Component {
 
   componentDidMount() {
     const profileId = this.props.match.params.profileId;
+    localStorage.getItem("user");
 
     axios.get(`http://localhost:5050/profil/${profileId}`).then(({ data }) => {
       this.setState({
