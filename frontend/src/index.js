@@ -8,7 +8,6 @@ import App from "./App";
 import { createBrowserHistory } from "history";
 const history = createBrowserHistory();
 
-// const
 
 ReactDOM.render(
   <BrowserRouter history={history}>
