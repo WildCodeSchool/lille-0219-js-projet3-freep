@@ -7,7 +7,7 @@ class Footer extends React.Component {
   render() {
     return (
       <footer className="row fixed-bottom p-1 justify-content-center m-0">
-        <Col xs="12" sm="3" className="text-center">
+        <Col xs="12" sm="3" className="text-center made-with">
           Made with
           <span role="img" aria-label="" className="px-2">
             ❤️
