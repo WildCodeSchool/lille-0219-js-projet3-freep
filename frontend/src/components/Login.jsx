@@ -66,17 +66,35 @@ class Login extends Component {
           }}
         >
           <h1 className="titleConnect">Prête pour de nouvelles aventures ? </h1>
+          <Button
+            className="facebook"
+            href="https://fr-fr.facebook.com/login/"
+            class="facebook"
+            role="button"
+            title="Lien"
+            style={{
+              fontSize: "15px",
+              borderRadius: "50px",
+              backgroundColor: "bleu",
+              marginBottom: "30px",
+              marginTop: "30px"
+            }}
+          >
+            Connecte toi avec Facebook
+          </Button>
+          <div class="trait" />
+
           <Form.Group controlId="email" bsSize="large">
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               for="email"
             >
               E-mail
             </h1>
+
             <Form.Control
               autoFocus
               type="email"
@@ -88,7 +106,6 @@ class Login extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               for="pwd"
@@ -101,46 +118,17 @@ class Login extends Component {
               type="password"
             />
           </Form.Group>
-          <div className="remember">
-            <input
-              refs="remember_me"
-              value={true}
-              id="checkbox1"
-              type="checkbox"
-            />
-            <h1
-              style={{
-                fontSize: "20px",
-                color: "goldenrod",
-                fontFamily: "DancingScript"
-              }}
-              For="checkbox1"
-            >
-              Se souvenir de moi
-            </h1>
-          </div>
+
           <Button
             class="myButton"
             block
             bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
-            style={{ border: " 1px solid black" }}
           >
             Connecte toi !
           </Button>
 
-          <Button
-            href="https://fr-fr.facebook.com/login/"
-            class="btn btn-primary btn-lg disabled"
-            role="button"
-            title="Lien"
-            style={{
-              fontSize: "15px"
-            }}
-          >
-            inscris toi avec ton compte Facebook
-          </Button>
           <div>
             <NavLink
               activeClassName="active"
@@ -157,7 +145,7 @@ class Login extends Component {
             exact
             to="/Registration"
           >
-            Inscris-toi ! ❀
+            Pas encore de compte ? Inscris-toi ! 🖤
           </NavLink>
         </Form>
       </div>

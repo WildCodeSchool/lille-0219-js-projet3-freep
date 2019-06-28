@@ -40,11 +40,11 @@ class NavFreep extends React.Component {
           </div>
           <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <form action="">
+            <form class="recherche_demo">
               <label htmlFor="clothe-profile-search">
                 <input
-                  type="text"
-                  placeholder="Cherche un vêtement ou un profil..."
+                  type="search"
+                  placeholder="𝓡𝓮𝓬𝓱𝓮𝓻𝓬𝓱𝓮 𝓾𝓷𝓮 𝓾𝓽𝓲𝓵𝓲𝓼𝓪𝓽𝓻𝓲𝓬𝓮, 𝓾𝓷 𝓿𝓮𝓽𝓮𝓶𝓮𝓷𝓽 👗 "
                 />
                 <input type="submit" />
                 <img className="magnifier" src="../pictures/loupe.png" />

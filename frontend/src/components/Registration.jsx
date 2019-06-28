@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
 import LoginBackground from "../pictures/Login.jpg";
+import { NavLink } from "react-router-dom";
 
 class Registration extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class Registration extends Component {
           backgroundImage: `url(${LoginBackground})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-          height: "100vh"
+          height: "500%"
         }}
       >
         <Form
@@ -60,13 +61,29 @@ class Registration extends Component {
             boxShadow: ".5rem 1rem 1rem rgba(0,0,0,.2)"
           }}
         >
-          <h1 className="titleConnect"> Rejoins la communauté Freep </h1>
+          <h1 className="titleConnect"> Rejoins la communauté Freep 🌸</h1>
 
+          <Button
+            className="facebook"
+            href="https://fr-fr.facebook.com/login/"
+            class="facebook"
+            role="button"
+            title="Lien"
+            style={{
+              fontSize: "15px",
+              borderRadius: "50px",
+              backgroundColor: "bleu",
+              marginBottom: "30px",
+              marginTop: "30px"
+            }}
+          >
+            Inscris-toi avec Facebook
+          </Button>
+          <div class="trait" />
           <Form.Group controlId="firstName" bsSize="large">
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               for="firstName"
@@ -85,7 +102,6 @@ class Registration extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               for="lastName"
@@ -104,7 +120,6 @@ class Registration extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               for="username"
@@ -124,7 +139,6 @@ class Registration extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               for="email"
@@ -142,7 +156,6 @@ class Registration extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               for="pwd"
@@ -159,7 +172,6 @@ class Registration extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               for="pwd"
@@ -180,8 +192,16 @@ class Registration extends Component {
             disabled={!this.validateForm()}
             type="submit"
           >
-            Rejoins nous !
+            Rejoins nous ! 💟
           </Button>
+          <NavLink
+            activeClassName="active"
+            className="littleInfo"
+            exact
+            to="/Login"
+          >
+            Déjà inscris ? Connecte toi !
+          </NavLink>
         </Form>
       </div>
     );
