@@ -55,7 +55,7 @@ class NavFreep extends React.Component {
               </label>
             </form>
             <Nav className="ml-auto" navbar>
-              <NavLink title="Propose ton vêtement !">
+              <div title="Propose ton vêtement !">
                 <PlusCircle
                   className="img"
                   color="black"
@@ -65,7 +65,7 @@ class NavFreep extends React.Component {
                   <ModalHeader toggle={this.toggleModal} className="pr-5" />
                   <Uploader />
                 </Modal>
-              </NavLink>
+              </div>
               <NavLink to="/partenaire" title="Découvre nos partenaires !">
                 <Tag className="img" color="black" />
               </NavLink>
