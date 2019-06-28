@@ -120,7 +120,7 @@ class Login extends Component {
             </h1>
           </div>
           <Button
-            class="myButton"
+            className="myButton"
             block
             bsSize="large"
             disabled={!this.validateForm()}
@@ -131,7 +131,7 @@ class Login extends Component {
           </Button>
           <Button
             href="https://fr-fr.facebook.com/login/"
-            class="btn btn-primary btn-lg disabled"
+            className="btn btn-primary btn-lg disabled"
             role="button"
             title="Lien"
             style={{
