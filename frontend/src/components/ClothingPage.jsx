@@ -15,7 +15,6 @@ import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
 import CommentForm from "./CommentForm";
-import { Link } from "react-router-dom";
 
 class ClothingPage extends React.Component {
   constructor(props) {
