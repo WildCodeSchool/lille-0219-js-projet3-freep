@@ -44,6 +44,35 @@ class Profile extends React.Component {
     });
   }
 
+  handleClick = () => {
+    const profileId = this.props.match.params.profileId;
+
+    this.setState(state => ({
+      isFollowed: !state.isFollowed
+    }));
+    if (!this.state.isFollowed) {
+      axios
+        .post(`http://localhost:5050/follow/${profileId}`, {
+          idAuthor: 1 // ;_;
+        })
+        .then(({ data }) => {
+          this.setState({
+            socialNew: { followers: data }
+          });
+        });
+    } else {
+      axios
+        .put(`http://localhost:5050/follow/${profileId}`, {
+          idAuthor: 1 // ;_;
+        })
+        .then(({ data }) => {
+          this.setState({
+            socialNew: { followers: data }
+          });
+        });
+    }
+  };
+
   render() {
     const user = this.state.user;
     const pictures = this.state.pictures;
