@@ -13,7 +13,6 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../style/Borrow.scss";
-
 class Borrow extends React.Component {
   constructor(props) {
     super(props);
@@ -24,21 +23,18 @@ class Borrow extends React.Component {
 
   handleDelete(e) {
     e.preventDefault();
-    const userId = this.props.userId;
     const borrowId = this.props.borrowId;
-    axios
-      .delete(`http://localhost:5050/emprunt/${userId}/${borrowId}`)
-      .then(({ data }) => {
-        this.setState({
-          hidden: true
-        });
+    axios.delete(`http://localhost:5050/emprunt/${borrowId}`).then(() => {
+      this.setState({
+        hidden: true
       });
+    });
   }
 
   render() {
     return (
       <div className={this.state.hidden ? "hidden" : ""}>
-        <Card>
+        <Card className="borrowCard">
           <CardBody>
             <Link to={`/article/${this.props.clothePage}`} className="link">
               <CardImg
@@ -47,18 +43,12 @@ class Borrow extends React.Component {
                 className="borrowPicture"
               />
             </Link>
-            <Button
-              onClick={e => {
-                this.handleDelete(e);
-              }}
-            >
-              Annuler l'emprunt
-            </Button>
 
             <Button
               onClick={() => {
                 this.props.toggleModalBorrow();
               }}
+              className="borrowButton"
             >
               J'ai emprunté ce vêtement
             </Button>
@@ -79,6 +69,14 @@ class Borrow extends React.Component {
                 <Button>Envoyer</Button>
               </Form>
             </Modal>
+            <Button
+              onClick={e => {
+                this.handleDelete(e);
+              }}
+              className="borrowButton"
+            >
+              Annuler l'emprunt
+            </Button>
           </CardBody>
         </Card>
       </div>
