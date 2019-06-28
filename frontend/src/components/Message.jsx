@@ -116,7 +116,7 @@ class Message extends React.Component {
         )}
         {this.state.messageArray.map((message, i) => {
           return (
-            <React.Fragment>
+            <React.Fragment key={i}>
               <Card>
                 <CardBody>
                   <Row>
