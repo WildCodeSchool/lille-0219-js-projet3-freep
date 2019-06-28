@@ -303,13 +303,11 @@ app.get("/emprunt/:userId", (req, res) => {
 });
 
 //Delete a Borrow
-app.delete(`/emprunt/:userId/:borrowId`, (req, res) => {
-  const userId = req.params.userId;
+app.delete(`/emprunt/:borrowId`, (req, res) => {
   const borrowId = req.params.borrowId;
   db.query(
     `DELETE FROM borrow
-    WHERE id_user=${userId}
-    AND id=${borrowId}`,
+    WHERE id=${borrowId}`,
     (err, rows) => {
       if (err) {
         console.log(err);
