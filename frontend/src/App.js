@@ -15,6 +15,7 @@ import Login from "./components/Login";
 import Registration from "./components/Registration";
 import Loader from "./components/Loader";
 import BorrowPage from "./components/BorrowPage";
+import EditProfile from "./components/EditProfile";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/accueil" component={HomePage} />
           <Route path="/article/:articleId" component={ClothingPage} />
           <Route path="/profil/:profileId" component={Profile} />
+          <Route path="/edit/:profileId" component={EditProfile} />
           <Route path="/users/:userId" component={ClothingPage} />
           <Route path="/partenaire" component={PartnerPage} />
           <Route path="/messagerie/:idReader" component={MessagingPage} />
