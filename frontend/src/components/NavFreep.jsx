@@ -29,7 +29,7 @@ class NavFreep extends React.Component {
   render() {
     return (
       <div className="header">
-        <Navbar color="light" light expand="md">
+        <Navbar color="light" light expand="md" className="p-0">
           <Link to="/accueil">
             <img className="logo" src="../pictures/logo.png" alt="logo" />
           </Link>
@@ -38,7 +38,7 @@ class NavFreep extends React.Component {
             <br />
             <span className="navCatch">La garde robe qui rapporte</span>
           </div>
-          <NavbarToggler onClick={this.toggleBurger} />
+          <NavbarToggler onClick={this.toggleBurger} className="mr-4" />
           <Collapse isOpen={this.state.isOpen} navbar>
             <form action="">
               <label htmlFor="clothe-profile-search">
@@ -51,7 +51,7 @@ class NavFreep extends React.Component {
               </label>
             </form>
             <Nav className="ml-auto" navbar>
-              <NavLink title="Propose ton vêtement !">
+              <NavLink title="Propose ton vêtement !" to="">
                 <PlusCircle
                   className="img"
                   color="black"
