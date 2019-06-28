@@ -351,6 +351,62 @@ app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
     }
   });
 });
+
+// Profile follow button routes
+
+app.get("/follow/:followId", (req, res) => {
+  const followId = req.params.followId;
+  db.query(
+    `SELECT id_user FROM social WHERE id_content = ${followId}`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting social route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+app.post("/follow/:followId", (req, res) => {
+  const followId = req.params.followId;
+  const authorId = req.body.idAuthor;
+  db.query(
+    `INSERT INTO social (id_user, content_type, id_content, created_at) VALUES (${authorId}, 'follow', ${followId}, NOW())`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting social route");
+      }
+      db.query(
+        `SELECT DISTINCT(id_user) FROM social WHERE id_content = ${followId}`,
+        (err, rows) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("error when getting social route");
+          }
+          res.status(200).send(rows);
+        }
+      );
+    }
+  );
+});
+
+app.put("/follow/:followId", (req, res) => {
+  const followId = req.params.followId;
+  const authorId = req.body.idAuthor;
+  db.query(
+    `DELETE FROM social WHERE id_user=${authorId} AND content_type="follow" AND id_content=${followId}`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting social route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
