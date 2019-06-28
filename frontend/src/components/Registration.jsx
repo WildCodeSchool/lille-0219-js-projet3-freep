@@ -14,8 +14,8 @@ class Registration extends Component {
       lastname: "",
       nickname: "",
       email: "",
-      password: ""
-      // confirmPassword: ""
+      password: "",
+      confirmPassword: ""
     };
   }
 
@@ -25,7 +25,7 @@ class Registration extends Component {
       this.state.lastname.length > 0 &&
       this.state.nickname.length > 0 &&
       this.state.email.length > 0 &&
-      this.state.password //=== this.state.confirmPassword
+      this.state.password === this.state.confirmPassword
     );
   }
 
@@ -38,6 +38,7 @@ class Registration extends Component {
   handleSubmit = event => {
     event.preventDefault();
     let { firstname, lastname, nickname, email, password } = this.state;
+    const { history } = this.props;
     axios
       .post("http://localhost:5050/auth/users", {
         firstname,
@@ -54,7 +55,7 @@ class Registration extends Component {
           email: data.email,
           password: data.password
         });
-        console.log(data);
+        history.push("/accueil");
       });
   };
 
@@ -173,7 +174,7 @@ class Registration extends Component {
               type="password"
             />
           </Form.Group>
-          {/* <Form.Group controlId="confirmPassword" bsSize="large">
+          <Form.Group controlId="confirmPassword" bsSize="large">
             <h1
               style={{
                 fontSize: "20px",
@@ -189,7 +190,7 @@ class Registration extends Component {
               onChange={this.handleChange}
               type="password"
             />
-          </Form.Group> */}
+          </Form.Group>
           <Button
             style={{ border: " 1px solid black" }}
             className="myButton"
