@@ -14,4 +14,5 @@ code {
 
 * {
   font-family: "montserrat", sans-serif;
+  font-size: calc(0.85rem + 0.15vw);
 }
