@@ -108,7 +108,7 @@ class Registration extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
+
                 fontFamily: "DancingScript"
               }}
               for="firstname"
