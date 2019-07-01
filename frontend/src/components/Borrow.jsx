@@ -73,12 +73,20 @@ class Borrow extends React.Component {
               <Form
                 method="POST"
                 enctype="multipart/form-data"
-                action="uploaddufichier"
+                action="/uploadProof"
               >
-                <Input type="file" name="monfichier" />
-                <Button>Envoyer</Button>
+                <Input type="file" name="myFile" />
+                <Button type="submit">Envoyer</Button>
               </Form>
             </Modal>
+            <Form
+              method="POST"
+              enctype="multipart/form-data"
+              action="/emprunt/uploadProof"
+            >
+              <Input type="file" name="myFile" />
+              <Button type="submit">Envoyer</Button>
+            </Form>
           </CardBody>
         </Card>
       </div>

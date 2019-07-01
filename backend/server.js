@@ -3,9 +3,39 @@ const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
 const multer = require("multer");
-const upload = multer({ dest: "tmp/" });
+const path = require("path");
+
+const storage = multer.diskStorage({
+  destination: "./uploadPictures/",
+  filename: function(req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+  fileFilter: function(req, file, cb) {
+    checkFileType(file, cb);
+  }
+}).single("myFile");
+
+checkFileType = (file, cb) => {
+  const fileTypes = /jpeg||jpg||png/;
+  const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = fileTypes.test(file.mimetype);
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    cb("Error: Images only");
+  }
+};
 
 app.use(cors());
+app.use(express.static("./uploadPictures"));
 
 const bodyParser = require("body-parser");
 
@@ -256,15 +286,18 @@ app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
 });
 
 // Upload a proof-picture
-app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
-  fs.rename(req.file.path, "public/pictures/" + req.file.originalname, err => {
+app.post("/uploadProof", (req, res) => {
+  upload(req, res, err => {
     if (err) {
-      res.send("error during the move");
+      console.log(err);
+      return res.status(500).send("error when upload a proof picture");
     } else {
-      res.send("File upload");
+      console.log(req.file);
+      res.send(req.file);
     }
   });
 });
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
