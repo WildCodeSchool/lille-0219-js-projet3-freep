@@ -360,7 +360,7 @@ app.post("/search", (req, res) => {
   const keyword = req.body.keyword;
   console.log(keyword);
   db.query(
-    "SELECT id, clothing.type, clothing.description FROM clothing WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
+    "SELECT clothing.id, clothing.type, clothing.description,picture.url FROM clothing INNER JOIN picture ON picture.id_clothing = clothing.id WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
     ["%" + keyword + "%", "%" + keyword + "%"],
     (err, ResultClothing) => {
       if (err) {
@@ -382,7 +382,9 @@ app.post("/search", (req, res) => {
               .status(500)
               .send("error when getting search route on users");
           }
-          SearchResult.ResultUsers = ResultUsers;
+          SearchResult = {
+            Results: ResultUsers
+          };
           res.status(200).send(SearchResult);
         }
       );

@@ -1,8 +1,10 @@
 import React from "react";
-import { Container } from "reactstrap";
 import { connect } from "react-redux";
 import "../style/ClothingPage.scss";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import { Heart, Target } from "react-feather";
+import { Row, Card, CardImg } from "reactstrap";
+import ReportButton from "./ReportButton";
 
 class Search extends React.Component {
   constructor(props) {
@@ -14,17 +16,26 @@ class Search extends React.Component {
   }
 
   render() {
-    console.log("------------");
-    console.log("restab : " + this.props.restab);
-    console.log("------------");
+    // console.log("------------");
+    // console.log("restab : " + this.props.restab);
+    // console.log("------------");
     return (
-      <Container>
-        <ul>
-          {this.props.restab.map(el => (
-            <li>{el.description}</li>
-          ))}
-        </ul>
-      </Container>
+      <React.Fragment>
+        {this.props.restab.map(el => (
+          <Card className="m-2">
+            <Link to={`/article/`}>
+              <CardImg src={el.url} alt="clothes" className="Photo" />
+            </Link>
+            <div className="overlay">
+              <Row className="p-0 card-buttons align-items-center">
+                <Heart color="white" />
+                <Target color="white" />
+                <ReportButton />
+              </Row>
+            </div>
+          </Card>
+        ))}
+      </React.Fragment>
     );
   }
 }
