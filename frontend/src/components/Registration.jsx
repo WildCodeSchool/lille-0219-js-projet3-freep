@@ -3,14 +3,16 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
 import LoginBackground from "../pictures/Login.jpg";
+import axios from "axios";
 import { NavLink } from "react-router-dom";
+
 class Registration extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
-      username: "",
+      firstname: "",
+      lastname: "",
+      nickname: "",
       email: "",
       password: "",
       confirmPassword: ""
@@ -18,9 +20,9 @@ class Registration extends Component {
   }
   validateForm() {
     return (
-      this.state.firstName.length > 0 &&
-      this.state.lastName.length > 0 &&
-      this.state.username.length > 0 &&
+      this.state.firstname.length > 0 &&
+      this.state.lastname.length > 0 &&
+      this.state.nickname.length > 0 &&
       this.state.email.length > 0 &&
       this.state.password === this.state.confirmPassword
     );
@@ -32,6 +34,35 @@ class Registration extends Component {
   };
   handleSubmit = event => {
     event.preventDefault();
+    let {
+      firstname,
+      lastname,
+      nickname,
+      email,
+      password,
+      confirmPassword
+    } = this.state;
+    const { history } = this.props;
+    if (password === confirmPassword) {
+      axios
+        .post("http://localhost:5050/auth/users", {
+          firstname,
+          lastname,
+          nickname,
+          email,
+          password
+        })
+        .then(({ data }) => {
+          this.setState({
+            firstname: data.firstname,
+            lastname: data.lastname,
+            nickname: data.nickname,
+            email: data.email,
+            password: data.password
+          });
+          history.push("/accueil");
+        });
+    }
   };
   render() {
     return (
@@ -79,51 +110,48 @@ class Registration extends Component {
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="firstName"
+              for="firstname"
             >
-              {" "}
-              Prénom{" "}
+              Prénom
             </h1>
             <Form.Control
               autoFocus
               type="text"
-              value={this.state.firstName}
+              value={this.state.firstname}
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="lastName" bsSize="large">
+          <Form.Group controlId="lastname" bsSize="large">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="lastName"
+              for="lastname"
             >
-              {" "}
-              Nom{" "}
+              Nom
             </h1>
             <Form.Control
               autoFocus
               type="text"
-              value={this.state.lastName}
+              value={this.state.lastname}
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="username" bsSize="large">
+          <Form.Group controlId="nickname" bsSize="large">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="username"
+              for="nickname"
             >
-              {" "}
-              Nom d'utilisateur{" "}
+              Nom d'utilisateur
             </h1>
             <Form.Control
               autoFocus
               type="text"
-              value={this.state.username}
+              value={this.state.nickname}
               onChange={this.handleChange}
             />
           </Form.Group>
@@ -150,9 +178,9 @@ class Registration extends Component {
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="pwd"
+              for="password"
             >
-              Mot de passe{" "}
+              Mot de passe
             </h1>
             <Form.Control
               value={this.state.password}
@@ -168,7 +196,7 @@ class Registration extends Component {
               }}
               for="pwd"
             >
-              Confirme ton mot de passe{" "}
+              Confirme ton mot de passe
             </h1>
             <Form.Control
               value={this.state.confirmPassword}

@@ -35,7 +35,6 @@ class Login extends Component {
         this.setState({
           login: { email: data.email, password: data.password, id: data.id }
         });
-        console.log(data);
         localStorage.setItem("user", JSON.stringify(data));
         history.push("/accueil");
       });
@@ -103,7 +102,7 @@ class Login extends Component {
               }}
               for="pwd"
             >
-              Mot de passe{" "}
+              Mot de passe
             </h1>
             <Form.Control
               value={this.state.password}
@@ -118,8 +117,9 @@ class Login extends Component {
             disabled={!this.validateForm()}
             type="submit"
           >
-            Connecte toi !
+            Connecte-toi !
           </Button>
+
           <div>
             <NavLink
               activeClassName="active"
