@@ -12,9 +12,11 @@ class NavFreep extends React.Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.state = {
       isOpen: false,
-      modal: false
+      modal: false,
+      profile: ""
     };
   }
+
   toggleBurger() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -26,7 +28,17 @@ class NavFreep extends React.Component {
     }));
   }
 
+  componentDidMount() {
+    if ("user" in localStorage) {
+      const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+      this.setState({
+        profile: currentUser
+      });
+    }
+  }
+
   render() {
+    console.log(this.state);
     return (
       <div className="header">
         <Navbar color="light" light expand="md">
@@ -74,7 +86,10 @@ class NavFreep extends React.Component {
               >
                 <Heart className="img" color="black" />
               </NavLink>
-              <NavLink to="/profil/1" title="Accède à ton profil">
+              <NavLink
+                to={`/profil/${this.state.profile}`}
+                title="Accède à ton profil"
+              >
                 <User className="img" color="black" />
               </NavLink>
             </Nav>
