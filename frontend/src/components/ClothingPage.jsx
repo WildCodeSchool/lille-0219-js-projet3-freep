@@ -54,9 +54,14 @@ class ClothingPage extends React.Component {
 
   componentDidMount() {
     const articleId = this.props.match.params.articleId;
+    const user = JSON.parse(localStorage.getItem("user"));
 
     axios
-      .get(`http://localhost:5050/articles/${articleId}`)
+      .get(`http://localhost:5050/articles/${articleId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
       .then(({ data }) => {
         this.setState({
           backendData: {
@@ -160,6 +165,7 @@ class ClothingPage extends React.Component {
                             picture={picture.url}
                             alt={picture.altText}
                             caption={picture.caption}
+                            link={picture.id_clothing}
                           />
                         </CarouselItem>
                       );
@@ -196,7 +202,10 @@ class ClothingPage extends React.Component {
                           {pictures.map((picture, key) => {
                             return (
                               <Col xs="6" md="4" key={key}>
-                                <Photo picture={picture.url} />
+                                <Photo
+                                  picture={picture.url}
+                                  link={picture.id_clothing}
+                                />
                               </Col>
                             );
                           })}
@@ -212,7 +221,10 @@ class ClothingPage extends React.Component {
                   {pictures.map((picture, key) => {
                     return (
                       <Col xs="6" md="6" key={key}>
-                        <Photo picture={picture.url} />
+                        <Photo
+                          picture={picture.url}
+                          link={picture.id_clothing}
+                        />
                       </Col>
                     );
                   })}

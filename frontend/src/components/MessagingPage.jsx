@@ -17,9 +17,13 @@ class MessagingPage extends React.Component {
 
   componentDidMount() {
     const idReader = this.props.match.params.idReader;
-
+    const user = JSON.parse(localStorage.getItem("user"));
     axios
-      .get(`http://localhost:5050/messagerie/${idReader}`)
+      .get(`http://localhost:5050/messagerie/${idReader}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
       .then(({ data }) => {
         this.setState({
           messagingArray: data,
