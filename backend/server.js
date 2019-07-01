@@ -16,6 +16,14 @@ app.use(passport.initialize());
 
 app.use("/auth", require("./auth"));
 
+// app.all(
+//   "/*",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res, next) => {
+//     next();
+//   }
+// );
+
 // Homepage
 
 app.get(
@@ -250,7 +258,7 @@ app.post(
 
 app.get(
   "/profil/:profileId",
-  // passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const profileId = req.params.profileId;
     db.query(
