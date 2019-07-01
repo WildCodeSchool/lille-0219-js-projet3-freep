@@ -8,8 +8,11 @@
   height: auto;
   z-index: 200;
   margin-bottom: 10rem;
+  transition: top 0.9s;
 }
-
+.header--hidden {
+  top: -150px;
+}
 .bg-light {
   background: white !important;
 }
