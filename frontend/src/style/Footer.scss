@@ -7,10 +7,17 @@ body {
   padding-bottom: 5vh;
   min-height: 100%;
 }
-footer {
+.footer {
   border-top: 2px solid goldenrod;
   padding: 2vh 0;
   background-color: rgba(255, 255, 255, 0.95);
   box-shadow: 2px -2px 5px 0 rgba(0, 0, 0, 0.1);
   color: #222;
+  position: fixed;
+  bottom: 0;
+  transition: bottom 0.6s;
+}
+
+.footer--hidden {
+  bottom: -100px;
 }
