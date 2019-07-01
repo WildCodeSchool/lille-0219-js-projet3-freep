@@ -34,15 +34,17 @@ function App() {
       <Container className="container">
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route path="/accueil" component={HomePage} />
-          <Route path="/article/:articleId" component={ClothingPage} />
+          <PrivateRoute path="/accueil" component={HomePage} />
+          <PrivateRoute path="/article/:articleId" component={ClothingPage} />
           <PrivateRoute path="/profil/:profileId" component={Profile} />
-          {/* <Route path="/users/:userId" component={ClothingPage} /> */}
-          <Route path="/partenaire" component={PartnerPage} />
-          <Route path="/messagerie/:idReader" component={MessagingPage} />
-          <Route path="/registration" exact component={Registration} />
-          <Route path="/message/:P1/:P2" component={Message} />
-          <Route path="/emprunt/:userId" component={BorrowPage} />
+          <PrivateRoute path="/partenaire" component={PartnerPage} />
+          <PrivateRoute
+            path="/messagerie/:idReader"
+            component={MessagingPage}
+          />
+          <Route path="/inscription" exact component={Registration} />
+          <PrivateRoute path="/message/:P1/:P2" component={Message} />
+          <PrivateRoute path="/emprunt/:userId" component={BorrowPage} />
         </Switch>
         <Footer />
       </Container>
