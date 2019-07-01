@@ -4,11 +4,9 @@ import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
 import LoginBackground from "../pictures/Login.jpg";
 import { NavLink } from "react-router-dom";
-
 class Registration extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       firstName: "",
       lastName: "",
@@ -18,7 +16,6 @@ class Registration extends Component {
       confirmPassword: ""
     };
   }
-
   validateForm() {
     return (
       this.state.firstName.length > 0 &&
@@ -28,17 +25,14 @@ class Registration extends Component {
       this.state.password === this.state.confirmPassword
     );
   }
-
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   };
-
   handleSubmit = event => {
     event.preventDefault();
   };
-
   render() {
     return (
       <div
@@ -62,7 +56,6 @@ class Registration extends Component {
           }}
         >
           <h1 className="titleConnect"> Rejoins la communauté Freep 🌸</h1>
-
           <Button
             className="facebook"
             href="https://fr-fr.facebook.com/login/"
@@ -134,7 +127,6 @@ class Registration extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-
           <Form.Group controlId="email" bsSize="large">
             <h1
               style={{
@@ -207,5 +199,4 @@ class Registration extends Component {
     );
   }
 }
-
 export default Registration;

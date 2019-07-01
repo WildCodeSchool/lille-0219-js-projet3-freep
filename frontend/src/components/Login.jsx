@@ -5,7 +5,6 @@ import "../style/Login.scss";
 import LoginBackground from "../pictures/Login.jpg";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -15,17 +14,14 @@ class Login extends Component {
       id: ""
     };
   }
-
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
-
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   };
-
   handleSubmit = event => {
     event.preventDefault();
     let { email, password } = this.state;
@@ -44,7 +40,6 @@ class Login extends Component {
         history.push("/accueil");
       });
   };
-
   render() {
     return (
       <div
@@ -83,7 +78,6 @@ class Login extends Component {
             Connecte toi avec Facebook
           </Button>
           <div class="trait" />
-
           <Form.Group controlId="email" bsSize="large">
             <h1
               style={{
@@ -94,7 +88,6 @@ class Login extends Component {
             >
               E-mail
             </h1>
-
             <Form.Control
               autoFocus
               type="email"
@@ -118,7 +111,6 @@ class Login extends Component {
               type="password"
             />
           </Form.Group>
-
           <Button
             class="myButton"
             block
@@ -128,7 +120,6 @@ class Login extends Component {
           >
             Connecte toi !
           </Button>
-
           <div>
             <NavLink
               activeClassName="active"
