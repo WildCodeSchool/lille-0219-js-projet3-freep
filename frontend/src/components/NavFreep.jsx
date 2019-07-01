@@ -4,6 +4,9 @@ import { Link, NavLink } from "react-router-dom";
 import { Tag, PlusCircle, Mail, Heart, User } from "react-feather";
 import { Modal, ModalHeader } from "reactstrap";
 import Uploader from "./Upload";
+import axios from "axios";
+import { connect } from "react-redux";
+import { setResultsActions } from "../Redux/actions";
 
 class NavFreep extends React.Component {
   constructor(props) {
@@ -12,8 +15,12 @@ class NavFreep extends React.Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.state = {
       isOpen: false,
-      modal: false
+      modal: false,
+      keyword: "",
+      searchResult: "",
+      tab: []
     };
+    this.handleChange = this.handleChange.bind(this);
   }
   toggleBurger() {
     this.setState({
@@ -26,7 +33,39 @@ class NavFreep extends React.Component {
     }));
   }
 
+  handleChange = e => {
+    const result = e.target.value;
+    this.setState({ searchResult: result }, () => {
+      axios
+        .post(`http://localhost:5050/search`, {
+          keyword: this.state.searchResult
+        })
+        .then(res => {
+          console.log("-----------------");
+          console.log(res.data.Results);
+          console.log("-----------------");
+          const { dispatch } = this.props;
+          const tab = this.state.tab;
+          for (let i = 0; i < res.data.Results.length; i++) {
+            this.setState(prevState => ({
+              tab: [
+                ...prevState.tab,
+                {
+                  ...res.data.Results[i]
+                }
+              ]
+            }));
+          }
+          dispatch(setResultsActions(tab));
+        })
+        .catch(err => {
+          console.log("Error :" + err);
+        });
+    });
+  };
+
   render() {
+    console.log(this.props.restab);
     return (
       <div className="header">
         <Navbar color="light" light expand="md">
@@ -45,6 +84,8 @@ class NavFreep extends React.Component {
                 <input
                   type="text"
                   placeholder="Cherche un vêtement ou un profil..."
+                  value={this.state.searchResult}
+                  onChange={this.handleChange}
                 />
                 <input type="submit" />
                 <img className="magnifier" src="../pictures/loupe.png" />
@@ -85,4 +126,10 @@ class NavFreep extends React.Component {
   }
 }
 
-export default NavFreep;
+const mapStateToProps = state => ({
+  restab: state
+});
+
+const NavFreepContainer = connect(mapStateToProps)(NavFreep);
+
+export default NavFreepContainer;

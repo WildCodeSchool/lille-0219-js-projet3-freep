@@ -358,6 +358,7 @@ app.listen(portNumber, () => {
 //Search
 app.post("/search", (req, res) => {
   const keyword = req.body.keyword;
+  console.log(keyword);
   db.query(
     "SELECT id, clothing.type, clothing.description FROM clothing WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
     ["%" + keyword + "%", "%" + keyword + "%"],

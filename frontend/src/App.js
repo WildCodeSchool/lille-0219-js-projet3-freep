@@ -15,6 +15,7 @@ import Login from "./components/Login";
 import Registration from "./components/Registration";
 import Loader from "./components/Loader";
 import BorrowPage from "./components/BorrowPage";
+import Search from "./components/Search";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/message/:P1/:P2" component={Message} />
           <Route path="/loader" component={Loader} />
           <Route path="/emprunt/:userId" component={BorrowPage} />
+          <Route path="/search" component={Search} />
         </Switch>
         <Footer />
       </Container>
