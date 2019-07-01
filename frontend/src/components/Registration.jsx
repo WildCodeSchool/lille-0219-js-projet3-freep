@@ -104,10 +104,11 @@ class Registration extends Component {
             Inscris-toi avec Facebook
           </Button>
           <div class="trait" />
-          <Form.Group controlId="firstName" bsSize="large">
+          <Form.Group controlId="firstname" bsSize="large">
             <h1
               style={{
                 fontSize: "20px",
+                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               for="firstname"
