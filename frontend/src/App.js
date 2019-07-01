@@ -13,18 +13,14 @@ import Message from "./components/Message";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
-import Loader from "./components/Loader";
 import BorrowPage from "./components/BorrowPage";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const token = localStorage.getItem("user");
-
   return (
     <Route
       {...rest}
-      render={props =>
-        token ? <Component {...props} /> : <Redirect to="/login" />
-      }
+      render={props => (token ? <Component {...props} /> : <Redirect to="/" />)}
     />
   );
 };
@@ -38,20 +34,15 @@ function App() {
       <Container className="container">
         <Switch>
           <Route exact path="/" component={Login} />
-          <PrivateRoute path="/accueil" component={HomePage} />
-          <PrivateRoute path="/article/:articleId" component={ClothingPage} />
+          <Route path="/accueil" component={HomePage} />
+          <Route path="/article/:articleId" component={ClothingPage} />
           <PrivateRoute path="/profil/:profileId" component={Profile} />
-          <Route path="/users/:userId" component={ClothingPage} />
-          <PrivateRoute path="/partenaire" component={PartnerPage} />
-          <PrivateRoute
-            path="/messagerie/:idReader"
-            component={MessagingPage}
-          />
-          <Route path="/login" exact component={Login} />
+          {/* <Route path="/users/:userId" component={ClothingPage} /> */}
+          <Route path="/partenaire" component={PartnerPage} />
+          <Route path="/messagerie/:idReader" component={MessagingPage} />
           <Route path="/registration" exact component={Registration} />
-          <PrivateRoute path="/message/:P1/:P2" component={Message} />
-          <Route path="/loader" component={Loader} />
-          <PrivateRoute path="/emprunt/:userId" component={BorrowPage} />
+          <Route path="/message/:P1/:P2" component={Message} />
+          <Route path="/emprunt/:userId" component={BorrowPage} />
         </Switch>
         <Footer />
       </Container>
