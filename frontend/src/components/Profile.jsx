@@ -24,12 +24,15 @@ class Profile extends React.Component {
       followers: [],
       followings: [],
       posts: [],
+      isFollowed: false,
       loading: true
     };
   }
 
   componentDidMount() {
     const profileId = this.props.match.params.profileId;
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    const currentFollowers = JSON.parse(localStorage.getItem("followers"));
     localStorage.getItem("user");
 
     axios.get(`http://localhost:5050/profil/${profileId}`).then(({ data }) => {
@@ -41,33 +44,40 @@ class Profile extends React.Component {
         posts: data.posts,
         loading: false
       });
+      localStorage.setItem("followers", JSON.stringify(data.followers));
     });
+    for (let i = 0; i <= currentFollowers.length; i++) {
+      if (currentUser === currentFollowers[i]) {
+        this.setState({
+          isFollowed: true
+        });
+      }
+    }
   }
 
   handleClick = () => {
     const profileId = this.props.match.params.profileId;
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
 
-    this.setState(state => ({
-      isFollowed: !state.isFollowed
-    }));
     if (!this.state.isFollowed) {
       axios
         .post(`http://localhost:5050/follow/${profileId}`, {
-          idAuthor: 1 // ;_;
+          idAuthor: currentUser
         })
         .then(({ data }) => {
           this.setState({
-            socialNew: { followers: data }
+            followers: data
           });
+          localStorage.setItem("followers", JSON.stringify(data));
         });
     } else {
       axios
         .put(`http://localhost:5050/follow/${profileId}`, {
-          idAuthor: 1 // ;_;
+          idAuthor: currentUser
         })
         .then(({ data }) => {
           this.setState({
-            socialNew: { followers: data }
+            followers: data
           });
         });
     }
