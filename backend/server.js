@@ -249,10 +249,14 @@ app.get("/profil/:profileId", (req, res) => {
                 console.log(err);
                 return res.status(500).send("error when getting social route");
               }
-              profileData.followers = rowsFollowers;
+
+              const followersArray = rowsFollowers.map(follower => {
+                return follower.id_user;
+              });
+              profileData.followers = followersArray;
 
               db.query(
-                `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
+                `SELECT DISTINCT(id_content) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
                 (err, rowsFollowings) => {
                   if (err) {
                     console.log(err);
