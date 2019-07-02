@@ -124,9 +124,9 @@ class Message extends React.Component {
         )}
         {this.state.messageArray.map((message, i) => {
           return (
-            <div className="messages-container d-flex">
-              <Card className="messages-card p-3">
-                <CardBody className="align-items-center">
+            <React.Fragment key={i}>
+              <Card>
+                <CardBody>
                   <Row>
                     <Col xs="3">
                       <img

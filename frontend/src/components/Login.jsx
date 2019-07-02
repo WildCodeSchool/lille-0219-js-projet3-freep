@@ -39,7 +39,6 @@ class Login extends Component {
         this.setState({
           login: { email: data.email, password: data.password, id: data.id }
         });
-        console.log(data);
         localStorage.setItem("user", JSON.stringify(data));
         history.push("/accueil");
       });
@@ -93,7 +92,7 @@ class Login extends Component {
               }}
               htmlFor="pwd"
             >
-              Mot de passe{" "}
+              Mot de passe
             </h1>
             <Form.Control
               value={this.state.password}
@@ -126,7 +125,7 @@ class Login extends Component {
             type="submit"
             style={{ border: " 1px solid black" }}
           >
-            Connecte toi !
+            Connecte-toi !
           </Button>
           <Button
             href="https://fr-fr.facebook.com/login/"
@@ -137,7 +136,7 @@ class Login extends Component {
               fontSize: "15px"
             }}
           >
-            inscris toi avec ton compte Facebook
+            Inscris-toi avec Facebook
           </Button>
           <div>
             <NavLink

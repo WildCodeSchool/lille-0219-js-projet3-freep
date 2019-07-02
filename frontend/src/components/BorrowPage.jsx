@@ -54,7 +54,7 @@ class BorrowPage extends React.Component {
           {this.state.borrowArray.map((borrow, i) => {
             return (
               borrow && (
-                <Row>
+                <Row key={i}>
                   <Col sm="6" md="4" lg="3">
                     <LazyLoad height={100} offset={-200}>
                       <Borrow
