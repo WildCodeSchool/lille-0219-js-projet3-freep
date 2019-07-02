@@ -38,7 +38,6 @@ class NavFreep extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="header">
         <Navbar color="light" light expand="md">
