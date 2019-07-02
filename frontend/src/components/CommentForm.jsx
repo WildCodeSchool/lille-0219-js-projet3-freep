@@ -9,7 +9,6 @@ class CommentForm extends Component {
       loading: false,
       comment: ""
     };
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
   handleFieldChange = event => {
@@ -31,9 +30,8 @@ class CommentForm extends Component {
       .then(({ data }) => {
         this.setState({
           loading: false,
-          comment: data
+          comment: ""
         });
-        this.setState({ comment: "" });
       })
       .catch(err => {
         console.log(err);
@@ -45,7 +43,12 @@ class CommentForm extends Component {
 
   render() {
     return (
-      <Form className="comment-form" onSubmit={this.onSubmit}>
+      <Form
+        className="comment-form"
+        onSubmit={e => {
+          this.onSubmit(e);
+        }}
+      >
         <FormGroup>
           <Label>
             <h2>Et toi, qu'en penses-tu?</h2>
