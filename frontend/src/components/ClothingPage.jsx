@@ -7,88 +7,59 @@ import {
   CarouselItem,
   CarouselControl,
   CarouselIndicators,
-  Button
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input
 } from "reactstrap";
 import "../style/ClothingPage.scss";
 import Comment from "./Comment";
 import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
-import CommentForm from "./CommentForm";
-import { Link } from "react-router-dom";
+// import CommentForm from "./CommentForm";
 
 class ClothingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      backendData: {
-        clothing: {},
-        users: [],
-        pictures: [],
-        comments: []
-      },
+      clothing: {},
+      users: [],
+      pictures: [],
+      commentsArray: [],
+      comment: "",
       loading: true,
       width: window.innerWidth,
       activeIndex: 0
     };
-
-    this.next = this.next.bind(this);
-    this.previous = this.previous.bind(this);
-    this.goToIndex = this.goToIndex.bind(this);
-    this.onExiting = this.onExiting.bind(this);
-    this.onExited = this.onExited.bind(this);
   }
 
-  onExiting() {
-    this.animating = true;
-  }
-
-  onExited() {
-    this.animating = false;
-  }
-
-  goToIndex(newIndex) {
-    if (this.animating) return;
-    this.setState({ activeIndex: newIndex });
-  }
+  // Get articles
 
   componentDidMount() {
     const articleId = this.props.match.params.articleId;
-
     axios
       .get(`http://localhost:5050/articles/${articleId}`)
       .then(({ data }) => {
         this.setState({
-          backendData: {
-            clothing: data.clothing,
-            users: data.users,
-            pictures: data.pictures,
-            comments: data.comments
-          },
+          clothing: data.clothing,
+          users: data.users,
+          pictures: data.pictures,
+          commentsArray: data.comments,
           loading: false
         });
       });
   }
 
-  next() {
-    const pictures = this.state.backendData.pictures;
-    if (this.animating) return;
-    const nextIndex =
-      this.state.activeIndex === pictures.length - 1
-        ? 0
-        : this.state.activeIndex + 1;
-    this.setState({ activeIndex: nextIndex });
-  }
+  getUser = id => {
+    const users = this.state.users.filter(user => {
+      return user.id === id;
+    });
+    return users[0];
+  };
 
-  previous() {
-    const pictures = this.state.backendData.pictures;
-    if (this.animating) return;
-    const nextIndex =
-      this.state.activeIndex === 0
-        ? pictures.length - 1
-        : this.state.activeIndex - 1;
-    this.setState({ activeIndex: nextIndex });
-  }
+  // Resize window for conditional rendering
 
   componentWillMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
@@ -102,17 +73,12 @@ class ClothingPage extends React.Component {
     this.setState({ width: window.innerWidth });
   };
 
-  getUser = id => {
-    const users = this.state.backendData.users.filter(user => {
-      return user.id === id;
-    });
-    return users[0];
-  };
+  // Add article to borrow list
 
   handleAdd(e) {
     const userId = 1;
-    const clothingId = this.state.backendData.clothing.id;
-    const pictureId = this.state.backendData.pictures[0].id;
+    const clothingId = this.state.clothing.id;
+    const pictureId = this.state.pictures[0].id;
     axios
       .post(
         `http://localhost:5050/emprunt/${userId}/${clothingId}/${pictureId}`
@@ -121,12 +87,47 @@ class ClothingPage extends React.Component {
         data.id_user = userId;
         data.id_clothing = clothingId;
         data.id_picture = pictureId;
-        this.props.history.push(
-          `/message/1/${this.state.backendData.users[0].id}`
-        );
+        this.props.history.push(`/message/1/${this.state.users[0].id}`);
       })
       .catch(err => {
         console.log(`Nope! ${err}`);
+      });
+  }
+
+  // Comment form
+
+  handleFieldChange = event => {
+    const { value } = event.target;
+    this.setState({
+      comment: value
+    });
+  };
+
+  onSubmit(e) {
+    e.preventDefault();
+    this.setState({
+      loading: true
+    });
+    const articleId = this.state.clothing.id;
+    let { comment } = this.state;
+    axios
+      .post(`http://localhost:5050/comment/${articleId}`, {
+        content: comment
+      })
+      .then(({ data }) => {
+        let comments = this.state.commentsArray;
+        comments.unshift(data);
+        this.setState({
+          loading: false,
+          commentsArray: comments,
+          comment: ""
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({
+          loading: false
+        });
       });
   }
 
@@ -134,11 +135,11 @@ class ClothingPage extends React.Component {
     const { width } = this.state;
     const isMobile = width <= 640;
     const { activeIndex } = this.state;
-    const clothing = this.state.backendData.clothing;
-    const pictures = this.state.backendData.pictures;
-    const comments = this.state.backendData.comments;
-
+    const clothing = this.state.clothing;
+    const pictures = this.state.pictures;
+    const comments = this.state.commentsArray;
     const auth = this.getUser(clothing.id_user);
+
     if (this.state.loading) {
       return <Loader />;
     } else {
@@ -159,7 +160,6 @@ class ClothingPage extends React.Component {
                             key={key}
                             picture={picture.url}
                             alt={picture.altText}
-                            caption={picture.caption}
                           />
                         </CarouselItem>
                       );
@@ -267,13 +267,37 @@ class ClothingPage extends React.Component {
                   ) : null}
                   {comments.map((comment, key) => {
                     const user = this.getUser(comment.id_user);
+                    console.log(user);
                     return (
                       <Comment key={key} comment={comment} profile={user} />
                     );
                   })}
                 </div>
               </div>
-              <CommentForm article={clothing.id} />
+              <Form
+                className="comment-form"
+                onSubmit={e => {
+                  this.onSubmit(e);
+                }}
+              >
+                <FormGroup>
+                  <Label>
+                    <h2>Et toi, qu'en penses-tu?</h2>
+                  </Label>
+                  <Col xs="9" lg="12" className="offset-3 offset-lg-0 p-0">
+                    <Input
+                      onChange={this.handleFieldChange}
+                      value={this.state.comment}
+                      type="text"
+                      name="message"
+                      placeholder="Ecris ton message ici"
+                    />
+                    <Row className="justify-content-end p-3">
+                      <Button>Envoyer</Button>
+                    </Row>
+                  </Col>
+                </FormGroup>
+              </Form>
             </Col>
           </Row>
         </Container>
