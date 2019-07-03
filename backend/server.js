@@ -361,7 +361,10 @@ app.get("/like/:idAuthor", (req, res) => {
       if (err) {
         return res.status(500).send("error when getting like route");
       }
-      res.status(200).send(rows);
+      let likesArray = rows.map(row => {
+        return row.id_content;
+      });
+      res.status(200).send(likesArray);
     }
   );
 });
