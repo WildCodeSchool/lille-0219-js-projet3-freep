@@ -351,6 +351,21 @@ app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
     }
   });
 });
+
+// Like picture
+app.get("/like/:idAuthor", (req, res) => {
+  const authorId = req.params.idAuthor;
+  db.query(
+    `SELECT id_content FROM social WHERE id_user = ${authorId} AND content_type = "like"`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when getting like route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
