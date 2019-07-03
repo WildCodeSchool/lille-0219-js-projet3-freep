@@ -17,7 +17,9 @@ class Borrow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hidden: false
+      hidden: false,
+      modal: false,
+      isOpen: false
     };
   }
 
@@ -29,6 +31,12 @@ class Borrow extends React.Component {
         hidden: true
       });
     });
+  }
+
+  toggleModalBorrow() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
   }
 
   render() {
@@ -46,20 +54,14 @@ class Borrow extends React.Component {
 
             <Button
               onClick={() => {
-                this.props.toggleModalBorrow();
+                this.toggleModalBorrow();
               }}
               className="borrowButton"
             >
               J'ai emprunté ce vêtement
             </Button>
-            <Modal
-              isOpen={this.props.modal}
-              toggle={this.props.toggleModalBorrow}
-            >
-              <ModalHeader
-                toggle={this.props.toggleModalBorrow}
-                className="pr-5"
-              />
+            <Modal isOpen={this.state.modal} toggle={this.toggleModalBorrow}>
+              <ModalHeader toggle={this.toggleModalBorrow} />
               <Form
                 method="POST"
                 enctype="multipart/form-data"

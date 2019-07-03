@@ -11,8 +11,7 @@ class BorrowPage extends React.Component {
     super(props);
     this.state = {
       borrowArray: [{}],
-      loading: true,
-      modal: false
+      loading: true
     };
   }
 
@@ -24,12 +23,6 @@ class BorrowPage extends React.Component {
         loading: false
       });
     });
-  }
-
-  toggleModalBorrow() {
-    this.setState(prevState => ({
-      modal: !prevState.modal
-    }));
   }
 
   render() {
@@ -54,7 +47,6 @@ class BorrowPage extends React.Component {
                       pictureUrl={borrow.url}
                       clothePage={borrow.id_clothing}
                       borrowId={borrow.id}
-                      toggleModalBorrow={this.toggleModalBorrow}
                     />
                   </Col>
                 )
