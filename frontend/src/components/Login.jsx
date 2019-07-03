@@ -65,14 +65,14 @@ class Login extends Component {
           }}
         >
           <h1 className="titleConnect">Prête pour de nouvelles aventures ? </h1>
-          <Form.Group controlId="email" bsSize="large">
+          <Form.Group controlId="email">
             <h1
               style={{
                 fontSize: "20px",
                 color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
-              for="email"
+              htmlFor="email"
             >
               E-mail
             </h1>
@@ -83,14 +83,14 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="password" bsSize="large">
+          <Form.Group controlId="password">
             <h1
               style={{
                 fontSize: "20px",
                 color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
-              for="pwd"
+              htmlFor="pwd"
             >
               Mot de passe
             </h1>
@@ -113,7 +113,7 @@ class Login extends Component {
                 color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
-              For="checkbox1"
+              htmlFor="checkbox1"
             >
               Se souvenir de moi
             </h1>
@@ -121,7 +121,6 @@ class Login extends Component {
           <Button
             className="myButton"
             block
-            bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
             style={{ border: " 1px solid black" }}

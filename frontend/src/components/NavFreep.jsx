@@ -29,7 +29,7 @@ class NavFreep extends React.Component {
   render() {
     return (
       <div className="header">
-        <Navbar color="light" light expand="md">
+        <Navbar color="light" light expand="md" className="py-0 mr-3">
           <Link to="/accueil">
             <img className="logo" src="../pictures/logo.png" alt="logo" />
           </Link>
@@ -55,7 +55,7 @@ class NavFreep extends React.Component {
               </label>
             </form>
             <Nav className="ml-auto" navbar>
-              <div title="Propose ton vêtement !">
+              <NavLink title="Propose ton vêtement !" to="">
                 <PlusCircle
                   className="img"
                   color="black"

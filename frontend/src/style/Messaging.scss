@@ -8,12 +8,6 @@
   src: url("Montserrat-Regular.ttf");
 }
 
-.imgAvatar {
-  height: 15vw;
-  width: 15vw;
-  object-fit: cover;
-}
-
 .cardTextMessaging {
   margin-left: 50px;
 }
@@ -22,12 +16,8 @@
   text-align: right;
 }
 
-.imgAvatarRight {
-  border-radius: 90%;
-  width: 20%;
-  height: 200px;
-  float: right;
-  object-fit: cover;
+.imgAvatar {
+  width: 8rem;
 }
 
 .nameRight {
@@ -49,9 +39,56 @@
 .link:hover {
   text-decoration: none;
 }
-.bodyText {
-  font-family: "Montserrat", sans-serif;
+
+.card {
+  background: rgba(white, 0.6);
+  border: 0;
+  margin: 2vh 0;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.05);
+  .card-body {
+    padding: 0 3vh;
+  }
 }
-.timeStamp {
-  font-family: "Montserrat", sans-serif;
+
+.messages-container:nth-child(even) {
+  justify-content: flex-end;
+}
+
+div.messages-container.d-flex:nth-of-type(2)
+  div.messages-card.card
+  div.align-items-center.card-body
+  div.row
+  div.col-3 {
+  order: 2;
+}
+
+.message-form {
+  width: 90%;
+  padding: 3vh;
+  margin: 0 auto;
+  .submit-button {
+    width: 8rem;
+    align-self: flex-end;
+  }
+  label {
+    font-family: "Dancing script", sans-serif;
+    color: goldenrod;
+    font-size: calc(1.5rem + 0.6vw);
+  }
+}
+
+.messages-card {
+  margin: 2vh 10vh;
+  width: 80%;
+}
+
+@media (max-width: 640px) {
+  .messages-card {
+    margin: 2vh 3vh;
+  }
+}
+
+button.btn:nth-child(1) > svg:nth-child(1) {
+  stroke: #f5f5f5;
+  width: 1.5rem;
 }
