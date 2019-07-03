@@ -1,12 +1,49 @@
 import React from "react";
 import "../style/Footer.scss";
 import { Col } from "reactstrap";
+import classnames from "classnames";
 
 class Footer extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      prevScrollpos: window.pageYOffset,
+      visible: true
+    };
+  }
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
+  handleScroll = () => {
+    const { prevScrollpos } = this.state;
+
+    const currentScrollPos = window.pageYOffset;
+    const visible = prevScrollpos > currentScrollPos;
+
+    this.setState({
+      prevScrollpos: currentScrollPos,
+      visible
+    });
+  };
+
   render() {
     return (
-      <footer className="row fixed-bottom p-1 justify-content-center m-0">
-        <Col xs="12" sm="3" className="text-center made-with">
+      <footer
+        className="row fixed-bottom p-1 justify-content-center m-0"
+        className={classnames(
+          "footer row fixed-bottom p-1 justify-content-center m-0",
+          {
+            "footer--hidden": !this.state.visible
+          }
+        )}
+      >
+        <Col xs="12" sm="3" className="text-center">
           Made with
           <span role="img" aria-label="" className="px-2">
             ❤️
