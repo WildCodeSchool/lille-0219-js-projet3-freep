@@ -19,13 +19,23 @@ button,
 .clothing-container {
   background: $main-color;
   h2 {
-    margin: 5vh auto;
+    margin: 5vh 0;
   }
 }
 
 .comments-container {
-  .sub-container {
-    padding: 2rem 0;
+  .sub-container button {
+    font-size: calc(1rem + 0.3vw);
+    background: #ad3a70cc;
+    border: none;
+    &:hover {
+      background: #6b2546cc;
+    }
+  }
+  .borrow-phrase {
+    font-family: "Dancing Script", cursive;
+    font-size: calc(1rem + 0.2vw);
+    padding-top: 0.3rem;
   }
   .comments-feed {
     background: #fbf4f1;
@@ -33,12 +43,18 @@ button,
   }
 }
 
-#comment-form {
+.no-comment-text {
+  font-family: "Dancing script", cursive;
+  font-size: 125%;
+}
+
+.comment-form input {
+  border: none;
   background: #fbf4f1;
-  border: transparent;
   transition: $transition;
   &:focus {
-    box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1) !important;
+    border: none;
   }
 }
 

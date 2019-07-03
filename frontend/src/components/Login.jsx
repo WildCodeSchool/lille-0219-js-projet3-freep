@@ -39,7 +39,6 @@ class Login extends Component {
         this.setState({
           login: { email: data.email, password: data.password, id: data.id }
         });
-        console.log(data);
         localStorage.setItem("user", JSON.stringify(data));
         history.push("/accueil");
       });
@@ -66,14 +65,14 @@ class Login extends Component {
           }}
         >
           <h1 className="titleConnect">Prête pour de nouvelles aventures ? </h1>
-          <Form.Group controlId="email" bsSize="large">
+          <Form.Group controlId="email">
             <h1
               style={{
                 fontSize: "20px",
                 color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
-              for="email"
+              htmlFor="email"
             >
               E-mail
             </h1>
@@ -84,16 +83,16 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="password" bsSize="large">
+          <Form.Group controlId="password">
             <h1
               style={{
                 fontSize: "20px",
                 color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
-              for="pwd"
+              htmlFor="pwd"
             >
-              Mot de passe{" "}
+              Mot de passe
             </h1>
             <Form.Control
               value={this.state.password}
@@ -114,31 +113,30 @@ class Login extends Component {
                 color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
-              For="checkbox1"
+              htmlFor="checkbox1"
             >
               Se souvenir de moi
             </h1>
           </div>
           <Button
-            class="myButton"
+            className="myButton"
             block
-            bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
             style={{ border: " 1px solid black" }}
           >
-            Connecte toi !
+            Connecte-toi !
           </Button>
           <Button
             href="https://fr-fr.facebook.com/login/"
-            class="btn btn-primary btn-lg disabled"
+            className="btn btn-primary btn-lg disabled"
             role="button"
             title="Lien"
             style={{
               fontSize: "15px"
             }}
           >
-            inscris toi avec ton compte Facebook
+            Inscris-toi avec Facebook
           </Button>
           <div>
             <NavLink

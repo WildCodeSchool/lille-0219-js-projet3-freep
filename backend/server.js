@@ -63,7 +63,7 @@ app.get("/articles/:id/", (req, res) => {
           });
 
           db.query(
-            `SELECT id, id_user, id_clothing, content, created_at FROM comment WHERE id_clothing=${articleId}`,
+            `SELECT id, id_user, id_clothing, content, created_at FROM comment WHERE id_clothing=${articleId} ORDER BY created_at DESC`,
             (err, rowsComments) => {
               if (err) {
                 console.log(err);
