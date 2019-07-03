@@ -159,7 +159,7 @@ class ClothingPage extends React.Component {
                             key={key}
                             picture={picture.url}
                             alt={picture.altText}
-                            caption={picture.caption}
+                            link={picture.id_clothing}
                           />
                         </CarouselItem>
                       );
@@ -196,7 +196,10 @@ class ClothingPage extends React.Component {
                           {pictures.map((picture, key) => {
                             return (
                               <Col xs="6" md="4" key={key}>
-                                <Photo picture={picture.url} />
+                                <Photo
+                                  picture={picture.url}
+                                  link={picture.id_clothing}
+                                />
                               </Col>
                             );
                           })}
@@ -212,7 +215,10 @@ class ClothingPage extends React.Component {
                   {pictures.map((picture, key) => {
                     return (
                       <Col xs="6" md="6" key={key}>
-                        <Photo picture={picture.url} />
+                        <Photo
+                          picture={picture.url}
+                          link={picture.id_clothing}
+                        />
                       </Col>
                     );
                   })}
