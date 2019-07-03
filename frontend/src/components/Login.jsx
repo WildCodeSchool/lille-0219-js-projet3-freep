@@ -83,7 +83,7 @@ class Login extends Component {
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="email"
+              htmlFor="email"
             >
               E-mail
             </h1>
@@ -94,13 +94,13 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="password" bsSize="large">
+          <Form.Group controlId="password">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="pwd"
+              htmlFor="pwd"
             >
               Mot de passe
             </h1>
@@ -113,7 +113,6 @@ class Login extends Component {
           <Button
             className="myButton"
             block
-            bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
           >

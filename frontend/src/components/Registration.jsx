@@ -122,13 +122,14 @@ class Registration extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="lastname" bsSize="large">
+          <Form.Group controlId="lastName">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="lastname"
+              htmlFor="lastName"
+
             >
               Nom
             </h1>
@@ -139,13 +140,13 @@ class Registration extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="nickname" bsSize="large">
+          <Form.Group controlId="username">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="nickname"
+              htmlFor="username"
             >
               Nom d'utilisateur
             </h1>
@@ -156,13 +157,14 @@ class Registration extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
+          
           <Form.Group controlId="email" bsSize="large">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="email"
+              htmlFor="email"
             >
               E-mail
             </h1>
@@ -173,13 +175,13 @@ class Registration extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="password" bsSize="large">
+          <Form.Group controlId="password">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="password"
+              htmlFor="pwd"
             >
               Mot de passe
             </h1>
@@ -189,13 +191,13 @@ class Registration extends Component {
               type="password"
             />
           </Form.Group>
-          <Form.Group controlId="confirmPassword" bsSize="large">
+          <Form.Group controlId="confirmPassword">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="pwd"
+              htmlFor="pwd"
             >
               Confirme ton mot de passe
             </h1>
@@ -209,7 +211,6 @@ class Registration extends Component {
             style={{ border: " 1px solid black" }}
             className="myButton"
             block
-            bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
           >
