@@ -14,32 +14,8 @@ class Photo extends React.Component {
   }
 
   componentDidMount() {
-    const pictureId = this.props.pictureId;
-
-    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-    // const choupette = JSON.stringify(currentUser);
-    // const currentLikes = JSON.parse(localStorage.getItem("likes"));
-    localStorage.getItem("user");
-
-    axios.get(`http://localhost:5050/like/${currentUser}`).then(({ data }) => {
-      this.setState({
-        picturesLiked: data,
-        loading: false
-      });
-      const likes = data.map(like => {
-        return like.id_content;
-      });
-      console.log(likes);
-      localStorage.setItem("likes", likes);
-      // for (let i = 0; i <= pictureId.length; i++) {
-      //   let id_picture;
-      //   if (pictureId === likes[i]) {
-      // this.setState({
-      //   isLiked: true
-      // });
-      // }
-      // }
-    });
+    // const pictureId = this.props.pictureId;
+    // const pictures = this.props.pictures;
   }
 
   handleClick = () => {
@@ -55,7 +31,6 @@ class Photo extends React.Component {
           this.setState({
             likes: data
           });
-          localStorage.setItem("likes", JSON.stringify(data));
         });
     } else {
       axios
@@ -74,6 +49,7 @@ class Photo extends React.Component {
     const picture = this.props.picture;
     const link = this.props.link;
     const picturesLiked = this.state.picturesLiked;
+    const isLiked = this.props.isLiked;
     return (
       <React.Fragment>
         <Card className="m-2">
@@ -82,11 +58,10 @@ class Photo extends React.Component {
           </Link>
           <div className="overlay">
             <Row className="p-0 card-buttons align-items-center">
-              {picturesLiked === this.likes ? (
-                <Heart onClick={this.handleClick} color="white" />
-              ) : (
-                <Heart onClick={this.handleClick} fill="pink" color="none" />
-              )}
+              <Heart
+                onClick={this.handleClick}
+                className={isLiked ? "liked" : "notLiked"}
+              />
               <Target color="white" />
               <ReportButton />
             </Row>
