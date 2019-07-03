@@ -47,11 +47,15 @@ class NavFreep extends React.Component {
                   placeholder="𝓡𝓮𝓬𝓱𝓮𝓻𝓬𝓱𝓮 𝓾𝓷𝓮 𝓾𝓽𝓲𝓵𝓲𝓼𝓪𝓽𝓻𝓲𝓬𝓮, 𝓾𝓷 𝓿𝓮𝓽𝓮𝓶𝓮𝓷𝓽 👗 "
                 />
                 <input type="submit" />
-                <img className="magnifier" src="../pictures/loupe.png" />
+                <img
+                  className="magnifier"
+                  src="../pictures/loupe.png"
+                  alt="loupe"
+                />
               </label>
             </form>
             <Nav className="ml-auto" navbar>
-              <NavLink title="Propose ton vêtement !">
+              <div title="Propose ton vêtement !">
                 <PlusCircle
                   className="img"
                   color="black"
@@ -61,7 +65,7 @@ class NavFreep extends React.Component {
                   <ModalHeader toggle={this.toggleModal} className="pr-5" />
                   <Uploader />
                 </Modal>
-              </NavLink>
+              </div>
               <NavLink to="/partenaire" title="Découvre nos partenaires !">
                 <Tag className="img" color="black" />
               </NavLink>

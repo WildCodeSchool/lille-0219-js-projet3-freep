@@ -111,7 +111,7 @@ class Login extends Component {
             />
           </Form.Group>
           <Button
-            class="myButton"
+            className="myButton"
             block
             bsSize="large"
             disabled={!this.validateForm()}
@@ -119,7 +119,6 @@ class Login extends Component {
           >
             Connecte-toi !
           </Button>
-
           <div>
             <NavLink
               activeClassName="active"

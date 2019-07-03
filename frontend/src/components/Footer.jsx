@@ -1,6 +1,5 @@
 import React from "react";
 import "../style/Footer.scss";
-import { breakStatement } from "@babel/types";
 import { Col } from "reactstrap";
 
 class Footer extends React.Component {
