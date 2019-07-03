@@ -16,16 +16,13 @@ class Search extends React.Component {
   }
 
   render() {
-    // console.log("------------");
-    // console.log("restab : " + this.props.restab);
-    // console.log("------------");
     return (
       <React.Fragment>
         {this.props.restab.map(el => (
           <Card className="m-2">
-            <Link to={`/article/`}>
-              <CardImg src={el.url} alt="clothes" className="Photo" />
-            </Link>
+            {/* <Link to={`/article/`}> */}
+            <CardImg src={el.url} alt="clothes" className="Photo" />
+            {/* </Link> */}
             <div className="overlay">
               <Row className="p-0 card-buttons align-items-center">
                 <Heart color="white" />

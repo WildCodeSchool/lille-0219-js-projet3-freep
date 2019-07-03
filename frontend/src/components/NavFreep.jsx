@@ -25,13 +25,6 @@ class NavFreep extends React.Component {
     // this.handleReset = this.handleReset.bind(this);
   }
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   console.log(" LES PRESTATE : ", prevState);
-  //   console.log("LES NEXTPROPS : ", nextProps);
-  //   console.log("LEs PROPS : ", this.state.props);
-  //   console.log("Le STATE : ", this.state);
-  // }
-
   toggleBurger() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -46,7 +39,6 @@ class NavFreep extends React.Component {
   handleChange(e) {
     const result = e.target.value;
     this.setState({ searchResult: result });
-    console.log("SearchResult : " + this.state.searchResult);
   }
 
   handleReset(e) {
@@ -62,12 +54,9 @@ class NavFreep extends React.Component {
         keyword: this.state.searchResult
       })
       .then(res => {
-        // console.log("-----------------");
-        // console.log(res.data.Results);
-        // console.log("-----------------");
         const { dispatch } = this.props;
         const tab = this.state.tab;
-        for (let i = 0; i < res.data.Results.length; i++) {
+        for (let i = 0; i < res.data.length; i++) {
           this.setState(prevState => ({
             tab: [
               ...prevState.tab,
@@ -85,7 +74,6 @@ class NavFreep extends React.Component {
   };
 
   render() {
-    console.log(this.state.tab);
     return (
       <div className="header">
         <Navbar color="light" light expand="md">
@@ -99,10 +87,7 @@ class NavFreep extends React.Component {
           </div>
           <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <form
-              // action=""
-              onSubmit={this.handleSubmit}
-            >
+            <form onSubmit={this.handleSubmit}>
               <label htmlFor="clothe-profile-search">
                 <input
                   type="text"

@@ -358,7 +358,7 @@ app.listen(portNumber, () => {
 //Search
 app.post("/search", (req, res) => {
   const keyword = req.body.keyword;
-  console.log(keyword);
+  console.log("keyword => " + keyword);
   db.query(
     "SELECT clothing.id, clothing.type, clothing.description,picture.url FROM clothing INNER JOIN picture ON picture.id_clothing = clothing.id WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
     ["%" + keyword + "%", "%" + keyword + "%"],
@@ -382,9 +382,11 @@ app.post("/search", (req, res) => {
               .status(500)
               .send("error when getting search route on users");
           }
-          SearchResult = {
-            Results: ResultUsers
-          };
+          // let SearchResult = {
+          //   ResultClothing,
+          //   ResultUsers
+          // };
+          SearchResult.ResultUsers = ResultUsers;
           res.status(200).send(SearchResult);
         }
       );
