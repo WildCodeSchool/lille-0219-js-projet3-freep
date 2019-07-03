@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
+
 const multer = require("multer");
 const path = require("path");
 
@@ -17,7 +18,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1000000 },
+  limits: { fileSize: 3000000 },
   fileFilter: function(req, file, cb) {
     checkFileType(file, cb);
   }
@@ -41,6 +42,32 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Upload a proof-picture
+app.post("/currentUser/:uploadProof", (req, res) => {
+  const path = req.file.path;
+  const clothingId = req.params.clothingId;
+  const currentUser = req.params.currentUser;
+  upload(req, res, err => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .send("error when upload a proof picture: File too large");
+    } else {
+      console.log(req.file);
+      res.send(req.file);
+    }
+  });
+  db.query(
+    `INSERT INTO pictures ( id_clothing, id_user, is_proof, created_at, url)
+    VALUES (${clothingId}, ${currentUser}, 1, Now(), ${path});`,
+    (err, rows, fields) => {
+      if (err) throw err;
+      res.status(200).send(rows);
+    }
+  );
+});
 
 // Homepage
 
@@ -283,19 +310,6 @@ app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
       res.status(200).send(newBorrow);
     }
   );
-});
-
-// Upload a proof-picture
-app.post("/uploadProof", (req, res) => {
-  upload(req, res, err => {
-    if (err) {
-      console.log(err);
-      return res.status(500).send("error when upload a proof picture");
-    } else {
-      console.log(req.file);
-      res.send(req.file);
-    }
-  });
 });
 
 app.listen(portNumber, () => {
