@@ -15,7 +15,6 @@ import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
 import CommentForm from "./CommentForm";
-import { Link } from "react-router-dom";
 
 class ClothingPage extends React.Component {
   constructor(props) {
@@ -149,8 +148,8 @@ class ClothingPage extends React.Component {
     } else {
       return (
         <Container className="clothing-container">
-          <Row className="px-4">
-            <Col lg="7" className="justify-content-center">
+          <Row className="p-3">
+            <Col lg="6" className="justify-content-center">
               <section>
                 {(() => {
                   if (isMobile) {
@@ -231,8 +230,8 @@ class ClothingPage extends React.Component {
                 </Row>
               </section>
             </Col>
-            <Col lg="5" className="comments-container">
-              <div className="sub-container">
+            <Col lg="6" className="comments-container pr-3">
+              <div className="sub-container d-flex flex-column">
                 <section>
                   <div className="p-4 comments-feed">
                     <div>
@@ -252,6 +251,19 @@ class ClothingPage extends React.Component {
                     </div>
                     <div className="pt-4">
                       <div>{clothing.description}</div>
+                      <Row className="pt-4 pr-3">
+                        <Col xs="8" className="borrow-phrase">
+                          Tu veux emprunter ce vêtement?
+                        </Col>
+                        <Button
+                          className="col-4"
+                          onClick={e => {
+                            this.handleAdd(e);
+                          }}
+                        >
+                          Contacte-moi!
+                        </Button>
+                      </Row>
                     </div>
                   </div>
                 </section>
@@ -260,20 +272,13 @@ class ClothingPage extends React.Component {
                     <h4 className="p-0">Caution demandée</h4>
                   </div>
                 ) : null}
-                <Button
-                  onClick={e => {
-                    this.handleAdd(e);
-                  }}
-                >
-                  Tu veux emprunter ce vêtement? Contacte-moi!
-                </Button>
                 <h2>
                   {comments.length} Commentaire
                   {comments.length >= 2 ? "s" : ""}
                 </h2>
                 <div className="comments-feed">
                   {comments.length === 0 ? (
-                    <div className="text-center">
+                    <div className="text-center no-comment-text">
                       Sois la première à laisser un commentaire !
                     </div>
                   ) : null}
