@@ -16,6 +16,14 @@ app.use(passport.initialize());
 
 app.use("/auth", require("./auth"));
 
+app.all(
+  "/*",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+    next();
+  }
+);
+
 // Homepage
 
 app.get("/articles/", (req, res) => {
@@ -38,7 +46,6 @@ app.get("/articles/", (req, res) => {
 
 app.get("/articles/:id/", (req, res) => {
   const articleId = req.params.id;
-
   let answer = {};
   db.query(
     `SELECT id, id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
@@ -63,7 +70,7 @@ app.get("/articles/:id/", (req, res) => {
           });
 
           db.query(
-            `SELECT id, id_user, id_clothing, content, created_at FROM comment WHERE id_clothing=${articleId}`,
+            `SELECT id, id_user, id_clothing, content, created_at FROM comment WHERE id_clothing=${articleId} ORDER BY created_at DESC`,
             (err, rowsComments) => {
               if (err) {
                 console.log(err);
@@ -144,6 +151,7 @@ app.post(`/comment/:id`, (req, res) => {
 });
 
 //Details messaging
+
 app.get("/message/:P1/:P2", (req, res) => {
   const P1 = req.params.P1;
   const P2 = req.params.P2;
@@ -171,51 +179,56 @@ app.get("/message/:P1/:P2", (req, res) => {
 });
 
 //Update message
+
 app.post("/message/:P1/:P2", (req, res) => {
   const P1 = req.params.P1;
   const P2 = req.params.P2;
   const content = req.body.content;
-  console.log(req.body);
-  db.query(
-    `UPDATE
+  if (content !== "") {
+    db.query(
+      `UPDATE
     message
     SET isLast=0
     WHERE
     (id_author = ${P1} OR id_reader = ${P1})
     AND (id_author = ${P2} OR id_reader = ${P2});`,
-    (err, rows) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("error when update message route");
-      }
-      db.query(
-        `INSERT INTO message(id_author,id_reader,content,created_at,isLast) 
-        VALUES(${P1},${P2},"${content}",NOW(),1);`,
-        (err, rows) => {
-          if (err) {
-            console.log(err);
-            res.status(500).send("error when post new message");
-          }
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("error when update message route");
+        } else {
           db.query(
-            `SELECT nickname, avatar FROM user WHERE id=${P1}`,
+            `INSERT INTO message(id_author,id_reader,content,created_at,isLast) 
+          VALUES(${P1},${P2},"${content}",NOW(),1);`,
             (err, rows) => {
               if (err) {
                 console.log(err);
-                res.status(500).send("error when getting message route");
+                res.status(500).send("error when post new message");
               }
-              const newMess = {
-                content: content,
-                date_diff: 0,
-                nickname: rows[0].nickname,
-                avatar: rows[0].avatar
-              };
-              res.status(200).send(newMess);
+              db.query(
+                `SELECT nickname, avatar FROM user WHERE id=${P1}`,
+                (err, rows) => {
+                  if (err) {
+                    console.log(err);
+                    res.status(500).send("error when getting message route");
+                  }
+                  const newMess = {
+                    content: content,
+                    date_diff: 0,
+                    nickname: rows[0].nickname,
+                    avatar: rows[0].avatar
+                  };
+                  res.status(200).send(newMess);
+                }
+              );
             }
           );
         }
-      );
-    }
-  );
+      }
+    );
+  } else {
+    res.status(403).send("empty message");
+  }
 });
 
 // Profile page routes
@@ -284,6 +297,7 @@ app.get("/profil/:profileId", (req, res) => {
 });
 
 //Borrow
+
 app.get("/emprunt/:userId", (req, res) => {
   const userId = req.params.userId;
   db.query(
@@ -303,6 +317,7 @@ app.get("/emprunt/:userId", (req, res) => {
 });
 
 //Delete a Borrow
+
 app.delete(`/emprunt/:borrowId`, (req, res) => {
   const borrowId = req.params.borrowId;
   db.query(
@@ -319,6 +334,7 @@ app.delete(`/emprunt/:borrowId`, (req, res) => {
 });
 
 // Add a Borrow
+
 app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
   const userId = req.params.userId;
   const clothingId = req.params.clothingId;
@@ -342,6 +358,7 @@ app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
 });
 
 // Upload a proof-picture
+
 app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
   fs.rename(req.file.path, "public/pictures/" + req.file.originalname, err => {
     if (err) {
@@ -351,6 +368,7 @@ app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
     }
   });
 });
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });

@@ -24,10 +24,9 @@ class Borrow extends React.Component {
 
   handleDelete(e) {
     e.preventDefault();
-    const userId = this.props.userId;
     const borrowId = this.props.borrowId;
     axios
-      .delete(`http://localhost:5050/emprunt/${userId}/${borrowId}`)
+      .delete(`http://localhost:5050/emprunt/${borrowId}`)
       .then(({ data }) => {
         this.setState({
           hidden: true
