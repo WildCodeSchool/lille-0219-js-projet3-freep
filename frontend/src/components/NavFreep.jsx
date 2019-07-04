@@ -78,7 +78,7 @@ class NavFreep extends React.Component {
               </label>
             </form>
             <Nav className="ml-auto" navbar>
-              <NavLink title="Propose ton vêtement !" to="">
+              <div title="Propose ton vêtement !" to="">
                 <PlusCircle
                   className="img"
                   color="black"

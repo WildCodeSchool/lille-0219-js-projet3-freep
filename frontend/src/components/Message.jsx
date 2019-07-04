@@ -13,7 +13,6 @@ import {
   Input
 } from "reactstrap";
 import { ArrowLeft } from "react-feather";
-import { Link } from "react-router-dom";
 import "../style/Messaging.scss";
 
 class Message extends React.Component {
@@ -89,15 +88,13 @@ class Message extends React.Component {
           <FormGroup className="d-flex flex-column">
             <Row>
               <Col xs="2">
-                <Link to="/messagerie/2">
-                  <Button
-                    onClick={e => {
-                      this.handlePrev(e);
-                    }}
-                  >
-                    <ArrowLeft />
-                  </Button>
-                </Link>
+                <Button
+                  onClick={e => {
+                    this.handlePrev(e);
+                  }}
+                >
+                  <ArrowLeft />
+                </Button>
               </Col>
               <Col xs="8">
                 <Label for="new-message" className="mx-2">
@@ -124,7 +121,7 @@ class Message extends React.Component {
         )}
         {this.state.messageArray.map((message, i) => {
           return (
-            <React.Fragment key={i}>
+            <div key={i}>
               <Card>
                 <CardBody>
                   <Row>
