@@ -356,7 +356,7 @@ app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
 app.get("/like/:idAuthor", (req, res) => {
   const authorId = req.params.idAuthor;
   db.query(
-    `SELECT id_content FROM social WHERE id_user = ${authorId} AND content_type = "like"`,
+    `SELECT DISTINCT(id_content) FROM social WHERE id_user = ${authorId} AND content_type = "like"`,
     (err, rows) => {
       if (err) {
         return res.status(500).send("error when getting like route");
@@ -365,6 +365,34 @@ app.get("/like/:idAuthor", (req, res) => {
         return row.id_content;
       });
       res.status(200).send(likesArray);
+    }
+  );
+});
+
+app.post("/like/:idPicture", (req, res) => {
+  const pictureId = req.params.idPicture;
+  const authorId = req.body.idAuthor;
+  db.query(
+    `INSERT INTO social (id_user, content_type, id_content, created_at) VALUES (${authorId}, "like", ${pictureId}, NOW())`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when posting like route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+app.put("/like/:idPicture", (req, res) => {
+  const pictureId = req.params.idPicture;
+  const authorId = req.body.idAuthor;
+  db.query(
+    `DELETE FROM social WHERE id_user=${authorId} AND content_type="like" AND id_content=${pictureId}`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when deleting like route");
+      }
+      res.status(200).send(rows);
     }
   );
 });
