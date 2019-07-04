@@ -2,6 +2,7 @@ import React from "react";
 import "../style/Footer.scss";
 import { Col } from "reactstrap";
 import classnames from "classnames";
+import { Heart } from "react-feather";
 
 class Footer extends React.Component {
   constructor(props) {
@@ -45,8 +46,8 @@ class Footer extends React.Component {
       >
         <Col xs="12" sm="3" className="text-center">
           Made with
-          <span role="img" aria-label="" className="px-2">
-            ❤️
+          <span role="img" aria-label="" className="footer-heart">
+            <Heart />
           </span>
           by Wild Code School
         </Col>
