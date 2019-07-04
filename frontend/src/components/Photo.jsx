@@ -9,13 +9,31 @@ class Photo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      picturesLiked: ""
+      isLiked: null,
+      picturesLiked: null,
+      likes: null
     };
   }
 
   componentDidMount() {
-    // const pictureId = this.props.pictureId;
-    // const pictures = this.props.pictures;
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    const picturesLiked = JSON.parse(localStorage.getItem("pictures"));
+    axios.get(`http://localhost:5050/like/${currentUser}`).then(({ data }) => {
+      this.setState({
+        picturesLiked: data
+      });
+      localStorage.setItem(
+        "pictures",
+        JSON.stringify(this.state.picturesLiked)
+      );
+    });
+    for (let i = 0; i <= picturesLiked.length; i++) {
+      if (currentUser === picturesLiked[i]) {
+        this.setState({
+          isLiked: true
+        });
+      }
+    }
   }
 
   handleClick = () => {
@@ -29,7 +47,7 @@ class Photo extends React.Component {
         })
         .then(({ data }) => {
           this.setState({
-            likes: data
+            isLiked: true
           });
         });
     } else {
@@ -39,7 +57,7 @@ class Photo extends React.Component {
         })
         .then(({ data }) => {
           this.setState({
-            likes: data
+            isLiked: false
           });
         });
     }
@@ -49,7 +67,9 @@ class Photo extends React.Component {
     const picture = this.props.picture;
     const link = this.props.link;
     const picturesLiked = this.state.picturesLiked;
-    const isLiked = this.props.isLiked;
+    const pictureId = this.props.pictureId;
+    const liked =
+      picturesLiked && picturesLiked.indexOf(pictureId) !== -1 ? true : false;
     return (
       <React.Fragment>
         <Card className="m-2">
@@ -60,7 +80,7 @@ class Photo extends React.Component {
             <Row className="p-0 card-buttons align-items-center">
               <Heart
                 onClick={this.handleClick}
-                className={isLiked ? "liked" : "notLiked"}
+                className={liked ? "liked" : "notLiked"}
               />
               <Target color="white" />
               <ReportButton />
