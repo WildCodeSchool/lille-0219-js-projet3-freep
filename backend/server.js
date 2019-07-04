@@ -16,6 +16,14 @@ app.use(passport.initialize());
 
 app.use("/auth", require("./auth"));
 
+app.all(
+  "/*",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+    next();
+  }
+);
+
 // Homepage
 
 app.get("/articles/", (req, res) => {
@@ -38,7 +46,6 @@ app.get("/articles/", (req, res) => {
 
 app.get("/articles/:id/", (req, res) => {
   const articleId = req.params.id;
-
   let answer = {};
   db.query(
     `SELECT id, id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
@@ -144,6 +151,7 @@ app.post(`/comment/:id`, (req, res) => {
 });
 
 //Details messaging
+
 app.get("/message/:P1/:P2", (req, res) => {
   const P1 = req.params.P1;
   const P2 = req.params.P2;
@@ -171,6 +179,7 @@ app.get("/message/:P1/:P2", (req, res) => {
 });
 
 //Update message
+
 app.post("/message/:P1/:P2", (req, res) => {
   const P1 = req.params.P1;
   const P2 = req.params.P2;
@@ -288,6 +297,7 @@ app.get("/profil/:profileId", (req, res) => {
 });
 
 //Borrow
+
 app.get("/emprunt/:userId", (req, res) => {
   const userId = req.params.userId;
   db.query(
@@ -307,6 +317,7 @@ app.get("/emprunt/:userId", (req, res) => {
 });
 
 //Delete a Borrow
+
 app.delete(`/emprunt/:borrowId`, (req, res) => {
   const borrowId = req.params.borrowId;
   db.query(
@@ -323,6 +334,7 @@ app.delete(`/emprunt/:borrowId`, (req, res) => {
 });
 
 // Add a Borrow
+
 app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
   const userId = req.params.userId;
   const clothingId = req.params.clothingId;
@@ -346,6 +358,7 @@ app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
 });
 
 // Upload a proof-picture
+
 app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
   fs.rename(req.file.path, "public/pictures/" + req.file.originalname, err => {
     if (err) {
@@ -355,6 +368,7 @@ app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
     }
   });
 });
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
