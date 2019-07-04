@@ -17,7 +17,15 @@ class Photo extends React.Component {
           <div className="overlay">
             <Row className="p-0 card-buttons align-items-center">
               <Heart color="white" />
-              <Target color="white" />
+              <div
+                style={{
+                  color: "white",
+                  fontWeight: "bolder",
+                  fontSize: "1.5rem"
+                }}
+              >
+                ℂ
+              </div>
               <ReportButton />
             </Row>
           </div>
