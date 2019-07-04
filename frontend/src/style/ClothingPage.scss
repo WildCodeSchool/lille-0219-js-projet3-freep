@@ -24,7 +24,7 @@ button,
 }
 
 .comments-container {
-  .sub-container button {
+  .sub-container button:not(.report-button) {
     font-size: calc(1rem + 0.3vw);
     background: #ad3a70cc;
     border: none;
@@ -40,6 +40,8 @@ button,
   .comments-feed {
     background: #fbf4f1;
     padding: 2vh 0;
+    border-radius: 5px;
+    box-shadow: 0.2rem 0.3rem 0.3rem fade-out(#222, 0.9) !important;
   }
 }
 
