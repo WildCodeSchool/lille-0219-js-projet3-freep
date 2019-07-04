@@ -39,6 +39,17 @@ class Borrow extends React.Component {
     }));
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    const clothingId = this.props.clothePage;
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    axios
+      .post(`http://localhost:5050/${currentUser}/${clothingId}/uploadProof`)
+      .then(() => {
+        alert("Votre photo a bien été envoyée");
+      });
+  }
+
   render() {
     return (
       <div className={this.state.hidden ? "hidden" : ""}>
@@ -72,12 +83,13 @@ class Borrow extends React.Component {
                 }}
               />
               <Form
-                method="POST"
+                onsubmit={e => {
+                  this.handleSubmit(e);
+                }}
                 enctype="multipart/form-data"
-                action="uploaddufichier"
               >
-                <Input type="file" name="monfichier" />
-                <Button>Envoyer</Button>
+                <Input type="file" name="myFile" />
+                <Button type="submit">Envoyer</Button>
               </Form>
             </Modal>
             <Button

@@ -2,11 +2,43 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
+
 const multer = require("multer");
-const upload = multer({ dest: "tmp/" });
+const path = require("path");
+
+const storage = multer.diskStorage({
+  destination: "./uploadPictures/",
+  filename: function(req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 3000000 },
+  fileFilter: function(req, file, cb) {
+    checkFileType(file, cb);
+  }
+}).single("myFile");
+
+checkFileType = (file, cb) => {
+  const fileTypes = /jpeg||jpg||png/;
+  const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = fileTypes.test(file.mimetype);
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    cb("Error: Images only");
+  }
+};
+
 const passport = require("passport");
 
 app.use(cors());
+app.use(express.static("./uploadPictures"));
 
 const bodyParser = require("body-parser");
 
@@ -15,6 +47,32 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 
 app.use("/auth", require("./auth"));
+
+// Upload a proof-picture
+app.post("/currentUser/:uploadProof", (req, res) => {
+  const path = req.file.path;
+  const clothingId = req.params.clothingId;
+  const currentUser = req.params.currentUser;
+  upload(req, res, err => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .send("error when upload a proof picture: File too large");
+    } else {
+      console.log(req.file);
+      res.send(req.file);
+    }
+  });
+  db.query(
+    `INSERT INTO pictures ( id_clothing, id_user, is_proof, created_at, url)
+    VALUES (${clothingId}, ${currentUser}, 1, Now(), ${path});`,
+    (err, rows, fields) => {
+      if (err) throw err;
+      res.status(200).send(rows);
+    }
+  );
+});
 
 // Homepage
 
@@ -341,16 +399,6 @@ app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
   );
 });
 
-// Upload a proof-picture
-app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
-  fs.rename(req.file.path, "public/pictures/" + req.file.originalname, err => {
-    if (err) {
-      res.send("error during the move");
-    } else {
-      res.send("File upload");
-    }
-  });
-});
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
