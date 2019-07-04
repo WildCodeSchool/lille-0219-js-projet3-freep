@@ -33,7 +33,7 @@ class Uploader extends React.Component {
           <ImageUploader
             className="my-5"
             // withIcon={true}
-            buttonText="Choose images"
+            buttonText="Choisir l'image"
             onChange={this.onDrop}
             imgExtension={[".jpg", ".gif", ".png"]}
             maxFileSize={5242880}
@@ -48,7 +48,7 @@ class Uploader extends React.Component {
           <Form className="d-flex flex-column mt-5">
             <FormGroup row>
               <Label for="clothing_title" sm={2}>
-                Titre
+                Type
               </Label>
               <Col sm={10}>
                 <Input
@@ -106,7 +106,7 @@ class Uploader extends React.Component {
                 <p className="pt-2 pl-2">Tu préfères demander une caution ?</p>
               </Label>
             </FormGroup>
-            <Button className="col-4 my-3 align-self-center">Submit</Button>
+            <Button className="col-4 my-3 align-self-center">Envoyer</Button>
           </Form>
         </Col>
       </Row>

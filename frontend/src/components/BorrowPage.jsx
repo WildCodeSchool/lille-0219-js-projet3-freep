@@ -16,11 +16,21 @@ class BorrowPage extends React.Component {
   }
 
   componentDidMount() {
-    const userId = this.props.match.params.userId;
-    axios.get(`http://localhost:5050/emprunt/${userId}`).then(({ data }) => {
-      this.setState({
-        borrowArray: data,
-        loading: false
+    const user = JSON.parse(localStorage.getItem("user"));
+    this.setState({
+      userId: this.props.match.params.userId
+    });
+    axios
+      .get(`http://localhost:5050/emprunt/${this.props.match.params.userId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
+      .then(({ data }) => {
+        this.setState({
+          borrowArray: data,
+          loading: false
+        });
       });
     });
   }

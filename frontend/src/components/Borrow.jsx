@@ -47,6 +47,7 @@ class Borrow extends React.Component {
       .post(`http://localhost:5050/${currentUser}/${clothingId}/uploadProof`)
       .then(() => {
         alert("Votre photo a bien été envoyée");
+
       });
   }
 
