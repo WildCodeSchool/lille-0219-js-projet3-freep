@@ -4,10 +4,9 @@ $transition: 0.2s;
 $secondary-color: goldenrod;
 
 .Photo {
+  border-radius: 10px;
   padding: 5px;
   background: linear-gradient(135deg, #ff90d4cc 30%, goldenrod);
-  animation: 0.5s appear;
-  border-radius: 10px;
 }
 
 .overlay {
@@ -20,11 +19,13 @@ $secondary-color: goldenrod;
   background: transparent;
   border-radius: 10px;
   border: none;
+  border-radius: 10px;
   margin: 3vh auto;
-  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  box-shadow: 0.2rem 0.3rem 0.3rem fade-out(#222, 0.9) !important;
   &:hover .overlay {
-    border-radius: 0 0 6px 6px;
-    transition: 0.4s ease-out;
+    border-radius: 0 0 10px 10px;
+    transition: 0.8s;
     position: absolute;
     background: rgba(34, 34, 34, 0.5);
     left: 5px;
