@@ -57,8 +57,6 @@ class NavFreep extends React.Component {
             <img className="logo" src="../pictures/logo.png" alt="logo" />
           </Link>
           <div className="navText">
-            <span className="navTitle">Freep</span>
-            <br />
             <span className="navCatch">La garde robe qui rapporte</span>
           </div>
           <NavbarToggler onClick={this.toggleBurger} />
