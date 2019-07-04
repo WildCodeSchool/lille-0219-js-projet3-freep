@@ -72,7 +72,7 @@ class Photo extends React.Component {
       picturesLiked && picturesLiked.indexOf(pictureId) !== -1 ? true : false;
     return (
       <React.Fragment>
-        <Card className="m-2">
+        <Card className="m-2 picture-card">
           <Link to={`/article/${link}`}>
             <CardImg src={picture} alt="clothes" className="Photo" />
           </Link>

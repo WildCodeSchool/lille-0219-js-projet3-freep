@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Tag, PlusCircle, Mail, Heart, User } from "react-feather";
 import { Modal, ModalHeader } from "reactstrap";
 import Uploader from "./Upload";
+import classnames from "classnames";
 
 class NavFreep extends React.Component {
   constructor(props) {
@@ -12,7 +13,9 @@ class NavFreep extends React.Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.state = {
       isOpen: false,
-      modal: false
+      modal: false,
+      prevScrollpos: window.pageYOffset,
+      visible: true
     };
   }
   toggleBurger() {
@@ -25,10 +28,30 @@ class NavFreep extends React.Component {
       modal: !prevState.modal
     }));
   }
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+  handleScroll = () => {
+    const { prevScrollpos } = this.state;
+
+    const currentScrollPos = window.pageYOffset;
+    const visible = prevScrollpos > currentScrollPos;
+    this.setState({
+      prevScrollpos: currentScrollPos,
+      visible
+    });
+  };
 
   render() {
     return (
-      <div className="header">
+      <div
+        className={classnames("header", {
+          "header--hidden": !this.state.visible
+        })}
+      >
         <Navbar color="light" light expand="md">
           <Link to="/accueil">
             <img className="logo" src="../pictures/logo.png" alt="logo" />
@@ -40,18 +63,22 @@ class NavFreep extends React.Component {
           </div>
           <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <form action="">
+            <form class="recherche_demo">
               <label htmlFor="clothe-profile-search">
                 <input
-                  type="text"
-                  placeholder="Cherche un vêtement ou un profil..."
+                  type="search"
+                  placeholder="𝓡𝓮𝓬𝓱𝓮𝓻𝓬𝓱𝓮 𝓾𝓷𝓮 𝓾𝓽𝓲𝓵𝓲𝓼𝓪𝓽𝓻𝓲𝓬𝓮, 𝓾𝓷 𝓿𝓮𝓽𝓮𝓶𝓮𝓷𝓽 👗 "
                 />
                 <input type="submit" />
-                <img className="magnifier" src="../pictures/loupe.png" />
+                <img
+                  className="magnifier"
+                  src="../pictures/loupe.png"
+                  alt="loupe"
+                />
               </label>
             </form>
             <Nav className="ml-auto" navbar>
-              <NavLink title="Propose ton vêtement !">
+              <div title="Propose ton vêtement !" to="">
                 <PlusCircle
                   className="img"
                   color="black"
@@ -61,7 +88,7 @@ class NavFreep extends React.Component {
                   <ModalHeader toggle={this.toggleModal} className="pr-5" />
                   <Uploader />
                 </Modal>
-              </NavLink>
+              </div>
               <NavLink to="/partenaire" title="Découvre nos partenaires !">
                 <Tag className="img" color="black" />
               </NavLink>

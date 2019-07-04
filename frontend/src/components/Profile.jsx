@@ -30,18 +30,23 @@ class Profile extends React.Component {
 
   componentDidMount() {
     const profileId = this.props.match.params.profileId;
-    localStorage.getItem("user");
-
-    axios.get(`http://localhost:5050/profil/${profileId}`).then(({ data }) => {
-      this.setState({
-        user: data.profile,
-        pictures: data.pictures,
-        followers: data.followers,
-        followings: data.followings,
-        posts: data.posts,
-        loading: false
+    const user = JSON.parse(localStorage.getItem("user"));
+    axios
+      .get(`http://localhost:5050/profil/${profileId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
+      .then(({ data }) => {
+        this.setState({
+          user: data.profile,
+          pictures: data.pictures,
+          followers: data.followers,
+          followings: data.followings,
+          posts: data.posts,
+          loading: false
+        });
       });
-    });
   }
 
   render() {

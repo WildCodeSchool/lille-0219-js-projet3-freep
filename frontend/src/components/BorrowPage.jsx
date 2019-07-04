@@ -20,11 +20,16 @@ class BorrowPage extends React.Component {
     this.refresh();
   }
   refresh() {
+    const user = JSON.parse(localStorage.getItem("user"));
     this.setState({
       userId: this.props.match.params.userId
     });
     axios
-      .get(`http://localhost:5050/emprunt/${this.props.match.params.userId}`)
+      .get(`http://localhost:5050/emprunt/${this.props.match.params.userId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
       .then(({ data }) => {
         this.setState({
           borrowArray: data,
@@ -54,7 +59,7 @@ class BorrowPage extends React.Component {
           {this.state.borrowArray.map((borrow, i) => {
             return (
               borrow && (
-                <Row>
+                <Row key={i}>
                   <Col sm="6" md="4" lg="3">
                     <LazyLoad height={100} offset={-200}>
                       <Borrow

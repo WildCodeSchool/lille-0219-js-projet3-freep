@@ -16,12 +16,19 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:5050/articles/`).then(({ data }) => {
-      this.setState({
-        picturesInfo: data,
-        loading: false
+    const user = JSON.parse(localStorage.getItem("user"));
+    axios
+      .get(`http://localhost:5050/articles/`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
+      .then(({ data }) => {
+        this.setState({
+          picturesInfo: data,
+          loading: false
+        });
       });
-    });
   }
 
   render() {
