@@ -5,7 +5,6 @@ import "../style/Login.scss";
 import LoginBackground from "../pictures/Login.jpg";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -15,17 +14,14 @@ class Login extends Component {
       id: ""
     };
   }
-
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
-
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   };
-
   handleSubmit = event => {
     event.preventDefault();
     let { email, password } = this.state;
@@ -43,7 +39,6 @@ class Login extends Component {
         history.push("/accueil");
       });
   };
-
   render() {
     return (
       <div
@@ -65,11 +60,27 @@ class Login extends Component {
           }}
         >
           <h1 className="titleConnect">Prête pour de nouvelles aventures ? </h1>
-          <Form.Group controlId="email">
+          <Button
+            className="facebook"
+            href="https://fr-fr.facebook.com/login/"
+            class="facebook"
+            role="button"
+            title="Lien"
+            style={{
+              fontSize: "15px",
+              borderRadius: "50px",
+              backgroundColor: "bleu",
+              marginBottom: "30px",
+              marginTop: "30px"
+            }}
+          >
+            Connecte toi avec Facebook
+          </Button>
+          <div class="trait" />
+          <Form.Group controlId="email" bsSize="large">
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               htmlFor="email"
@@ -87,7 +98,6 @@ class Login extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               htmlFor="pwd"
@@ -100,43 +110,13 @@ class Login extends Component {
               type="password"
             />
           </Form.Group>
-          <div className="remember">
-            <input
-              refs="remember_me"
-              value={true}
-              id="checkbox1"
-              type="checkbox"
-            />
-            <h1
-              style={{
-                fontSize: "20px",
-                color: "goldenrod",
-                fontFamily: "DancingScript"
-              }}
-              htmlFor="checkbox1"
-            >
-              Se souvenir de moi
-            </h1>
-          </div>
           <Button
             className="myButton"
             block
             disabled={!this.validateForm()}
             type="submit"
-            style={{ border: " 1px solid black" }}
           >
             Connecte-toi !
-          </Button>
-          <Button
-            href="https://fr-fr.facebook.com/login/"
-            className="btn btn-primary btn-lg disabled"
-            role="button"
-            title="Lien"
-            style={{
-              fontSize: "15px"
-            }}
-          >
-            Inscris-toi avec Facebook
           </Button>
           <div>
             <NavLink
@@ -154,7 +134,7 @@ class Login extends Component {
             exact
             to="/Registration"
           >
-            Inscris-toi ! ❀
+            Pas encore de compte ? Inscris-toi ! 🖤
           </NavLink>
         </Form>
       </div>
