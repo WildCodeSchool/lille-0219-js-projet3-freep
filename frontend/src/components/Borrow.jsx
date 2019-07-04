@@ -60,8 +60,17 @@ class Borrow extends React.Component {
             >
               J'ai emprunté ce vêtement
             </Button>
-            <Modal isOpen={this.state.modal} toggle={this.toggleModalBorrow}>
-              <ModalHeader toggle={this.toggleModalBorrow} />
+            <Modal
+              isOpen={this.state.modal}
+              toggle={() => {
+                this.toggleModalBorrow();
+              }}
+            >
+              <ModalHeader
+                toggle={() => {
+                  this.toggleModalBorrow();
+                }}
+              />
               <Form
                 method="POST"
                 enctype="multipart/form-data"
