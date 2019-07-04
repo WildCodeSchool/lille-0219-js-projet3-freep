@@ -38,7 +38,7 @@ class ReportButton extends React.Component {
           <MoreHorizontal color="white" />
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem className="p-1 report-button">
+          <DropdownItem className="report-button">
             <a href={mailtoAddress}>Signaler un abus</a>
           </DropdownItem>
         </DropdownMenu>

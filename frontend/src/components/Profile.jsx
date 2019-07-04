@@ -33,19 +33,26 @@ class Profile extends React.Component {
     const profileId = this.props.match.params.profileId;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     const currentFollowers = JSON.parse(localStorage.getItem("followers"));
+    const user = JSON.parse(localStorage.getItem("user"));
     localStorage.getItem("user");
 
-    axios.get(`http://localhost:5050/profil/${profileId}`).then(({ data }) => {
-      this.setState({
-        user: data.profile,
-        pictures: data.pictures,
-        followers: data.followers,
-        followings: data.followings,
-        posts: data.posts,
-        loading: false
+    axios
+      .get(`http://localhost:5050/profil/${profileId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
+      .then(({ data }) => {
+        this.setState({
+          user: data.profile,
+          pictures: data.pictures,
+          followers: data.followers,
+          followings: data.followings,
+          posts: data.posts,
+          loading: false
+        });
+        localStorage.setItem("followers", JSON.stringify(data.followers));
       });
-      localStorage.setItem("followers", JSON.stringify(data.followers));
-    });
     for (let i = 0; i <= currentFollowers.length; i++) {
       if (currentUser === currentFollowers[i]) {
         this.setState({
