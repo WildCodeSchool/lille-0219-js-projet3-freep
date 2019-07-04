@@ -86,7 +86,6 @@ class Registration extends Component {
             boxShadow: ".5rem 1rem 1rem rgba(0,0,0,.2)"
           }}
         >
-<<<<<<< HEAD
           <h1 className="titleConnect"> Rejoins la communauté Freep 🌸</h1>
           <Button
             className="facebook"
@@ -106,10 +105,6 @@ class Registration extends Component {
           </Button>
           <div class="trait" />
           <Form.Group controlId="firstname" bsSize="large">
-=======
-          <h1 className="titleConnect"> Rejoins la communauté Freep </h1>
-          <Form.Group controlId="firstName">
->>>>>>> 28e2f99ec309e963e9f463d65d39709dfed3861c
             <h1
               style={{
                 fontSize: "20px",
@@ -134,7 +129,6 @@ class Registration extends Component {
                 fontFamily: "DancingScript"
               }}
               htmlFor="lastName"
-
             >
               Nom
             </h1>
@@ -162,12 +156,8 @@ class Registration extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-<<<<<<< HEAD
-          <Form.Group controlId="email" bsSize="large">
-=======
 
           <Form.Group controlId="email">
->>>>>>> 28e2f99ec309e963e9f463d65d39709dfed3861c
             <h1
               style={{
                 fontSize: "20px",

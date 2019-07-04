@@ -5,6 +5,7 @@ import "../style/Login.scss";
 import LoginBackground from "../pictures/Login.jpg";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -14,14 +15,17 @@ class Login extends Component {
       id: ""
     };
   }
+
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
+
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   };
+
   handleSubmit = event => {
     event.preventDefault();
     let { email, password } = this.state;
@@ -35,10 +39,12 @@ class Login extends Component {
         this.setState({
           login: { email: data.email, password: data.password, id: data.id }
         });
+        console.log(data);
         localStorage.setItem("user", JSON.stringify(data));
         history.push("/accueil");
       });
   };
+
   render() {
     return (
       <div
@@ -46,8 +52,7 @@ class Login extends Component {
         style={{
           backgroundImage: `url(${LoginBackground})`,
           backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "100vh"
+          backgroundSize: "cover"
         }}
       >
         <Form
@@ -60,7 +65,6 @@ class Login extends Component {
           }}
         >
           <h1 className="titleConnect">Prête pour de nouvelles aventures ? </h1>
-<<<<<<< HEAD
           <Button
             className="facebook"
             href="https://fr-fr.facebook.com/login/"
@@ -78,19 +82,18 @@ class Login extends Component {
             Connecte toi avec Facebook
           </Button>
           <div class="trait" />
+
           <Form.Group controlId="email" bsSize="large">
-=======
-          <Form.Group controlId="email">
->>>>>>> 28e2f99ec309e963e9f463d65d39709dfed3861c
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              htmlFor="email"
+              for="email"
             >
               E-mail
             </h1>
+
             <Form.Control
               autoFocus
               type="email"
@@ -98,15 +101,15 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="password">
+          <Form.Group controlId="password" bsSize="large">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              htmlFor="pwd"
+              for="pwd"
             >
-              Mot de passe
+              Mot de passe{" "}
             </h1>
             <Form.Control
               value={this.state.password}
@@ -114,35 +117,17 @@ class Login extends Component {
               type="password"
             />
           </Form.Group>
-<<<<<<< HEAD
-=======
-          <div className="remember">
-            <input
-              refs="remember_me"
-              value={true}
-              id="checkbox1"
-              type="checkbox"
-            />
-            <h1
-              style={{
-                fontSize: "20px",
-                color: "goldenrod",
-                fontFamily: "DancingScript"
-              }}
-              htmlFor="checkbox1"
-            >
-              Se souvenir de moi
-            </h1>
-          </div>
->>>>>>> 28e2f99ec309e963e9f463d65d39709dfed3861c
+
           <Button
-            className="myButton"
+            class="myButton"
             block
+            bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
           >
-            Connecte-toi !
+            Connecte toi !
           </Button>
+
           <div>
             <NavLink
               activeClassName="active"
