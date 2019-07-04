@@ -1,15 +1,19 @@
 $bl: #222;
 
-* {
-  color: $bl;
-}
-
 .dropdown-btn .btn,
 .dropdown-btn .btn:hover {
   border: transparent;
   background: transparent !important;
   color: $bl;
   box-shadow: 0 0 0 transparent !important;
+}
+
+.comments-feed div div div.dropdown-btn button.dots svg {
+  stroke: fade-out($bl, 0.5) !important;
+  stroke-width: 1px;
+  &:hover {
+    stroke: $bl !important;
+  }
 }
 
 .report-button {
@@ -32,15 +36,13 @@ $bl: #222;
 .dropdown-menu {
   border: none;
   background: #fbf4f1;
+  padding: 0 !important;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.05);
 }
 
 .comments-profile {
   font-size: calc(1rem + 0.2vw);
   margin-left: 2.25rem;
-}
-
-div:nth-child(1) > button:nth-child(1) > svg {
-  stroke: #222;
 }
 
 .comment-avatar {

@@ -60,6 +60,7 @@ class Login extends Component {
           }}
         >
           <h1 className="titleConnect">Prête pour de nouvelles aventures ? </h1>
+<<<<<<< HEAD
           <Button
             className="facebook"
             href="https://fr-fr.facebook.com/login/"
@@ -78,12 +79,15 @@ class Login extends Component {
           </Button>
           <div class="trait" />
           <Form.Group controlId="email" bsSize="large">
+=======
+          <Form.Group controlId="email">
+>>>>>>> 28e2f99ec309e963e9f463d65d39709dfed3861c
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="email"
+              htmlFor="email"
             >
               E-mail
             </h1>
@@ -94,13 +98,13 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="password" bsSize="large">
+          <Form.Group controlId="password">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="pwd"
+              htmlFor="pwd"
             >
               Mot de passe
             </h1>
@@ -110,10 +114,30 @@ class Login extends Component {
               type="password"
             />
           </Form.Group>
+<<<<<<< HEAD
+=======
+          <div className="remember">
+            <input
+              refs="remember_me"
+              value={true}
+              id="checkbox1"
+              type="checkbox"
+            />
+            <h1
+              style={{
+                fontSize: "20px",
+                color: "goldenrod",
+                fontFamily: "DancingScript"
+              }}
+              htmlFor="checkbox1"
+            >
+              Se souvenir de moi
+            </h1>
+          </div>
+>>>>>>> 28e2f99ec309e963e9f463d65d39709dfed3861c
           <Button
             className="myButton"
             block
-            bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
           >

@@ -86,6 +86,7 @@ class Registration extends Component {
             boxShadow: ".5rem 1rem 1rem rgba(0,0,0,.2)"
           }}
         >
+<<<<<<< HEAD
           <h1 className="titleConnect"> Rejoins la communauté Freep 🌸</h1>
           <Button
             className="facebook"
@@ -105,6 +106,10 @@ class Registration extends Component {
           </Button>
           <div class="trait" />
           <Form.Group controlId="firstname" bsSize="large">
+=======
+          <h1 className="titleConnect"> Rejoins la communauté Freep </h1>
+          <Form.Group controlId="firstName">
+>>>>>>> 28e2f99ec309e963e9f463d65d39709dfed3861c
             <h1
               style={{
                 fontSize: "20px",
@@ -122,13 +127,14 @@ class Registration extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="lastname" bsSize="large">
+          <Form.Group controlId="lastName">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="lastname"
+              htmlFor="lastName"
+
             >
               Nom
             </h1>
@@ -139,13 +145,13 @@ class Registration extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="nickname" bsSize="large">
+          <Form.Group controlId="username">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="nickname"
+              htmlFor="username"
             >
               Nom d'utilisateur
             </h1>
@@ -156,13 +162,18 @@ class Registration extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
+<<<<<<< HEAD
           <Form.Group controlId="email" bsSize="large">
+=======
+
+          <Form.Group controlId="email">
+>>>>>>> 28e2f99ec309e963e9f463d65d39709dfed3861c
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="email"
+              htmlFor="email"
             >
               E-mail
             </h1>
@@ -173,13 +184,13 @@ class Registration extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group controlId="password" bsSize="large">
+          <Form.Group controlId="password">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="password"
+              htmlFor="pwd"
             >
               Mot de passe
             </h1>
@@ -189,13 +200,13 @@ class Registration extends Component {
               type="password"
             />
           </Form.Group>
-          <Form.Group controlId="confirmPassword" bsSize="large">
+          <Form.Group controlId="confirmPassword">
             <h1
               style={{
                 fontSize: "20px",
                 fontFamily: "DancingScript"
               }}
-              for="pwd"
+              htmlFor="pwd"
             >
               Confirme ton mot de passe
             </h1>
@@ -209,7 +220,6 @@ class Registration extends Component {
             style={{ border: " 1px solid black" }}
             className="myButton"
             block
-            bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
           >

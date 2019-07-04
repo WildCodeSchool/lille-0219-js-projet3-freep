@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Tag, PlusCircle, Mail, Heart, User } from "react-feather";
 import { Modal, ModalHeader } from "reactstrap";
 import Uploader from "./Upload";
+import classnames from "classnames";
 
 class NavFreep extends React.Component {
   constructor(props) {
@@ -12,7 +13,9 @@ class NavFreep extends React.Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.state = {
       isOpen: false,
-      modal: false
+      modal: false,
+      prevScrollpos: window.pageYOffset,
+      visible: true
     };
   }
   toggleBurger() {
@@ -25,10 +28,30 @@ class NavFreep extends React.Component {
       modal: !prevState.modal
     }));
   }
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+  handleScroll = () => {
+    const { prevScrollpos } = this.state;
+
+    const currentScrollPos = window.pageYOffset;
+    const visible = prevScrollpos > currentScrollPos;
+    this.setState({
+      prevScrollpos: currentScrollPos,
+      visible
+    });
+  };
 
   render() {
     return (
-      <div className="header">
+      <div
+        className={classnames("header", {
+          "header--hidden": !this.state.visible
+        })}
+      >
         <Navbar color="light" light expand="md">
           <Link to="/accueil">
             <img className="logo" src="../pictures/logo.png" alt="logo" />
@@ -55,7 +78,7 @@ class NavFreep extends React.Component {
               </label>
             </form>
             <Nav className="ml-auto" navbar>
-              <div title="Propose ton vêtement !">
+              <NavLink title="Propose ton vêtement !" to="">
                 <PlusCircle
                   className="img"
                   color="black"
