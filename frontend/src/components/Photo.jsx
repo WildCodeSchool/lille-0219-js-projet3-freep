@@ -17,7 +17,6 @@ class Photo extends React.Component {
 
   componentDidMount() {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-    const picturesLiked = JSON.parse(localStorage.getItem("pictures"));
     axios.get(`http://localhost:5050/like/${currentUser}`).then(({ data }) => {
       this.setState({
         picturesLiked: data
@@ -27,19 +26,11 @@ class Photo extends React.Component {
         JSON.stringify(this.state.picturesLiked)
       );
     });
-    for (let i = 0; i <= picturesLiked.length; i++) {
-      if (currentUser === picturesLiked[i]) {
-        this.setState({
-          isLiked: true
-        });
-      }
-    }
   }
 
   handleClick = () => {
     const pictureId = this.props.pictureId;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-
     if (!this.state.isLiked) {
       axios
         .post(`http://localhost:5050/like/${pictureId}`, {
