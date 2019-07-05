@@ -4,7 +4,6 @@ import axios from "axios";
 import {
   Card,
   CardBody,
-  CardImg,
   Row,
   Col,
   Button,
@@ -14,7 +13,6 @@ import {
   Input
 } from "reactstrap";
 import { ArrowLeft } from "react-feather";
-import { Link } from "react-router-dom";
 import "../style/Messaging.scss";
 
 class Message extends React.Component {
@@ -80,23 +78,30 @@ class Message extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Link to="/messagerie/2">
-          <Button
-            onClick={e => {
-              this.handlePrev(e);
-            }}
-          >
-            <ArrowLeft />
-          </Button>
-        </Link>
+      <div className="d-flex flex-column">
         <Form
+          className="message-form"
           onSubmit={e => {
             this.handleSubmit(e);
           }}
         >
-          <FormGroup>
-            <Label for="exampleText">Nouveau Message</Label>
+          <FormGroup className="d-flex flex-column">
+            <Row>
+              <Col xs="2">
+                <Button
+                  onClick={e => {
+                    this.handlePrev(e);
+                  }}
+                >
+                  <ArrowLeft />
+                </Button>
+              </Col>
+              <Col xs="8">
+                <Label for="new-message" className="mx-2">
+                  Nouveau Message
+                </Label>
+              </Col>
+            </Row>
             <Input
               type="textarea"
               name="content_form"
@@ -106,7 +111,7 @@ class Message extends React.Component {
                 this.handleChange(e);
               }}
             />
-            <Button>Envoyer</Button>
+            <Button className="my-3 submit-button">Envoyer</Button>
           </FormGroup>
         </Form>
         {this.state.messageArray.length === 0 ? (
@@ -116,20 +121,20 @@ class Message extends React.Component {
         )}
         {this.state.messageArray.map((message, i) => {
           return (
-            <React.Fragment>
+            <div key={i}>
               <Card>
                 <CardBody>
                   <Row>
-                    <Col xs="3" sm="3" md="3">
-                      <CardImg
+                    <Col xs="3">
+                      <img
                         src={message.avatar}
                         alt="Avatar"
                         className="imgAvatar rounded-circle"
                       />
                     </Col>
-                    <Col xs="9" sm="9" md="9">
-                      <div className="m-5">
-                        <Row className="d-flex">
+                    <Col xs="9">
+                      <div className="mx-5 my-3">
+                        <Row>
                           <Col>
                             <p className="name">{message.nickname}</p>
                           </Col>
@@ -151,10 +156,10 @@ class Message extends React.Component {
                   </Row>
                 </CardBody>
               </Card>
-            </React.Fragment>
+            </div>
           );
         })}
-      </React.Fragment>
+      </div>
     );
   }
 }
