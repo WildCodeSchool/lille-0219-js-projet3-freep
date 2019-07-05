@@ -20,7 +20,7 @@ router.post("/users", (req, res) => {
         user.nickname
       }', '${user.email}', '${user.password}', '${user.firstname}', '${
         user.lastname
-      }', "https://cdn2.vectorstock.com/i/1000x1000/20/86/viking-horned-helmet-ancient-costume-vector-15462086.jpg", NOW())`,
+      }', "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png", NOW())`,
       user,
       (err, rows, fields) => {
         if (err) throw err;
