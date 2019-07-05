@@ -24,6 +24,10 @@ const upload = multer({
   }
 }).single("myFile");
 
+const uploadClothe = multer({
+  storage: storage
+}).array("pictureClotheUpload", 3);
+
 checkFileType = (file, cb) => {
   const fileTypes = /jpeg||jpg||png/;
   const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
@@ -49,7 +53,7 @@ app.use(passport.initialize());
 app.use("/auth", require("./auth"));
 
 // Upload a proof-picture
-app.post("/currentUser/:uploadProof", (req, res) => {
+app.post("/currentUser/:clothingId/:uploadProof", (req, res) => {
   const path = req.file.path;
   const clothingId = req.params.clothingId;
   const currentUser = req.params.currentUser;
@@ -73,6 +77,46 @@ app.post("/currentUser/:uploadProof", (req, res) => {
     }
   );
 });
+
+// Upload clothes pictures
+
+app.post("/currentUser/:uploadPicture", (req, res) => {
+  const path = req.file.path;
+  const currentUser = req.params.currentUser;
+  const type = req.body.type;
+  const brand = req.body.brand;
+  const size = req.body.size;
+  const description = req.body.description;
+  const deposit = req.body.deposit;
+
+  uploadClothe(req, res, err => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(500)
+        .send("error when upload a proof picture: File too large");
+    } else {
+      console.log(req.file);
+      res.send(req.file);
+    }
+  });
+  db.query(
+    `INSERT INTO clothing ( id_user, type, brand, size, description, is_deposit, created_at)
+    VALUES ( ${currentUser}, ${type}, ${brand}, ${size}, ${description}, ${deposit}, Now());`,
+    (err, rows, fields) => {
+      if (err) throw err;
+      db.query(
+        `INSERT INTO pictures ( id_clothing, id_user, is_proof, created_at, url)
+        VALUES (${clothingId}, ${currentUser}, 0, Now(), ${path});`,
+        (err, rows, fields) => {
+          if (err) throw err;
+          res.status(200).send(rows);
+        }
+      );
+    }
+  );
+});
+
 app.all(
   "/*",
   passport.authenticate("jwt", { session: false }),

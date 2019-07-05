@@ -32,7 +32,6 @@ class BorrowPage extends React.Component {
           loading: false
         });
       });
-    });
   }
 
   render() {
