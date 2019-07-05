@@ -108,7 +108,6 @@ class Profile extends React.Component {
                     <Col xs="auto">
                       <Nickname info={user} />
                     </Col>
-                    <Col xs="auto">✮✮✮✮✮</Col>
                   </Row>
                 </Col>
               </Row>
