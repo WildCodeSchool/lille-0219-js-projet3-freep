@@ -24,16 +24,15 @@ class Profile extends React.Component {
       followers: [],
       followings: [],
       posts: [],
-      isFollowed: false,
-      loading: true
+      loading: true,
+      isFollowed: null
     };
   }
 
   componentDidMount() {
-    const profileId = this.props.match.params.profileId;
+    const profileId = this.state.user.id;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     const currentFollowers = JSON.parse(localStorage.getItem("followers"));
-    localStorage.getItem("user");
 
     axios.get(`http://localhost:5050/profil/${profileId}`).then(({ data }) => {
       this.setState({
@@ -44,8 +43,9 @@ class Profile extends React.Component {
         posts: data.posts,
         loading: false
       });
-      localStorage.setItem("followers", JSON.stringify(data.followers));
+      localStorage.setItem("followers", JSON.stringify(this.state.followers));
     });
+
     for (let i = 0; i <= currentFollowers.length; i++) {
       if (currentUser === currentFollowers[i]) {
         this.setState({
@@ -55,8 +55,8 @@ class Profile extends React.Component {
     }
   }
 
-  handleClick = () => {
-    const profileId = this.props.match.params.profileId;
+  handleClick() {
+    const profileId = this.state.user.id;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
 
     if (!this.state.isFollowed) {
@@ -65,10 +65,11 @@ class Profile extends React.Component {
           idAuthor: currentUser
         })
         .then(({ data }) => {
-          this.setState({
-            followers: data
-          });
           localStorage.setItem("followers", JSON.stringify(data));
+          this.setState({
+            followers: data,
+            isFollowed: true
+          });
         });
     } else {
       axios
@@ -76,12 +77,14 @@ class Profile extends React.Component {
           idAuthor: currentUser
         })
         .then(({ data }) => {
+          localStorage.setItem("followers", JSON.stringify(data));
           this.setState({
-            followers: data
+            followers: data,
+            isFollowed: false
           });
         });
     }
-  };
+  }
 
   render() {
     const user = this.state.user;
@@ -143,7 +146,12 @@ class Profile extends React.Component {
                 : 0 + " Post"}
             </Col>
             <Col>
-              <Button onClick={this.handleClick} className="button primaryfont">
+              <Button
+                onClick={() => {
+                  this.handleClick();
+                }}
+                className="button primaryfont"
+              >
                 {this.state.isFollowed ? "Suivie ✓" : "Suivre"}
               </Button>
             </Col>
