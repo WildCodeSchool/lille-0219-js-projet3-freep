@@ -34,17 +34,17 @@ function App() {
       <Container className="container">
         <Switch>
           <Route exact path="/" component={Login} />
+          <Route path="/inscription" exact component={Registration} />
           <PrivateRoute path="/accueil" component={HomePage} />
-          <PrivateRoute path="/article/:articleId" component={ClothingPage} />
           <PrivateRoute path="/profil/:profileId" component={Profile} />
+          <PrivateRoute path="/message/:P1/:P2" component={Message} />
+          <PrivateRoute path="/emprunt/:userId" component={BorrowPage} />
+          <PrivateRoute path="/article/:articleId" component={ClothingPage} />
           <PrivateRoute path="/partenaire" component={PartnerPage} />
           <PrivateRoute
             path="/messagerie/:idReader"
             component={MessagingPage}
           />
-          <Route path="/inscription" exact component={Registration} />
-          <PrivateRoute path="/message/:P1/:P2" component={Message} />
-          <PrivateRoute path="/emprunt/:userId" component={BorrowPage} />
         </Switch>
         <Footer />
       </Container>
