@@ -383,7 +383,7 @@ app.post("/follow/:followId", (req, res) => {
         res.status(500).send("error when getting social route");
       }
       db.query(
-        `SELECT DISTINCT(id_user) FROM social WHERE id_content = ${followId}`,
+        `SELECT DISTINCT(id_user) FROM social WHERE content_type="follow" AND id_content = ${followId}`,
         (err, rows) => {
           if (err) {
             console.log(err);
@@ -406,7 +406,16 @@ app.put("/follow/:followId", (req, res) => {
         console.log(err);
         res.status(500).send("error when getting social route");
       }
-      res.status(200).send(rows);
+      db.query(
+        `SELECT DISTINCT(id_user) FROM social WHERE content_type="follow" AND id_content = ${followId}`,
+        (err, rows) => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("error when getting social route");
+          }
+          res.status(200).send(rows);
+        }
+      );
     }
   );
 });
