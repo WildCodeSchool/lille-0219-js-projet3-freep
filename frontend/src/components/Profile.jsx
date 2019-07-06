@@ -8,6 +8,7 @@ import axios from "axios";
 import "../style/Profile.scss";
 import Loader from "./Loader";
 import LazyLoad from "react-lazyload";
+import { Map } from "react-feather";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class Profile extends React.Component {
         avatar: "https://randomuser.me/api/portraits/women/90.jpg",
         nickname: "Jade",
         description: `Qu'est-ce que le Lorem Ipsum ?
-        Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.`
+        Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.`,
+        location: "Lille"
       },
       pictures: [],
       followers: [],
@@ -112,8 +114,12 @@ class Profile extends React.Component {
                 </Col>
                 <Col xs="8">
                   <Row xs="6" className="align-items-center">
-                    <Col xs="auto">
+                    <Col xs="12">
                       <Nickname info={user} />
+                    </Col>
+                    <Col xs="12" className="location">
+                      <Map color="#919191" width="18" />
+                      {user.location}
                     </Col>
                   </Row>
                 </Col>
@@ -123,7 +129,7 @@ class Profile extends React.Component {
               <Col className="text-justify">{user.description}</Col>
             </Col>
           </Row>
-          <Row className="text-center my-5">
+          <Row className="text-center my-5 profile-data">
             <Col xs="4" xl="2" className="p-0">
               {followers
                 ? followers > 9999
@@ -156,14 +162,14 @@ class Profile extends React.Component {
                 onClick={() => {
                   this.handleClick();
                 }}
-                className="button"
+                className="button px-4"
               >
                 {this.state.isFollowed ? "Suivie ✓" : "Suivre"}
               </Button>
             </Col>
             <Col className="my-5 my-xl-0">
               <Link to="/message">
-                <Button className="button">Message</Button>
+                <Button className="button px-4">Message</Button>
               </Link>
             </Col>
           </Row>
