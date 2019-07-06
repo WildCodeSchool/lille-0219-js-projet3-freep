@@ -1,0 +1,14 @@
+@import "../index.scss";
+
+.user-name {
+  font-size: calc(0.8rem + 1vw);
+}
+
+.button {
+  background: #ad3a70cc;
+  border: none;
+  &:hover {
+    background: rgba($main-color, 0.8);
+    box-shadow: $box-shadow;
+  }
+}
