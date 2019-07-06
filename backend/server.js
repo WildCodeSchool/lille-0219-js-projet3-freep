@@ -20,7 +20,7 @@ app.use("/auth", require("./auth"));
 
 app.get("/articles/", (req, res) => {
   db.query(
-    `SELECT id, id_clothing, id_user, is_proof, created_at, url FROM picture ORDER BY created_at DESC`,
+    `SELECT id_clothing, created_at, url FROM picture ORDER BY created_at DESC`,
     (err, rows) => {
       if (err) {
         console.log(err);
@@ -384,6 +384,20 @@ app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
     }
   });
 });
+
+// Partners page
+
+app.get("/partenaire/:profileId", (req, res) => {
+  const profileId = req.params.profileId;
+  db.query(`SELECT points FROM user WHERE id=${profileId}`, (err, rows) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send("error when getting profile route");
+    }
+    res.status(200).send(rows[0]);
+  });
+});
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
