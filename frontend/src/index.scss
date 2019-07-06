@@ -11,3 +11,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+////////////// Helpers
+
+// Colors
+
+$main-color: #f6003f;
+$secondary-color: goldenrod;
+$third-color: #f8d5c7;
+$wh: #f5f5f5;
+$bl: #222;
+$page-bg: linear-gradient(
+  to left top,
+  #ec9daa,
+  #f3b8b7,
+  #f7d2cb,
+  #f8dbd3,
+  #fae3dc,
+  #fbece6,
+  #fae6de,
+  #fae0d6,
+  #f9dbcf,
+  #f8d5c7
+);
+
+// Effects
+
+$transition: 0.2s;
+$radius-lg: 10px;
+$radius-sm: 5px;
