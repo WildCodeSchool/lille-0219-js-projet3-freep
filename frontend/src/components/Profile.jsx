@@ -1,11 +1,11 @@
 import React from "react";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import Nickname from "./Nickname";
 import Photo from "./Photo";
 import axios from "axios";
-import "../style/Profile.css";
+import "../style/Profile.scss";
 import Loader from "./Loader";
 import LazyLoad from "react-lazyload";
 
@@ -30,13 +30,12 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    const profileId = this.state.user.id;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     const currentFollowers = JSON.parse(localStorage.getItem("followers"));
     const user = JSON.parse(localStorage.getItem("user"));
 
     axios
-      .get(`http://localhost:5050/profil/${profileId}`, {
+      .get(`http://localhost:5050/profil/${currentUser}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }
@@ -51,6 +50,7 @@ class Profile extends React.Component {
           loading: false
         });
         localStorage.setItem("followers", JSON.stringify(this.state.followers));
+        console.log(data);
       });
 
     for (let i = 0; i <= currentFollowers.length; i++) {
@@ -103,14 +103,14 @@ class Profile extends React.Component {
       return <Loader />;
     } else {
       return (
-        <Container>
+        <React.Fragment>
           <Row>
             <Col xs="12" sm="6">
               <Row className="align-items-center">
-                <Col xs="4" md="3">
+                <Col xs="4">
                   <Avatar info={user} />
                 </Col>
-                <Col>
+                <Col xs="8">
                   <Row xs="6" className="align-items-center">
                     <Col xs="auto">
                       <Nickname info={user} />
@@ -123,8 +123,8 @@ class Profile extends React.Component {
               <Col className="text-justify">{user.description}</Col>
             </Col>
           </Row>
-          <Row className="text-center">
-            <Col xs="4" xl="2" className="primaryfont p-0">
+          <Row className="text-center my-5">
+            <Col xs="4" xl="2" className="p-0">
               {followers
                 ? followers > 9999
                   ? (followers / 1000).toPrecision(3) + "K Followers"
@@ -133,7 +133,7 @@ class Profile extends React.Component {
                   : followers + " Followers"
                 : 0 + " Follower"}
             </Col>
-            <Col xs="4" xl="2" className="primaryfont p-0">
+            <Col xs="4" xl="2" className="p-0">
               {followings
                 ? followings > 9999
                   ? (followings / 1000).toPrecision(3) + "K Followers"
@@ -142,7 +142,7 @@ class Profile extends React.Component {
                   : followings + " Followings"
                 : 0 + " Following"}
             </Col>
-            <Col xs="4" xl="2" className="primaryfont p-0">
+            <Col xs="4" xl="2" className="p-0">
               {posts
                 ? posts > 9999
                   ? (posts / 1000).toPrecision(3) + "K Posts"
@@ -151,19 +151,19 @@ class Profile extends React.Component {
                   : posts + " Posts"
                 : 0 + " Post"}
             </Col>
-            <Col>
+            <Col className="my-5 my-xl-0">
               <Button
                 onClick={() => {
                   this.handleClick();
                 }}
-                className="button primaryfont"
+                className="button"
               >
                 {this.state.isFollowed ? "Suivie ✓" : "Suivre"}
               </Button>
             </Col>
-            <Col>
+            <Col className="my-5 my-xl-0">
               <Link to="/message">
-                <Button className="button primaryfont">Message</Button>
+                <Button className="button">Message</Button>
               </Link>
             </Col>
           </Row>
@@ -178,7 +178,7 @@ class Profile extends React.Component {
               );
             })}
           </Row>
-        </Container>
+        </React.Fragment>
       );
     }
   }
