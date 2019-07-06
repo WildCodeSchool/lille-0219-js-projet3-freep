@@ -46,8 +46,8 @@ class Footer extends React.Component {
       >
         <Col xs="12" sm="3" className="text-center">
           Made with
-          <span role="img" aria-label="" className="footer-heart">
-            <Heart />
+          <span role="img" aria-label="" className="footer-heart" alt="love">
+            <Heart fill="#f6003f" color="transparent" />
           </span>
           by Wild Code School
         </Col>
