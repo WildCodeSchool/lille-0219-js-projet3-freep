@@ -34,6 +34,39 @@ app.get("/articles/", (req, res) => {
   );
 });
 
+// Clothing-deposit
+
+app.get("/deposit/", (req, res) => {
+  let result = {};
+  db.query(
+    `SELECT id_clothing FROM picture ORDER BY created_at DESC`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("error when getting pictures route");
+      }
+      if (!rows) {
+        return res.status(404).send("No pictures found");
+      }
+      result.pictures = rows;
+
+      db.query(
+        `SELECT id FROM clothing WHERE is_deposit=1`,
+        (err, rowsDeposits) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).send("error when getting articles route");
+          }
+          result.deposit = rowsDeposits.map(deposit => {
+            return deposit.id;
+          });
+          res.status(200).send(result);
+        }
+      );
+    }
+  );
+});
+
 // ClothingPage
 
 app.get("/articles/:id/", (req, res) => {
