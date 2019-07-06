@@ -93,9 +93,6 @@ form label input[type="submit"] {
   width: 30px;
   margin-right: 10px;
 }
-form {
-  margin: 2.5rem auto 0 auto;
-}
 
 .magnifier {
   width: 20px;
@@ -103,6 +100,10 @@ form {
   color: black;
   cursor: pointer;
   opacity: 0.5;
+}
+
+.navbar-collapse form {
+  margin: 0 auto;
 }
 
 @media screen and (max-width: 1025px) {
@@ -188,18 +189,20 @@ form {
   }
 }
 .recherche_demo [placeholder] {
-  transition: s;
+  transition: $transition;
   display: flex;
   border-bottom: 3px solid pink;
-  width: 25%;
+  width: 100%;
   border-left: transparent;
   border-top: transparent;
   border-right: transparent;
   margin-bottom: 2px auto;
+  color: rgba($bl, 0.7);
+  font-style: italic;
 }
 
 .recherche_demo [placeholder]:hover {
-  width: 80%;
+  // width: 80%;
   border-left: 3px solid pink(0, 0%, 60%);
   border-top: 3px solid pink(0, 0%, 60%);
   border-right: 3px solid pink(0, 0%, 60%);
@@ -213,4 +216,20 @@ form label input {
   top: 100%;
   transform: translateY(-80%);
   outline: none;
+}
+
+.navbar-nav {
+  div:hover {
+    cursor: pointer;
+    svg {
+      stroke: $main-color;
+    }
+  }
+  a:hover {
+    cursor: pointer;
+    svg {
+      transition: $transition;
+      stroke: $main-color;
+    }
+  }
 }
