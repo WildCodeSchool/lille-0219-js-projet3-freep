@@ -3,12 +3,7 @@
 .Photo {
   border-radius: $radius-lg;
   padding: 5px;
-  background: linear-gradient(
-    130deg,
-    fade-out($main-color, 0.8),
-    fade-out($main-color, 0.2),
-    fade-out($main-color, 0.8)
-  );
+  background: $gradient;
 }
 
 .overlay {
