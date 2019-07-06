@@ -34,7 +34,7 @@ class Photo extends React.Component {
         </Link>
         <div className="overlay">
           <Row className="p-0 card-buttons align-items-center">
-            <Heart color="white" />
+            <Heart color="white" width="19" />
             <div className={dep ? "deposit" : "no-deposit"}>ℂ</div>
             <ReportButton />
           </Row>
