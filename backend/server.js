@@ -373,7 +373,7 @@ app.get(
   (req, res) => {
     const profileId = req.params.profileId;
     db.query(
-      `SELECT id, nickname, avatar, description FROM user WHERE id=${profileId}`,
+      `SELECT id, nickname, avatar, description, location FROM user WHERE id=${profileId}`,
       (err, rowsUser) => {
         if (err) {
           console.log(err);
