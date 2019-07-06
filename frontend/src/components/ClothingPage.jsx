@@ -53,7 +53,6 @@ class ClothingPage extends React.Component {
 
   componentDidMount() {
     const articleId = this.props.match.params.articleId;
-
     axios
       .get(`http://localhost:5050/articles/${articleId}`)
       .then(({ data }) => {
@@ -136,8 +135,8 @@ class ClothingPage extends React.Component {
     const clothing = this.state.backendData.clothing;
     const pictures = this.state.backendData.pictures;
     const comments = this.state.backendData.comments;
-
     const auth = this.getUser(clothing.id_user);
+
     if (this.state.loading) {
       return <Loader />;
     } else {
@@ -158,7 +157,7 @@ class ClothingPage extends React.Component {
                             key={key}
                             picture={picture.url}
                             alt={picture.altText}
-                            caption={picture.caption}
+                            link={picture.id_clothing}
                           />
                         </CarouselItem>
                       );
@@ -190,17 +189,19 @@ class ClothingPage extends React.Component {
                     );
                   } else {
                     return (
-                      <React.Fragment>
-                        <Row className="justify-content-center">
-                          {pictures.map((picture, key) => {
-                            return (
-                              <Col xs="6" md="4" key={key}>
-                                <Photo picture={picture.url} />
-                              </Col>
-                            );
-                          })}
-                        </Row>
-                      </React.Fragment>
+                      <Row className="justify-content-center">
+                        {pictures.map((picture, key) => {
+                          return (
+                            <Col xs="6" md="4" key={key}>
+                              <Photo
+                                picture={picture.url}
+                                pictureId={picture.id}
+                                link={picture.id_clothing}
+                              />
+                            </Col>
+                          );
+                        })}
+                      </Row>
                     );
                   }
                 })()}
@@ -211,7 +212,11 @@ class ClothingPage extends React.Component {
                   {pictures.map((picture, key) => {
                     return (
                       <Col xs="6" md="6" key={key}>
-                        <Photo picture={picture.url} />
+                        <Photo
+                          picture={picture.url}
+                          pictureId={picture.id}
+                          link={picture.id_clothing}
+                        />
                       </Col>
                     );
                   })}
@@ -249,7 +254,7 @@ class ClothingPage extends React.Component {
                             this.handleAdd(e);
                           }}
                         >
-                          Contacte-moi!
+                          Contacte-moi !
                         </Button>
                       </Row>
                     </div>
@@ -273,7 +278,10 @@ class ClothingPage extends React.Component {
                   {comments.map((comment, key) => {
                     const user = this.getUser(comment.id_user);
                     return (
-                      <Comment key={key} comment={comment} profile={user} />
+                      <React.Fragment>
+                        <Comment key={key} comment={comment} profile={user} />
+                        <hr />
+                      </React.Fragment>
                     );
                   })}
                 </div>
