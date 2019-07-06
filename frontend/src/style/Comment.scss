@@ -37,7 +37,7 @@
   border: none;
   background: $wh;
   padding: 0 !important;
-  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: $box-shadow;
 }
 
 .comments-profile {
@@ -102,4 +102,8 @@
     font-size: calc(0.5rem + 0.3vw);
     margin-left: 0;
   }
+}
+
+.text-muted {
+  font-size: 0.8rem;
 }
