@@ -16,11 +16,13 @@ router.post("/users", (req, res) => {
     console.log(user);
 
     db.query(
-      `INSERT INTO user (nickname, email, password, firstname, lastname, avatar, created_at) VALUES ('${
+      `INSERT INTO user (nickname, email, password, firstname, lastname, avatar, created_at, location) VALUES ('${
         user.nickname
       }', '${user.email}', '${user.password}', '${user.firstname}', '${
         user.lastname
-      }', "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png", NOW())`,
+      }', "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png", NOW(), '${
+        user.location
+      }')`,
       user,
       (err, rows, fields) => {
         if (err) throw err;
