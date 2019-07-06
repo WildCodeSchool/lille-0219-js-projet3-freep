@@ -1,4 +1,4 @@
-$bl: #222;
+@import "../index.scss";
 
 .dropdown-btn .btn,
 .dropdown-btn .btn:hover {
@@ -12,19 +12,19 @@ $bl: #222;
   stroke: fade-out($bl, 0.5) !important;
   stroke-width: 1px;
   &:hover {
-    stroke: $bl !important;
+    stroke: $main-color !important;
   }
 }
 
 .report-button {
   border: transparent;
-  border-radius: 3px;
+  border-radius: $radius-sm;
   &:hover {
-    background: #fbf4f1;
+    background: $wh;
   }
   a {
     font-size: 0.8rem;
-    font-family: sans-serif;
+    font-family: "montserrat", sans-serif;
     color: fade-out($bl, 0.5);
     text-decoration: none;
     &:hover {
@@ -35,7 +35,7 @@ $bl: #222;
 
 .dropdown-menu {
   border: none;
-  background: #fbf4f1;
+  background: $wh;
   padding: 0 !important;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.05);
 }
@@ -48,7 +48,6 @@ $bl: #222;
 .comment-avatar {
   width: 80px;
   height: 80px;
-  margin-right: 2rem;
   border-radius: 50%;
 }
 
@@ -76,8 +75,8 @@ $bl: #222;
   }
   .comments-profile {
     font-size: calc(0.8rem + 0.3vw);
-    margin-left: 1.5rem;
-    margin-right: 1rem;
+    margin-left: 2.5rem;
+    margin-right: 2rem;
   }
   .comment {
     font-size: calc(0.8rem + 0.3vw);
