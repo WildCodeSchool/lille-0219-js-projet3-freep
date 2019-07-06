@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+* {
+  font-family: "Montserrat", sans-serif;
+  font-size: calc(0.85rem + 0.15vw);
+}
+
 ////////////// Helpers
 
 // Colors
@@ -33,6 +38,12 @@ $page-bg: linear-gradient(
   #fae0d6,
   #f9dbcf,
   #f8d5c7
+);
+$gradient: linear-gradient(
+  130deg,
+  fade-out($main-color, 0.8),
+  fade-out($main-color, 0.2),
+  fade-out($main-color, 0.8)
 );
 
 // Effects
