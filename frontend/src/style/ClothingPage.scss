@@ -64,7 +64,7 @@ h4 {
 
 .comment-form input {
   border: none;
-  background: #fbf4f1;
+  background: $wh;
   transition: $transition;
   &:focus {
     box-shadow: $box-shadow;
