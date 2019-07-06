@@ -19,7 +19,7 @@ code {
 $main-color: #f6003f;
 $secondary-color: goldenrod;
 $third-color: #f8d5c7;
-$wh: #f5f5f5;
+$wh: #fbf4f1;
 $bl: #222;
 $page-bg: linear-gradient(
   to left top,
@@ -40,3 +40,4 @@ $page-bg: linear-gradient(
 $transition: 0.2s;
 $radius-lg: 10px;
 $radius-sm: 5px;
+$box-shadow: 0.2rem 0.3rem 0.3rem fade-out(#222, 0.9) !important;
