@@ -14,8 +14,13 @@ class PartnerPage extends React.Component {
 
   componentDidMount() {
     const profileId = JSON.parse(localStorage.getItem("user")).user.id;
+    const user = JSON.parse(localStorage.getItem("user"));
     axios
-      .get(`http://localhost:5050/partenaire/${profileId}`)
+      .get(`http://localhost:5050/partenaire/${profileId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
       .then(({ data }) => {
         this.setState({
           userPoints: data.points
@@ -27,9 +32,9 @@ class PartnerPage extends React.Component {
     const points = this.state.userPoints;
     return (
       <React.Fragment>
-        <Card className="cardPoint">
+        <Card className="cardPoint m-5">
           <CardBody>
-            <p className="point">Vous avez {points} points.</p>
+            <p className="point">Vous avez {points} points</p>
           </CardBody>
         </Card>
         <Partner />
