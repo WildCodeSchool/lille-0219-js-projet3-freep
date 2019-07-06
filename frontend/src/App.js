@@ -31,7 +31,7 @@ function App() {
       <header>
         <NavFreep />
       </header>
-      <Container className="container">
+      <Container>
         <Switch>
           <Route exact path="/" component={Login} />
           <Route path="/inscription" exact component={Registration} />
