@@ -2,6 +2,17 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
+const passport = require("passport");
+const bodyParser = require("body-parser");
+
+app.use(cors());
+app.use(express.static("./uploadPictures"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use("/auth", require("./auth"));
+
+//
 
 const multer = require("multer");
 const path = require("path");
@@ -39,19 +50,6 @@ checkFileType = (file, cb) => {
   }
 };
 
-const passport = require("passport");
-
-app.use(cors());
-app.use(express.static("./uploadPictures"));
-
-const bodyParser = require("body-parser");
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(passport.initialize());
-
-app.use("/auth", require("./auth"));
-
 // Homepage
 
 app.get(
@@ -75,6 +73,7 @@ app.get(
 );
 
 // Upload a proof-picture
+
 app.post("/currentUser/:clothingId/:uploadProof", (req, res) => {
   const path = req.file.path;
   const clothingId = req.params.clothingId;
@@ -99,7 +98,6 @@ app.post("/currentUser/:clothingId/:uploadProof", (req, res) => {
     }
   );
 });
-
 
 // Upload clothes pictures
 
@@ -139,14 +137,6 @@ app.post("/currentUser/:uploadPicture", (req, res) => {
     }
   );
 });
-
-app.all(
-  "/*",
-  passport.authenticate("jwt", { session: false }),
-  (req, res, next) => {
-    next();
-  }
-);
 
 // Homepage
 
@@ -509,20 +499,7 @@ app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
   );
 });
 
-// Upload a proof-picture
-
-app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
-  fs.rename(req.file.path, "public/pictures/" + req.file.originalname, err => {
-    if (err) {
-      res.send("error during the move");
-    } else {
-      res.send("File upload");
-    }
-  });
-});
-
-
-// Like picture
+// Picture liking
 
 app.get("/like/:idAuthor", (req, res) => {
   const authorId = req.params.idAuthor;
@@ -536,19 +513,6 @@ app.get("/like/:idAuthor", (req, res) => {
         return row.id_content;
       });
       res.status(200).send(likesArray);
-
-// Profile follow button routes
-
-app.get("/follow/:followId", (req, res) => {
-  const followId = req.params.followId;
-  db.query(
-    `SELECT id_user FROM social WHERE id_content = ${followId}`,
-    (err, rows) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("error when getting social route");
-      }
-      res.status(200).send(rows);
     }
   );
 });
@@ -563,7 +527,40 @@ app.post("/like/:idPicture", (req, res) => {
         return res.status(500).send("error when posting like route");
       }
       res.status(200).send(rows);
-      
+    }
+  );
+});
+
+app.put("/like/:idPicture", (req, res) => {
+  const pictureId = req.params.idPicture;
+  const authorId = req.body.idAuthor;
+  db.query(
+    `DELETE FROM social WHERE id_user=${authorId} AND content_type="like" AND id_content=${pictureId}`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when deleting like route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+// Follow button
+
+app.get("/follow/:followId", (req, res) => {
+  const followId = req.params.followId;
+  db.query(
+    `SELECT id_user FROM social WHERE id_content = ${followId} AND type='follow'`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("error when getting social route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
 app.post("/follow/:followId", (req, res) => {
   const followId = req.params.followId;
   const authorId = req.body.idAuthor;
@@ -587,18 +584,6 @@ app.post("/follow/:followId", (req, res) => {
     }
   );
 });
-
-
-app.put("/like/:idPicture", (req, res) => {
-  const pictureId = req.params.idPicture;
-  const authorId = req.body.idAuthor;
-  db.query(
-    `DELETE FROM social WHERE id_user=${authorId} AND content_type="like" AND id_content=${pictureId}`,
-    (err, rows) => {
-      if (err) {
-        return res.status(500).send("error when deleting like route");
-      }
-      res.status(200).send(rows);
 
 app.put("/follow/:followId", (req, res) => {
   const followId = req.params.followId;
