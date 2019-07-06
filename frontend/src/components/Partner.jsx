@@ -1,14 +1,14 @@
 import React from "react";
-import BannerKiabi from "../pictures/BannerKiabi.jpg";
-import "../style/Partner.css";
+import ComingSoon from "../pictures/comingsoon.png";
+import "../style/Partner.scss";
 
 class Partner extends React.Component {
   render() {
     return (
       <React.Fragment>
         <div className="partner">
-          <img src={BannerKiabi} alt="Kiabi" className="banner" />
-          <p className="brand">Kiabi</p>
+          <img src={ComingSoon} alt="coming soon" className="banner" />
+          <p className="brand"> </p>
         </div>
       </React.Fragment>
     );
