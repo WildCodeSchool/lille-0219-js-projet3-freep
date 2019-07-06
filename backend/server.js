@@ -107,14 +107,6 @@ app.post("/currentUser/:uploadPicture", (req, res) => {
   );
 });
 
-// app.all(
-//   "/*",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res, next) => {
-//     next();
-//   }
-// );
-
 // Homepage
 
 app.get(
