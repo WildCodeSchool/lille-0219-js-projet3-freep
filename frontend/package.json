@@ -9,6 +9,7 @@
     "cors": "^2.8.5",
     "history": "^4.9.0",
     "mdbreact": "^4.17.0",
+    "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.9",
