@@ -46,7 +46,7 @@ h4 {
     background: #fbf4f1;
     padding: 2vh 0;
     border-radius: $radius-lg;
-    box-shadow: 0.2rem 0.3rem 0.3rem fade-out(#222, 0.9) !important;
+    box-shadow: $box-shadow;
     .comments-profile {
       font-size: calc(0.8rem + 0.2vw);
       font-style: italic;
@@ -67,7 +67,7 @@ h4 {
   background: #fbf4f1;
   transition: $transition;
   &:focus {
-    box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1) !important;
+    box-shadow: $box-shadow;
     border: none;
   }
 }
@@ -78,10 +78,6 @@ h4 {
     border-radius: $radius-sm;
     padding: 0.5rem 1rem;
     transition: $transition;
-    &:hover,
-    &:focus {
-      box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
-    }
     &:active,
     &:focus {
       margin-top: 2px;
