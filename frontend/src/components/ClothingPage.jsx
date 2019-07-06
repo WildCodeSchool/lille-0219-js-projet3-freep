@@ -53,8 +53,14 @@ class ClothingPage extends React.Component {
 
   componentDidMount() {
     const articleId = this.props.match.params.articleId;
+    const user = JSON.parse(localStorage.getItem("user"));
+
     axios
-      .get(`http://localhost:5050/articles/${articleId}`)
+      .get(`http://localhost:5050/articles/${articleId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
       .then(({ data }) => {
         this.setState({
           backendData: {

@@ -13,7 +13,6 @@ import {
   Input
 } from "reactstrap";
 import { ArrowLeft } from "react-feather";
-import { Link } from "react-router-dom";
 import "../style/Messaging.scss";
 
 class Message extends React.Component {

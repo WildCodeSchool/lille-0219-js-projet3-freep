@@ -4,11 +4,11 @@ import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
 import LoginBackground from "../pictures/Login.jpg";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 class Registration extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       firstname: "",
       lastname: "",
@@ -18,7 +18,6 @@ class Registration extends Component {
       confirmPassword: ""
     };
   }
-
   validateForm() {
     return (
       this.state.firstname.length > 0 &&
@@ -28,13 +27,11 @@ class Registration extends Component {
       this.state.password === this.state.confirmPassword
     );
   }
-
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   };
-
   handleSubmit = event => {
     event.preventDefault();
     let {
@@ -67,7 +64,6 @@ class Registration extends Component {
         });
     }
   };
-
   render() {
     return (
       <div
@@ -76,7 +72,7 @@ class Registration extends Component {
           backgroundImage: `url(${LoginBackground})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-          height: "100vh"
+          height: "500%"
         }}
       >
         <Form
@@ -90,12 +86,29 @@ class Registration extends Component {
             boxShadow: ".5rem 1rem 1rem rgba(0,0,0,.2)"
           }}
         >
-          <h1 className="titleConnect"> Rejoins la communauté Freep </h1>
-          <Form.Group controlId="firstName">
+          <h1 className="titleConnect"> Rejoins la communauté Freep 🌸</h1>
+          <Button
+            className="facebook"
+            href="https://fr-fr.facebook.com/login/"
+            class="facebook"
+            role="button"
+            title="Lien"
+            style={{
+              fontSize: "15px",
+              borderRadius: "50px",
+              backgroundColor: "bleu",
+              marginBottom: "30px",
+              marginTop: "30px"
+            }}
+          >
+            Inscris-toi avec Facebook
+          </Button>
+          <div class="trait" />
+          <Form.Group controlId="firstname" bsSize="large">
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
+
                 fontFamily: "DancingScript"
               }}
               for="firstname"
@@ -113,7 +126,6 @@ class Registration extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               htmlFor="lastName"
@@ -132,7 +144,6 @@ class Registration extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               htmlFor="username"
@@ -146,12 +157,11 @@ class Registration extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-
-          <Form.Group controlId="email">
+          
+          <Form.Group controlId="email" bsSize="large">
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               htmlFor="email"
@@ -169,7 +179,6 @@ class Registration extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               htmlFor="pwd"
@@ -186,7 +195,6 @@ class Registration extends Component {
             <h1
               style={{
                 fontSize: "20px",
-                color: "goldenrod",
                 fontFamily: "DancingScript"
               }}
               htmlFor="pwd"
@@ -206,12 +214,19 @@ class Registration extends Component {
             disabled={!this.validateForm()}
             type="submit"
           >
-            Rejoins-nous !
+            Rejoins nous ! 💟
           </Button>
+          <NavLink
+            activeClassName="active"
+            className="littleInfo"
+            exact
+            to="/Login"
+          >
+            Déjà inscris ? Connecte toi !
+          </NavLink>
         </Form>
       </div>
     );
   }
 }
-
 export default Registration;

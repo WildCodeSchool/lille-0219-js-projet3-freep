@@ -14,10 +14,12 @@ class NavFreep extends React.Component {
     this.state = {
       isOpen: false,
       modal: false,
+      profile: "",
       prevScrollpos: window.pageYOffset,
       visible: true
     };
   }
+
   toggleBurger() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -45,6 +47,15 @@ class NavFreep extends React.Component {
     });
   };
 
+  componentDidMount() {
+    if ("user" in localStorage) {
+      const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+      this.setState({
+        profile: currentUser
+      });
+    }
+  }
+
   render() {
     return (
       <div
@@ -61,11 +72,11 @@ class NavFreep extends React.Component {
           </div>
           <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <form action="">
+            <form class="recherche_demo">
               <label htmlFor="clothe-profile-search">
                 <input
-                  type="text"
-                  placeholder="Cherche un vêtement ou un profil..."
+                  type="search"
+                  placeholder="𝓡𝓮𝓬𝓱𝓮𝓻𝓬𝓱𝓮 𝓾𝓷𝓮 𝓾𝓽𝓲𝓵𝓲𝓼𝓪𝓽𝓻𝓲𝓬𝓮, 𝓾𝓷 𝓿𝓮𝓽𝓮𝓶𝓮𝓷𝓽 👗 "
                 />
                 <input type="submit" />
                 <img
@@ -99,7 +110,10 @@ class NavFreep extends React.Component {
               >
                 <Heart className="img" color="black" />
               </NavLink>
-              <NavLink to="/profil/1" title="Accède à ton profil">
+              <NavLink
+                to={`/profil/${this.state.profile}`}
+                title="Accède à ton profil"
+              >
                 <User className="img" color="black" />
               </NavLink>
             </Nav>

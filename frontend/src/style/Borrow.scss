@@ -1,7 +1,33 @@
-.hidden {
-  display: none;
+@font-face {
+  font-family: "DancingScript";
+  src: url("DancingScript-Regular.ttf");
 }
 
-.borrowPicture {
-  width: 250px;
+.hidden {
+  display: none !important;
+}
+
+.borrowCard {
+  border-radius: 20px;
+  padding: 5px;
+  background: linear-gradient(135deg, #f8d5c7 0%, #f7fab2 100%);
+  animation: 0.5s appear;
+}
+
+.borrowButton {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f8bdd0 !important;
+  border-color: #f8bbd0 !important;
+  color: goldenrod;
+  text-shadow: 0 0 6px white !important;
+}
+
+.titleBorrow {
+  font-size: 3rem;
+  color: goldenrod;
+  font-family: DancingScript;
 }
