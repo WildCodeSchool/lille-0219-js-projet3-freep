@@ -36,7 +36,7 @@ h4 {
     background: #ad3a70cc;
     border: none;
     &:hover {
-      background: #6b2546cc;
+      background: rgba($main-color, 0.8);
     }
   }
   .borrow-phrase {
