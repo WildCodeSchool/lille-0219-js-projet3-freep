@@ -76,7 +76,7 @@ class NavFreep extends React.Component {
               <label htmlFor="clothe-profile-search">
                 <input
                   type="search"
-                  placeholder="𝓡𝓮𝓬𝓱𝓮𝓻𝓬𝓱𝓮 𝓾𝓷𝓮 𝓾𝓽𝓲𝓵𝓲𝓼𝓪𝓽𝓻𝓲𝓬𝓮, 𝓾𝓷 𝓿𝓮𝓽𝓮𝓶𝓮𝓷𝓽 👗 "
+                  placeholder="Recherche une utilisatrice ou un vêtement"
                 />
                 <input type="submit" />
                 <img
@@ -90,7 +90,7 @@ class NavFreep extends React.Component {
               <div title="Propose ton vêtement !" to="">
                 <PlusCircle
                   className="img"
-                  color="black"
+                  color="#222"
                   onClick={this.toggleModal}
                 />
                 <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
@@ -98,23 +98,26 @@ class NavFreep extends React.Component {
                   <Uploader />
                 </Modal>
               </div>
-              <NavLink to="/partenaire" title="Découvre nos partenaires !">
-                <Tag className="img" color="black" />
+              <NavLink
+                to={`/partenaire/${this.state.profile}`}
+                title="Découvre nos partenaires !"
+              >
+                <Tag className="img" color="#222" />
               </NavLink>
               <NavLink to="/messagerie/2" title="Parle avec nos Freepeuses">
-                <Mail className="img" color="black" />
+                <Mail className="img" color="#222" />
               </NavLink>
               <NavLink
                 to="/emprunt/1"
                 title="Retrouve les vêtements que tu souhaites emprunter"
               >
-                <Heart className="img" color="black" />
+                <Heart className="img" color="#222" />
               </NavLink>
               <NavLink
                 to={`/profil/${this.state.profile}`}
                 title="Accède à ton profil"
               >
-                <User className="img" color="black" />
+                <User className="img" color="#222" />
               </NavLink>
             </Nav>
           </Collapse>
