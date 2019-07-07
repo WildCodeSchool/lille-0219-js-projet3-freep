@@ -52,3 +52,8 @@ $transition: 0.2s;
 $radius-lg: 10px;
 $radius-sm: 5px;
 $box-shadow: 0.2rem 0.3rem 0.3rem fade-out(#222, 0.9) !important;
+
+html {
+  scrollbar-color: $main-color rgba(0, 0, 0, 0.1);
+  scrollbar-width: thin;
+}
