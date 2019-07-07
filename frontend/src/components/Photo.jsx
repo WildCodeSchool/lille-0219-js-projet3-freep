@@ -1,5 +1,5 @@
 import React from "react";
-import { Heart, Target } from "react-feather";
+import { Heart } from "react-feather";
 import { Link } from "react-router-dom";
 import { Row, Card, CardImg } from "reactstrap";
 import ReportButton from "./ReportButton";
