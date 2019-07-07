@@ -52,7 +52,6 @@ class Profile extends React.Component {
           loading: false
         });
         localStorage.setItem("followers", JSON.stringify(this.state.followers));
-        console.log(data);
       });
 
     for (let i = 0; i <= currentFollowers.length; i++) {
