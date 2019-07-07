@@ -30,7 +30,7 @@ h4 {
 }
 
 .comments-container {
-  .sub-container button:not(.report-button),
+  .sub-container button:not(.dots):not(.report-button),
   .comment-form button {
     font-size: calc(1rem + 0.3vw);
     background: #ad3a70cc;
@@ -54,6 +54,9 @@ h4 {
     }
     .comment {
       line-height: 1.3;
+    }
+    a {
+      text-decoration: none;
     }
   }
 }
@@ -94,6 +97,7 @@ button {
 hr {
   width: 30%;
   border-top: 1px solid rgba($main-color, 0.1stat);
+  margin: 0.6rem auto;
 }
 
 hr:last-of-type {
