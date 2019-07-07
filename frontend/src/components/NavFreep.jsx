@@ -68,7 +68,7 @@ class NavFreep extends React.Component {
           </div>
           <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <form class="recherche_demo">
+            <form className="recherche_demo">
               <label htmlFor="clothe-profile-search">
                 <input
                   type="search"
@@ -100,7 +100,10 @@ class NavFreep extends React.Component {
               >
                 <Tag className="img" color="#222" />
               </NavLink>
-              <NavLink to="/messagerie/2" title="Parle avec nos Freepeuses">
+              <NavLink
+                to={`/messagerie/${this.state.profile}`}
+                title="Parle avec nos Freepeuses"
+              >
                 <Mail className="img" color="#222" />
               </NavLink>
               <NavLink
