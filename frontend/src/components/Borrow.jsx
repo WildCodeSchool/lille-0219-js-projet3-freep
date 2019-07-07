@@ -87,10 +87,10 @@ class Borrow extends React.Component {
                     }}
                   />
                   <Form
-                    onsubmit={e => {
+                    onSubmit={e => {
                       this.handleSubmit(e);
                     }}
-                    enctype="multipart/form-data"
+                    encType="multipart/form-data"
                   >
                     <Input type="file" name="myFile" />
                     <Button type="submit">Envoyer</Button>
