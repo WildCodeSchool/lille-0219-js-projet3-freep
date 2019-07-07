@@ -76,7 +76,7 @@ class Registration extends Component {
     return (
       <div className="Registration">
         <Form onSubmit={this.handleSubmit}>
-          <h1> Rejoins la communauté Freep !</h1>
+          <h2 className="text-center"> Rejoins la communauté Freep !</h2>
           <Button
             className="facebook"
             href="https://fr-fr.facebook.com/login/"
@@ -85,11 +85,11 @@ class Registration extends Component {
           >
             Inscris-toi avec Facebook
           </Button>
-          <div class="trait" />
+          <div className="trait" />
           <Row>
             <Col xs="6">
               <Form.Group controlId="firstname">
-                <label for="firstname">Prénom</label>
+                <label htmlFor="firstname">Prénom</label>
                 <Form.Control
                   autoFocus
                   type="text"
