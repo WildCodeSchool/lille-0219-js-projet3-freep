@@ -32,3 +32,12 @@ body {
   width: 15px;
   margin: 0 7px;
 }
+
+footer a {
+  color: $bl;
+  transition: $transition;
+  &:hover {
+    text-decoration: none;
+    color: rgba($bl, 0.85);
+  }
+}
