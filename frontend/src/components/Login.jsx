@@ -48,7 +48,7 @@ class Login extends Component {
     return (
       <div className="Login">
         <Form onSubmit={this.handleSubmit}>
-          <h1>Prête pour de nouvelles aventures ? </h1>
+          <h2>Prête pour de nouvelles aventures ? </h2>
           <Button
             className="facebook"
             href="https://fr-fr.facebook.com/login/"
@@ -57,7 +57,7 @@ class Login extends Component {
           >
             Connecte-toi avec Facebook
           </Button>
-          <div class="trait" />
+          <div className="trait" />
           <Form.Group controlId="email">
             <label htmlFor="email">E-mail</label>
             <Form.Control
@@ -83,11 +83,11 @@ class Login extends Component {
           >
             Connecte-toi !
           </Button>
-          <Link to="" className="littleInfo forgotten-password">
+          <Link to="" className="forgotten-password">
             Mot de passe oublié ?
           </Link>
           <div className="registration-link">
-            <Link className="littleInfo" exact to="/inscription">
+            <Link to="/inscription">
               Pas encore de compte ? Inscris-toi !
               <Heart width="12" className="mx-1" />
             </Link>
