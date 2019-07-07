@@ -1,32 +1,17 @@
 @import "../index.scss";
 
 .header {
-  display: inline-block;
   position: fixed;
   top: 0;
   border-bottom: 2px solid $main-color;
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
-  width: 101vw;
-  height: auto;
+  width: 100vw;
   z-index: 200;
-  margin-bottom: 10rem;
   transition: top 0.6s;
 }
+
 .header--hidden {
   top: -150px;
-}
-.bg-light {
-  background: white !important;
-}
-
-.navbar-nav {
-  flex-direction: row;
-  margin-top: 2em;
-}
-
-.navTitle {
-  font-family: "dancing script";
-  font-size: 2rem;
 }
 
 .navCatch {
@@ -40,20 +25,6 @@
 
 .bg-light {
   background: white !important;
-}
-
-ul {
-  list-style: none;
-}
-
-.search-input {
-  text-align: center;
-  height: 20px;
-  width: 20rem;
-}
-
-.list-right {
-  text-align: right;
 }
 
 label,
@@ -76,22 +47,13 @@ form label input[type="text"] {
   font-size: 15px;
   font-family: sans-serif;
   border: none;
-  border-radius: 7px;
-  height: 2rem;
-}
-
-form label input {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 form label input[type="submit"] {
   color: transparent;
   cursor: pointer;
   width: 30px;
-  margin-right: 10px;
+  transform: translate(-2rem, -1.5rem);
 }
 
 .magnifier {
@@ -99,25 +61,23 @@ form label input[type="submit"] {
   margin-left: 50px;
   color: black;
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 .navbar-collapse form {
   margin: 0 auto;
 }
 
-@media screen and (max-width: 1025px) {
-  .img {
-    width: 25px;
-  }
-  .magnifier {
-    width: 20px;
-    margin-left: 13px;
-  }
-  form label input[type="submit"] {
-    margin-right: 3px;
-    width: 38px;
-  }
+.img {
+  width: 25px;
+}
+.magnifier {
+  width: 20px;
+  margin-left: 60px;
+}
+form label input[type="submit"] {
+  margin-right: 3px;
+  width: 38px;
 }
 
 @media screen and (max-width: 808px) {
@@ -151,11 +111,10 @@ form label input[type="submit"] {
     margin-left: -0.5rem;
     font-size: 0.6rem;
   }
-  .search-input {
-    width: 10rem;
-  }
+
   .collapse {
-    margin-top: 1rem;
+    display: flex;
+    align-items: center;
   }
   .img {
     width: 25px;
@@ -165,9 +124,6 @@ form label input[type="submit"] {
     padding-left: 5px;
   }
 
-  form {
-    margin-top: 0;
-  }
   .magnifier {
     width: 20px;
     margin-left: 8px;
@@ -188,11 +144,12 @@ form label input[type="submit"] {
     width: 6rem;
   }
 }
+
 .recherche_demo [placeholder] {
   transition: $transition;
   display: flex;
-  border-bottom: 3px solid pink;
-  width: 100%;
+  border-bottom: 2px solid pink;
+  width: 80%;
   border-left: transparent;
   border-top: transparent;
   border-right: transparent;
@@ -202,7 +159,6 @@ form label input[type="submit"] {
 }
 
 .recherche_demo [placeholder]:hover {
-  // width: 80%;
   border-left: 3px solid pink(0, 0%, 60%);
   border-top: 3px solid pink(0, 0%, 60%);
   border-right: 3px solid pink(0, 0%, 60%);
@@ -210,9 +166,10 @@ form label input[type="submit"] {
     border-top 0.2s 0.4s cubic-bezier(0.54, 1.85, 0.5, 1),
     border-right 0.2s 0.8s cubic-bezier(0.54, 1.85, 0.5, 1);
 }
+
 form label input {
   position: absolute;
-  left: 20%;
+  left: 25%;
   top: 100%;
   transform: translateY(-80%);
   outline: none;
