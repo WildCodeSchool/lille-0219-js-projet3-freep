@@ -284,7 +284,7 @@ app.post(`/comment/:id`, (req, res) => {
 
 app.get(
   "/message/:currentUser/:P2",
-  // passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const currentUser = req.params.currentUser;
     const P2 = req.params.P2;
