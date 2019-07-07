@@ -1,6 +1,10 @@
-@font-face {
-  font-family: "DancingScript";
-  src: url("DancingScript-Regular.ttf");
+@import "../index.scss";
+
+h1 {
+  font-size: 3rem;
+  color: goldenrod;
+  font-family: "Dancing script";
+  margin: 5vh auto;
 }
 
 .hidden {
@@ -8,26 +12,34 @@
 }
 
 .borrowCard {
-  border-radius: 20px;
+  border-radius: $radius-lg;
+  box-shadow: $box-shadow;
   padding: 5px;
-  background: linear-gradient(135deg, #f8d5c7 0%, #f7fab2 100%);
-  animation: 0.5s appear;
-}
-
-.borrowButton {
-  display: block;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #f8bdd0 !important;
-  border-color: #f8bbd0 !important;
-  color: goldenrod;
-  text-shadow: 0 0 6px white !important;
-}
-
-.titleBorrow {
-  font-size: 3rem;
-  color: goldenrod;
-  font-family: DancingScript;
+  background: $gradient;
+  margin: 0.5rem;
+  .card-body {
+    padding: 0 !important;
+  }
+  .card-footer {
+    background: $wh;
+    border: none;
+    .borrowButton {
+      font-size: 0.7rem !important;
+      font-style: normal;
+      background: #ad3a70cc;
+      border: none;
+      &:hover {
+        box-shadow: $box-shadow;
+      }
+    }
+  }
+  &:hover .card-img {
+    transition: $transition;
+    filter: saturate(0);
+  }
+  &:hover .card-footer .borrowButton {
+    transition: $transition;
+    background: $gradient;
+    color: $wh;
+  }
 }
