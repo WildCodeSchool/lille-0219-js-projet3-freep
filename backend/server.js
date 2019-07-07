@@ -283,22 +283,22 @@ app.post(`/comment/:id`, (req, res) => {
 //Details messaging
 
 app.get(
-  "/message/:P1/:P2",
-  passport.authenticate("jwt", { session: false }),
+  "/message/:currentUser/:P2",
+  // passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const P1 = req.params.P1;
+    const currentUser = req.params.currentUser;
     const P2 = req.params.P2;
     db.query(
       `SELECT 
     TIME(DATE_ADD(message.created_at,INTERVAL 2 hour)) as hour_send,
     content, 
     DATEDIFF(NOW(), message.created_at) AS date_diff,
-    nickname, 
+    nickname, id_author,
     avatar
     FROM message
     INNER JOIN user ON user.id = message.id_author
       WHERE
-      (id_author = ${P1} OR id_reader = ${P1})
+      (id_author = ${currentUser} OR id_reader = ${currentUser})
       AND (id_author = ${P2} OR id_reader = ${P2})
       ORDER BY message.created_at DESC;`,
       (err, rows) => {
@@ -314,8 +314,8 @@ app.get(
 
 //Update message
 
-app.post("/message/:P1/:P2", (req, res) => {
-  const P1 = req.params.P1;
+app.post("/message/:currentUser/:P2", (req, res) => {
+  const currentUser = req.params.currentUser;
   const P2 = req.params.P2;
   const content = req.body.content;
   if (content !== "") {
@@ -324,7 +324,7 @@ app.post("/message/:P1/:P2", (req, res) => {
     message
     SET isLast=0
     WHERE
-    (id_author = ${P1} OR id_reader = ${P1})
+    (id_author = ${currentUser} OR id_reader = ${currentUser})
     AND (id_author = ${P2} OR id_reader = ${P2});`,
       (err, rows) => {
         if (err) {
@@ -333,14 +333,14 @@ app.post("/message/:P1/:P2", (req, res) => {
         } else {
           db.query(
             `INSERT INTO message(id_author,id_reader,content,created_at,isLast) 
-          VALUES(${P1},${P2},"${content}",NOW(),1);`,
+          VALUES(${currentUser},${P2},"${content}",NOW(),1);`,
             (err, rows) => {
               if (err) {
                 console.log(err);
                 res.status(500).send("error when post new message");
               }
               db.query(
-                `SELECT nickname, avatar FROM user WHERE id=${P1}`,
+                `SELECT nickname, avatar FROM user WHERE id=${currentUser}`,
                 (err, rows) => {
                   if (err) {
                     console.log(err);
