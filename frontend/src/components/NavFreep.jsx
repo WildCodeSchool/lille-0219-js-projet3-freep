@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
-import { Tag, PlusCircle, Mail, Heart, User } from "react-feather";
+import { Tag, PlusCircle, Mail, Shuffle, User } from "react-feather";
 import { Modal, ModalHeader } from "reactstrap";
 import Uploader from "./Upload";
 import classnames from "classnames";
@@ -32,22 +32,6 @@ class NavFreep extends React.Component {
   }
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
-  }
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
-  }
-  handleScroll = () => {
-    const { prevScrollpos } = this.state;
-
-    const currentScrollPos = window.pageYOffset;
-    const visible = prevScrollpos > currentScrollPos;
-    this.setState({
-      prevScrollpos: currentScrollPos,
-      visible
-    });
-  };
-
-  componentDidMount() {
     if ("user" in localStorage) {
       const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
       this.setState({
@@ -55,6 +39,18 @@ class NavFreep extends React.Component {
       });
     }
   }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+  handleScroll = () => {
+    const { prevScrollpos } = this.state;
+    const currentScrollPos = window.pageYOffset;
+    const visible = prevScrollpos > currentScrollPos;
+    this.setState({
+      prevScrollpos: currentScrollPos,
+      visible
+    });
+  };
 
   render() {
     return (
@@ -111,7 +107,7 @@ class NavFreep extends React.Component {
                 to="/emprunt/1"
                 title="Retrouve les vêtements que tu souhaites emprunter"
               >
-                <Heart className="img" color="#222" />
+                <Shuffle className="img" color="#222" />
               </NavLink>
               <NavLink
                 to={`/profil/${this.state.profile}`}
