@@ -9,6 +9,7 @@ import {
   CarouselIndicators,
   Button
 } from "reactstrap";
+import { Link } from "react-router-dom";
 import "../style/ClothingPage.scss";
 import Comment from "./Comment";
 import Photo from "./Photo";
@@ -233,7 +234,7 @@ class ClothingPage extends React.Component {
               <div className="sub-container d-flex flex-column">
                 <section>
                   <div className="p-4 comments-feed">
-                    <div>
+                    <Link to={`/profil/${auth.id}`}>
                       <Row className="align-items-center">
                         <Col xs="6" md="5">
                           <img
@@ -247,7 +248,7 @@ class ClothingPage extends React.Component {
                           {auth && auth.nickname}
                         </Col>
                       </Row>
-                    </div>
+                    </Link>
                     <div className="pt-4">
                       <div>{clothing.description}</div>
                       <Row className="pt-4 pr-3">
@@ -284,8 +285,8 @@ class ClothingPage extends React.Component {
                   {comments.map((comment, key) => {
                     const user = this.getUser(comment.id_user);
                     return (
-                      <React.Fragment>
-                        <Comment key={key} comment={comment} profile={user} />
+                      <React.Fragment key={key}>
+                        <Comment comment={comment} profile={user} />
                         <hr />
                       </React.Fragment>
                     );
