@@ -4,6 +4,19 @@ const app = express();
 const { portNumber, db } = require("./conf");
 const passport = require("passport");
 const bodyParser = require("body-parser");
+<<<<<<< HEAD
+=======
+
+app.use(cors());
+app.use(express.static("./uploadPictures"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use("/auth", require("./auth"));
+
+//
+
+>>>>>>> d00afb8de5d0a94a02ec0f5d1a3946de6f320d51
 const multer = require("multer");
 const path = require("path");
 
@@ -135,6 +148,7 @@ app.post("/currentUser/:uploadPicture", (req, res) => {
   );
 });
 
+<<<<<<< HEAD
 // Clothing-deposit
 
 app.get("/deposit/", (req, res) => {
@@ -150,6 +164,9 @@ app.get("/deposit/", (req, res) => {
         return res.status(404).send("No pictures found");
       }
       result.pictures = rows;
+=======
+// Homepage
+>>>>>>> d00afb8de5d0a94a02ec0f5d1a3946de6f320d51
 
       db.query(
         `SELECT id FROM clothing WHERE is_deposit=1`,
@@ -529,6 +546,7 @@ app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
   );
 });
 
+<<<<<<< HEAD
 // Partners page
 
 app.get(
@@ -548,6 +566,10 @@ app.get(
 
 // Picture liking
 
+=======
+// Picture liking
+
+>>>>>>> d00afb8de5d0a94a02ec0f5d1a3946de6f320d51
 app.get("/like/:idAuthor", (req, res) => {
   const authorId = req.params.idAuthor;
   db.query(

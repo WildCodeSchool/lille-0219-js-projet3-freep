@@ -62,7 +62,6 @@ class Photo extends React.Component {
     const deposit = this.state.deposit;
     const dep = deposit && deposit.indexOf(link) !== -1 ? false : true;
     const picturesLiked = this.state.picturesLiked;
-    console.log(picturesLiked);
     const pictureId = this.props.pictureId;
     const liked =
       picturesLiked && picturesLiked.indexOf(pictureId) !== -1 ? true : false;
