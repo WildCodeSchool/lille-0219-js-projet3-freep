@@ -2,26 +2,46 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Row, Col } from "reactstrap";
+import "../style/EditProfile.css";
+import axios from "axios";
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
       username: "",
-      email: "",
-      password: "",
-      confirmPassword: ""
+      location: "",
+      description: "",
+      avatar: ""
     };
+  }
+
+  componentDidMount() {
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    axios
+      .get(`http://localhost:5050/monprofil/${currentUser}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
+      .then(({ data }) => {
+        console.log("TCL: EditProfile -> data", data);
+        this.setState({
+          username: data.nickname,
+          location: data.location,
+          description: data.description,
+          avatar: data.avatar
+        });
+      });
   }
 
   validateForm() {
     return (
-      this.state.firstName.length > 0 &&
-      this.state.lastName.length > 0 &&
       this.state.username.length > 0 &&
-      this.state.email.length > 0 &&
-      this.state.password === this.state.confirmPassword
+      this.state.location.length > 0 &&
+      this.state.description.length > 0 &&
+      this.state.avatar.length > 0
     );
   }
 
@@ -62,21 +82,22 @@ class EditProfile extends React.Component {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group controlId="email" bsSize="large">
+            <Form.Group controlId="location" bsSize="large">
               <h1
                 style={{
                   fontSize: "20px",
                   color: "goldenrod",
                   fontFamily: "DancingScript"
                 }}
-                for="email"
+                for="location"
               >
-                E-mail
+                {" "}
+                Ville{" "}
               </h1>
               <Form.Control
                 autoFocus
-                type="email"
-                value={this.state.email}
+                type="text"
+                value={this.state.location}
                 onChange={this.handleChange}
               />
             </Form.Group>
@@ -84,39 +105,24 @@ class EditProfile extends React.Component {
         </Row>
         <Row>
           <Col>
-            <Form.Group controlId="password" bsSize="large">
+            <Form.Group controlId="description" bsSize="large">
               <h1
                 style={{
                   fontSize: "20px",
                   color: "goldenrod",
                   fontFamily: "DancingScript"
                 }}
-                for="pwd"
+                for="description"
               >
-                Mot de passe{" "}
+                {" "}
+                Description{" "}
               </h1>
               <Form.Control
-                type="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="confirmPassword" bsSize="large">
-              <h1
-                style={{
-                  fontSize: "20px",
-                  color: "goldenrod",
-                  fontFamily: "DancingScript"
-                }}
-                for="pwd"
-              >
-                Confirme ton mot de passe{" "}
-              </h1>
-              <Form.Control
-                type="password"
-                value={this.state.confirmPassword}
+                as="textarea"
+                rows="3"
+                autoFocus
+                type="text"
+                value={this.state.description}
                 onChange={this.handleChange}
               />
             </Form.Group>
