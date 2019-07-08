@@ -2,6 +2,17 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
+const passport = require("passport");
+const bodyParser = require("body-parser");
+
+app.use(cors());
+app.use(express.static("./uploadPictures"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use("/auth", require("./auth"));
+
+//
 
 const multer = require("multer");
 const path = require("path");
@@ -39,20 +50,30 @@ checkFileType = (file, cb) => {
   }
 };
 
-const passport = require("passport");
+// Homepage
 
-app.use(cors());
-app.use(express.static("./uploadPictures"));
-
-const bodyParser = require("body-parser");
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(passport.initialize());
-
-app.use("/auth", require("./auth"));
+app.get(
+  "/articles/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    db.query(
+      `SELECT id, id_clothing, id_user, is_proof, created_at, url FROM picture ORDER BY created_at DESC`,
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("error when getting pictures route");
+        }
+        if (!rows) {
+          return res.status(404).send("No pictures found");
+        }
+        res.status(200).send(rows);
+      }
+    );
+  }
+);
 
 // Upload a proof-picture
+
 app.post("/currentUser/:clothingId/:uploadProof", (req, res) => {
   const path = req.file.path;
   const clothingId = req.params.clothingId;
@@ -116,14 +137,6 @@ app.post("/currentUser/:uploadPicture", (req, res) => {
     }
   );
 });
-
-app.all(
-  "/*",
-  passport.authenticate("jwt", { session: false }),
-  (req, res, next) => {
-    next();
-  }
-);
 
 // Homepage
 
@@ -267,11 +280,14 @@ app.post(`/comment/:id`, (req, res) => {
 
 //Details messaging
 
-app.get("/message/:P1/:P2", (req, res) => {
-  const P1 = req.params.P1;
-  const P2 = req.params.P2;
-  db.query(
-    `SELECT 
+app.get(
+  "/message/:P1/:P2",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const P1 = req.params.P1;
+    const P2 = req.params.P2;
+    db.query(
+      `SELECT 
     TIME(DATE_ADD(message.created_at,INTERVAL 2 hour)) as hour_send,
     content, 
     DATEDIFF(NOW(), message.created_at) AS date_diff,
@@ -283,15 +299,16 @@ app.get("/message/:P1/:P2", (req, res) => {
       (id_author = ${P1} OR id_reader = ${P1})
       AND (id_author = ${P2} OR id_reader = ${P2})
       ORDER BY message.created_at DESC;`,
-    (err, rows) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("error when getting message route");
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          res.status(500).send("error when getting message route");
+        }
+        res.status(200).send(rows);
       }
-      res.status(200).send(rows);
-    }
-  );
-});
+    );
+  }
+);
 
 //Update message
 
@@ -382,14 +399,10 @@ app.get(
                     .status(500)
                     .send("error when getting social route");
                 }
-
-                const followersArray = rowsFollowers.map(follower => {
-                  return follower.id_user;
-                });
-                profileData.followers = followersArray;
+                profileData.followers = rowsFollowers;
 
                 db.query(
-                  `SELECT DISTINCT(id_content) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
+                  `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
                   (err, rowsFollowings) => {
                     if (err) {
                       console.log(err);
@@ -486,24 +499,58 @@ app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
   );
 });
 
-// Upload a proof-picture
+// Picture liking
 
-app.post("/uploaddufichier", upload.single("monfichier"), (req, res, next) => {
-  fs.rename(req.file.path, "public/pictures/" + req.file.originalname, err => {
-    if (err) {
-      res.send("error during the move");
-    } else {
-      res.send("File upload");
+app.get("/like/:idAuthor", (req, res) => {
+  const authorId = req.params.idAuthor;
+  db.query(
+    `SELECT DISTINCT(id_content) FROM social WHERE id_user = ${authorId} AND content_type = "like"`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when getting like route");
+      }
+      let likesArray = rows.map(row => {
+        return row.id_content;
+      });
+      res.status(200).send(likesArray);
     }
-  });
+  );
 });
 
-// Profile follow button routes
+app.post("/like/:idPicture", (req, res) => {
+  const pictureId = req.params.idPicture;
+  const authorId = req.body.idAuthor;
+  db.query(
+    `INSERT INTO social (id_user, content_type, id_content, created_at) VALUES (${authorId}, "like", ${pictureId}, NOW())`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when posting like route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+app.put("/like/:idPicture", (req, res) => {
+  const pictureId = req.params.idPicture;
+  const authorId = req.body.idAuthor;
+  db.query(
+    `DELETE FROM social WHERE id_user=${authorId} AND content_type="like" AND id_content=${pictureId}`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when deleting like route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+// Follow button
 
 app.get("/follow/:followId", (req, res) => {
   const followId = req.params.followId;
   db.query(
-    `SELECT id_user FROM social WHERE id_content = ${followId}`,
+    `SELECT id_user FROM social WHERE id_content = ${followId} AND type='follow'`,
     (err, rows) => {
       if (err) {
         console.log(err);
