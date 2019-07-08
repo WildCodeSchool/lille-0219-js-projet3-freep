@@ -142,7 +142,7 @@ class Login extends Component {
             activeClassName="active"
             className="littleInfo"
             exact
-            to="/Registration"
+            to="/inscription"
           >
             Pas encore de compte ? Inscris-toi ! 🖤
           </NavLink>

@@ -163,8 +163,8 @@ class ClothingPage extends React.Component {
                             key={key}
                             picture={picture.url}
                             alt={picture.altText}
-                            caption={picture.caption}
                             link={picture.id_clothing}
+                            pictureId={picture.id}
                           />
                         </CarouselItem>
                       );
@@ -204,6 +204,7 @@ class ClothingPage extends React.Component {
                                 <Photo
                                   picture={picture.url}
                                   link={picture.id_clothing}
+                                  pictureId={picture.id}
                                 />
                               </Col>
                             );
@@ -223,6 +224,7 @@ class ClothingPage extends React.Component {
                         <Photo
                           picture={picture.url}
                           link={picture.id_clothing}
+                          pictureId={picture.id}
                         />
                       </Col>
                     );
