@@ -67,3 +67,12 @@ svg {
     transform: translate(2px, 1px);
   }
 }
+
+.liked {
+  fill: #f6003f;
+  stroke: #f6003f;
+}
+
+.notLiked {
+  stroke: white;
+}

@@ -194,6 +194,7 @@ class ClothingPage extends React.Component {
                             picture={picture.url}
                             alt={picture.altText}
                             link={picture.id_clothing}
+                            pictureId={picture.id}
                           />
                         </CarouselItem>
                       );

@@ -10,7 +10,8 @@ class HomePage extends React.Component {
     super(props);
     this.state = {
       loading: true,
-      picturesInfo: []
+      picturesInfo: [],
+      picturesLiked: null
     };
   }
 
@@ -29,6 +30,7 @@ class HomePage extends React.Component {
         });
       });
   }
+
   render() {
     const pictures = this.state.picturesInfo;
     if (this.state.loading) {
@@ -39,7 +41,11 @@ class HomePage extends React.Component {
           {pictures.map((picture, key) => {
             return (
               <Col sm="6" md="4" lg="3" key={key} className="picture-frame">
-                <Photo picture={picture.url} link={picture.id_clothing} />
+                <Photo
+                  picture={picture.url}
+                  link={picture.id_clothing}
+                  pictureId={picture.id}
+                />
               </Col>
             );
           })}

@@ -2,10 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { portNumber, db } = require("./conf");
-const multer = require("multer");
-const path = require("path");
 const passport = require("passport");
 const bodyParser = require("body-parser");
+const multer = require("multer");
+const path = require("path");
 
 app.use(cors());
 app.use(express.static("./uploadPictures"));
@@ -54,6 +54,28 @@ checkFileType = (file, cb) => {
     cb("Error: Images only");
   }
 };
+
+// Homepage
+
+app.get(
+  "/articles/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    db.query(
+      `SELECT id, id_clothing, id_user, is_proof, created_at, url FROM picture ORDER BY created_at DESC`,
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).send("error when getting pictures route");
+        }
+        if (!rows) {
+          return res.status(404).send("No pictures found");
+        }
+        res.status(200).send(rows);
+      }
+    );
+  }
+);
 
 // Upload a proof-picture
 
@@ -112,28 +134,6 @@ app.post("/currentUser/:uploadPicture", (req, res) => {
     }
   );
 });
-
-// Homepage
-
-app.get(
-  "/articles/",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    db.query(
-      `SELECT id, id_clothing, id_user, is_proof, created_at, url FROM picture ORDER BY created_at DESC`,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send("error when getting pictures route");
-        }
-        if (!rows) {
-          return res.status(404).send("No pictures found");
-        }
-        res.status(200).send(rows);
-      }
-    );
-  }
-);
 
 // Clothing-deposit
 
@@ -429,14 +429,10 @@ app.get(
                     .status(500)
                     .send("error when getting social route");
                 }
-
-                const followersArray = rowsFollowers.map(follower => {
-                  return follower.id_user;
-                });
-                profileData.followers = followersArray;
+                profileData.followers = rowsFollowers;
 
                 db.query(
-                  `SELECT DISTINCT(id_content) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
+                  `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
                   (err, rowsFollowings) => {
                     if (err) {
                       console.log(err);
@@ -550,12 +546,58 @@ app.get(
   }
 );
 
-// Profile follow button routes
+// Picture liking
+
+app.get("/like/:idAuthor", (req, res) => {
+  const authorId = req.params.idAuthor;
+  db.query(
+    `SELECT DISTINCT(id_content) FROM social WHERE id_user = ${authorId} AND content_type = "like"`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when getting like route");
+      }
+      let likesArray = rows.map(row => {
+        return row.id_content;
+      });
+      res.status(200).send(likesArray);
+    }
+  );
+});
+
+app.post("/like/:idPicture", (req, res) => {
+  const pictureId = req.params.idPicture;
+  const authorId = req.body.idAuthor;
+  db.query(
+    `INSERT INTO social (id_user, content_type, id_content, created_at) VALUES (${authorId}, "like", ${pictureId}, NOW())`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when posting like route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+app.put("/like/:idPicture", (req, res) => {
+  const pictureId = req.params.idPicture;
+  const authorId = req.body.idAuthor;
+  db.query(
+    `DELETE FROM social WHERE id_user=${authorId} AND content_type="like" AND id_content=${pictureId}`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when deleting like route");
+      }
+      res.status(200).send(rows);
+    }
+  );
+});
+
+// Follow button
 
 app.get("/follow/:followId", (req, res) => {
   const followId = req.params.followId;
   db.query(
-    `SELECT id_user FROM social WHERE id_content = ${followId}`,
+    `SELECT id_user FROM social WHERE id_content = ${followId} AND type='follow'`,
     (err, rows) => {
       if (err) {
         console.log(err);

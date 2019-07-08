@@ -9,7 +9,9 @@ class Photo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      deposit: null
+      deposit: null,
+      isLiked: null,
+      picturesLiked: null
     };
   }
 
@@ -19,13 +21,51 @@ class Photo extends React.Component {
         deposit: data.deposit
       });
     });
+
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    axios.get(`http://localhost:5050/like/${currentUser}`).then(({ data }) => {
+      this.setState({
+        picturesLiked: data
+      });
+    });
   }
+
+  handleClick = () => {
+    const pictureId = this.props.pictureId;
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    if (!this.state.isLiked) {
+      axios
+        .post(`http://localhost:5050/like/${pictureId}`, {
+          idAuthor: currentUser
+        })
+        .then(({ data }) => {
+          this.setState({
+            isLiked: true
+          });
+        });
+    } else {
+      axios
+        .put(`http://localhost:5050/like/${pictureId}`, {
+          idAuthor: currentUser
+        })
+        .then(({ data }) => {
+          this.setState({
+            isLiked: false
+          });
+        });
+    }
+  };
 
   render() {
     const picture = this.props.picture;
     const link = this.props.link;
     const deposit = this.state.deposit;
     const dep = deposit && deposit.indexOf(link) !== -1 ? false : true;
+    const picturesLiked = this.state.picturesLiked;
+    console.log(picturesLiked);
+    const pictureId = this.props.pictureId;
+    const liked =
+      picturesLiked && picturesLiked.indexOf(pictureId) !== -1 ? true : false;
 
     return (
       <Card className="m-2 picture-card">
@@ -34,7 +74,11 @@ class Photo extends React.Component {
         </Link>
         <div className="overlay">
           <Row className="p-0 card-buttons align-items-center">
-            <Heart color="white" width="19" />
+            <Heart
+              width="19"
+              onClick={this.handleClick}
+              className={liked ? "liked" : "notLiked"}
+            />
             <div className={dep ? "deposit" : "no-deposit"}>ℂ</div>
             <ReportButton />
           </Row>
