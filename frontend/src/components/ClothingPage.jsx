@@ -115,19 +115,19 @@ class ClothingPage extends React.Component {
   };
 
   handleAdd(e) {
-    const userId = 1;
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     const clothingId = this.state.backendData.clothing.id;
     const pictureId = this.state.backendData.pictures[0].id;
     axios
       .post(
-        `http://localhost:5050/emprunt/${userId}/${clothingId}/${pictureId}`
+        `http://localhost:5050/emprunt/${currentUser}/${clothingId}/${pictureId}`
       )
       .then(({ data }) => {
-        data.id_user = userId;
+        data.id_user = currentUser;
         data.id_clothing = clothingId;
         data.id_picture = pictureId;
         this.props.history.push(
-          `/message/1/${this.state.backendData.users[0].id}`
+          `/message/${currentUser}/${this.state.backendData.users[0].id}`
         );
       })
       .catch(err => {
