@@ -37,7 +37,7 @@ function App() {
           <Route exact path="/inscription" component={Registration} />
           <PrivateRoute path="/accueil" component={HomePage} />
           <PrivateRoute path="/profil/:profileId" component={Profile} />
-          <PrivateRoute path="/message/:currentUser/:P2" component={Message} />
+          <PrivateRoute path="/message/:P1/:P2" component={Message} />
           <PrivateRoute path="/emprunt/:userId" component={BorrowPage} />
           <PrivateRoute path="/article/:articleId" component={ClothingPage} />
           <PrivateRoute path="/partenaire" component={PartnerPage} />
