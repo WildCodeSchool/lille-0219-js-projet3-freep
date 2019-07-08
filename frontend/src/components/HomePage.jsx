@@ -10,18 +10,27 @@ class HomePage extends React.Component {
     super(props);
     this.state = {
       loading: true,
-      picturesInfo: []
+      picturesInfo: [],
+      picturesLiked: null
     };
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:5050/articles/`).then(({ data }) => {
-      this.setState({
-        picturesInfo: data,
-        loading: false
+    const user = JSON.parse(localStorage.getItem("user"));
+    axios
+      .get(`http://localhost:5050/articles/`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
+      .then(({ data }) => {
+        this.setState({
+          picturesInfo: data,
+          loading: false
+        });
       });
-    });
   }
+
   render() {
     const pictures = this.state.picturesInfo;
     if (this.state.loading) {
@@ -32,7 +41,11 @@ class HomePage extends React.Component {
           {pictures.map((picture, key) => {
             return (
               <Col sm="6" md="4" lg="3" key={key}>
-                <Photo picture={picture.url} link={picture.id_clothing} />
+                <Photo
+                  picture={picture.url}
+                  pictureId={picture.id}
+                  link={picture.id_clothing}
+                />
               </Col>
             );
           })}

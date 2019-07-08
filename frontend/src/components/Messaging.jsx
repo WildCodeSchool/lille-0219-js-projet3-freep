@@ -1,6 +1,6 @@
 //composant pour 1 message
 import React from "react";
-import { Card, CardBody, CardImg, Row, Col } from "reactstrap";
+import { Card, CardBody, Row, Col } from "reactstrap";
 import "../style/Messaging.scss";
 import { Link } from "react-router-dom";
 
@@ -19,32 +19,30 @@ class Messaging extends React.Component {
             className="link"
           >
             <CardBody>
-              <Row>
-                <Col xs="3" sm="3" md="3">
-                  <CardImg
+              <Row className="align-items-center px-3">
+                <Col xs="3">
+                  <img
                     src={this.props.avatar}
                     alt="Avatar"
                     className="imgAvatar rounded-circle"
                   />
                 </Col>
-                <Col xs="9" sm="9" md="9">
-                  <div className="m-5">
-                    <Row className="d-flex">
-                      <Col>
-                        <p className="name">{this.props.nickname}</p>
-                      </Col>
-                      <Col>
-                        <p className="messageDate timeStamp">
-                          {this.props.timeStamp}
-                        </p>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <p className="bodyText text-justify">
-                        {this.props.message}
+                <Col xs="9">
+                  <Row className="m-5">
+                    <Col>
+                      <p className="name">{this.props.nickname}</p>
+                    </Col>
+                    <Col>
+                      <p className="messageDate timeStamp">
+                        {this.props.timeStamp}
                       </p>
-                    </Row>
-                  </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <p className="bodyText text-justify px-5">
+                      {this.props.message}
+                    </p>
+                  </Row>
                 </Col>
               </Row>
             </CardBody>

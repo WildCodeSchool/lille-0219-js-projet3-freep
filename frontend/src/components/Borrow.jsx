@@ -13,32 +13,48 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../style/Borrow.scss";
-
 class Borrow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hidden: false
+      hidden: false,
+      modal: false,
+      isOpen: false
     };
   }
 
   handleDelete(e) {
     e.preventDefault();
-    const userId = this.props.userId;
     const borrowId = this.props.borrowId;
+    axios.delete(`http://localhost:5050/emprunt/${borrowId}`).then(() => {
+      this.setState({
+        hidden: true
+      });
+    });
+  }
+
+  toggleModalBorrow() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const clothingId = this.props.clothePage;
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .delete(`http://localhost:5050/emprunt/${userId}/${borrowId}`)
-      .then(({ data }) => {
-        this.setState({
-          hidden: true
-        });
+      .post(`http://localhost:5050/${currentUser}/${clothingId}/uploadProof`)
+      .then(() => {
+        alert("Votre photo a bien été envoyée");
+
       });
   }
 
   render() {
     return (
       <div className={this.state.hidden ? "hidden" : ""}>
-        <Card>
+        <Card className="borrowCard">
           <CardBody>
             <Link to={`/article/${this.props.clothePage}`} className="link">
               <CardImg
@@ -47,38 +63,44 @@ class Borrow extends React.Component {
                 className="borrowPicture"
               />
             </Link>
-            <Button
-              onClick={e => {
-                this.handleDelete(e);
-              }}
-            >
-              Annuler l'emprunt
-            </Button>
 
             <Button
               onClick={() => {
-                this.props.toggleModalBorrow();
+                this.toggleModalBorrow();
               }}
+              className="borrowButton"
             >
               J'ai emprunté ce vêtement
             </Button>
             <Modal
-              isOpen={this.props.modal}
-              toggle={this.props.toggleModalBorrow}
+              isOpen={this.state.modal}
+              toggle={() => {
+                this.toggleModalBorrow();
+              }}
             >
               <ModalHeader
-                toggle={this.props.toggleModalBorrow}
-                className="pr-5"
+                toggle={() => {
+                  this.toggleModalBorrow();
+                }}
               />
               <Form
-                method="POST"
+                onsubmit={e => {
+                  this.handleSubmit(e);
+                }}
                 enctype="multipart/form-data"
-                action="uploaddufichier"
               >
-                <Input type="file" name="monfichier" />
-                <Button>Envoyer</Button>
+                <Input type="file" name="myFile" />
+                <Button type="submit">Envoyer</Button>
               </Form>
             </Modal>
+            <Button
+              onClick={e => {
+                this.handleDelete(e);
+              }}
+              className="borrowButton"
+            >
+              Annuler l'emprunt
+            </Button>
           </CardBody>
         </Card>
       </div>
