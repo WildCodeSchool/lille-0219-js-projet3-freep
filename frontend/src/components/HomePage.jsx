@@ -40,19 +40,11 @@ class HomePage extends React.Component {
         <Masonry>
           {pictures.map((picture, key) => {
             return (
-<<<<<<< HEAD
               <Col sm="6" md="4" lg="3" key={key} className="picture-frame">
                 <Photo
                   picture={picture.url}
                   link={picture.id_clothing}
                   pictureId={picture.id}
-=======
-              <Col sm="6" md="4" lg="3" key={key}>
-                <Photo
-                  picture={picture.url}
-                  pictureId={picture.id}
-                  link={picture.id_clothing}
->>>>>>> d00afb8de5d0a94a02ec0f5d1a3946de6f320d51
                 />
               </Col>
             );

@@ -155,7 +155,7 @@ class ClothingPage extends React.Component {
         data.id_clothing = clothingId;
         data.id_picture = pictureId;
         this.props.history.push(
-          `/message/${currentUser}/${this.state.users[0].id}`
+          `/message/${currentUser}/${this.state.clothing.id_user}`
         );
       })
       .catch(err => {
@@ -164,7 +164,6 @@ class ClothingPage extends React.Component {
   }
 
   render() {
-    console.log(this.state.comment);
     const { width } = this.state;
     const isMobile = width <= 640;
     const { activeIndex } = this.state;
@@ -226,7 +225,6 @@ class ClothingPage extends React.Component {
                     );
                   } else {
                     return (
-<<<<<<< HEAD
                       <Row className="justify-content-center">
                         {pictures.map((picture, key) => {
                           return (
@@ -240,23 +238,6 @@ class ClothingPage extends React.Component {
                           );
                         })}
                       </Row>
-=======
-                      <React.Fragment>
-                        <Row className="justify-content-center">
-                          {pictures.map((picture, key) => {
-                            return (
-                              <Col xs="6" md="4" key={key}>
-                                <Photo
-                                  picture={picture.url}
-                                  link={picture.id_clothing}
-                                  pictureId={picture.id}
-                                />
-                              </Col>
-                            );
-                          })}
-                        </Row>
-                      </React.Fragment>
->>>>>>> d00afb8de5d0a94a02ec0f5d1a3946de6f320d51
                     );
                   }
                 })()}
@@ -271,7 +252,6 @@ class ClothingPage extends React.Component {
                           picture={picture.url}
                           pictureId={picture.id}
                           link={picture.id_clothing}
-                          pictureId={picture.id}
                         />
                       </Col>
                     );

@@ -92,17 +92,6 @@ class Login extends Component {
               <Heart width="12" className="mx-1" />
             </Link>
           </div>
-<<<<<<< HEAD
-=======
-          <NavLink
-            activeClassName="active"
-            className="littleInfo"
-            exact
-            to="/inscription"
-          >
-            Pas encore de compte ? Inscris-toi ! 🖤
-          </NavLink>
->>>>>>> d00afb8de5d0a94a02ec0f5d1a3946de6f320d51
         </Form>
       </div>
     );
