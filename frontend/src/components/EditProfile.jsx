@@ -26,7 +26,6 @@ class EditProfile extends React.Component {
         }
       })
       .then(({ data }) => {
-        console.log("TCL: EditProfile -> data", data);
         this.setState({
           username: data.nickname,
           location: data.location,
@@ -61,14 +60,14 @@ class EditProfile extends React.Component {
         <h1 className="titleConnect">Modifie ton profil !</h1>
         <Row>
           <Col>
-            <Form.Group controlId="username" bsSize="large">
+            <Form.Group controlId="username">
               <h1
                 style={{
                   fontSize: "20px",
                   color: "goldenrod",
                   fontFamily: "DancingScript"
                 }}
-                for="username"
+                htmlFor="username"
               >
                 {" "}
                 Nom d'utilisateur{" "}
@@ -82,14 +81,14 @@ class EditProfile extends React.Component {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group controlId="location" bsSize="large">
+            <Form.Group controlId="location">
               <h1
                 style={{
                   fontSize: "20px",
                   color: "goldenrod",
                   fontFamily: "DancingScript"
                 }}
-                for="location"
+                htmlFor="location"
               >
                 {" "}
                 Ville{" "}
@@ -105,14 +104,14 @@ class EditProfile extends React.Component {
         </Row>
         <Row>
           <Col>
-            <Form.Group controlId="description" bsSize="large">
+            <Form.Group controlId="description">
               <h1
                 style={{
                   fontSize: "20px",
                   color: "goldenrod",
                   fontFamily: "DancingScript"
                 }}
-                for="description"
+                htmlFor="description"
               >
                 {" "}
                 Description{" "}
@@ -132,7 +131,6 @@ class EditProfile extends React.Component {
           style={{ border: " 1px solid black" }}
           className="myButton"
           block
-          bsSize="large"
           disabled={!this.validateForm()}
           type="submit"
         >
