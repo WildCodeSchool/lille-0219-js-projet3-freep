@@ -611,15 +611,31 @@ app.put("/follow/:followId", (req, res) => {
 
 // My Profile
 
-app.get("/monprofil/:myProfile", (req, res) => {
+app.get("/modification/:myProfile", (req, res) => {
   const myProfile = req.params.myProfile;
   db.query(
-    `SELECT nickname, location, description, avatar FROM user WHERE id = ${myProfile}`,
+    `SELECT id, nickname, location, description FROM user WHERE id = ${myProfile}`,
     (err, rows) => {
       if (err) {
-        return res.status(500).send("error when editiing my profile");
+        return res.status(500).send("error when editing my profile");
       }
       res.status(200).send(rows[0]);
+    }
+  );
+});
+
+app.put("/modification/:myProfile", (req, res) => {
+  const myProfile = req.params.myProfile;
+  const nickname = req.body.nickname;
+  const location = req.body.location;
+  const description = req.body.description;
+  db.query(
+    `UPDATE user SET nickname='${nickname}', location='${location}', description='${description}' WHERE id = ${myProfile}`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when editing my profile");
+      }
+      res.status(200).send(rows);
     }
   );
 });
