@@ -199,7 +199,9 @@ app.get(
             });
 
             db.query(
-              `SELECT id, id_user, id_clothing, content, created_at FROM comment WHERE id_clothing=${articleId} ORDER BY created_at DESC`,
+              `SELECT DATEDIFF(NOW(), created_at) AS date_diff,
+              TIME(DATE_ADD(created_at,INTERVAL 2 hour)) as hour_send, id, id_user, id_clothing, content
+               FROM comment WHERE id_clothing=${articleId} ORDER BY created_at DESC`,
               (err, rowsComments) => {
                 if (err) {
                   console.log(err);
@@ -249,7 +251,7 @@ app.get(
       db.query(
         `SELECT id_author, id_reader, content, 
       DATEDIFF(NOW(), message.created_at) AS date_diff,
-      TIME(message.created_at) as hour_send,
+      TIME(DATE_ADD(message.created_at,INTERVAL 2 hour)) as hour_send,
       nickname, 
       avatar
       FROM message
@@ -273,14 +275,34 @@ app.get(
 
 app.post(`/comment/:id`, (req, res) => {
   if (req.body.content !== "") {
+    const content = req.body.content;
+    const authorId = req.body.idAuthor;
     db.query(
-      `INSERT INTO comment ( id_user, id_clothing, content, created_at)
-      VALUES ( '4', ${req.params.id}, '${req.body.content}', NOW());
+      `INSERT INTO comment (id_user, id_clothing, content, created_at)
+      VALUES ( ${authorId}, ${req.params.id}, "${content}", NOW());
   `,
-      (err, rows, fields) => {
+      (err, rows) => {
         if (err) throw err;
         console.log("Comment recorded !");
-        res.status(200).send(rows);
+        db.query(
+          `SELECT nickname, avatar FROM comment INNER JOIN user on user.id=comment.id_user INNER JOIN clothing ON clothing.id = id_clothing WHERE id_clothing=${
+            req.params.id
+          }`,
+          (err, rows) => {
+            if (err) {
+              console.log(err);
+              res.status(500).send("error when getting comments route");
+            }
+            const newComment = {
+              content: content,
+              date_diff: 0,
+              nickname: rows[0].nickname,
+              avatar: rows[0].avatar,
+              id_user: authorId
+            };
+            res.status(200).send(newComment);
+          }
+        );
       }
     );
   }
