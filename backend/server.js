@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use("/auth", require("./auth"));
 
-//
+// Initialize upload
 
 const storage = multer.diskStorage({
   destination: "./uploadPictures/",
@@ -26,6 +26,8 @@ const storage = multer.diskStorage({
   }
 });
 
+// Allow 1 file
+
 const upload = multer({
   storage: storage,
   limits: { fileSize: 5000000 },
@@ -34,9 +36,13 @@ const upload = multer({
   }
 }).single("myFile");
 
+// Allow multiple files
+
 const uploadClothe = multer({
   storage: storage
 }).array("pictureClotheUpload", 3);
+
+// Allow extensions
 
 checkFileType = (file, cb) => {
   const fileTypes = /jpeg||jpg||png/;
@@ -283,10 +289,10 @@ app.post(`/comment/:id`, (req, res) => {
 //Details messaging
 
 app.get(
-  "/message/:currentUser/:P2",
+  "/message/:P1/:P2",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const currentUser = req.params.currentUser;
+    const P1 = req.params.P1;
     const P2 = req.params.P2;
     db.query(
       `SELECT 
@@ -298,7 +304,7 @@ app.get(
     FROM message
     INNER JOIN user ON user.id = message.id_author
       WHERE
-      (id_author = ${currentUser} OR id_reader = ${currentUser})
+      (id_author = ${P1} OR id_reader = ${P1})
       AND (id_author = ${P2} OR id_reader = ${P2})
       ORDER BY message.created_at DESC;`,
       (err, rows) => {
@@ -314,8 +320,8 @@ app.get(
 
 //Update message
 
-app.post("/message/:currentUser/:P2", (req, res) => {
-  const currentUser = req.params.currentUser;
+app.post("/message/:P1/:P2", (req, res) => {
+  const P1 = req.params.P1;
   const P2 = req.params.P2;
   const content = req.body.content;
   if (content !== "") {
@@ -324,7 +330,7 @@ app.post("/message/:currentUser/:P2", (req, res) => {
     message
     SET isLast=0
     WHERE
-    (id_author = ${currentUser} OR id_reader = ${currentUser})
+    (id_author = ${P1} OR id_reader = ${P1})
     AND (id_author = ${P2} OR id_reader = ${P2});`,
       (err, rows) => {
         if (err) {
@@ -333,14 +339,14 @@ app.post("/message/:currentUser/:P2", (req, res) => {
         } else {
           db.query(
             `INSERT INTO message(id_author,id_reader,content,created_at,isLast) 
-          VALUES(${currentUser},${P2},"${content}",NOW(),1);`,
+          VALUES(${P1},${P2},"${content}",NOW(),1);`,
             (err, rows) => {
               if (err) {
                 console.log(err);
                 res.status(500).send("error when post new message");
               }
               db.query(
-                `SELECT nickname, avatar FROM user WHERE id=${currentUser}`,
+                `SELECT nickname, avatar FROM user WHERE id=${P1}`,
                 (err, rows) => {
                   if (err) {
                     console.log(err);
