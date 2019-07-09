@@ -71,7 +71,7 @@ class EditProfile extends React.Component {
         >
           <h1 className="titleConnect">Modifie ton profil !</h1>
           <Row>
-            <Col>
+            <Col lg="6">
               <Form.Group controlId="nickname">
                 <h1
                   style={{
@@ -94,7 +94,7 @@ class EditProfile extends React.Component {
                 />
               </Form.Group>
             </Col>
-            <Col>
+            <Col lg="6">
               <Form.Group controlId="location">
                 <h1
                   style={{
@@ -134,7 +134,7 @@ class EditProfile extends React.Component {
                 </h1>
                 <Form.Control
                   as="textarea"
-                  rows="3"
+                  rows="5"
                   autoFocus
                   type="text"
                   value={description}
