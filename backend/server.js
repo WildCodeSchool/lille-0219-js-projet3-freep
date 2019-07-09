@@ -4,6 +4,8 @@ const app = express();
 const { portNumber, db } = require("./conf");
 const passport = require("passport");
 const bodyParser = require("body-parser");
+const multer = require("multer");
+const path = require("path");
 
 app.use(cors());
 app.use(express.static("./uploadPictures"));
@@ -12,10 +14,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use("/auth", require("./auth"));
 
-//
-
-const multer = require("multer");
-const path = require("path");
+// Initialize upload
 
 const storage = multer.diskStorage({
   destination: "./uploadPictures/",
@@ -27,6 +26,8 @@ const storage = multer.diskStorage({
   }
 });
 
+// Allow 1 file
+
 const upload = multer({
   storage: storage,
   limits: { fileSize: 5000000 },
@@ -35,9 +36,13 @@ const upload = multer({
   }
 }).single("myFile");
 
+// Allow multiple files
+
 const uploadClothe = multer({
   storage: storage
 }).array("pictureClotheUpload", 3);
+
+// Allow extensions
 
 checkFileType = (file, cb) => {
   const fileTypes = /jpeg||jpg||png/;
@@ -89,14 +94,6 @@ app.post("/currentUser/:clothingId/:uploadProof", (req, res) => {
       res.send(req.file);
     }
   });
-  db.query(
-    `INSERT INTO pictures ( id_clothing, id_user, is_proof, created_at, url)
-    VALUES (${clothingId}, ${currentUser}, 1, Now(), ${path});`,
-    (err, rows, fields) => {
-      if (err) throw err;
-      res.status(200).send(rows);
-    }
-  );
 });
 
 // Upload clothes pictures
@@ -138,27 +135,38 @@ app.post("/currentUser/:uploadPicture", (req, res) => {
   );
 });
 
-// Homepage
+// Clothing-deposit
 
-app.get(
-  "/articles/",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    db.query(
-      `SELECT id, id_clothing, id_user, is_proof, created_at, url FROM picture ORDER BY created_at DESC`,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).send("error when getting pictures route");
-        }
-        if (!rows) {
-          return res.status(404).send("No pictures found");
-        }
-        res.status(200).send(rows);
+app.get("/deposit/", (req, res) => {
+  let result = {};
+  db.query(
+    `SELECT id_clothing FROM picture ORDER BY created_at DESC`,
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("error when getting pictures route");
       }
-    );
-  }
-);
+      if (!rows) {
+        return res.status(404).send("No pictures found");
+      }
+      result.pictures = rows;
+
+      db.query(
+        `SELECT id FROM clothing WHERE is_deposit=1`,
+        (err, rowsDeposits) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).send("error when getting articles route");
+          }
+          result.deposit = rowsDeposits.map(deposit => {
+            return deposit.id;
+          });
+          res.status(200).send(result);
+        }
+      );
+    }
+  );
+});
 
 // ClothingPage
 
@@ -191,7 +199,9 @@ app.get(
             });
 
             db.query(
-              `SELECT id, id_user, id_clothing, content, created_at FROM comment WHERE id_clothing=${articleId} ORDER BY created_at DESC`,
+              `SELECT DATEDIFF(NOW(), created_at) AS date_diff,
+              TIME(DATE_ADD(created_at,INTERVAL 2 hour)) as hour_send, id, id_user, id_clothing, content
+               FROM comment WHERE id_clothing=${articleId} ORDER BY created_at DESC`,
               (err, rowsComments) => {
                 if (err) {
                   console.log(err);
@@ -241,7 +251,7 @@ app.get(
       db.query(
         `SELECT id_author, id_reader, content, 
       DATEDIFF(NOW(), message.created_at) AS date_diff,
-      TIME(message.created_at) as hour_send,
+      TIME(DATE_ADD(message.created_at,INTERVAL 2 hour)) as hour_send,
       nickname, 
       avatar
       FROM message
@@ -265,14 +275,34 @@ app.get(
 
 app.post(`/comment/:id`, (req, res) => {
   if (req.body.content !== "") {
+    const content = req.body.content;
+    const authorId = req.body.idAuthor;
     db.query(
-      `INSERT INTO comment ( id_user, id_clothing, content, created_at)
-      VALUES ( '4', ${req.params.id}, '${req.body.content}', NOW());
+      `INSERT INTO comment (id_user, id_clothing, content, created_at)
+      VALUES ( ${authorId}, ${req.params.id}, "${content}", NOW());
   `,
-      (err, rows, fields) => {
+      (err, rows) => {
         if (err) throw err;
         console.log("Comment recorded !");
-        res.status(200).send(rows);
+        db.query(
+          `SELECT nickname, avatar FROM comment INNER JOIN user on user.id=comment.id_user INNER JOIN clothing ON clothing.id = id_clothing WHERE id_clothing=${
+            req.params.id
+          }`,
+          (err, rows) => {
+            if (err) {
+              console.log(err);
+              res.status(500).send("error when getting comments route");
+            }
+            const newComment = {
+              content: content,
+              date_diff: 0,
+              nickname: rows[0].nickname,
+              avatar: rows[0].avatar,
+              id_user: authorId
+            };
+            res.status(200).send(newComment);
+          }
+        );
       }
     );
   }
@@ -291,7 +321,7 @@ app.get(
     TIME(DATE_ADD(message.created_at,INTERVAL 2 hour)) as hour_send,
     content, 
     DATEDIFF(NOW(), message.created_at) AS date_diff,
-    nickname, 
+    nickname, id_author,
     avatar
     FROM message
     INNER JOIN user ON user.id = message.id_author
@@ -371,7 +401,7 @@ app.get(
   (req, res) => {
     const profileId = req.params.profileId;
     db.query(
-      `SELECT id, nickname, avatar, description FROM user WHERE id=${profileId}`,
+      `SELECT id, nickname, avatar, description, location FROM user WHERE id=${profileId}`,
       (err, rowsUser) => {
         if (err) {
           console.log(err);
@@ -498,6 +528,23 @@ app.post(`/emprunt/:userId/:clothingId/:pictureId`, (req, res) => {
     }
   );
 });
+
+// Partners page
+
+app.get(
+  "/partenaire/:profileId",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const profileId = req.params.profileId;
+    db.query(`SELECT points FROM user WHERE id=${profileId}`, (err, rows) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("error when getting profile route");
+      }
+      res.status(200).send(rows[0]);
+    });
+  }
+);
 
 // Picture liking
 

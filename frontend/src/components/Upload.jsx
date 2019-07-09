@@ -41,10 +41,10 @@ class Uploader extends React.Component {
       <React.Fragment>
         <Form
           className="d-flex flex-column mt-5"
-          onsubmit={e => {
+          onSubmit={e => {
             this.handleSubmit(e);
           }}
-          enctype="multipart/form-data"
+          encType="multipart/form-data"
         >
           <Row className="uploader-container">
             <Col md="4" className="text-center">

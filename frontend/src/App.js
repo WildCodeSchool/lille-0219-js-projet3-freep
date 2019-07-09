@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./App.scss";
 import HomePage from "./components/HomePage";
 import Profile from "./components/Profile";
 import { Container } from "reactstrap";
@@ -32,10 +32,10 @@ function App() {
       <header>
         <NavFreep />
       </header>
-      <Container className="container">
+      <Container>
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route path="/inscription" exact component={Registration} />
+          <Route exact path="/inscription" component={Registration} />
           <PrivateRoute path="/accueil" component={HomePage} />
           <PrivateRoute path="/profil/:profileId" component={Profile} />
           <PrivateRoute path="/modification" component={EditProfile} />
