@@ -2,7 +2,7 @@ import React from "react";
 import Borrow from "./Borrow";
 import axios from "axios";
 import Loader from "./Loader";
-import { Col, Container } from "reactstrap";
+import { Col } from "reactstrap";
 import "../style/Borrow.scss";
 import Masonry from "react-masonry-component";
 
@@ -39,18 +39,16 @@ class BorrowPage extends React.Component {
       return <Loader />;
     } else {
       return (
-        <Container>
-          <h1 className="titleBorrow">Ce que je veux emprunter</h1>
+        <React.Fragment>
+          <h1>Ce que je veux emprunter</h1>
           {this.state.borrowArray.length === 0 ? (
             <p>Vous n'avez pas d'emprunt en cours.</p>
-          ) : (
-            ""
-          )}
+          ) : null}
           <Masonry>
             {this.state.borrowArray.map((borrow, i) => {
               return (
                 borrow && (
-                  <Col sm="6" md="4" lg="3" xl="3">
+                  <Col sm="6" md="4" lg="3" xl="3" key={i}>
                     <Borrow
                       key={i}
                       pictureUrl={borrow.url}
@@ -62,7 +60,7 @@ class BorrowPage extends React.Component {
               );
             })}
           </Masonry>
-        </Container>
+        </React.Fragment>
       );
     }
   }

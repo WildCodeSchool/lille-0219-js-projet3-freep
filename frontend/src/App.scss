@@ -1,15 +1,12 @@
-@font-face {
-  font-family: "Dancing Script";
-  src: url("./style/DancingScript-Regular.ttf");
-}
+@import "./index.scss";
 
 body {
   background: #fbf4f1;
 }
 
 ::selection {
-  background: goldenrod;
-  color: white;
+  background: rgba($main-color, 0.5);
+  color: $wh;
 }
 
 .container {

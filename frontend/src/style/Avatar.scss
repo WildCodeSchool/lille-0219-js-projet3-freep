@@ -1,0 +1,11 @@
+@import "../index.scss";
+
+.avatar {
+  border-radius: 50%;
+  padding: 5px;
+  background: $gradient;
+  object-fit: cover;
+  min-width: 80px;
+  width: 10vw;
+  box-shadow: $box-shadow;
+}

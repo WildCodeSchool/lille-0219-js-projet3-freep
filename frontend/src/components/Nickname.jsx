@@ -1,14 +1,8 @@
 import React from "react";
 
-class Nickname extends React.Component {
-  render() {
-    const info = this.props.info;
-    return (
-      <React.Fragment>
-        <span className="primaryfont m-3">{info.nickname}</span>
-      </React.Fragment>
-    );
-  }
-}
+const Nickname = props => {
+  const info = props.info;
+  return <p className="user-name m-3">{info.nickname}</p>;
+};
 
 export default Nickname;

@@ -1,13 +1,9 @@
-$main-color: #f8d5c7;
-$white: #f5f5f5;
-$transition: 0.2s;
-$secondary-color: goldenrod;
+@import "../index.scss";
 
 .Photo {
+  border-radius: $radius-lg;
   padding: 5px;
-  background: linear-gradient(135deg, #ff90d4cc 30%, goldenrod);
-  animation: 0.5s appear;
-  border-radius: 10px;
+  background: $gradient;
 }
 
 .overlay {
@@ -18,21 +14,24 @@ $secondary-color: goldenrod;
 
 .picture-card {
   background: transparent;
-  border-radius: 10px;
+  border-radius: $radius-lg;
   border: none;
   margin: 3vh auto;
-  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: $box-shadow;
   &:hover .overlay {
-    border-radius: 0 0 6px 6px;
-    transition: 0.4s ease-out;
+    border-radius: 0 0 5px 5px;
+    transition: 0.5s;
     position: absolute;
-    background: rgba(34, 34, 34, 0.5);
+    background: rgba($bl, 0.7);
     left: 5px;
     bottom: 5px;
     right: 5px;
     opacity: 1;
     justify-content: center;
     height: 4rem;
+    .card-buttons svg:nth-of-type(1):hover {
+      cursor: pointer;
+    }
   }
 }
 
@@ -46,6 +45,26 @@ svg {
   }
   to {
     opacity: 1;
+  }
+}
+
+.deposit {
+  color: transparent;
+  font-size: 1.5rem;
+}
+
+.no-deposit {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.picture-frame {
+  transition: 0.1s;
+  &:nth-of-type(even):hover {
+    transform: translate(2px);
+  }
+  &:nth-of-type(odd):hover {
+    transform: translate(2px, 1px);
   }
 }
 

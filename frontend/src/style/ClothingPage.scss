@@ -1,45 +1,63 @@
-$main-color: #f8d5c7;
-$white: #f5f5f5;
-$transition: 0.2s;
-$secondary-color: goldenrod;
+@import "../index.scss";
 
 h2,
-h4,
-button,
-.profile-name {
+h4 {
   font-family: "dancing script";
   color: $secondary-color;
 }
 
 .profile-name {
-  font-size: calc(1rem + 1vw);
+  font-size: calc(1rem + 0.8vw);
   color: $secondary-color;
 }
 
 .clothing-container {
-  background: $main-color;
+  background: $page-bg;
+  animation: appear 0.4s ease-out;
+  @keyframes appear {
+    from {
+      transform: translate(-100vw);
+      opacity: 0;
+    }
+    to {
+      transform: translate(0);
+      opacity: 1;
+    }
+  }
   h2 {
     margin: 5vh 0;
   }
 }
 
 .comments-container {
-  .sub-container button {
+  .sub-container button:not(.dots):not(.report-button),
+  .comment-form button {
     font-size: calc(1rem + 0.3vw);
     background: #ad3a70cc;
     border: none;
     &:hover {
-      background: #6b2546cc;
+      background: $gradient;
+      box-shadow: $box-shadow;
     }
   }
   .borrow-phrase {
-    font-family: "Dancing Script", cursive;
-    font-size: calc(1rem + 0.2vw);
     padding-top: 0.3rem;
   }
   .comments-feed {
     background: #fbf4f1;
     padding: 2vh 0;
+    border-radius: $radius-lg;
+    box-shadow: $box-shadow;
+    .comments-profile {
+      font-size: calc(0.8rem + 0.2vw);
+      font-style: italic;
+    }
+    .comment {
+      line-height: 1.3;
+    }
+    a {
+      text-decoration: none;
+    }
   }
 }
 
@@ -50,10 +68,10 @@ button,
 
 .comment-form input {
   border: none;
-  background: #fbf4f1;
+  background: $wh;
   transition: $transition;
   &:focus {
-    box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1) !important;
+    box-shadow: $box-shadow;
     border: none;
   }
 }
@@ -61,17 +79,27 @@ button,
 .comment-form {
   button {
     border: transparent;
-    border-radius: 5px;
+    border-radius: $radius-sm;
     padding: 0.5rem 1rem;
     transition: $transition;
-    font-size: 1.3rem;
-    &:hover,
-    &:focus {
-      box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1);
-    }
     &:active,
     &:focus {
       margin-top: 2px;
     }
   }
+}
+
+button {
+  font-size: 1rem !important;
+  font-style: italic;
+}
+
+hr {
+  width: 30%;
+  border-top: 1px solid rgba($main-color, 0.1stat);
+  margin: 0.6rem auto;
+}
+
+hr:last-of-type {
+  border-top: none;
 }
