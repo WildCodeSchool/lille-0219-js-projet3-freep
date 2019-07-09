@@ -373,7 +373,7 @@ app.post("/search", (req, res) => {
         Results: ResultClothing
       };
       db.query(
-        "SELECT user.nickname FROM user WHERE user.nickname LIKE ?",
+        "SELECT user.nickname, user.avatar FROM user WHERE user.nickname LIKE ?",
         "%" + keyword,
         (err, ResultUsers) => {
           if (err) {

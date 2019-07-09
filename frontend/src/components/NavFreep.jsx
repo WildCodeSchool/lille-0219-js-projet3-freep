@@ -54,19 +54,9 @@ class NavFreep extends React.Component {
         keyword: this.state.searchResult
       })
       .then(res => {
-        const { dispatch } = this.props;
-        const tab = this.state.tab;
-        for (let i = 0; i < res.data.length; i++) {
-          this.setState(prevState => ({
-            tab: [
-              ...prevState.tab,
-              {
-                ...res.data.Results[i]
-              }
-            ]
-          }));
-        }
-        dispatch(setResultsActions(tab));
+        const { dispatch, history } = this.props;
+        dispatch(setResultsActions(res.data));
+        // history.push("/Search");
       })
       .catch(err => {
         console.log("Error :" + err);
@@ -97,7 +87,11 @@ class NavFreep extends React.Component {
                   //onFocus={this.handleReset}
                 />
                 <input type="submit" />
-                <img className="magnifier" src="../pictures/loupe.png" />
+                <img
+                  className="magnifier"
+                  src="../pictures/loupe.png"
+                  alt="magnifier"
+                />
               </label>
             </form>
             <Nav className="ml-auto" navbar>
