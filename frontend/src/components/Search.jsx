@@ -1,5 +1,5 @@
 import React from "react";
-import "../style/Avatar.css";
+import "../style/Avatar.scss";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Heart, Target, CloudLightning } from "react-feather";
