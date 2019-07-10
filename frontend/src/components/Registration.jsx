@@ -85,111 +85,6 @@ class Registration extends Component {
           >
             Inscris-toi avec Facebook
           </Button>
-<<<<<<< HEAD
-          <div class="trait" />
-          <Form.Group controlId="firstname" bsSize="large">
-            <h1
-              style={{
-                fontSize: "20px",
-
-                fontFamily: "DancingScript"
-              }}
-              for="firstname"
-            >
-              Prénom
-            </h1>
-            <Form.Control
-              autoFocus
-              type="text"
-              value={this.state.firstname}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="lastName">
-            <h1
-              style={{
-                fontSize: "20px",
-                fontFamily: "DancingScript"
-              }}
-              htmlFor="lastName"
-            >
-              Nom
-            </h1>
-            <Form.Control
-              autoFocus
-              type="text"
-              value={this.state.lastname}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="username">
-            <h1
-              style={{
-                fontSize: "20px",
-                fontFamily: "DancingScript"
-              }}
-              htmlFor="username"
-            >
-              Nom d'utilisateur
-            </h1>
-            <Form.Control
-              autoFocus
-              type="text"
-              value={this.state.nickname}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="email">
-            <h1
-              style={{
-                fontSize: "20px",
-                fontFamily: "DancingScript"
-              }}
-              htmlFor="email"
-            >
-              E-mail
-            </h1>
-            <Form.Control
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="password">
-            <h1
-              style={{
-                fontSize: "20px",
-                fontFamily: "DancingScript"
-              }}
-              htmlFor="pwd"
-            >
-              Mot de passe
-            </h1>
-            <Form.Control
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </Form.Group>
-          <Form.Group controlId="confirmPassword">
-            <h1
-              style={{
-                fontSize: "20px",
-                fontFamily: "DancingScript"
-              }}
-              htmlFor="pwd"
-            >
-              Confirme ton mot de passe
-            </h1>
-            <Form.Control
-              value={this.state.confirmPassword}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </Form.Group>
-=======
           <div className="trait" />
           <Row>
             <Col xs="6">
@@ -268,7 +163,6 @@ class Registration extends Component {
               </Form.Group>
             </Col>
           </Row>
->>>>>>> 825478e31ae0c5e757c58e3d8632b3a41b1b219c
           <Button
             className="myButton"
             block
