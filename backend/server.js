@@ -358,7 +358,6 @@ app.listen(portNumber, () => {
 //Search
 app.post("/search", (req, res) => {
   const keyword = req.body.keyword;
-  console.log("keyword => " + keyword);
   db.query(
     "SELECT clothing.id, clothing.type, clothing.description,picture.url FROM clothing INNER JOIN picture ON picture.id_clothing = clothing.id WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
     ["%" + keyword + "%", "%" + keyword + "%"],
