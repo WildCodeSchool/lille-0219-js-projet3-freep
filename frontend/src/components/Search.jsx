@@ -1,10 +1,11 @@
 import React from "react";
+import "../style/Avatar.css";
 import { connect } from "react-redux";
-import "../style/ClothingPage.scss";
 import { Link } from "react-router-dom";
-import { Heart, Target } from "react-feather";
-import { Row, Card, CardImg } from "reactstrap";
+import { Heart, Target, CloudLightning } from "react-feather";
+import { Col, Row, Card, CardImg } from "reactstrap";
 import ReportButton from "./ReportButton";
+import Masonry from "react-masonry-component";
 
 class Search extends React.Component {
   constructor(props) {
@@ -17,38 +18,32 @@ class Search extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        <p>Clothes</p>
+      <Masonry>
         {this.props.clothes.map(el => (
-          <Card className="m-2">
-            <Link to={`/article/`}>
-              <CardImg src={el.url} alt="clothes" className="Photo" />
-            </Link>
-            <div className="overlay">
-              <Row className="p-0 card-buttons align-items-center">
-                <Heart color="white" />
-                <Target color="white" />
-                <ReportButton />
-              </Row>
-            </div>
-          </Card>
+          <Col Col sm="6" md="4" lg="3">
+            <Card className="m-2">
+              <Link to={`/article/` + el.id}>
+                <CardImg src={el.url} alt="clothes" className="Photo" />
+              </Link>
+              <div className="overlay">
+                <Row className="p-0 card-buttons align-items-center">
+                  <Heart color="white" />
+                  <Target color="white" />
+                  <ReportButton />
+                </Row>
+              </div>
+            </Card>
+          </Col>
         ))}
-        <p>User</p>
+        <hr />
         {this.props.users.map(e => (
-          <Card className="m-2">
-            <Link to={`/article/`}>
-              <CardImg src={e.avatar} alt="users" className="Photo" />
+          <React.Fragment>
+            <Link to={`/profil/` + e.id}>
+              <img src={e.avatar} className="avatar m-3" alt="Avatar" />
             </Link>
-            <div className="overlay">
-              <Row className="p-0 card-buttons align-items-center">
-                <Heart color="white" />
-                <Target color="white" />
-                <ReportButton />
-              </Row>
-            </div>
-          </Card>
+          </React.Fragment>
         ))}
-      </React.Fragment>
+      </Masonry>
     );
   }
 }

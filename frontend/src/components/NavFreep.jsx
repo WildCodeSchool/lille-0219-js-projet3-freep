@@ -22,7 +22,6 @@ class NavFreep extends React.Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.handleReset = this.handleReset.bind(this);
   }
 
   toggleBurger() {
@@ -54,9 +53,8 @@ class NavFreep extends React.Component {
         keyword: this.state.searchResult
       })
       .then(res => {
-        const { dispatch, history } = this.props;
+        const { dispatch } = this.props;
         dispatch(setResultsActions(res.data));
-        // history.push("/Search");
       })
       .catch(err => {
         console.log("Error :" + err);
@@ -84,14 +82,15 @@ class NavFreep extends React.Component {
                   placeholder="Cherche un vêtement ou un profil..."
                   value={this.state.searchResult}
                   onChange={this.handleChange}
-                  //onFocus={this.handleReset}
                 />
                 <input type="submit" />
-                <img
-                  className="magnifier"
-                  src="../pictures/loupe.png"
-                  alt="magnifier"
-                />
+                <Link to={`/search`}>
+                  <img
+                    className="magnifier"
+                    src="../pictures/loupe.png"
+                    alt="magnifier"
+                  />
+                </Link>
               </label>
             </form>
             <Nav className="ml-auto" navbar>
