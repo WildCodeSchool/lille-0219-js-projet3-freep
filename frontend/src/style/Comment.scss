@@ -1,8 +1,4 @@
-$bl: #222;
-
-* {
-  color: $bl;
-}
+@import "../index.scss";
 
 .dropdown-btn .btn,
 .dropdown-btn .btn:hover {
@@ -12,15 +8,23 @@ $bl: #222;
   box-shadow: 0 0 0 transparent !important;
 }
 
-.report-button {
-  background: #fbf4f1;
-  border: transparent;
+.comments-feed div div div.dropdown-btn button.dots svg {
+  stroke: fade-out($bl, 0.5) !important;
+  stroke-width: 1px;
   &:hover {
-    background: #fbf4f1;
+    stroke: $main-color !important;
+  }
+}
+
+.report-button {
+  border: transparent;
+  border-radius: $radius-sm;
+  &:hover {
+    background: $wh;
   }
   a {
     font-size: 0.8rem;
-    font-family: sans-serif;
+    font-family: "montserrat", sans-serif;
     color: fade-out($bl, 0.5);
     text-decoration: none;
     &:hover {
@@ -31,7 +35,9 @@ $bl: #222;
 
 .dropdown-menu {
   border: none;
-  background: #fbf4f1;
+  background: $wh;
+  padding: 0 !important;
+  box-shadow: $box-shadow;
 }
 
 .comments-profile {
@@ -39,14 +45,9 @@ $bl: #222;
   margin-left: 2.25rem;
 }
 
-div:nth-child(1) > button:nth-child(1) > svg {
-  stroke: #222;
-}
-
 .comment-avatar {
   width: 80px;
   height: 80px;
-  margin-right: 2rem;
   border-radius: 50%;
 }
 
@@ -74,8 +75,8 @@ div:nth-child(1) > button:nth-child(1) > svg {
   }
   .comments-profile {
     font-size: calc(0.8rem + 0.3vw);
-    margin-left: 1.5rem;
-    margin-right: 1rem;
+    margin-left: 2.5rem;
+    margin-right: 2rem;
   }
   .comment {
     font-size: calc(0.8rem + 0.3vw);
@@ -101,4 +102,8 @@ div:nth-child(1) > button:nth-child(1) > svg {
     font-size: calc(0.5rem + 0.3vw);
     margin-left: 0;
   }
+}
+
+.text-muted {
+  font-size: 0.8rem;
 }

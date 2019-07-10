@@ -2,29 +2,30 @@ import React from "react";
 import Borrow from "./Borrow";
 import axios from "axios";
 import Loader from "./Loader";
-import { Col, Row, Container } from "reactstrap";
-import LazyLoad from "react-lazyload";
+import { Col } from "reactstrap";
+import "../style/Borrow.scss";
+import Masonry from "react-masonry-component";
 
 class BorrowPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: null,
       borrowArray: [{}],
-      loading: true,
-      modal: false
+      loading: true
     };
   }
 
   componentDidMount() {
-    this.refresh();
-  }
-  refresh() {
+    const user = JSON.parse(localStorage.getItem("user"));
     this.setState({
       userId: this.props.match.params.userId
     });
     axios
-      .get(`http://localhost:5050/emprunt/${this.props.match.params.userId}`)
+      .get(`http://localhost:5050/emprunt/${this.props.match.params.userId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
       .then(({ data }) => {
         this.setState({
           borrowArray: data,
@@ -33,46 +34,33 @@ class BorrowPage extends React.Component {
       });
   }
 
-  toggleModalBorrow() {
-    this.setState(prevState => ({
-      modal: !prevState.modal
-    }));
-  }
-
   render() {
     if (this.state.loading) {
       return <Loader />;
     } else {
       return (
-        <Container>
+        <React.Fragment>
           <h1>Ce que je veux emprunter</h1>
           {this.state.borrowArray.length === 0 ? (
             <p>Vous n'avez pas d'emprunt en cours.</p>
-          ) : (
-            ""
-          )}
-          {this.state.borrowArray.map((borrow, i) => {
-            return (
-              borrow && (
-                <Row>
-                  <Col sm="6" md="4" lg="3">
-                    <LazyLoad height={100} offset={-200}>
-                      <Borrow
-                        key={i}
-                        pictureUrl={borrow.url}
-                        clothePage={borrow.id_clothing}
-                        borrowId={borrow.id}
-                        userId={this.props.match.params.userId}
-                        listRefresh={this.refresh}
-                        toggleModalBorrow={this.toggleModalBorrow}
-                      />
-                    </LazyLoad>
+          ) : null}
+          <Masonry>
+            {this.state.borrowArray.map((borrow, i) => {
+              return (
+                borrow && (
+                  <Col sm="6" md="4" lg="3" xl="3" key={i}>
+                    <Borrow
+                      key={i}
+                      pictureUrl={borrow.url}
+                      clothePage={borrow.id_clothing}
+                      borrowId={borrow.id}
+                    />
                   </Col>
-                </Row>
-              )
-            );
-          })}
-        </Container>
+                )
+              );
+            })}
+          </Masonry>
+        </React.Fragment>
       );
     }
   }

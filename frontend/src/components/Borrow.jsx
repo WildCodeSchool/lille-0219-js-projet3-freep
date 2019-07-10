@@ -1,9 +1,11 @@
 //composant pour 1 emprunt
 import React from "react";
 import {
+  Col,
   Card,
   CardBody,
   CardImg,
+  CardFooter,
   Button,
   Form,
   Input,
@@ -18,27 +20,43 @@ class Borrow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hidden: false
+      hidden: false,
+      modal: false,
+      isOpen: false
     };
   }
 
   handleDelete(e) {
     e.preventDefault();
-    const userId = this.props.userId;
     const borrowId = this.props.borrowId;
+    axios.delete(`http://localhost:5050/emprunt/${borrowId}`).then(() => {
+      this.setState({
+        hidden: true
+      });
+    });
+  }
+
+  toggleModalBorrow() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const clothingId = this.props.clothePage;
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .delete(`http://localhost:5050/emprunt/${userId}/${borrowId}`)
-      .then(({ data }) => {
-        this.setState({
-          hidden: true
-        });
+      .post(`http://localhost:5050/${currentUser}/${clothingId}/uploadProof`)
+      .then(() => {
+        alert("Votre photo a bien été envoyée");
       });
   }
 
   render() {
     return (
       <div className={this.state.hidden ? "hidden" : ""}>
-        <Card>
+        <Card className="borrowCard">
           <CardBody>
             <Link to={`/article/${this.props.clothePage}`} className="link">
               <CardImg
@@ -47,38 +65,49 @@ class Borrow extends React.Component {
                 className="borrowPicture"
               />
             </Link>
-            <Button
-              onClick={e => {
-                this.handleDelete(e);
-              }}
-            >
-              Annuler l'emprunt
-            </Button>
-
-            <Button
-              onClick={() => {
-                this.props.toggleModalBorrow();
-              }}
-            >
-              J'ai emprunté ce vêtement
-            </Button>
-            <Modal
-              isOpen={this.props.modal}
-              toggle={this.props.toggleModalBorrow}
-            >
-              <ModalHeader
-                toggle={this.props.toggleModalBorrow}
-                className="pr-5"
-              />
-              <Form
-                method="POST"
-                enctype="multipart/form-data"
-                action="uploaddufichier"
-              >
-                <Input type="file" name="monfichier" />
-                <Button>Envoyer</Button>
-              </Form>
-            </Modal>
+            <CardFooter className="row justify-content-center px-0 py-2 mx-auto">
+              <Col xs="5" className="m-1 p-0 d-flex justify-content-center">
+                <Button
+                  onClick={() => {
+                    this.toggleModalBorrow();
+                  }}
+                  className="borrowButton"
+                >
+                  J'ai emprunté ce vêtement
+                </Button>
+                <Modal
+                  isOpen={this.state.modal}
+                  toggle={() => {
+                    this.toggleModalBorrow();
+                  }}
+                >
+                  <ModalHeader
+                    toggle={() => {
+                      this.toggleModalBorrow();
+                    }}
+                  />
+                  <Form
+                    onSubmit={e => {
+                      this.handleSubmit(e);
+                    }}
+                    encType="multipart/form-data"
+                  >
+                    <Input type="file" name="myFile" />
+                    <Button type="submit">Envoyer</Button>
+                  </Form>
+                </Modal>
+              </Col>
+              <Col xs="5" className="m-1 p-0 d-flex justify-content-center">
+                <Button
+                  onClick={e => {
+                    this.handleDelete(e);
+                  }}
+                  className="borrowButton"
+                >
+                  Annuler l'emprunt
+                </Button>
+              </Col>
+            </CardFooter>
           </CardBody>
         </Card>
       </div>

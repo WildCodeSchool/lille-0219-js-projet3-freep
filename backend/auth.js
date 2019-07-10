@@ -16,9 +16,13 @@ router.post("/users", (req, res) => {
     console.log(user);
 
     db.query(
-      `INSERT INTO user (nickname, email, password, firstname, lastname, avatar, created_at, description) VALUES ("Viking01", "Loic@example.com", "${
-        user.password
-      }", "Loic", "Bobby", "https://cdn2.vectorstock.com/i/1000x1000/20/86/viking-horned-helmet-ancient-costume-vector-15462086.jpg", NOW(), "super(props)")`,
+      `INSERT INTO user (nickname, email, password, firstname, lastname, avatar, created_at, location) VALUES ('${
+        user.nickname
+      }', '${user.email}', '${user.password}', '${user.firstname}', '${
+        user.lastname
+      }', "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png", NOW(), '${
+        user.location
+      }')`,
       user,
       (err, rows, fields) => {
         if (err) throw err;

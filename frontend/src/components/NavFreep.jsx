@@ -1,12 +1,13 @@
 import React from "react";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
-import { Tag, PlusCircle, Mail, Heart, User } from "react-feather";
+import { Tag, PlusCircle, Mail, Shuffle, User } from "react-feather";
 import { Modal, ModalHeader } from "reactstrap";
 import Uploader from "./Upload";
 import axios from "axios";
 import { connect } from "react-redux";
 import { setResultsActions } from "../Redux/actions";
+import classnames from "classnames";
 
 class NavFreep extends React.Component {
   constructor(props) {
@@ -18,7 +19,10 @@ class NavFreep extends React.Component {
       modal: false,
       keyword: "",
       searchResult: "",
-      tab: []
+      tab: [],
+      profile: "",
+      prevScrollpos: window.pageYOffset,
+      visible: true
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -34,6 +38,27 @@ class NavFreep extends React.Component {
       modal: !prevState.modal
     }));
   }
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
+    if ("user" in localStorage) {
+      const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+      this.setState({
+        profile: currentUser
+      });
+    }
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+  handleScroll = () => {
+    const { prevScrollpos } = this.state;
+    const currentScrollPos = window.pageYOffset;
+    const visible = prevScrollpos > currentScrollPos;
+    this.setState({
+      prevScrollpos: currentScrollPos,
+      visible
+    });
+  };
 
   handleChange(e) {
     const result = e.target.value;
@@ -63,23 +88,25 @@ class NavFreep extends React.Component {
 
   render() {
     return (
-      <div className="header">
+      <div
+        className={classnames("header", {
+          "header--hidden": !this.state.visible
+        })}
+      >
         <Navbar color="light" light expand="md">
           <Link to="/accueil">
             <img className="logo" src="../pictures/logo.png" alt="logo" />
           </Link>
           <div className="navText">
-            <span className="navTitle">Freep</span>
-            <br />
             <span className="navCatch">La garde robe qui rapporte</span>
           </div>
           <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <form onSubmit={this.handleSubmit}>
+            <form className="recherche_demo" onSubmit={this.handleSubmit}>
               <label htmlFor="clothe-profile-search">
                 <input
-                  type="text"
-                  placeholder="Cherche un vêtement ou un profil..."
+                  type="search"
+                  placeholder="Recherche une utilisatrice ou un vêtement"
                   value={this.state.searchResult}
                   onChange={this.handleChange}
                 />
@@ -94,31 +121,40 @@ class NavFreep extends React.Component {
               </label>
             </form>
             <Nav className="ml-auto" navbar>
-              <NavLink title="Propose ton vêtement !">
+              <div title="Propose ton vêtement !" to="">
                 <PlusCircle
                   className="img"
-                  color="black"
+                  color="#222"
                   onClick={this.toggleModal}
                 />
                 <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
                   <ModalHeader toggle={this.toggleModal} className="pr-5" />
                   <Uploader />
                 </Modal>
-              </NavLink>
-              <NavLink to="/partenaire" title="Découvre nos partenaires !">
-                <Tag className="img" color="black" />
-              </NavLink>
-              <NavLink to="/messagerie/2" title="Parle avec nos Freepeuses">
-                <Mail className="img" color="black" />
+              </div>
+              <NavLink
+                to={`/partenaire/${this.state.profile}`}
+                title="Découvre nos partenaires !"
+              >
+                <Tag className="img" color="#222" />
               </NavLink>
               <NavLink
-                to="/emprunt/1"
+                to={`/messagerie/${this.state.profile}`}
+                title="Parle avec nos Freepeuses"
+              >
+                <Mail className="img" color="#222" />
+              </NavLink>
+              <NavLink
+                to={`/emprunt/${this.state.profile}`}
                 title="Retrouve les vêtements que tu souhaites emprunter"
               >
-                <Heart className="img" color="black" />
+                <Shuffle className="img" color="#222" />
               </NavLink>
-              <NavLink to="/profil/1" title="Accède à ton profil">
-                <User className="img" color="black" />
+              <NavLink
+                to={`/profil/${this.state.profile}`}
+                title="Accède à ton profil"
+              >
+                <User className="img" color="#222" />
               </NavLink>
             </Nav>
           </Collapse>

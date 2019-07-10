@@ -1,5 +1,5 @@
 import React from "react";
-import "../style/Avatar.css";
+import "../style/Avatar.scss";
 
 class Avatar extends React.Component {
   render() {

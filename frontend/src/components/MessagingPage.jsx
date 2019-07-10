@@ -16,10 +16,18 @@ class MessagingPage extends React.Component {
   }
 
   componentDidMount() {
-    const idReader = this.props.match.params.idReader;
-
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    const user = JSON.parse(localStorage.getItem("user"));
     axios
-      .get(`http://localhost:5050/messagerie/${idReader}`)
+      .get(
+        `http://localhost:5050/messagerie/${currentUser}
+      `,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        }
+      )
       .then(({ data }) => {
         this.setState({
           messagingArray: data,
@@ -33,18 +41,13 @@ class MessagingPage extends React.Component {
     } else {
       return (
         <React.Fragment>
-          <h1 className="titleMessage">Messagerie</h1>
+          <h1>Messagerie</h1>
           {this.state.messagingArray.length === 0 ? (
             <p>Vous n'avez pas de conversation en cours.</p>
           ) : (
             ""
           )}
           {this.state.messagingArray.map((messaging, i) => {
-            console.log("id: " + messaging.id);
-            console.log("idAuthor: " + messaging.id_author);
-            console.log("idReader: " + messaging.id_reader);
-            console.log("content: " + messaging.content);
-
             return (
               messaging && (
                 <Messaging

@@ -2,190 +2,184 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
-import LoginBackground from "../pictures/Login.jpg";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { Heart } from "react-feather";
+import { Row, Col } from "reactstrap";
 
 class Registration extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      firstName: "",
-      lastName: "",
-      username: "",
+      firstname: "",
+      lastname: "",
+      nickname: "",
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      location: ""
     };
   }
-
   validateForm() {
     return (
-      this.state.firstName.length > 0 &&
-      this.state.lastName.length > 0 &&
-      this.state.username.length > 0 &&
+      this.state.firstname.length > 0 &&
+      this.state.lastname.length > 0 &&
+      this.state.nickname.length > 0 &&
       this.state.email.length > 0 &&
+      this.state.location.length > 0 &&
+      this.state.password.length > 0 &&
+      this.state.confirmPassword.length > 0 &&
       this.state.password === this.state.confirmPassword
     );
   }
-
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   };
-
   handleSubmit = event => {
     event.preventDefault();
+    let {
+      firstname,
+      lastname,
+      nickname,
+      email,
+      password,
+      confirmPassword,
+      location
+    } = this.state;
+    const { history } = this.props;
+    if (password === confirmPassword) {
+      axios
+        .post("http://localhost:5050/auth/users", {
+          firstname,
+          lastname,
+          nickname,
+          email,
+          password,
+          location
+        })
+        .then(({ data }) => {
+          this.setState({
+            firstname: data.firstname,
+            lastname: data.lastname,
+            nickname: data.nickname,
+            email: data.email,
+            password: data.password,
+            location: data.location
+          });
+          history.push("/accueil");
+        });
+    }
   };
-
   render() {
     return (
-      <div
-        className="Registration"
-        style={{
-          backgroundImage: `url(${LoginBackground})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "100vh"
-        }}
-      >
-        <Form
-          onSubmit={this.handleSubmit}
-          style={{
-            text: "center",
-            background: "#f5f5f5",
-            padding: "5vh",
-            margin: "50px",
-            borderRadius: "10px",
-            boxShadow: ".5rem 1rem 1rem rgba(0,0,0,.2)"
-          }}
-        >
-          <h1 className="titleConnect"> Rejoins la communauté Freep </h1>
-
-          <Form.Group controlId="firstName" bsSize="large">
-            <h1
-              style={{
-                fontSize: "20px",
-                color: "goldenrod",
-                fontFamily: "DancingScript"
-              }}
-              for="firstName"
-            >
-              {" "}
-              Prénom{" "}
-            </h1>
-            <Form.Control
-              autoFocus
-              type="text"
-              value={this.state.firstName}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="lastName" bsSize="large">
-            <h1
-              style={{
-                fontSize: "20px",
-                color: "goldenrod",
-                fontFamily: "DancingScript"
-              }}
-              for="lastName"
-            >
-              {" "}
-              Nom{" "}
-            </h1>
-            <Form.Control
-              autoFocus
-              type="text"
-              value={this.state.lastName}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="username" bsSize="large">
-            <h1
-              style={{
-                fontSize: "20px",
-                color: "goldenrod",
-                fontFamily: "DancingScript"
-              }}
-              for="username"
-            >
-              {" "}
-              Nom d'utilisateur{" "}
-            </h1>
-            <Form.Control
-              autoFocus
-              type="text"
-              value={this.state.username}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="email" bsSize="large">
-            <h1
-              style={{
-                fontSize: "20px",
-                color: "goldenrod",
-                fontFamily: "DancingScript"
-              }}
-              for="email"
-            >
-              E-mail
-            </h1>
-            <Form.Control
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="password" bsSize="large">
-            <h1
-              style={{
-                fontSize: "20px",
-                color: "goldenrod",
-                fontFamily: "DancingScript"
-              }}
-              for="pwd"
-            >
-              Mot de passe{" "}
-            </h1>
-            <Form.Control
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </Form.Group>
-          <Form.Group controlId="confirmPassword" bsSize="large">
-            <h1
-              style={{
-                fontSize: "20px",
-                color: "goldenrod",
-                fontFamily: "DancingScript"
-              }}
-              for="pwd"
-            >
-              Confirme ton mot de passe{" "}
-            </h1>
-            <Form.Control
-              value={this.state.confirmPassword}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </Form.Group>
+      <div className="Registration">
+        <Form onSubmit={this.handleSubmit}>
+          <h2 className="text-center"> Rejoins la communauté Freep !</h2>
           <Button
-            style={{ border: " 1px solid black" }}
+            className="facebook"
+            href="https://fr-fr.facebook.com/login/"
+            role="button"
+            title="Lien"
+          >
+            Inscris-toi avec Facebook
+          </Button>
+          <div className="trait" />
+          <Row>
+            <Col xs="6">
+              <Form.Group controlId="firstname">
+                <label htmlFor="firstname">Prénom</label>
+                <Form.Control
+                  autoFocus
+                  type="text"
+                  value={this.state.firstname}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs="6">
+              <Form.Group controlId="lastname">
+                <label htmlFor="lastname">Nom</label>
+                <Form.Control
+                  autoFocus
+                  type="text"
+                  value={this.state.lastname}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs="6">
+              <Form.Group controlId="nickname">
+                <label htmlFor="nickname">Pseudo</label>
+                <Form.Control
+                  autoFocus
+                  type="text"
+                  value={this.state.nickname}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs="6">
+              <Form.Group controlId="location">
+                <label htmlFor="location">Ville</label>
+                <Form.Control
+                  autoFocus
+                  type="text"
+                  value={this.state.location}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="email">
+                <label htmlFor="email">E-mail</label>
+                <Form.Control
+                  autoFocus
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs="6">
+              <Form.Group controlId="password">
+                <label htmlFor="pwd">Mot de passe</label>
+                <Form.Control
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  type="password"
+                />
+              </Form.Group>
+            </Col>
+            <Col xs="6">
+              <Form.Group controlId="confirmPassword">
+                <label htmlFor="pwd">Confirme ton mot de passe</label>
+                <Form.Control
+                  value={this.state.confirmPassword}
+                  onChange={this.handleChange}
+                  type="password"
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Button
             className="myButton"
             block
-            bsSize="large"
             disabled={!this.validateForm()}
             type="submit"
           >
-            Rejoins nous !
+            Rejoins-nous !
           </Button>
+          <div className="registration-link">
+            <Link to="/">
+              Déjà inscrite ? Connecte-toi !
+              <Heart width="12" className="mx-1" />
+            </Link>
+          </div>
         </Form>
       </div>
     );
   }
 }
-
 export default Registration;
