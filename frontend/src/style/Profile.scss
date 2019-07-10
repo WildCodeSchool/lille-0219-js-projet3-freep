@@ -1,0 +1,22 @@
+@import "../index.scss";
+
+.user-name {
+  font-size: calc(0.8rem + 1vw);
+}
+
+.button {
+  background: #ad3a70cc;
+  border: none;
+  &:hover {
+    background: $gradient;
+    box-shadow: $box-shadow;
+  }
+}
+
+.profile-data div {
+  font-size: 1.25rem;
+}
+
+.location {
+  color: #808080;
+}

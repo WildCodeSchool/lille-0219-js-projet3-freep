@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
-import LoginBackground from "../pictures/Login.jpg";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
+<<<<<<< HEAD
+=======
+import { Heart } from "react-feather";
+>>>>>>> 825478e31ae0c5e757c58e3d8632b3a41b1b219c
 
 class Login extends Component {
   constructor(props) {
@@ -47,6 +50,7 @@ class Login extends Component {
 
   render() {
     return (
+<<<<<<< HEAD
       <div
         className="Login"
         style={{
@@ -65,22 +69,20 @@ class Login extends Component {
           }}
         >
           <h1 className="titleConnect">Prête pour de nouvelles aventures ? </h1>
+=======
+      <div className="Login">
+        <Form onSubmit={this.handleSubmit}>
+          <h2>Prête pour de nouvelles aventures ? </h2>
+>>>>>>> 825478e31ae0c5e757c58e3d8632b3a41b1b219c
           <Button
             className="facebook"
             href="https://fr-fr.facebook.com/login/"
-            class="facebook"
             role="button"
             title="Lien"
-            style={{
-              fontSize: "15px",
-              borderRadius: "50px",
-              backgroundColor: "bleu",
-              marginBottom: "30px",
-              marginTop: "30px"
-            }}
           >
-            Connecte toi avec Facebook
+            Connecte-toi avec Facebook
           </Button>
+<<<<<<< HEAD
           <div class="trait" />
 
           <Form.Group controlId="email" bsSize="large">
@@ -94,6 +96,11 @@ class Login extends Component {
               E-mail
             </h1>
 
+=======
+          <div className="trait" />
+          <Form.Group controlId="email">
+            <label htmlFor="email">E-mail</label>
+>>>>>>> 825478e31ae0c5e757c58e3d8632b3a41b1b219c
             <Form.Control
               autoFocus
               type="email"
@@ -101,6 +108,7 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
+<<<<<<< HEAD
           <Form.Group controlId="password" bsSize="large">
             <h1
               style={{
@@ -111,6 +119,10 @@ class Login extends Component {
             >
               Mot de passe{" "}
             </h1>
+=======
+          <Form.Group controlId="password">
+            <label htmlFor="pwd">Mot de passe</label>
+>>>>>>> 825478e31ae0c5e757c58e3d8632b3a41b1b219c
             <Form.Control
               value={this.state.password}
               onChange={this.handleChange}
@@ -127,6 +139,7 @@ class Login extends Component {
           >
             Connecte toi !
           </Button>
+<<<<<<< HEAD
 
           <div>
             <NavLink
@@ -137,15 +150,17 @@ class Login extends Component {
             >
               Mot de passe oublié ?
             </NavLink>
+=======
+          <Link to="" className="forgotten-password">
+            Mot de passe oublié ?
+          </Link>
+          <div className="registration-link">
+            <Link to="/inscription">
+              Pas encore de compte ? Inscris-toi !
+              <Heart width="12" className="mx-1" />
+            </Link>
+>>>>>>> 825478e31ae0c5e757c58e3d8632b3a41b1b219c
           </div>
-          <NavLink
-            activeClassName="active"
-            className="littleInfo"
-            exact
-            to="/inscription"
-          >
-            Pas encore de compte ? Inscris-toi ! 🖤
-          </NavLink>
         </Form>
       </div>
     );

@@ -1,3 +1,5 @@
+@import "../index.scss";
+
 .brand {
   position: absolute;
   top: 50%;
@@ -18,4 +20,5 @@
   width: 100%;
   height: 300px;
   object-fit: cover;
+  border-radius: $radius-lg;
 }

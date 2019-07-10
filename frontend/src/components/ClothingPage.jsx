@@ -7,35 +7,52 @@ import {
   CarouselItem,
   CarouselControl,
   CarouselIndicators,
-  Button
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input
 } from "reactstrap";
+import { Link } from "react-router-dom";
 import "../style/ClothingPage.scss";
 import Comment from "./Comment";
 import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
-import CommentForm from "./CommentForm";
 
 class ClothingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      backendData: {
-        clothing: {},
-        users: [],
-        pictures: [],
-        comments: []
-      },
+      clothing: {},
+      users: [],
+      pictures: [],
+      commentsArray: [],
+      comment: "",
       loading: true,
       width: window.innerWidth,
       activeIndex: 0
     };
+  }
 
-    this.next = this.next.bind(this);
-    this.previous = this.previous.bind(this);
-    this.goToIndex = this.goToIndex.bind(this);
-    this.onExiting = this.onExiting.bind(this);
-    this.onExited = this.onExited.bind(this);
+  componentDidMount() {
+    const articleId = this.props.match.params.articleId;
+    const user = JSON.parse(localStorage.getItem("user"));
+    axios
+      .get(`http://localhost:5050/articles/${articleId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      })
+      .then(({ data }) => {
+        this.setState({
+          clothing: data.clothing,
+          users: data.users,
+          pictures: data.pictures,
+          commentsArray: data.comments,
+          loading: false
+        });
+      });
   }
 
   onExiting() {
@@ -51,31 +68,43 @@ class ClothingPage extends React.Component {
     this.setState({ activeIndex: newIndex });
   }
 
-  componentDidMount() {
-    const articleId = this.props.match.params.articleId;
-    const user = JSON.parse(localStorage.getItem("user"));
+  // Comment form
 
+  handleFieldChange(e) {
+    const { value } = e.target;
+    this.setState({ comment: value });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    const articleId = this.state.clothing.id;
+    let { comment } = this.state;
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .get(`http://localhost:5050/articles/${articleId}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
+      .post(`http://localhost:5050/comment/${articleId}`, {
+        content: comment,
+        idAuthor: currentUser
       })
       .then(({ data }) => {
+        let comments = this.state.commentsArray;
+        data.hour_send = "l'instant";
+        comments.unshift(data);
         this.setState({
-          backendData: {
-            clothing: data.clothing,
-            users: data.users,
-            pictures: data.pictures,
-            comments: data.comments
-          },
+          loading: false,
+          commentsArray: comments,
+          comment: ""
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({
           loading: false
         });
       });
   }
 
   next() {
-    const pictures = this.state.backendData.pictures;
+    const pictures = this.state.pictures;
     if (this.animating) return;
     const nextIndex =
       this.state.activeIndex === pictures.length - 1
@@ -85,7 +114,7 @@ class ClothingPage extends React.Component {
   }
 
   previous() {
-    const pictures = this.state.backendData.pictures;
+    const pictures = this.state.pictures;
     if (this.animating) return;
     const nextIndex =
       this.state.activeIndex === 0
@@ -107,26 +136,26 @@ class ClothingPage extends React.Component {
   };
 
   getUser = id => {
-    const users = this.state.backendData.users.filter(user => {
+    const users = this.state.users.filter(user => {
       return user.id === id;
     });
     return users[0];
   };
 
   handleAdd(e) {
-    const userId = 1;
-    const clothingId = this.state.backendData.clothing.id;
-    const pictureId = this.state.backendData.pictures[0].id;
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    const clothingId = this.state.clothing.id;
+    const pictureId = this.state.pictures[0].id;
     axios
       .post(
-        `http://localhost:5050/emprunt/${userId}/${clothingId}/${pictureId}`
+        `http://localhost:5050/emprunt/${currentUser}/${clothingId}/${pictureId}`
       )
       .then(({ data }) => {
-        data.id_user = userId;
+        data.id_user = currentUser;
         data.id_clothing = clothingId;
         data.id_picture = pictureId;
         this.props.history.push(
-          `/message/1/${this.state.backendData.users[0].id}`
+          `/message/${currentUser}/${this.state.clothing.id_user}`
         );
       })
       .catch(err => {
@@ -138,11 +167,11 @@ class ClothingPage extends React.Component {
     const { width } = this.state;
     const isMobile = width <= 640;
     const { activeIndex } = this.state;
-    const clothing = this.state.backendData.clothing;
-    const pictures = this.state.backendData.pictures;
-    const comments = this.state.backendData.comments;
-
+    const clothing = this.state.clothing;
+    const pictures = this.state.pictures;
+    const comments = this.state.commentsArray;
     const auth = this.getUser(clothing.id_user);
+
     if (this.state.loading) {
       return <Loader />;
     } else {
@@ -196,21 +225,19 @@ class ClothingPage extends React.Component {
                     );
                   } else {
                     return (
-                      <React.Fragment>
-                        <Row className="justify-content-center">
-                          {pictures.map((picture, key) => {
-                            return (
-                              <Col xs="6" md="4" key={key}>
-                                <Photo
-                                  picture={picture.url}
-                                  link={picture.id_clothing}
-                                  pictureId={picture.id}
-                                />
-                              </Col>
-                            );
-                          })}
-                        </Row>
-                      </React.Fragment>
+                      <Row className="justify-content-center">
+                        {pictures.map((picture, key) => {
+                          return (
+                            <Col xs="6" md="4" key={key}>
+                              <Photo
+                                picture={picture.url}
+                                pictureId={picture.id}
+                                link={picture.id_clothing}
+                              />
+                            </Col>
+                          );
+                        })}
+                      </Row>
                     );
                   }
                 })()}
@@ -223,8 +250,8 @@ class ClothingPage extends React.Component {
                       <Col xs="6" md="6" key={key}>
                         <Photo
                           picture={picture.url}
-                          link={picture.id_clothing}
                           pictureId={picture.id}
+                          link={picture.id_clothing}
                         />
                       </Col>
                     );
@@ -236,7 +263,7 @@ class ClothingPage extends React.Component {
               <div className="sub-container d-flex flex-column">
                 <section>
                   <div className="p-4 comments-feed">
-                    <div>
+                    <Link to={`/profil/${auth.id}`}>
                       <Row className="align-items-center">
                         <Col xs="6" md="5">
                           <img
@@ -250,7 +277,7 @@ class ClothingPage extends React.Component {
                           {auth && auth.nickname}
                         </Col>
                       </Row>
-                    </div>
+                    </Link>
                     <div className="pt-4">
                       <div>{clothing.description}</div>
                       <Row className="pt-4 pr-3">
@@ -263,7 +290,7 @@ class ClothingPage extends React.Component {
                             this.handleAdd(e);
                           }}
                         >
-                          Contacte-moi!
+                          Contacte-moi !
                         </Button>
                       </Row>
                     </div>
@@ -287,12 +314,46 @@ class ClothingPage extends React.Component {
                   {comments.map((comment, key) => {
                     const user = this.getUser(comment.id_user);
                     return (
-                      <Comment key={key} comment={comment} profile={user} />
+                      <React.Fragment key={key}>
+                        <Comment
+                          comment={comment}
+                          profile={user}
+                          timeStamp={
+                            comment.date_diff >= 1
+                              ? "Il y a " + comment.date_diff + " jours."
+                              : "Envoyé à " + comment.hour_send + "."
+                          }
+                        />
+                        <hr />
+                      </React.Fragment>
                     );
                   })}
                 </div>
               </div>
-              <CommentForm article={clothing.id} />
+              <Form
+                className="comment-form"
+                onSubmit={e => {
+                  this.onSubmit(e);
+                }}
+              >
+                <FormGroup>
+                  <Label>
+                    <h2>Et toi, qu'en penses-tu?</h2>
+                  </Label>
+                  <Col xs="9" lg="12" className="offset-3 offset-lg-0 p-0">
+                    <Input
+                      onChange={e => this.handleFieldChange(e)}
+                      value={this.state.comment}
+                      type="text"
+                      name="message"
+                      placeholder="Ecris ton message ici"
+                    />
+                    <Row className="justify-content-end p-3">
+                      <Button>Envoyer</Button>
+                    </Row>
+                  </Col>
+                </FormGroup>
+              </Form>
             </Col>
           </Row>
         </Container>

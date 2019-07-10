@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
-import { Tag, PlusCircle, Mail, Heart, User } from "react-feather";
+import { Tag, PlusCircle, Mail, Shuffle, User } from "react-feather";
 import { Modal, ModalHeader } from "reactstrap";
 import Uploader from "./Upload";
 import classnames from "classnames";
@@ -32,22 +32,6 @@ class NavFreep extends React.Component {
   }
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
-  }
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
-  }
-  handleScroll = () => {
-    const { prevScrollpos } = this.state;
-
-    const currentScrollPos = window.pageYOffset;
-    const visible = prevScrollpos > currentScrollPos;
-    this.setState({
-      prevScrollpos: currentScrollPos,
-      visible
-    });
-  };
-
-  componentDidMount() {
     if ("user" in localStorage) {
       const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
       this.setState({
@@ -55,6 +39,18 @@ class NavFreep extends React.Component {
       });
     }
   }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+  handleScroll = () => {
+    const { prevScrollpos } = this.state;
+    const currentScrollPos = window.pageYOffset;
+    const visible = prevScrollpos > currentScrollPos;
+    this.setState({
+      prevScrollpos: currentScrollPos,
+      visible
+    });
+  };
 
   render() {
     return (
@@ -68,17 +64,15 @@ class NavFreep extends React.Component {
             <img className="logo" src="../pictures/logo.png" alt="logo" />
           </Link>
           <div className="navText">
-            <span className="navTitle">Freep</span>
-            <br />
             <span className="navCatch">La garde robe qui rapporte</span>
           </div>
           <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <form class="recherche_demo">
+            <form className="recherche_demo">
               <label htmlFor="clothe-profile-search">
                 <input
                   type="search"
-                  placeholder="𝓡𝓮𝓬𝓱𝓮𝓻𝓬𝓱𝓮 𝓾𝓷𝓮 𝓾𝓽𝓲𝓵𝓲𝓼𝓪𝓽𝓻𝓲𝓬𝓮, 𝓾𝓷 𝓿𝓮𝓽𝓮𝓶𝓮𝓷𝓽 👗 "
+                  placeholder="Recherche une utilisatrice ou un vêtement"
                 />
                 <input type="submit" />
                 <img
@@ -92,7 +86,7 @@ class NavFreep extends React.Component {
               <div title="Propose ton vêtement !" to="">
                 <PlusCircle
                   className="img"
-                  color="black"
+                  color="#222"
                   onClick={this.toggleModal}
                 />
                 <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
@@ -100,23 +94,29 @@ class NavFreep extends React.Component {
                   <Uploader />
                 </Modal>
               </div>
-              <NavLink to="/partenaire" title="Découvre nos partenaires !">
-                <Tag className="img" color="black" />
-              </NavLink>
-              <NavLink to="/messagerie/2" title="Parle avec nos Freepeuses">
-                <Mail className="img" color="black" />
+              <NavLink
+                to={`/partenaire/${this.state.profile}`}
+                title="Découvre nos partenaires !"
+              >
+                <Tag className="img" color="#222" />
               </NavLink>
               <NavLink
-                to="/emprunt/1"
+                to={`/messagerie/${this.state.profile}`}
+                title="Parle avec nos Freepeuses"
+              >
+                <Mail className="img" color="#222" />
+              </NavLink>
+              <NavLink
+                to={`/emprunt/${this.state.profile}`}
                 title="Retrouve les vêtements que tu souhaites emprunter"
               >
-                <Heart className="img" color="black" />
+                <Shuffle className="img" color="#222" />
               </NavLink>
               <NavLink
                 to={`/profil/${this.state.profile}`}
                 title="Accède à ton profil"
               >
-                <User className="img" color="black" />
+                <User className="img" color="#222" />
               </NavLink>
             </Nav>
           </Collapse>

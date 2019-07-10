@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "../style/Login.scss";
-import LoginBackground from "../pictures/Login.jpg";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Heart } from "react-feather";
+import { Row, Col } from "reactstrap";
 
 class Registration extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class Registration extends Component {
       nickname: "",
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      location: ""
     };
   }
   validateForm() {
@@ -24,6 +26,9 @@ class Registration extends Component {
       this.state.lastname.length > 0 &&
       this.state.nickname.length > 0 &&
       this.state.email.length > 0 &&
+      this.state.location.length > 0 &&
+      this.state.password.length > 0 &&
+      this.state.confirmPassword.length > 0 &&
       this.state.password === this.state.confirmPassword
     );
   }
@@ -40,7 +45,8 @@ class Registration extends Component {
       nickname,
       email,
       password,
-      confirmPassword
+      confirmPassword,
+      location
     } = this.state;
     const { history } = this.props;
     if (password === confirmPassword) {
@@ -50,7 +56,8 @@ class Registration extends Component {
           lastname,
           nickname,
           email,
-          password
+          password,
+          location
         })
         .then(({ data }) => {
           this.setState({
@@ -58,7 +65,8 @@ class Registration extends Component {
             lastname: data.lastname,
             nickname: data.nickname,
             email: data.email,
-            password: data.password
+            password: data.password,
+            location: data.location
           });
           history.push("/accueil");
         });
@@ -66,43 +74,18 @@ class Registration extends Component {
   };
   render() {
     return (
-      <div
-        className="Registration"
-        style={{
-          backgroundImage: `url(${LoginBackground})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "500%"
-        }}
-      >
-        <Form
-          onSubmit={this.handleSubmit}
-          style={{
-            text: "center",
-            background: "#f5f5f5",
-            padding: "5vh",
-            margin: "50px",
-            borderRadius: "10px",
-            boxShadow: ".5rem 1rem 1rem rgba(0,0,0,.2)"
-          }}
-        >
-          <h1 className="titleConnect"> Rejoins la communauté Freep 🌸</h1>
+      <div className="Registration">
+        <Form onSubmit={this.handleSubmit}>
+          <h2 className="text-center"> Rejoins la communauté Freep !</h2>
           <Button
             className="facebook"
             href="https://fr-fr.facebook.com/login/"
-            class="facebook"
             role="button"
             title="Lien"
-            style={{
-              fontSize: "15px",
-              borderRadius: "50px",
-              backgroundColor: "bleu",
-              marginBottom: "30px",
-              marginTop: "30px"
-            }}
           >
             Inscris-toi avec Facebook
           </Button>
+<<<<<<< HEAD
           <div class="trait" />
           <Form.Group controlId="firstname" bsSize="large">
             <h1
@@ -206,23 +189,100 @@ class Registration extends Component {
               type="password"
             />
           </Form.Group>
+=======
+          <div className="trait" />
+          <Row>
+            <Col xs="6">
+              <Form.Group controlId="firstname">
+                <label htmlFor="firstname">Prénom</label>
+                <Form.Control
+                  autoFocus
+                  type="text"
+                  value={this.state.firstname}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs="6">
+              <Form.Group controlId="lastname">
+                <label htmlFor="lastname">Nom</label>
+                <Form.Control
+                  autoFocus
+                  type="text"
+                  value={this.state.lastname}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs="6">
+              <Form.Group controlId="nickname">
+                <label htmlFor="nickname">Pseudo</label>
+                <Form.Control
+                  autoFocus
+                  type="text"
+                  value={this.state.nickname}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs="6">
+              <Form.Group controlId="location">
+                <label htmlFor="location">Ville</label>
+                <Form.Control
+                  autoFocus
+                  type="text"
+                  value={this.state.location}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="email">
+                <label htmlFor="email">E-mail</label>
+                <Form.Control
+                  autoFocus
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs="6">
+              <Form.Group controlId="password">
+                <label htmlFor="pwd">Mot de passe</label>
+                <Form.Control
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  type="password"
+                />
+              </Form.Group>
+            </Col>
+            <Col xs="6">
+              <Form.Group controlId="confirmPassword">
+                <label htmlFor="pwd">Confirme ton mot de passe</label>
+                <Form.Control
+                  value={this.state.confirmPassword}
+                  onChange={this.handleChange}
+                  type="password"
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+>>>>>>> 825478e31ae0c5e757c58e3d8632b3a41b1b219c
           <Button
-            style={{ border: " 1px solid black" }}
             className="myButton"
             block
             disabled={!this.validateForm()}
             type="submit"
           >
-            Rejoins nous ! 💟
+            Rejoins-nous !
           </Button>
-          <NavLink
-            activeClassName="active"
-            className="littleInfo"
-            exact
-            to="/Login"
-          >
-            Déjà inscris ? Connecte toi !
-          </NavLink>
+          <div className="registration-link">
+            <Link to="/">
+              Déjà inscrite ? Connecte-toi !
+              <Heart width="12" className="mx-1" />
+            </Link>
+          </div>
         </Form>
       </div>
     );
