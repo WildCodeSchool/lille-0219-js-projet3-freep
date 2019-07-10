@@ -7,21 +7,14 @@ import Photo from "./Photo";
 import axios from "axios";
 import "../style/Profile.scss";
 import Loader from "./Loader";
-import LazyLoad from "react-lazyload";
 import { Map } from "react-feather";
+import Masonry from "react-masonry-component";
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-        id: 1,
-        avatar: "https://randomuser.me/api/portraits/women/90.jpg",
-        nickname: "Jade",
-        description: `Qu'est-ce que le Lorem Ipsum ?
-        Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.`,
-        location: "Lille"
-      },
+      user: {},
       pictures: [],
       followers: [],
       followings: [],
@@ -33,11 +26,11 @@ class Profile extends React.Component {
 
   componentDidMount() {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-    const currentFollowers = JSON.parse(localStorage.getItem("followers"));
     const user = JSON.parse(localStorage.getItem("user"));
+    const profileId = this.props.match.params.profileId;
 
     axios
-      .get(`http://localhost:5050/profil/${currentUser}`, {
+      .get(`http://localhost:5050/profil/${profileId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }
@@ -54,8 +47,10 @@ class Profile extends React.Component {
         localStorage.setItem("followers", JSON.stringify(this.state.followers));
       });
 
-    for (let i = 0; i <= currentFollowers.length; i++) {
-      if (currentUser === currentFollowers[i]) {
+    const currentFollowers = JSON.parse(localStorage.getItem("followers"));
+    for (let i = 0; i < currentFollowers.length; i++) {
+      const followersId = currentFollowers[i].id_user;
+      if (currentUser === followersId) {
         this.setState({
           isFollowed: true
         });
@@ -100,6 +95,7 @@ class Profile extends React.Component {
     const followers = this.state.followers.length;
     const followings = this.state.followings.length;
     const posts = this.state.posts.length;
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     if (this.state.loading) {
       return <Loader />;
     } else {
@@ -157,14 +153,18 @@ class Profile extends React.Component {
                 : 0 + " Post"}
             </Col>
             <Col className="my-5 my-xl-0">
-              <Button
-                onClick={() => {
-                  this.handleClick();
-                }}
-                className="button px-4"
-              >
-                {this.state.isFollowed ? "Suivie ✓" : "Suivre"}
-              </Button>
+              {this.state.user.id !== currentUser ? (
+                <Button
+                  onClick={() => {
+                    this.handleClick();
+                  }}
+                  className="button px-4"
+                >
+                  {this.state.isFollowed ? "Suivie ✓" : "Suivre"}
+                </Button>
+              ) : (
+                <Button className="button px-4">Editer</Button>
+              )}
             </Col>
             <Col className="my-5 my-xl-0">
               <Link to="/message">
@@ -172,21 +172,19 @@ class Profile extends React.Component {
               </Link>
             </Col>
           </Row>
-          <Row>
+          <Masonry>
             {pictures.map((picture, key) => {
               return (
                 <Col sm="6" md="4" lg="3" key={key}>
-                  <LazyLoad height={100} offset={-200}>
-                    <Photo
-                      picture={picture.url}
-                      link={picture.id_clothing}
-                      pictureId={picture.id}
-                    />
-                  </LazyLoad>
+                  <Photo
+                    picture={picture.url}
+                    link={picture.id_clothing}
+                    pictureId={picture.id}
+                  />
                 </Col>
               );
             })}
-          </Row>
+          </Masonry>
         </React.Fragment>
       );
     }
