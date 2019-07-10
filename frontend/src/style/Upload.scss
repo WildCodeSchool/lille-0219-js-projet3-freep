@@ -1,29 +1,36 @@
+@import "../index.scss";
+
 .uploader-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   margin: 5vh;
-  form input,
   .form-control {
     border: none;
-    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.05);
   }
-  .fileContainer,
-  .fileContainer .image-upload-button {
-    border-radius: 0.25rem;
-  }
-  .btn {
-    background: #3f4257;
+  .btn,
+  .fileContainer .image-upload-button,
+  .fileContainer .chooseFileButton {
+    background: #ad3a70cc;
+    border: none;
+    border-radius: $radius-sm;
     &:hover {
-      background: #545972;
+      background: linear-gradient(
+        130deg,
+        fade-out($main-color, 0.8),
+        fade-out($main-color, 0.2),
+        fade-out($main-color, 0.8)
+      );
+      box-shadow: $box-shadow;
     }
   }
 }
 
 .fileContainer input {
-  z-index: 0;
-  top: 70%;
-  left: 20%;
+  z-index: 10000;
+  top: 68%;
+  left: 25%;
+  width: 50%;
 }
 
 .modal-content {
@@ -31,8 +38,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, 10%);
-  background: #fff8fff6;
-  box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  background: #fff8ff;
 }
 
 .modal-dialog {
