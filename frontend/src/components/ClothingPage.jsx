@@ -228,7 +228,7 @@ class ClothingPage extends React.Component {
                       <Row className="justify-content-center">
                         {pictures.map((picture, key) => {
                           return (
-                            <Col xs="6" md="4" key={key}>
+                            <Col xs="6" key={key}>
                               <Photo
                                 picture={picture.url}
                                 pictureId={picture.id}
@@ -247,7 +247,7 @@ class ClothingPage extends React.Component {
                 <Row className="justify-content-center">
                   {pictures.map((picture, key) => {
                     return (
-                      <Col xs="6" md="6" key={key}>
+                      <Col xs="6" key={key}>
                         <Photo
                           picture={picture.url}
                           pictureId={picture.id}
