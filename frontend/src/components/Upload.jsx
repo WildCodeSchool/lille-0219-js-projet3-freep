@@ -1,5 +1,4 @@
 import React from "react";
-import ImageUploader from "react-images-upload";
 import "../style/Upload.scss";
 import {
   Row,
@@ -16,27 +15,78 @@ import axios from "axios";
 class Uploader extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { pictures: [], uploadArray: [] };
-    this.onDrop = this.onDrop.bind(this);
-  }
-
-  onDrop(picture) {
-    this.setState({
-      pictures: this.state.pictures.concat(picture)
-    });
+    this.state = {
+      pictures: [],
+      type: null,
+      brand: null,
+      size: null,
+      description: null
+    };
   }
 
   handleSubmit(e) {
     e.preventDefault();
+    let { type, brand, size, description } = this.state;
+
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .post(`http://localhost:5050/${currentUser}/uploadPicture`)
-      .then(() => {
-        alert("Votre photo a bien été envoyée");
+      .post(`http://localhost:5050/uploadClothe/${currentUser}`, {
+        type: type,
+        brand: brand,
+        size: size,
+        description: description
+      })
+      .then(({ data }) => {
+        this.setState({
+          type: data.type,
+          brand: data.brand,
+          size: data.size,
+          description: data.description
+        });
       });
   }
 
+  onChangeFields(e) {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  }
+
+  // onChangeChecked(e) {
+  //   this.setState({
+  //     deposit: e.event.checked
+  //   });
+  // }
+  // handleSubmitPictures(e) {
+  //   e.preventDefault();
+  //   this.picturesUpload(this.state.pictures);
+  // }
+
+  // picturesUpload(files) {
+  //   const formData = new FormData();
+  //   formData.append("clothePicture", files);
+  //   const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+  //   return axios
+  //     .post(
+  //       `http://localhost:5050/uploadClothePictures/${currentUser}`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           "content-type": "multipart/form-data"
+  //         }
+  //       }
+  //     )
+  //     .then(response => {
+  //       console.log(response.data);
+  //     });
+  // }
+
+  // onChangePictures(e) {
+  //   this.setState({ pictures: e.target.files });
+  // }
+
   render() {
+    console.log(this.state);
     return (
       <React.Fragment>
         <Form
@@ -44,43 +94,44 @@ class Uploader extends React.Component {
           onSubmit={e => {
             this.handleSubmit(e);
           }}
-          encType="multipart/form-data"
         >
           <Row className="uploader-container">
-            <Col md="4" className="text-center">
+            {/* <Col md="4" className="text-center">
               <h2>Prête ton vêtement !</h2>
-              <ImageUploader
-                className="my-5"
-                withIcon={true}
-                buttonText="Choisir l'image"
-                onChange={this.onDrop}
-                imgExtension={[".jpg", ".jpeg"]}
-                maxFileSize={5242880}
-                withPreview={true}
-                label="Max 5Mo | extensions : .jpg .jpeg "
-                labelClass="mb-4"
-                buttonClassName="image-upload-button"
-                name="pictureClotheUpload"
+              <Input
+                type="file"
+                name="clothePicture"
+                multiple
+                onChange={e => {
+                  this.onChangePictures(e);
+                }}
+                onSubmit={e => {
+                  this.handleSubmitPictures(e);
+                }}
               />
-            </Col>
+            </Col> */}
             <Col md="7" className="offset-1">
               <h2>Décris-nous ta tenue !</h2>
 
               <FormGroup row>
-                <Label for="clothing_title" sm={2}>
+                <Label htmlFor="type" sm={2}>
                   Type
                 </Label>
                 <Col sm={10}>
                   <Input
                     type="text"
                     name="type"
-                    id="clothing-title"
+                    id="type"
+                    value={this.state.type}
                     placeholder="Veste ? Pantalon ?"
+                    onChange={e => {
+                      this.onChangeFields(e);
+                    }}
                   />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="brand" sm={2}>
+                <Label htmlFor="brand" sm={2}>
                   Marque
                 </Label>
                 <Col sm={10}>
@@ -88,27 +139,38 @@ class Uploader extends React.Component {
                     type="text"
                     name="brand"
                     id="brand"
+                    value={this.state.brand}
                     placeholder="Zara ? Le comptoir des cotonniers ?"
+                    onChange={e => {
+                      this.onChangeFields(e);
+                    }}
                   />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="size" sm={2}>
+                <Label htmlFor="size" sm={2}>
                   Taille
                 </Label>
                 <Col sm={10}>
-                  <CustomInput type="select" name="size" id="size">
-                    <option>S</option>
-                    <option>M</option>
-                    <option>L</option>
-                    <option>XL</option>
-                    <option>XXL</option>
-                    <option>XXXL+</option>
+                  <CustomInput
+                    type="select"
+                    name="size"
+                    id="size"
+                    onChange={e => {
+                      this.onChangeFields(e);
+                    }}
+                  >
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                    <option value="XXL">XXL</option>
+                    <option value="XXXL+">XXXL+</option>
                   </CustomInput>
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="description" sm={2}>
+                <Label htmlFor="description" sm={2}>
                   Description
                 </Label>
                 <Col sm={10}>
@@ -116,18 +178,29 @@ class Uploader extends React.Component {
                     type="textarea"
                     name="description"
                     id="description"
+                    value={this.state.description}
                     placeholder="Plus on a de détails, plus on aime !"
+                    onChange={e => {
+                      this.onChangeFields(e);
+                    }}
                   />
                 </Col>
               </FormGroup>
-              <FormGroup check>
+              {/* <FormGroup check>
                 <Label check className="offset-2">
-                  <Input type="checkbox" name="deposit" />
+                  <Input
+                    type="checkbox"
+                    name="deposit"
+                    id="deposit"
+                    onChange={() => {
+                      this.onChangeChecked();
+                    }}
+                  />
                   <p className="pt-2 pl-2">
                     Tu préfères demander une caution ?
                   </p>
                 </Label>
-              </FormGroup>
+              </FormGroup> */}
               <Button className="col-4 my-3 align-self-center" type="submit">
                 Envoyer
               </Button>

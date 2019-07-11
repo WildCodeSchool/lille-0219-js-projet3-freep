@@ -26,10 +26,14 @@ const storage = multer.diskStorage({
   }
 });
 
-// Allow 1 file
+// Upload Function
 
 const upload = multer({
-  storage: storage
+  storage: storage,
+  limits: { fileSize: 5000000 },
+  fileFilter: function(req, file, cb) {
+    checkFileType(file, cb);
+  }
 });
 
 // Allow extensions
@@ -75,6 +79,7 @@ app.post(
     const clothingId = req.params.clothingId;
     const currentUser = req.params.currentUser;
     const file = req.file.path;
+    console.log(req.file);
 
     cloudinary.uploader.upload(file, { tags: "basic_sample" }, (err, image) => {
       if (err) {
@@ -94,44 +99,61 @@ app.post(
   }
 );
 
-// Upload clothes pictures
+// Upload a Clothe
 
-app.post("/currentUser/:uploadPicture", (req, res) => {
-  const path = req.file.path;
+app.post("/uploadClothe/:currentUser", (req, res) => {
   const currentUser = req.params.currentUser;
   const type = req.body.type;
-  const brand = req.body.brand;
   const size = req.body.size;
+  const brand = req.body.brand;
   const description = req.body.description;
-  const deposit = req.body.deposit;
-
-  uploadClothe(req, res, err => {
-    if (err) {
-      console.log(err);
-      return res
-        .status(500)
-        .send("error when upload a proof picture: File too large");
-    } else {
-      console.log(req.file);
-      res.send(req.file);
-    }
-  });
   db.query(
-    `INSERT INTO clothing ( id_user, type, brand, size, description, is_deposit, created_at)
-    VALUES ( ${currentUser}, ${type}, ${brand}, ${size}, ${description}, ${deposit}, Now());`,
+    `INSERT INTO clothing ( id_user, created_at, type, brand, size, description)
+    VALUES (${currentUser}, Now(), ${type}.toString(), ${brand}.toString(), ${size}.toString(), ${description}.toString());`,
     (err, rows, fields) => {
       if (err) throw err;
-      db.query(
-        `INSERT INTO pictures ( id_clothing, id_user, is_proof, created_at, url)
-        VALUES (${clothingId}, ${currentUser}, 0, Now(), ${path});`,
-        (err, rows, fields) => {
-          if (err) throw err;
-          res.status(200).send(rows);
-        }
-      );
+      res.status(200).send(rows);
     }
   );
 });
+
+// Upload clothes pictures
+
+// app.post(
+//   "/currentUser/:uploadClothePictures",
+//   upload.array("clothePicture", 3),
+//   (req, res) => {
+//     const files = req.file.path;
+//     const currentUser = req.params.currentUser;
+
+//     cloudinary.uploader.upload(
+//       files,
+//       { tags: "basic_sample" },
+//       (err, image) => {
+//         if (err) {
+//           console.warn(err);
+//         }
+//         console.log(image);
+//         const path = image.url;
+//         // db.query(
+//         //   `INSERT INTO pictures ( id_clothing, id_user, is_proof, created_at, url)
+//         // VALUES (${clothingId}, ${currentUser}, 0, Now(), ${path});`,
+//         //   (err, rows, fields) => {
+//         //     if (err) throw err;
+//         //     res.status(200).send(rows);
+//         //   }
+//         // );
+//         //   db.query(
+//         //     `INSERT INTO clothing ( id_user, type, brand, size, description, is_deposit, created_at)
+//         // VALUES ( ${currentUser}, ${type}, ${brand}, ${size}, ${description}, ${deposit}, Now());`,
+//         //     (err, rows, fields) => {
+//         //       if (err) throw err;
+//         //   }
+//         // );
+//       }
+//     );
+//   }
+// );
 
 // Clothing-deposit
 
