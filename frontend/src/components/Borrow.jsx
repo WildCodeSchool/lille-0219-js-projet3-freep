@@ -21,6 +21,7 @@ class Borrow extends React.Component {
     super(props);
     this.state = {
       hidden: false,
+      file: null,
       modal: false,
       isOpen: false
     };
@@ -43,14 +44,31 @@ class Borrow extends React.Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
+    this.fileUpload(this.state.file);
+  }
+
+  fileUpload(file) {
+    const formData = new FormData();
+    formData.append("proof", file);
     const clothingId = this.props.clothePage;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-    axios
-      .post(`http://localhost:5050/${currentUser}/${clothingId}/uploadProof`)
-      .then(() => {
-        alert("Votre photo a bien été envoyée");
+    return axios
+      .post(
+        `http://localhost:5050/uploadProof/${currentUser}/${clothingId}`,
+        formData,
+        {
+          headers: {
+            "content-type": "multipart/form-data"
+          }
+        }
+      )
+      .then(response => {
+        console.log(response.data);
       });
+  }
+
+  onChange(e) {
+    this.setState({ file: e.target.files[0] });
   }
 
   render() {
@@ -90,9 +108,8 @@ class Borrow extends React.Component {
                     onSubmit={e => {
                       this.handleSubmit(e);
                     }}
-                    encType="multipart/form-data"
                   >
-                    <Input type="file" name="myFile" />
+                    <Input type="file" name="proof" />
                     <Button type="submit">Envoyer</Button>
                   </Form>
                 </Modal>
