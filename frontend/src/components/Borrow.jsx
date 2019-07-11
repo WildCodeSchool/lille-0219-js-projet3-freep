@@ -44,6 +44,7 @@ class Borrow extends React.Component {
   }
 
   handleSubmit(e) {
+    e.preventDefault();
     this.fileUpload(this.state.file);
   }
 
@@ -109,8 +110,21 @@ class Borrow extends React.Component {
                       this.handleSubmit(e);
                     }}
                   >
-                    <Input type="file" name="proof" />
-                    <Button type="submit">Envoyer</Button>
+                    <Input
+                      type="file"
+                      name="proof"
+                      onChange={e => {
+                        this.onChange(e);
+                      }}
+                    />
+                    <Button
+                      type="submit"
+                      onClick={() => {
+                        this.toggleModalBorrow();
+                      }}
+                    >
+                      Envoyer
+                    </Button>
                   </Form>
                 </Modal>
               </Col>

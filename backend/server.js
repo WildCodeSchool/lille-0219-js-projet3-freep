@@ -29,11 +29,7 @@ const storage = multer.diskStorage({
 // Allow 1 file
 
 const upload = multer({
-  storage: storage,
-  limits: { fileSize: 5000000 },
-  fileFilter: function(req, file, cb) {
-    checkFileType(file, cb);
-  }
+  storage: storage
 });
 
 // Allow extensions
