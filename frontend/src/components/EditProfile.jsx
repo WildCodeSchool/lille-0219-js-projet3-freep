@@ -85,6 +85,7 @@ class EditProfile extends React.Component {
                   Nom d'utilisateur *{" "}
                 </h1>
                 <Form.Control
+                  tabIndex="1"
                   autoFocus
                   type="text"
                   value={nickname}
@@ -108,6 +109,7 @@ class EditProfile extends React.Component {
                   Ville{" "}
                 </h1>
                 <Form.Control
+                  tabIndex="2"
                   autoFocus
                   type="text"
                   value={location}
@@ -133,6 +135,7 @@ class EditProfile extends React.Component {
                   Description{" "}
                 </h1>
                 <Form.Control
+                  tabIndex="3"
                   as="textarea"
                   rows="5"
                   autoFocus
@@ -161,6 +164,7 @@ class EditProfile extends React.Component {
             block
             disabled={!this.validateForm()}
             type="submit"
+            tabIndex="4"
           >
             Valider
           </Button>

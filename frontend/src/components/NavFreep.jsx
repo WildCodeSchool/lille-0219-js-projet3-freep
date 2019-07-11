@@ -16,7 +16,8 @@ class NavFreep extends React.Component {
       modal: false,
       profile: "",
       prevScrollpos: window.pageYOffset,
-      visible: true
+      visible: true,
+      width: window.innerWidth
     };
   }
 
@@ -39,9 +40,16 @@ class NavFreep extends React.Component {
       });
     }
   }
+
+  componentWillMount() {
+    window.addEventListener("resize", this.handleWindowSizeChange);
+  }
+
   componentWillUnmount() {
+    window.addEventListener("resize", this.handleWindowSizeChange);
     window.removeEventListener("scroll", this.handleScroll);
   }
+
   handleScroll = () => {
     const { prevScrollpos } = this.state;
     const currentScrollPos = window.pageYOffset;
@@ -52,7 +60,13 @@ class NavFreep extends React.Component {
     });
   };
 
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth });
+  };
+
   render() {
+    const { width } = this.state;
+    const isMobile = width <= 640;
     return (
       <div
         className={classnames("header", {
@@ -82,42 +96,101 @@ class NavFreep extends React.Component {
                 />
               </label>
             </form>
-            <Nav className="ml-auto" navbar>
-              <div title="Propose ton vêtement !" to="">
-                <PlusCircle
-                  className="img"
-                  color="#222"
-                  onClick={this.toggleModal}
-                />
-                <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
-                  <ModalHeader toggle={this.toggleModal} className="pr-5" />
-                  <Uploader />
-                </Modal>
-              </div>
-              <NavLink
-                to={`/partenaire/${this.state.profile}`}
-                title="Découvre nos partenaires !"
-              >
-                <Tag className="img" color="#222" />
-              </NavLink>
-              <NavLink
-                to={`/messagerie/${this.state.profile}`}
-                title="Parle avec nos Freepeuses"
-              >
-                <Mail className="img" color="#222" />
-              </NavLink>
-              <NavLink
-                to={`/emprunt/${this.state.profile}`}
-                title="Retrouve les vêtements que tu souhaites emprunter"
-              >
-                <Shuffle className="img" color="#222" />
-              </NavLink>
-              <NavLink
-                to={`/profil/${this.state.profile}`}
-                title="Accède à ton profil"
-              >
-                <User className="img" color="#222" />
-              </NavLink>
+            <Nav className="ml-auto text-center" navbar>
+              {isMobile ? (
+                <NavLink to="" title="Propose ton vêtement !">
+                  <PlusCircle
+                    className="img"
+                    color="#222"
+                    onClick={this.toggleModal}
+                  />
+                  <p>Upload</p>
+                  <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal} className="pr-5" />
+                    <Uploader />
+                  </Modal>
+                </NavLink>
+              ) : (
+                <NavLink to="" title="Propose ton vêtement !">
+                  <PlusCircle
+                    className="img"
+                    color="#222"
+                    onClick={this.toggleModal}
+                  />
+                  <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal} className="pr-5" />
+                    <Uploader />
+                  </Modal>
+                </NavLink>
+              )}
+              {isMobile ? (
+                <NavLink
+                  to={`/partenaire/${this.state.profile}`}
+                  onClick={this.toggleBurger}
+                  title="Découvre nos partenaires !"
+                >
+                  <Tag className="img" color="#222" />
+                  <p>Partenaires</p>
+                </NavLink>
+              ) : (
+                <NavLink
+                  to={`/partenaire/${this.state.profile}`}
+                  title="Découvre nos partenaires !"
+                >
+                  <Tag className="img" color="#222" />
+                </NavLink>
+              )}
+              {isMobile ? (
+                <NavLink
+                  to={`/messagerie/${this.state.profile}`}
+                  onClick={this.toggleBurger}
+                  title="Parle avec nos Freepeuses"
+                >
+                  <Mail className="img" color="#222" />
+                  <p>Messagerie</p>
+                </NavLink>
+              ) : (
+                <NavLink
+                  to={`/messagerie/${this.state.profile}`}
+                  title="Parle avec nos Freepeuses"
+                >
+                  <Mail className="img" color="#222" />
+                </NavLink>
+              )}
+              {isMobile ? (
+                <NavLink
+                  to={`/emprunt/${this.state.profile}`}
+                  onClick={this.toggleBurger}
+                  title="Retrouve les vêtements que tu souhaites emprunter"
+                >
+                  <Shuffle className="img" color="#222" />
+                  <p>Emprunts</p>
+                </NavLink>
+              ) : (
+                <NavLink
+                  to={`/emprunt/${this.state.profile}`}
+                  title="Retrouve les vêtements que tu souhaites emprunter"
+                >
+                  <Shuffle className="img" color="#222" />
+                </NavLink>
+              )}
+              {isMobile ? (
+                <NavLink
+                  to={`/profil/${this.state.profile}`}
+                  onClick={this.toggleBurger}
+                  title="Accède à ton profil"
+                >
+                  <User className="img" color="#222" />
+                  <p>Profil</p>
+                </NavLink>
+              ) : (
+                <NavLink
+                  to={`/profil/${this.state.profile}`}
+                  title="Accède à ton profil"
+                >
+                  <User className="img" color="#222" />
+                </NavLink>
+              )}
             </Nav>
           </Collapse>
         </Navbar>
