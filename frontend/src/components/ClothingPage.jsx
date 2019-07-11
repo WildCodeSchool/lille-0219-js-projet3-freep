@@ -171,6 +171,8 @@ class ClothingPage extends React.Component {
     const pictures = this.state.pictures;
     const comments = this.state.commentsArray;
     const auth = this.getUser(clothing.id_user);
+    const proofPictures = pictures.filter(x => x.is_proof);
+    const initialPictures = pictures.filter(x => !x.is_proof);
 
     if (this.state.loading) {
       return <Loader />;
@@ -182,9 +184,10 @@ class ClothingPage extends React.Component {
               <section>
                 {(() => {
                   if (isMobile) {
-                    const slides = pictures.map((picture, key) => {
+                    const slides = initialPictures.map((picture, key) => {
                       return (
                         <CarouselItem
+                          key={key}
                           onExiting={this.onExiting}
                           onExited={this.onExited}
                         >
@@ -226,13 +229,15 @@ class ClothingPage extends React.Component {
                   } else {
                     return (
                       <Row className="justify-content-center">
-                        {pictures.map((picture, key) => {
+                        {initialPictures.map((picture, key) => {
                           return (
                             <Col xs="6" key={key}>
                               <Photo
+                                key={key}
                                 picture={picture.url}
-                                pictureId={picture.id}
+                                alt={picture.altText}
                                 link={picture.id_clothing}
+                                pictureId={picture.id}
                               />
                             </Col>
                           );
@@ -245,7 +250,7 @@ class ClothingPage extends React.Component {
               <section>
                 <h2 className="text-center">Elles l'ont porté récemment</h2>
                 <Row className="justify-content-center">
-                  {pictures.map((picture, key) => {
+                  {proofPictures.map((picture, key) => {
                     return (
                       <Col xs="6" key={key}>
                         <Photo
