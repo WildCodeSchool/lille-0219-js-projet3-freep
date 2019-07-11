@@ -12,7 +12,7 @@ const Comment = props => {
           <img
             src={props.profile.avatar}
             alt={`user-${props.profile.id}`}
-            className="comment-avatar"
+            className="comment-avatar avatar"
           />
         </Col>
       </Link>
