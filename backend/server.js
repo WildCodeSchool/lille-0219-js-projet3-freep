@@ -673,18 +673,13 @@ app.get("/modification/:myProfile", (req, res) => {
 
 app.put("/modification/:myProfile", (req, res) => {
   const myProfile = req.params.myProfile;
-  const nickname = req.body.nickname;
-  const location = req.body.location;
-  const description = req.body.description;
-  db.query(
-    `UPDATE user SET nickname='${nickname}', location='${location}', description='${description}' WHERE id = ${myProfile}`,
-    (err, rows) => {
-      if (err) {
-        return res.status(500).send("error when editing my profile");
-      }
-      res.status(200).send(rows);
+  const body = req.body;
+  db.query(`UPDATE user SET ? WHERE id = ${myProfile}`, [body], (err, rows) => {
+    if (err) {
+      return res.status(500).send("error when editing my profile");
     }
-  );
+    res.status(200).send(rows);
+  });
 });
 
 app.listen(portNumber, () => {
