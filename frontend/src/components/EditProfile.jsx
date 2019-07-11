@@ -110,7 +110,6 @@ class EditProfile extends React.Component {
                 </h1>
                 <Form.Control
                   tabIndex="2"
-                  autoFocus
                   type="text"
                   value={location}
                   onChange={event => {
@@ -138,7 +137,6 @@ class EditProfile extends React.Component {
                   tabIndex="3"
                   as="textarea"
                   rows="5"
-                  autoFocus
                   type="text"
                   value={description}
                   onChange={event => {
