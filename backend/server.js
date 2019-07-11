@@ -686,10 +686,6 @@ app.post("/search", (req, res) => {
               .status(500)
               .send("error when getting search route on users");
           }
-          // let SearchResult = {
-          //   ResultClothing,
-          //   ResultUsers
-          // };
           SearchResult.ResultUsers = ResultUsers;
           res.status(200).send(SearchResult);
         }
