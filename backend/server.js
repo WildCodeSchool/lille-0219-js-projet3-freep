@@ -186,7 +186,7 @@ app.get(
         answer.clothing = rowsArticle[0];
 
         db.query(
-          `SELECT id, id_clothing, id_user, url FROM picture WHERE id_clothing=${articleId}`,
+          `SELECT id, id_clothing, id_user, is_proof, url FROM picture WHERE id_clothing=${articleId}`,
           (err, rowsPics) => {
             if (err) {
               console.log(err);
