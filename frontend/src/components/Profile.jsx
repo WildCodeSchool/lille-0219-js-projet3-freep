@@ -191,7 +191,7 @@ class Profile extends React.Component {
                   Se déconnecter
                 </Button>
               ) : (
-                <Link to="/message">
+                <Link to={`/message/${currentUser}/${user.id}`}>
                   <Button className="button px-4">Message</Button>
                 </Link>
               )}
