@@ -432,7 +432,7 @@ app.get(
                 profileData.followers = rowsFollowers;
 
                 db.query(
-                  `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
+                  `SELECT DISTINCT(id_content) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
                   (err, rowsFollowings) => {
                     if (err) {
                       console.log(err);
@@ -593,20 +593,6 @@ app.put("/like/:idPicture", (req, res) => {
 });
 
 // Follow button
-
-app.get("/follow/:followId", (req, res) => {
-  const followId = req.params.followId;
-  db.query(
-    `SELECT id_user FROM social WHERE id_content = ${followId} AND type='follow'`,
-    (err, rows) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("error when getting social route");
-      }
-      res.status(200).send(rows);
-    }
-  );
-});
 
 app.post("/follow/:followId", (req, res) => {
   const followId = req.params.followId;
