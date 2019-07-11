@@ -57,3 +57,18 @@ html {
   scrollbar-color: $main-color rgba(0, 0, 0, 0.1);
   scrollbar-width: thin;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff0404;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
