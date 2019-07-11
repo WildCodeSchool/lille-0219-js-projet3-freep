@@ -27,7 +27,7 @@ class ReportButton extends React.Component {
   render() {
     return (
       <ButtonDropdown
-        direction="right"
+        direction="down"
         className="dropdown-btn"
         isOpen={this.state.btnDropright}
         toggle={() => {
@@ -37,7 +37,7 @@ class ReportButton extends React.Component {
         <DropdownToggle className="dots p-0">
           <MoreHorizontal color="white" />
         </DropdownToggle>
-        <DropdownMenu>
+        <DropdownMenu style={{ transform: "translate(-25%)" }}>
           <DropdownItem className="report-button">
             <a href={mailtoAddress}>Signaler un abus</a>
           </DropdownItem>
