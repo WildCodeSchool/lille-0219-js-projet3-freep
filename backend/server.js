@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const { portNumber, db } = require("./conf");
+const { portNumber, db, cloudinary } = require("./conf");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -34,13 +34,7 @@ const upload = multer({
   fileFilter: function(req, file, cb) {
     checkFileType(file, cb);
   }
-}).single("myFile");
-
-// Allow multiple files
-
-const uploadClothe = multer({
-  storage: storage
-}).array("pictureClotheUpload", 3);
+});
 
 // Allow extensions
 
@@ -78,23 +72,31 @@ app.get(
 );
 
 // Upload a proof-picture
+app.post(
+  "/uploadProof/:currentUser/:clothingId",
+  upload.single("proof"),
+  (req, res) => {
+    const clothingId = req.params.clothingId;
+    const currentUser = req.params.currentUser;
+    const file = req.file.path;
 
-app.post("/currentUser/:clothingId/:uploadProof", (req, res) => {
-  const path = req.file.path;
-  const clothingId = req.params.clothingId;
-  const currentUser = req.params.currentUser;
-  upload(req, res, err => {
-    if (err) {
-      console.log(err);
-      return res
-        .status(500)
-        .send("error when upload a proof picture: File too large");
-    } else {
-      console.log(req.file);
-      res.send(req.file);
-    }
-  });
-});
+    cloudinary.uploader.upload(file, { tags: "basic_sample" }, (err, image) => {
+      if (err) {
+        console.warn(err);
+      }
+      console.log(image);
+      const path = image.url;
+      db.query(
+        `INSERT INTO picture ( id_clothing, id_user, is_proof, created_at, url)
+          VALUES (${clothingId}, ${currentUser}, 1, Now(), "${path}");`,
+        (err, rows, fields) => {
+          if (err) throw err;
+          res.status(200);
+        }
+      );
+    });
+  }
+);
 
 // Upload clothes pictures
 
