@@ -14,10 +14,17 @@ class NavFreep extends React.Component {
     this.state = {
       isOpen: false,
       modal: false,
+      modalPicture: false,
       profile: "",
       prevScrollpos: window.pageYOffset,
       visible: true
     };
+  }
+
+  toggleModalPicture() {
+    this.setState(prevState => ({
+      modalPicture: !prevState.modalPicture
+    }));
   }
 
   toggleBurger() {
@@ -89,9 +96,20 @@ class NavFreep extends React.Component {
                   color="#222"
                   onClick={this.toggleModal}
                 />
-                <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
+                o
+                <Modal
+                  isOpen={this.state.modal}
+                  toggle={this.toggleModal}
+                  onClosed={() => this.toggleModalPicture}
+                >
                   <ModalHeader toggle={this.toggleModal} className="pr-5" />
-                  <Uploader />
+                  <Uploader
+                    modalClothe={this.toggleModal}
+                    modalPicture={this.state.modalPicture}
+                    toggleModalPicture={() => {
+                      this.toggleModalPicture();
+                    }}
+                  />
                 </Modal>
               </div>
               <NavLink
