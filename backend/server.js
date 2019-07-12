@@ -645,3 +645,37 @@ app.put("/follow/:followId", (req, res) => {
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });
+
+//Search
+app.post("/search", (req, res) => {
+  const keyword = req.body.keyword;
+  db.query(
+    "SELECT clothing.id, clothing.type, clothing.description,picture.url FROM clothing INNER JOIN picture ON picture.id_clothing = clothing.id WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
+    ["%" + keyword + "%", "%" + keyword + "%"],
+    (err, ResultClothing) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(500)
+          .send("error when getting search route on clothes");
+      }
+      let SearchResult = {
+        Results: ResultClothing
+      };
+      db.query(
+        "SELECT user.id, user.nickname, user.avatar FROM user WHERE user.nickname LIKE ?",
+        "%" + keyword,
+        (err, ResultUsers) => {
+          if (err) {
+            console.log(err);
+            return res
+              .status(500)
+              .send("error when getting search route on users");
+          }
+          SearchResult.ResultUsers = ResultUsers;
+          res.status(200).send(SearchResult);
+        }
+      );
+    }
+  );
+});
