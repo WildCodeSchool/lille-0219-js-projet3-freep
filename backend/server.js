@@ -660,11 +660,11 @@ app.post("/search", (req, res) => {
           .send("error when getting search route on clothes");
       }
       let SearchResult = {
-        Results: ResultClothing
+        ResultClothing: ResultClothing
       };
       db.query(
         "SELECT user.id, user.nickname, user.avatar FROM user WHERE user.nickname LIKE ?",
-        "%" + keyword,
+        "%" + keyword + "%",
         (err, ResultUsers) => {
           if (err) {
             console.log(err);

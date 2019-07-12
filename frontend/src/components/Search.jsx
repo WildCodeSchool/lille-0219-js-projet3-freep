@@ -50,7 +50,7 @@ class Search extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    clothes: state.Results || [],
+    clothes: state.ResultClothing || [],
     users: state.ResultUsers || []
   };
 };

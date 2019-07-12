@@ -92,7 +92,7 @@ class NavFreep extends React.Component {
       .catch(err => {
         console.log("Error :" + err);
       });
-
+  };
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
   };
@@ -133,6 +133,7 @@ class NavFreep extends React.Component {
                 </Link>
               </label>
             </form>
+
             <Nav className="ml-auto text-center" navbar>
               {isMobile ? (
                 <NavLink to="" title="Propose ton vêtement !">
