@@ -238,7 +238,8 @@ class NavFreep extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  restab: state
+  restab: state,
+  modalClothe: state.modalClothe
 });
 
 const NavFreepContainer = connect(mapStateToProps)(NavFreep);
