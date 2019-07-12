@@ -79,6 +79,10 @@ class NavFreep extends React.Component {
     });
   }
 
+  handleClick() {
+    this.props.history.push("/search");
+  }
+
   handleSubmit = e => {
     if (e) e.preventDefault();
     axios
@@ -122,9 +126,12 @@ class NavFreep extends React.Component {
                   placeholder="Recherche une utilisatrice ou un vêtement"
                   value={this.state.searchResult}
                   onChange={this.handleChange}
+                  onClick={() => {
+                    this.handleClick();
+                  }}
                 />
                 <input type="submit" />
-                <Link to={`/search`}>
+                <Link to={`/search`} className="LinkSearch">
                   <img
                     className="magnifier"
                     src="../pictures/loupe.png"
@@ -133,7 +140,6 @@ class NavFreep extends React.Component {
                 </Link>
               </label>
             </form>
-
             <Nav className="ml-auto text-center" navbar>
               {isMobile ? (
                 <NavLink to="" title="Propose ton vêtement !">
