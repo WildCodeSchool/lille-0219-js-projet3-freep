@@ -4,6 +4,9 @@ import { Link, NavLink } from "react-router-dom";
 import { Tag, PlusCircle, Mail, Shuffle, User } from "react-feather";
 import { Modal, ModalHeader } from "reactstrap";
 import Uploader from "./Upload";
+import axios from "axios";
+import { connect } from "react-redux";
+import { setResultsActions } from "../Redux/actions";
 import classnames from "classnames";
 
 class NavFreep extends React.Component {
@@ -14,11 +17,16 @@ class NavFreep extends React.Component {
     this.state = {
       isOpen: false,
       modal: false,
+      keyword: "",
+      searchResult: "",
+      tab: [],
       profile: "",
       prevScrollpos: window.pageYOffset,
       visible: true,
       width: window.innerWidth
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   toggleBurger() {
@@ -60,6 +68,31 @@ class NavFreep extends React.Component {
     });
   };
 
+  handleChange(e) {
+    const result = e.target.value;
+    this.setState({ searchResult: result });
+  }
+
+  handleReset(e) {
+    this.setState({
+      tab: []
+    });
+  }
+
+  handleSubmit = e => {
+    if (e) e.preventDefault();
+    axios
+      .post(`http://localhost:5050/search`, {
+        keyword: this.state.searchResult
+      })
+      .then(res => {
+        const { dispatch } = this.props;
+        dispatch(setResultsActions(res.data));
+      })
+      .catch(err => {
+        console.log("Error :" + err);
+      });
+
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
   };
@@ -82,18 +115,22 @@ class NavFreep extends React.Component {
           </div>
           <NavbarToggler onClick={this.toggleBurger} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <form className="recherche_demo">
+            <form className="recherche_demo" onSubmit={this.handleSubmit}>
               <label htmlFor="clothe-profile-search">
                 <input
                   type="search"
                   placeholder="Recherche une utilisatrice ou un vêtement"
+                  value={this.state.searchResult}
+                  onChange={this.handleChange}
                 />
                 <input type="submit" />
-                <img
-                  className="magnifier"
-                  src="../pictures/loupe.png"
-                  alt="loupe"
-                />
+                <Link to={`/search`}>
+                  <img
+                    className="magnifier"
+                    src="../pictures/loupe.png"
+                    alt="magnifier"
+                  />
+                </Link>
               </label>
             </form>
             <Nav className="ml-auto text-center" navbar>
@@ -199,4 +236,10 @@ class NavFreep extends React.Component {
   }
 }
 
-export default NavFreep;
+const mapStateToProps = state => ({
+  restab: state
+});
+
+const NavFreepContainer = connect(mapStateToProps)(NavFreep);
+
+export default NavFreepContainer;

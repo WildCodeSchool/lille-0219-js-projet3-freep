@@ -12,9 +12,11 @@ import MessagingPage from "./components/MessagingPage";
 import Message from "./components/Message";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
+import Loader from "./components/Loader";
 import Registration from "./components/Registration";
 import BorrowPage from "./components/BorrowPage";
 import EditProfile from "./components/EditProfile";
+import Search from "./components/Search";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const token = localStorage.getItem("user");
@@ -35,6 +37,12 @@ function App() {
       <Container>
         <Switch>
           <Route exact path="/" component={Login} />
+          <Route path="/users/:userId" component={ClothingPage} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/registration" exact component={Registration} />
+          <Route path="/loader" component={Loader} />
+          <Route path="/emprunt/:userId" component={BorrowPage} />
+          <PrivateRoute path="/search" component={Search} />
           <Route exact path="/inscription" component={Registration} />
           <PrivateRoute path="/accueil" component={HomePage} />
           <PrivateRoute path="/profil/:profileId" component={Profile} />
