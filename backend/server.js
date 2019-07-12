@@ -109,7 +109,7 @@ app.post("/uploadClothe/:currentUser", (req, res) => {
   const description = req.body.description;
   db.query(
     `INSERT INTO clothing ( id_user, created_at, type, brand, size, description)
-    VALUES (${currentUser}, Now(), ${type}.toString(), ${brand}.toString(), ${size}.toString(), ${description}.toString());`,
+    VALUES (${currentUser}, Now(), "${type}", "${brand}", "${size}", "${description}");`,
     (err, rows, fields) => {
       if (err) throw err;
       res.status(200).send(rows);
