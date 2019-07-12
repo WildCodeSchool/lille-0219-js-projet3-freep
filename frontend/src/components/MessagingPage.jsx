@@ -58,8 +58,10 @@ class MessagingPage extends React.Component {
                   id_reader={messaging.id_reader}
                   timeStamp={
                     messaging.date_diff >= 1
-                      ? "Il y a " + messaging.date_diff + " jours."
-                      : "Envoyé à " + messaging.hour_send + "."
+                      ? messaging.date_diff > 1
+                        ? "Il y a " + messaging.date_diff + " jours"
+                        : "Il y a " + messaging.date_diff + " jour"
+                      : "Envoyé à " + messaging.hour_send
                   }
                   message={messaging.content}
                 />

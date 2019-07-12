@@ -38,15 +38,6 @@ img {
 
 form label {
   position: relative;
-  width: 25rem;
-}
-
-form label input[type="text"] {
-  width: 100%;
-  padding: 10px 10px 10px 40px;
-  font-size: 15px;
-  font-family: sans-serif;
-  border: none;
 }
 
 form label input[type="submit"] {
@@ -58,81 +49,37 @@ form label input[type="submit"] {
 
 .magnifier {
   width: 20px;
-  margin-left: 50px;
   color: black;
   cursor: pointer;
   opacity: 0.7;
+  padding-bottom: 1vh;
 }
 
-.navbar-collapse form {
+.recherche_demo {
   margin: 0 auto;
+  width: 35%;
+  transform: perspective(1px) translateZ(0);
 }
 
-.img {
-  width: 25px;
-}
-.magnifier {
-  width: 20px;
-  margin-left: 60px;
-}
-form label input[type="submit"] {
-  margin-right: 3px;
-  width: 38px;
-}
-
-@media screen and (max-width: 808px) {
-  form label input[type="text"] {
-    margin-left: 2.5rem;
-    width: 70%;
-    font-size: 0.8rem;
-  }
-  input {
-    padding-left: 3rem;
-  }
-  .img {
-    width: 25px;
-    position: relative;
-    right: 3.5rem;
-  }
-  .magnifier {
-    width: 20px;
-    margin-left: 50px;
-  }
-  form label input[type="submit"] {
-    width: 2px;
-    margin-right: 0;
-    margin-left: 20px;
-  }
+.recherche_demo:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  background: pink;
+  height: 2px;
+  transition-property: right;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
 }
 
-@media screen and (max-width: 766px) {
-  form label input[type="text"] {
-    width: 85%;
-    margin-left: -0.5rem;
-    font-size: 0.6rem;
-  }
-
-  .collapse {
-    display: flex;
-    align-items: center;
-  }
-  .img {
-    width: 25px;
-    right: 0;
-  }
-  input {
-    padding-left: 5px;
-  }
-
-  .magnifier {
-    width: 20px;
-    margin-left: 8px;
-  }
-  form label input[type="submit"] {
-    width: 28px;
-    margin-right: 33px;
-    margin-left: 0;
-  }
+.recherche_demo:hover:before,
+.recherche_demo:focus-within:before,
+.recherche_demo:focus:before,
+.recherche_demo:active:before {
+  right: 0;
 }
 
 @media screen and (max-width: 352px) {
@@ -145,33 +92,54 @@ form label input[type="submit"] {
   }
 }
 
+$count: rgba(255, 192, 203, 0.1), rgba(255, 192, 203, 0.3),
+  rgba(255, 192, 203, 0.5), rgba(255, 192, 203, 0.7), rgba(255, 192, 203, 0.9);
+
+@media (max-width: 766px) {
+  @for $i from 1 through length($count) {
+    ul a:nth-of-type(#{length($count)}n + #{$i}) {
+      background-color: nth($count, $i);
+    }
+  }
+  .navbar-collapse {
+    height: 100vh;
+    ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      a {
+        padding: 3vh 0 !important;
+        width: 100%;
+        text-decoration: none;
+        color: $bl;
+        p {
+          margin: 1vh;
+        }
+      }
+    }
+  }
+  .recherche_demo {
+    width: 70%;
+  }
+  .navbar-collapse form {
+    margin: 5vh auto;
+  }
+}
+
 .recherche_demo [placeholder] {
   transition: $transition;
-  display: flex;
-  border-bottom: 2px solid pink;
-  width: 80%;
+  width: 100%;
   border-left: transparent;
   border-top: transparent;
   border-right: transparent;
-  margin-bottom: 2px auto;
   color: rgba($bl, 0.7);
   font-style: italic;
 }
 
-.recherche_demo [placeholder]:hover {
-  border-left: 3px solid pink(0, 0%, 60%);
-  border-top: 3px solid pink(0, 0%, 60%);
-  border-right: 3px solid pink(0, 0%, 60%);
-  transition: width 0.2s, border-left 0.2s 0.2s cubic-bezier(0.54, 1.85, 0.5, 1),
-    border-top 0.2s 0.4s cubic-bezier(0.54, 1.85, 0.5, 1),
-    border-right 0.2s 0.8s cubic-bezier(0.54, 1.85, 0.5, 1);
-}
-
-form label input {
+form label input:first-of-type {
   position: absolute;
-  left: 25%;
-  top: 100%;
-  transform: translateY(-80%);
+  top: 50%;
+  transform: translate(20px, -20%);
   outline: none;
 }
 

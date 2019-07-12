@@ -17,7 +17,7 @@ const Messaging = props => {
               <img
                 src={props.avatar}
                 alt="Avatar"
-                className="imgAvatar rounded-circle"
+                className="imgAvatar avatar rounded-circle"
               />
             </Col>
             <Col xs="9" className="d-flex my-5 flex-column">
