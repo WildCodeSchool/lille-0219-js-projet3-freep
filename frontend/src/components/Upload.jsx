@@ -16,6 +16,7 @@ class Uploader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      hidden: true,
       pictures: [],
       type: null,
       brand: null,
@@ -41,7 +42,8 @@ class Uploader extends React.Component {
           type: data.type,
           brand: data.brand,
           size: data.size,
-          description: data.description
+          description: data.description,
+          hidden: false
         });
       });
   }
@@ -57,36 +59,36 @@ class Uploader extends React.Component {
   //     deposit: e.event.checked
   //   });
   // }
-  // handleSubmitPictures(e) {
-  //   e.preventDefault();
-  //   this.picturesUpload(this.state.pictures);
-  // }
 
-  // picturesUpload(files) {
-  //   const formData = new FormData();
-  //   formData.append("clothePicture", files);
-  //   const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-  //   return axios
-  //     .post(
-  //       `http://localhost:5050/uploadClothePictures/${currentUser}`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "content-type": "multipart/form-data"
-  //         }
-  //       }
-  //     )
-  //     .then(response => {
-  //       console.log(response.data);
-  //     });
-  // }
+  handleSubmitPictures(e) {
+    e.preventDefault();
+    this.picturesUpload(this.state.pictures);
+  }
 
-  // onChangePictures(e) {
-  //   this.setState({ pictures: e.target.files });
-  // }
+  picturesUpload(files) {
+    const formData = new FormData();
+    formData.append("clothePicture", file);
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    return axios
+      .post(
+        `http://localhost:5050/uploadClothePictures/${currentUser}`,
+        formData,
+        {
+          headers: {
+            "content-type": "multipart/form-data"
+          }
+        }
+      )
+      .then(response => {
+        console.log(response.data);
+      });
+  }
+
+  onChangePictures(e) {
+    this.setState({ pictures: e.target.files });
+  }
 
   render() {
-    console.log(this.state);
     return (
       <React.Fragment>
         <Form
@@ -96,20 +98,6 @@ class Uploader extends React.Component {
           }}
         >
           <Row className="uploader-container">
-            {/* <Col md="4" className="text-center">
-              <h2>Prête ton vêtement !</h2>
-              <Input
-                type="file"
-                name="clothePicture"
-                multiple
-                onChange={e => {
-                  this.onChangePictures(e);
-                }}
-                onSubmit={e => {
-                  this.handleSubmitPictures(e);
-                }}
-              />
-            </Col> */}
             <Col md="7" className="offset-1">
               <h2>Décris-nous ta tenue !</h2>
 
@@ -206,6 +194,27 @@ class Uploader extends React.Component {
               </Button>
             </Col>
           </Row>
+          <div className={this.state.hidden ? "hidden" : ""}>
+            <Row className="uploader-container">
+              <Col md="4" className="text-center">
+                <h2>Prête ton vêtement !</h2>
+                <Input
+                  type="file"
+                  name="clothePicture"
+                  multiple
+                  onChange={e => {
+                    this.onChangePictures(e);
+                  }}
+                  onSubmit={e => {
+                    this.handleSubmitPictures(e);
+                  }}
+                />
+                <Button className="col-4 my-3 align-self-center" type="submit">
+                  Envoyer
+                </Button>
+              </Col>
+            </Row>
+          </div>
         </Form>
       </React.Fragment>
     );
