@@ -119,41 +119,42 @@ app.post("/uploadClothe/:currentUser", (req, res) => {
 
 // Upload clothes pictures
 
-// app.post(
-//   "/currentUser/:uploadClothePictures",
-//   upload.array("clothePicture", 3),
-//   (req, res) => {
-//     const files = req.file.path;
-//     const currentUser = req.params.currentUser;
+app.post(
+  "/:currentUser/uploadClothePictures",
+  upload.array("clothePicture", 3),
+  (req, res) => {
+    const files = req.file.path;
+    const currentUser = req.params.currentUser;
+    console.log(req);
 
-//     cloudinary.uploader.upload(
-//       files,
-//       { tags: "basic_sample" },
-//       (err, image) => {
-//         if (err) {
-//           console.warn(err);
-//         }
-//         console.log(image);
-//         const path = image.url;
-//         // db.query(
-//         //   `INSERT INTO pictures ( id_clothing, id_user, is_proof, created_at, url)
-//         // VALUES (${clothingId}, ${currentUser}, 0, Now(), ${path});`,
-//         //   (err, rows, fields) => {
-//         //     if (err) throw err;
-//         //     res.status(200).send(rows);
-//         //   }
-//         // );
-//         //   db.query(
-//         //     `INSERT INTO clothing ( id_user, type, brand, size, description, is_deposit, created_at)
-//         // VALUES ( ${currentUser}, ${type}, ${brand}, ${size}, ${description}, ${deposit}, Now());`,
-//         //     (err, rows, fields) => {
-//         //       if (err) throw err;
-//         //   }
-//         // );
-//       }
-//     );
-//   }
-// );
+    cloudinary.uploader.upload(
+      files,
+      { tags: "basic_sample" },
+      (err, image) => {
+        if (err) {
+          console.warn(err);
+        }
+        console.log(image);
+        const path = image.url;
+        db.query(
+          `SELECT clothing.id FROM clothing WHERE id_user = ${currentUser} ORDER BY created_at DESC LIMIT 1`,
+          (err, rows) => {
+            if (err) throw err;
+            const id_clothing = rows[0].id;
+            db.query(
+              `INSERT INTO pictures ( id_clothing, id_user, is_proof, created_at, url)
+            VALUES (${id_clothing}, ${currentUser}, 0, Now(), ${path});`,
+              (err, rows, fields) => {
+                if (err) throw err;
+                res.status(200).send(rows);
+              }
+            );
+          }
+        );
+      }
+    );
+  }
+);
 
 // Clothing-deposit
 
