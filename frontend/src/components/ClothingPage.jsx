@@ -19,6 +19,7 @@ import Comment from "./Comment";
 import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
+import Masonry from "react-masonry-component";
 
 class ClothingPage extends React.Component {
   constructor(props) {
@@ -249,7 +250,7 @@ class ClothingPage extends React.Component {
               </section>
               <section>
                 <h2 className="text-center">Elles l'ont porté récemment</h2>
-                <Row className="justify-content-center">
+                <Masonry className="justify-content-center">
                   {proofPictures.map((picture, key) => {
                     return (
                       <Col xs="6" key={key}>
@@ -261,7 +262,7 @@ class ClothingPage extends React.Component {
                       </Col>
                     );
                   })}
-                </Row>
+                </Masonry>
               </section>
             </Col>
             <Col lg="6" className="comments-container pr-3">
