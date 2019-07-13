@@ -69,7 +69,12 @@ class Photo extends React.Component {
     return (
       <Card className="m-2 picture-card">
         <Link to={`/article/${link}`}>
-          <CardImg src={picture} alt="clothes" className="Photo" />
+          <CardImg
+            src={picture}
+            style={{ minHeight: "180px" }}
+            alt="clothes"
+            className="Photo"
+          />
         </Link>
         <div className="overlay">
           <Row className="p-0 card-buttons align-items-center">
