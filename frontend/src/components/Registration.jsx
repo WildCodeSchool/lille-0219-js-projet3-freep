@@ -131,7 +131,7 @@ class Registration extends Component {
                 />
               </Form.Group>
             </Col>
-            <Col>
+            <Col xs="12">
               <Form.Group controlId="email">
                 <label htmlFor="email">E-mail</label>
                 <Form.Control

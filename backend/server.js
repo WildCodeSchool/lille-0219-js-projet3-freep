@@ -432,7 +432,7 @@ app.get(
                 profileData.followers = rowsFollowers;
 
                 db.query(
-                  `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
+                  `SELECT DISTINCT(id_content) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
                   (err, rowsFollowings) => {
                     if (err) {
                       console.log(err);
@@ -594,20 +594,6 @@ app.put("/like/:idPicture", (req, res) => {
 
 // Follow button
 
-app.get("/follow/:followId", (req, res) => {
-  const followId = req.params.followId;
-  db.query(
-    `SELECT id_user FROM social WHERE id_content = ${followId} AND type='follow'`,
-    (err, rows) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send("error when getting social route");
-      }
-      res.status(200).send(rows);
-    }
-  );
-});
-
 app.post("/follow/:followId", (req, res) => {
   const followId = req.params.followId;
   const authorId = req.body.idAuthor;
@@ -658,4 +644,38 @@ app.put("/follow/:followId", (req, res) => {
 
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
+});
+
+//Search
+app.post("/search", (req, res) => {
+  const keyword = req.body.keyword;
+  db.query(
+    "SELECT clothing.id, clothing.type, clothing.description,picture.url FROM clothing INNER JOIN picture ON picture.id_clothing = clothing.id WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
+    ["%" + keyword + "%", "%" + keyword + "%"],
+    (err, ResultClothing) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(500)
+          .send("error when getting search route on clothes");
+      }
+      let SearchResult = {
+        Results: ResultClothing
+      };
+      db.query(
+        "SELECT user.id, user.nickname, user.avatar FROM user WHERE user.nickname LIKE ?",
+        "%" + keyword,
+        (err, ResultUsers) => {
+          if (err) {
+            console.log(err);
+            return res
+              .status(500)
+              .send("error when getting search route on users");
+          }
+          SearchResult.ResultUsers = ResultUsers;
+          res.status(200).send(SearchResult);
+        }
+      );
+    }
+  );
 });
