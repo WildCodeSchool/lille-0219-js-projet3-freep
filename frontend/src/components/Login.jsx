@@ -5,6 +5,8 @@ import "../style/Login.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Heart } from "react-feather";
+import { loggedInUserActions } from "../Redux/actions";
+import { connect } from "react-redux";
 
 class Login extends Component {
   constructor(props) {
@@ -36,11 +38,16 @@ class Login extends Component {
         password
       })
       .then(({ data }) => {
-        this.setState({
-          login: { email: data.email, password: data.password, id: data.id }
-        });
-        localStorage.setItem("user", JSON.stringify(data));
+        // this.setState({
+        //   login: { email: data.email, password: data.password, id: data.id }
+        // });
+        // localStorage.setItem("user", JSON.stringify(data));
+        const { dispatch } = this.props;
+        dispatch(loggedInUserActions(data));
         history.push("/accueil");
+      })
+      .catch(err => {
+        console.log("Error :" + err);
       });
   };
 
@@ -97,4 +104,13 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+const LoginContainer = connect(mapStateToProps)(Login);
+
+export default LoginContainer;
