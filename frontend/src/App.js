@@ -12,52 +12,62 @@ import MessagingPage from "./components/MessagingPage";
 import Message from "./components/Message";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
-import Loader from "./components/Loader";
+// import Loader from "./components/Loader";
 import Registration from "./components/Registration";
 import BorrowPage from "./components/BorrowPage";
 import Search from "./components/Search";
+import { connect } from "react-redux";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const token = localStorage.getItem("user");
+const PrivateRoute = ({ component: Component, user, ...rest }) => {
+  // const token = localStorage.getItem("user");
+  // const { user } = this.props;
   return (
     <Route
       {...rest}
-      render={props => (token ? <Component {...props} /> : <Redirect to="/" />)}
+      render={props =>
+        user.isLoggedIn ? <Component {...props} /> : <Redirect to="/" />
+      }
     />
   );
 };
 
-function App() {
-  return (
-    <React.Fragment>
-      <header>
-        <NavFreep />
-      </header>
-      <Container>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route path="/users/:userId" component={ClothingPage} />
+const App = ({ user }) => (
+  <React.Fragment>
+    <header>
+      <NavFreep />
+    </header>
+    <Container>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        {/* <Route path="/users/:userId" component={ClothingPage} />
           <Route path="/login" exact component={Login} />
           <Route path="/registration" exact component={Registration} />
           <Route path="/loader" component={Loader} />
-          <Route path="/emprunt/:userId" component={BorrowPage} />
-          <PrivateRoute path="/search" component={Search} />
-          <Route exact path="/inscription" component={Registration} />
-          <PrivateRoute path="/accueil" component={HomePage} />
-          <PrivateRoute path="/profil/:profileId" component={Profile} />
-          <PrivateRoute path="/message/:P1/:P2" component={Message} />
-          <PrivateRoute path="/emprunt/:userId" component={BorrowPage} />
-          <PrivateRoute path="/article/:articleId" component={ClothingPage} />
-          <PrivateRoute path="/partenaire" component={PartnerPage} />
-          <PrivateRoute
-            path="/messagerie/:idReader"
-            component={MessagingPage}
-          />
-        </Switch>
-        <Footer />
-      </Container>
-    </React.Fragment>
-  );
-}
+          <Route path="/emprunt/:userId" component={BorrowPage} /> */}
+        <PrivateRoute path="/search" component={Search} />
+        <Route exact path="/inscription" component={Registration} />
+        <PrivateRoute path="/accueil" component={HomePage} user={user} />
+        <PrivateRoute path="/profil/:profileId" component={Profile} />
+        <PrivateRoute path="/message/:P1/:P2" component={Message} />
+        <PrivateRoute path="/emprunt/:userId" component={BorrowPage} />
+        <PrivateRoute path="/article/:articleId" component={ClothingPage} />
+        <PrivateRoute path="/partenaire" component={PartnerPage} />
+        <PrivateRoute path="/messagerie/:idReader" component={MessagingPage} />
+      </Switch>
+      <Footer />
+    </Container>
+  </React.Fragment>
+);
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    user: state.loginReducer.user
+  };
+};
+
+const withConnect = connect(
+  mapStateToProps,
+  null
+)(App);
+
+export default withConnect;
