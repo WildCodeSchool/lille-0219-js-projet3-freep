@@ -8,10 +8,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Router } from "react-router-dom";
 import App from "./App";
 import { createBrowserHistory } from "history";
-import searchReducers from "./Redux/reducers";
-const history = createBrowserHistory();
 
-const store = createStore(searchReducers);
+import reducer from "./Redux/reducersList";
+// import searchReducers from "./Redux/reducers";
+// import loginReducer from "./Redux/loginReducer";
+
+const history = createBrowserHistory();
+const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
   <Provider store={store}>
