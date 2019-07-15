@@ -642,6 +642,32 @@ app.put("/follow/:followId", (req, res) => {
   );
 });
 
+// My Profile
+
+app.get("/modification/:myProfile", (req, res) => {
+  const myProfile = req.params.myProfile;
+  db.query(
+    `SELECT id, nickname, location, description FROM user WHERE id = ${myProfile}`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when editing my profile");
+      }
+      res.status(200).send(rows[0]);
+    }
+  );
+});
+
+app.put("/modification/:myProfile", (req, res) => {
+  const myProfile = req.params.myProfile;
+  const body = req.body;
+  db.query(`UPDATE user SET ? WHERE id = ${myProfile}`, [body], (err, rows) => {
+    if (err) {
+      return res.status(500).send("error when editing my profile");
+    }
+    res.status(200).send(rows);
+  });
+});
+
 app.listen(portNumber, () => {
   console.log(`API root available at: http://localhost:${portNumber}/`);
 });

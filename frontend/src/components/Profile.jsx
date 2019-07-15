@@ -28,7 +28,7 @@ class Profile extends React.Component {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     const user = JSON.parse(localStorage.getItem("user"));
     const profileId = this.props.match.params.profileId;
-
+    const currentFollowers = JSON.parse(localStorage.getItem("followers"));
     axios
       .get(`http://localhost:5050/profil/${profileId}`, {
         headers: {
@@ -47,19 +47,20 @@ class Profile extends React.Component {
         localStorage.setItem("followers", JSON.stringify(this.state.followers));
       });
 
-    const currentFollowers = JSON.parse(localStorage.getItem("followers"));
-    for (let i = 0; i < currentFollowers.length; i++) {
-      const followersId = currentFollowers[i].id_user;
-      if (currentUser === followersId) {
-        this.setState({
-          isFollowed: true
-        });
+    if (currentFollowers > 0) {
+      for (let i = 0; i < currentFollowers.length; i++) {
+        const followersId = currentFollowers[i].id_user;
+        if (currentUser === followersId) {
+          this.setState({
+            isFollowed: true
+          });
+        }
       }
     }
   }
 
   handleClick() {
-    const profileId = this.state.user.id;
+    const profileId = this.props.match.params.profileId;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
 
     if (!this.state.isFollowed) {
@@ -89,13 +90,18 @@ class Profile extends React.Component {
     }
   }
 
+  handleLogout() {
+    localStorage.removeItem("user");
+    this.props.history.push("/");
+  }
+
   render() {
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     const user = this.state.user;
     const pictures = this.state.pictures;
     const followers = this.state.followers.length;
     const followings = this.state.followings.length;
     const posts = this.state.posts.length;
-    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     if (this.state.loading) {
       return <Loader />;
     } else {
@@ -114,7 +120,13 @@ class Profile extends React.Component {
                     </Col>
                     <Col xs="12" className="location">
                       <Map color="#919191" width="18" />
-                      {user.location}
+                      <a
+                        href={`https://google.com/maps/dir//${user.location}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {user.location}
+                      </a>
                     </Col>
                   </Row>
                 </Col>
@@ -163,13 +175,26 @@ class Profile extends React.Component {
                   {this.state.isFollowed ? "Suivie ✓" : "Suivre"}
                 </Button>
               ) : (
-                <Button className="button px-4">Editer</Button>
+                <Link to="/modification">
+                  <Button className="button px-4">Éditer</Button>
+                </Link>
               )}
             </Col>
             <Col className="my-5 my-xl-0">
-              <Link to="/message">
-                <Button className="button px-4">Message</Button>
-              </Link>
+              {this.state.user.id === currentUser ? (
+                <Button
+                  onClick={() => {
+                    this.handleLogout();
+                  }}
+                  className="button px-4"
+                >
+                  Se déconnecter
+                </Button>
+              ) : (
+                <Link to={`/message/${currentUser}/${user.id}`}>
+                  <Button className="button px-4">Message</Button>
+                </Link>
+              )}
             </Col>
           </Row>
           <Masonry>
