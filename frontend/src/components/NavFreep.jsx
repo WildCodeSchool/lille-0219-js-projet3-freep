@@ -92,6 +92,7 @@ class NavFreep extends React.Component {
       .catch(err => {
         console.log("Error :" + err);
       });
+  };
 
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
