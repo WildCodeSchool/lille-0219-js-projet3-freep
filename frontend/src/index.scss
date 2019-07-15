@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+* {
+  font-family: "Montserrat", sans-serif;
+  font-size: calc(0.85rem + 0.15vw);
+}
+
+////////////// Helpers
+
+// Colors
+
+$main-color: #f6003f;
+$secondary-color: goldenrod;
+$third-color: #f8d5c7;
+$wh: #fbf4f1;
+$bl: #222;
+$page-bg: linear-gradient(
+  to left top,
+  #ec9daa,
+  #f3b8b7,
+  #f7d2cb,
+  #f8dbd3,
+  #fae3dc,
+  #fbece6,
+  #fae6de,
+  #fae0d6,
+  #f9dbcf,
+  #f8d5c7
+);
+$gradient: linear-gradient(
+  130deg,
+  fade-out($main-color, 0.8),
+  fade-out($main-color, 0.2),
+  fade-out($main-color, 0.8)
+);
+
+// Effects
+
+$transition: 0.2s;
+$radius-lg: 10px;
+$radius-sm: 5px;
+$box-shadow: 0.2rem 0.3rem 0.3rem fade-out(#222, 0.9) !important;
+
+html {
+  scrollbar-color: $main-color rgba(0, 0, 0, 0.1);
+  scrollbar-width: thin;
+}

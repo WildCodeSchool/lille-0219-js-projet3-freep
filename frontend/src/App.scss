@@ -1,0 +1,33 @@
+@import "./index.scss";
+
+body {
+  background: #fbf4f1;
+}
+
+::selection {
+  background: rgba($main-color, 0.5);
+  color: $wh;
+}
+
+.container {
+  margin-bottom: 2rem;
+  margin-top: 7rem;
+}
+
+@media screen and (max-width: 808px) {
+  .container {
+    margin-top: 10.5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    margin-top: 6.5rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .container {
+    margin-top: 9rem;
+  }
+}

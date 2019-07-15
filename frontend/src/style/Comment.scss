@@ -1,0 +1,109 @@
+@import "../index.scss";
+
+.dropdown-btn .btn,
+.dropdown-btn .btn:hover {
+  border: transparent;
+  background: transparent !important;
+  color: $bl;
+  box-shadow: 0 0 0 transparent !important;
+}
+
+.comments-feed div div div.dropdown-btn button.dots svg {
+  stroke: fade-out($bl, 0.5) !important;
+  stroke-width: 1px;
+  &:hover {
+    stroke: $main-color !important;
+  }
+}
+
+.report-button {
+  border: transparent;
+  border-radius: $radius-sm;
+  &:hover {
+    background: $wh;
+  }
+  a {
+    font-size: 0.8rem;
+    font-family: "montserrat", sans-serif;
+    color: fade-out($bl, 0.5);
+    text-decoration: none;
+    &:hover {
+      color: fade-out($bl, 0.2);
+    }
+  }
+}
+
+.dropdown-menu {
+  border: none;
+  background: $wh;
+  padding: 0 !important;
+  box-shadow: $box-shadow;
+}
+
+.comments-profile {
+  font-size: calc(1rem + 0.2vw);
+  margin-left: 2.25rem;
+}
+
+.comment-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+@media screen and (max-width: 1024px) {
+  .comment-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 2.5rem;
+  }
+  .comments-profile {
+    font-size: calc(0.7rem + 0.3vw);
+    margin-left: 1.5rem;
+  }
+  .comment {
+    font-size: calc(0.7rem + 0.3vw);
+    margin-left: 0.25rem;
+  }
+}
+
+@media screen and (max-width: 766px) {
+  .comment-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 2.5rem;
+  }
+  .comments-profile {
+    font-size: calc(0.8rem + 0.3vw);
+    margin-left: 2.5rem;
+    margin-right: 2rem;
+  }
+  .comment {
+    font-size: calc(0.8rem + 0.3vw);
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
+  .comment-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 2.5rem;
+  }
+  .comments-profile {
+    font-size: calc(0.6rem + 0.3vw);
+    margin-left: 1.5rem;
+    margin-right: 1rem;
+  }
+  .comment {
+    font-size: calc(0.5rem + 0.3vw);
+    margin-left: 0;
+  }
+}
+
+.text-muted {
+  font-size: 0.8rem;
+}

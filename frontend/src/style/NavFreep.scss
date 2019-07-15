@@ -1,0 +1,160 @@
+@import "../index.scss";
+
+.header {
+  position: fixed;
+  top: 0;
+  border-bottom: 2px solid $main-color;
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.1);
+  width: 100vw;
+  z-index: 200;
+  transition: top 0.6s;
+}
+
+.header--hidden {
+  top: -150px;
+}
+
+.navCatch {
+  font-size: calc(0.9rem + 0.2vw);
+}
+
+.logo {
+  width: 4.5rem;
+  margin: 0 1rem;
+}
+
+.bg-light {
+  background: white !important;
+}
+
+label,
+input,
+button,
+img {
+  display: block;
+  background-color: transparent;
+  border: none;
+}
+
+form label {
+  position: relative;
+}
+
+form label input[type="submit"] {
+  color: transparent;
+  cursor: pointer;
+  width: 30px;
+  transform: translate(-2rem, -1.5rem);
+}
+
+.magnifier {
+  width: 20px;
+  color: black;
+  cursor: pointer;
+  opacity: 0.7;
+  padding-bottom: 1vh;
+}
+
+.recherche_demo {
+  margin: 0 auto;
+  width: 35%;
+  transform: perspective(1px) translateZ(0);
+}
+
+.recherche_demo:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  background: pink;
+  height: 2px;
+  transition-property: right;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+}
+
+.recherche_demo:hover:before,
+.recherche_demo:focus-within:before,
+.recherche_demo:focus:before,
+.recherche_demo:active:before {
+  right: 0;
+}
+
+@media screen and (max-width: 352px) {
+  form label input[type="text"] {
+    width: 60%;
+    margin-left: -0.5rem;
+  }
+  .search-input {
+    width: 6rem;
+  }
+}
+
+$count: rgba(255, 192, 203, 0.1), rgba(255, 192, 203, 0.3),
+  rgba(255, 192, 203, 0.5), rgba(255, 192, 203, 0.7), rgba(255, 192, 203, 0.9);
+
+@media (max-width: 766px) {
+  @for $i from 1 through length($count) {
+    ul a:nth-of-type(#{length($count)}n + #{$i}) {
+      background-color: nth($count, $i);
+    }
+  }
+  .navbar-collapse {
+    height: 100vh;
+    ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      a {
+        padding: 3vh 0 !important;
+        width: 100%;
+        text-decoration: none;
+        color: $bl;
+        p {
+          margin: 1vh;
+        }
+      }
+    }
+  }
+  .recherche_demo {
+    width: 70%;
+  }
+  .navbar-collapse form {
+    margin: 5vh auto;
+  }
+}
+
+.recherche_demo [placeholder] {
+  transition: $transition;
+  width: 100%;
+  border-left: transparent;
+  border-top: transparent;
+  border-right: transparent;
+  color: rgba($bl, 0.7);
+  font-style: italic;
+}
+
+form label input:first-of-type {
+  position: absolute;
+  top: 50%;
+  transform: translate(20px, -20%);
+  outline: none;
+}
+
+.navbar-nav {
+  div:hover {
+    cursor: pointer;
+    svg {
+      stroke: $main-color;
+    }
+  }
+  a:hover {
+    cursor: pointer;
+    svg {
+      transition: $transition;
+      stroke: $main-color;
+    }
+  }
+}

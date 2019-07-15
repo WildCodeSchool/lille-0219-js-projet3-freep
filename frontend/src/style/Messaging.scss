@@ -1,0 +1,102 @@
+@import "../index.scss";
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("Montserrat-Regular.ttf");
+}
+
+.imgAvatar {
+  width: 8rem;
+}
+
+.name {
+  font-size: calc(1rem + 1vw);
+  color: goldenrod;
+}
+
+.titleMessage {
+  font-size: 3rem;
+  color: goldenrod;
+  font-family: "Dancing script", cursive;
+}
+
+.link,
+.link:hover {
+  color: $bl;
+  text-decoration: none;
+}
+
+.messaging-card {
+  border: 0;
+  box-shadow: $box-shadow;
+  border-radius: $radius-sm;
+  margin: 2vh 10vh;
+  &:hover {
+    transform: translateY(2px);
+  }
+  .card-body {
+    display: flex;
+    padding: 0 3vh;
+    align-items: center;
+  }
+}
+
+.message-card {
+  border-radius: $radius-sm;
+  margin: 2vh 10vh;
+  width: 75%;
+  border: 0;
+}
+
+.myself {
+  margin-left: 15vw;
+}
+
+.message-form {
+  position: fixed;
+  bottom: 5vh;
+  right: 0;
+  width: 300px;
+  z-index: 6000;
+  background: white;
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.05);
+  padding: 3vh;
+  animation: appear-right 1.5s;
+  @keyframes appear-right {
+    0%,
+    66% {
+      transform: translate(40vw);
+    }
+    to {
+      transform: translate(0);
+    }
+  }
+  textarea {
+    border: none;
+    border-radius: $radius-sm;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    &:focus {
+      box-shadow: 0 0 #fff !important;
+    }
+  }
+  label {
+    font-family: "Dancing script", sans-serif;
+    color: goldenrod;
+    font-size: calc(1.5rem + 0.6vw);
+    width: 100%;
+  }
+}
+
+.message-form button,
+.messages-container button {
+  background: #ad3a70cc;
+  border: none;
+  &:hover {
+    background: $gradient;
+    box-shadow: $box-shadow;
+  }
+}
+
+.message-text {
+  width: 100%;
+}

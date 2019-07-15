@@ -1,0 +1,105 @@
+@import "../index.scss";
+
+.Login,
+.Registration {
+  background: url("../pictures/Login.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Login form,
+.Registration form {
+  background: $wh;
+  padding: 5vh;
+  border-radius: $radius-lg;
+  max-width: 450px !important;
+  box-shadow: $box-shadow;
+}
+
+label {
+  font-size: 0.8rem;
+  color: fade-out($bl, 0.3);
+  font-style: italic;
+}
+
+h1 {
+  color: goldenrod;
+  font-family: "dancing script", cursive;
+  text-align: center;
+  font-size: calc(1.3rem + 1vw);
+}
+
+.registration-link a,
+.registration-link svg {
+  font-size: 0.7rem;
+  color: fade-out($bl, 0.3);
+  stroke: fade-out($bl, 0.3);
+  transition: $transition;
+}
+
+.registration-link:hover a,
+.registration-link:hover svg {
+  text-decoration: none;
+  color: $bl;
+  stroke: $bl;
+}
+
+.btn-primary {
+  border-color: transparent !important;
+  background-color: #cf343a !important;
+  font-size: 20px;
+  border-radius: 30px;
+}
+
+input[type="checkbox"] {
+  padding-bottom: 3vh !important;
+}
+
+.facebook,
+.forgotten-password {
+  display: none;
+  font-size: 1rem;
+  border-radius: 50px;
+  margin: 30px 0;
+  background: rgb(41, 41, 160) !important;
+}
+
+.trait {
+  background-color: fade-out($bl, 0.9);
+  height: 1px;
+  width: 40%;
+  margin: 3vh auto;
+}
+
+.Login .form-control,
+.Registration .form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  color: #c44c51;
+  border: 1px solid #ffbeac;
+  border-radius: 10vh;
+}
+
+.form-control:focus {
+  outline: none !important;
+  border: 1px solid #ffbeac;
+  color: black;
+  box-shadow: $box-shadow;
+}
+
+.myButton {
+  margin: 5vh 0;
+}
+
+@media all and (min-width: 480px) {
+  .Login form {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+}

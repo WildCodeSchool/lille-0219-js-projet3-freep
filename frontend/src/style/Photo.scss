@@ -1,0 +1,78 @@
+@import "../index.scss";
+
+.Photo {
+  border-radius: $radius-lg;
+  padding: 5px;
+  background: $gradient;
+}
+
+.overlay {
+  opacity: 0;
+  display: flex;
+  height: 0;
+}
+
+.picture-card {
+  background: transparent;
+  border-radius: $radius-lg;
+  border: none;
+  margin: 3vh auto;
+  box-shadow: $box-shadow;
+  &:hover .overlay {
+    border-radius: 0 0 5px 5px;
+    transition: 0.5s;
+    position: absolute;
+    background: rgba($bl, 0.7);
+    left: 5px;
+    bottom: 5px;
+    right: 5px;
+    opacity: 1;
+    justify-content: center;
+    height: 4rem;
+    .card-buttons svg:nth-of-type(1):hover {
+      cursor: pointer;
+    }
+  }
+}
+
+svg {
+  margin: 0 1vw;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.deposit {
+  color: transparent;
+  font-size: 1.5rem;
+}
+
+.no-deposit {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.picture-frame {
+  transition: 0.1s;
+  &:nth-of-type(even):hover {
+    transform: translate(2px);
+  }
+  &:nth-of-type(odd):hover {
+    transform: translate(2px, 1px);
+  }
+}
+
+.liked {
+  fill: #f6003f;
+  stroke: #f6003f;
+}
+
+.notLiked {
+  stroke: white;
+}
