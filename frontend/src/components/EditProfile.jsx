@@ -81,8 +81,7 @@ class EditProfile extends React.Component {
                   }}
                   htmlFor="nickname"
                 >
-                  {" "}
-                  Nom d'utilisateur *{" "}
+                  Nom d'utilisateur *
                 </h1>
                 <Form.Control
                   tabIndex="1"
@@ -105,8 +104,7 @@ class EditProfile extends React.Component {
                   }}
                   htmlFor="location"
                 >
-                  {" "}
-                  Ville{" "}
+                  Ville
                 </h1>
                 <Form.Control
                   tabIndex="2"
@@ -130,8 +128,7 @@ class EditProfile extends React.Component {
                   }}
                   htmlFor="description"
                 >
-                  {" "}
-                  Description{" "}
+                  Description
                 </h1>
                 <Form.Control
                   tabIndex="3"
