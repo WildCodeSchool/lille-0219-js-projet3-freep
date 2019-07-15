@@ -91,7 +91,7 @@ class Profile extends React.Component {
   }
 
   handleLogout() {
-    localStorage.clear();
+    localStorage.removeItem("user");
     this.props.history.push("/");
   }
 
