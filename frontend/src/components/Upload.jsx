@@ -14,6 +14,8 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import UploadClothePictures from "./UploadClothePictures";
+import { connect } from "react-redux";
+import { setResultsActions } from "../Redux/actions";
 
 class Uploader extends React.Component {
   constructor(props) {
@@ -47,6 +49,8 @@ class Uploader extends React.Component {
           size: data.size,
           description: data.description
         });
+        dispatch(setResultsActions(res.data));
+        console.log("data: " + res.data);
         this.props.modalClothe();
       });
   }
@@ -190,4 +194,10 @@ class Uploader extends React.Component {
     );
   }
 }
-export default Uploader;
+
+const mapStateToProps = state => ({
+  modalClothe: state.resultsModalClothe
+});
+
+const UploaderContainer = connect(mapStateToProps)(Uploader);
+export default UploaderContainer;

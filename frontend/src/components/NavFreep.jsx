@@ -136,7 +136,7 @@ class NavFreep extends React.Component {
             </form>
             <Nav className="ml-auto text-center" navbar>
               {isMobile ? (
-                <NavLink to="" title="Propose ton vêtement !">
+                <div title="Propose ton vêtement !">
                   <PlusCircle
                     className="img"
                     color="#222"
@@ -145,11 +145,11 @@ class NavFreep extends React.Component {
                   <p>Upload</p>
                   <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal} className="pr-5" />
-                    <Uploader />
+                    <Uploader modalClothe={this.toggleModal} />
                   </Modal>
-                </NavLink>
+                </div>
               ) : (
-                <NavLink to="" title="Propose ton vêtement !">
+                <div title="Propose ton vêtement !">
                   <PlusCircle
                     className="img"
                     color="#222"
@@ -157,9 +157,9 @@ class NavFreep extends React.Component {
                   />
                   <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal} className="pr-5" />
-                    <Uploader />
+                    <Uploader modalClothe={this.toggleModal} />
                   </Modal>
-                </NavLink>
+                </div>
               )}
               {isMobile ? (
                 <NavLink
@@ -238,8 +238,7 @@ class NavFreep extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  restab: state,
-  modalClothe: state.modalClothe
+  restab: state
 });
 
 const NavFreepContainer = connect(mapStateToProps)(NavFreep);
