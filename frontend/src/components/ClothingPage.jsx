@@ -19,6 +19,7 @@ import Comment from "./Comment";
 import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
+import { backend } from "../conf";
 
 class ClothingPage extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class ClothingPage extends React.Component {
     const articleId = this.props.match.params.articleId;
     const user = JSON.parse(localStorage.getItem("user"));
     axios
-      .get(`http://localhost:5050/articles/${articleId}`, {
+      .get(`https://backend.freep-app.fr/articles/${articleId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }
@@ -81,7 +82,7 @@ class ClothingPage extends React.Component {
     let { comment } = this.state;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .post(`http://localhost:5050/comment/${articleId}`, {
+      .post(`https://backend.freep-app.fr/comment/${articleId}`, {
         content: comment,
         idAuthor: currentUser
       })
@@ -148,7 +149,7 @@ class ClothingPage extends React.Component {
     const pictureId = this.state.pictures[0].id;
     axios
       .post(
-        `http://localhost:5050/emprunt/${currentUser}/${clothingId}/${pictureId}`
+        `https://backend.freep-app.fr/emprunt/${currentUser}/${clothingId}/${pictureId}`
       )
       .then(({ data }) => {
         data.id_user = currentUser;

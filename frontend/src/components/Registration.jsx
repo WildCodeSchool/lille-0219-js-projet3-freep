@@ -6,6 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Heart } from "react-feather";
 import { Row, Col } from "reactstrap";
+import { backend } from "../conf";
 
 class Registration extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class Registration extends Component {
     const { history } = this.props;
     if (password === confirmPassword) {
       axios
-        .post("http://localhost:5050/auth/users", {
+        .post(`https://backend.freep-app.fr/auth/users`, {
           firstname,
           lastname,
           nickname,

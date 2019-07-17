@@ -3,7 +3,7 @@ import "../style/Footer.scss";
 import { Col } from "reactstrap";
 import classnames from "classnames";
 import { Heart } from "react-feather";
-import mailtoAddress from "../conf.js";
+import { mailtoAddress } from "../conf.js";
 
 class Footer extends React.Component {
   constructor(props) {

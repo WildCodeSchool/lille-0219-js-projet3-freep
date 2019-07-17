@@ -31,7 +31,7 @@ class Login extends Component {
     let { email, password } = this.state;
     const { history } = this.props;
     axios
-      .post(`http://localhost:5050/auth/login`, {
+      .post(`https://backend.freep-app.fr/auth/login`, {
         email,
         password
       })

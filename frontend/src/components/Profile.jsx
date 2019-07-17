@@ -9,6 +9,7 @@ import "../style/Profile.scss";
 import Loader from "./Loader";
 import { Map } from "react-feather";
 import Masonry from "react-masonry-component";
+import { backend } from "../conf";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class Profile extends React.Component {
     const profileId = this.props.match.params.profileId;
     const currentFollowers = JSON.parse(localStorage.getItem("followers"));
     axios
-      .get(`http://localhost:5050/profil/${profileId}`, {
+      .get(`https://backend.freep-app.fr/profil/${profileId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }
@@ -65,7 +66,7 @@ class Profile extends React.Component {
 
     if (!this.state.isFollowed) {
       axios
-        .post(`http://localhost:5050/follow/${profileId}`, {
+        .post(`https://backend.freep-app.fr/follow/${profileId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {
@@ -77,7 +78,7 @@ class Profile extends React.Component {
         });
     } else {
       axios
-        .put(`http://localhost:5050/follow/${profileId}`, {
+        .put(`https://backend.freep-app.fr/follow/${profileId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {

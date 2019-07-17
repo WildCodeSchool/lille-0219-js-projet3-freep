@@ -15,6 +15,7 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../style/Borrow.scss";
+import { backend } from "../conf";
 
 class Borrow extends React.Component {
   constructor(props) {
@@ -29,11 +30,13 @@ class Borrow extends React.Component {
   handleDelete(e) {
     e.preventDefault();
     const borrowId = this.props.borrowId;
-    axios.delete(`http://localhost:5050/emprunt/${borrowId}`).then(() => {
-      this.setState({
-        hidden: true
+    axios
+      .delete(`https://backend.freep-app.fr/emprunt/${borrowId}`)
+      .then(() => {
+        this.setState({
+          hidden: true
+        });
       });
-    });
   }
 
   toggleModalBorrow() {
@@ -47,7 +50,9 @@ class Borrow extends React.Component {
     const clothingId = this.props.clothePage;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .post(`http://localhost:5050/${currentUser}/${clothingId}/uploadProof`)
+      .post(
+        `https://backend.freep-app.fr/${currentUser}/${clothingId}/uploadProof`
+      )
       .then(() => {
         alert("Votre photo a bien été envoyée");
       });
