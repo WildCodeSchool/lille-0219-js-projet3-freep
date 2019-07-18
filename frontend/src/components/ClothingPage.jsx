@@ -166,18 +166,15 @@ class ClothingPage extends React.Component {
       });
   }
 
-  // cancel filter, ask for initial pics || proof pics
-
   render() {
     const { width } = this.state;
     const isMobile = width <= 640;
     const { activeIndex } = this.state;
     const clothing = this.state.clothing;
-    const pictures = this.state.pictures;
+    const initialPics = this.state.initialPics;
+    const proofPics = this.state.proofPics;
     const comments = this.state.commentsArray;
     const auth = this.getUser(clothing.id_user);
-    const proofPictures = pictures.filter(x => x.is_proof);
-    const initialPictures = pictures.filter(x => !x.is_proof);
 
     if (this.state.loading) {
       return <Loader />;
@@ -189,7 +186,7 @@ class ClothingPage extends React.Component {
               <section>
                 {(() => {
                   if (isMobile) {
-                    const slides = initialPictures.map((picture, key) => {
+                    const slides = initialPics.map((picture, key) => {
                       return (
                         <CarouselItem
                           key={key}
@@ -214,7 +211,7 @@ class ClothingPage extends React.Component {
                         previous={this.previous}
                       >
                         <CarouselIndicators
-                          items={pictures}
+                          items={initialPics}
                           activeIndex={activeIndex}
                           onClickHandler={this.goToIndex}
                         />
@@ -234,7 +231,7 @@ class ClothingPage extends React.Component {
                   } else {
                     return (
                       <Row className="justify-content-center">
-                        {initialPictures.map((picture, key) => {
+                        {initialPics.map((picture, key) => {
                           return (
                             <Col xs="6" key={key}>
                               <Photo
@@ -255,7 +252,7 @@ class ClothingPage extends React.Component {
               <section>
                 <h2 className="text-center">Elles l'ont porté récemment</h2>
                 <Masonry className="justify-content-center">
-                  {proofPictures.map((picture, key) => {
+                  {proofPics.map((picture, key) => {
                     return (
                       <Col xs="6" key={key}>
                         <Photo
