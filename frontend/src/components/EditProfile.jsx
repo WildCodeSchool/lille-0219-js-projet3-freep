@@ -20,7 +20,7 @@ class EditProfile extends React.Component {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
 
     axios
-      .get(`https://backend.freep-app.fr/modification/${currentUser}`)
+      .get(`${backend}/modification/${currentUser}`)
       .then(({ data }) => {
         this.setState({
           id: data.id,
@@ -46,7 +46,7 @@ class EditProfile extends React.Component {
     const currentUser = this.state.id;
     event.preventDefault();
     axios
-      .put(`https://backend.freep-app.fr/modification/${currentUser}`, {
+      .put(`${backend}/modification/${currentUser}`, {
         nickname: this.state.nickname,
         location: this.state.location,
         description: this.state.description

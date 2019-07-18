@@ -1,4 +1,4 @@
 const mailtoAddress = "mailto:a@b?subject=Signaler un abus";
-const backend = "https://backend.freep-app.fr";
+const backend = "http://localhost:5050";
 
 export { mailtoAddress, backend };

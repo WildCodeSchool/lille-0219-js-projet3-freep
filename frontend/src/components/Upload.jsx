@@ -31,7 +31,7 @@ class Uploader extends React.Component {
     e.preventDefault();
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .post(`https://backend.freep-app.fr/${currentUser}/uploadPicture`)
+      .post(`${backend}/${currentUser}/uploadPicture`)
       .then(() => {
         alert("Votre photo a bien été envoyée");
       });

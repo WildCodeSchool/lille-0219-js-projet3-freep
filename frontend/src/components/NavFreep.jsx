@@ -83,7 +83,7 @@ class NavFreep extends React.Component {
   handleSubmit = e => {
     if (e) e.preventDefault();
     axios
-      .post(`https://backend.freep-app.fr/search`, {
+      .post(`${backend}/search`, {
         keyword: this.state.searchResult
       })
       .then(res => {
