@@ -41,7 +41,7 @@ class ReportButton extends React.Component {
         <DropdownMenu>
           <DropdownItem className="report-button">
             <a
-              href={`mailto:${mailtoAddress}?subject=Une%20Freepeuse%20veut%20signaler%20un%20abus&body=Bonjour,%20je%20vous%20signale%20un%20abus%20sur%20l%27article%20suivant%20:%20http://localhost:3000/article/${link}`}
+              href={`mailto:${mailtoAddress}?subject=Une%20Freepeuse%20veut%20signaler%20un%20abus&body=Bonjour,%20je%20vous%20signale%20un%20abus%20sur%20l%27article%20suivant%20:%20https://freep-app.fr/article/${link}`}
               target="_blank"
               rel="noopener noreferrer"
             >
