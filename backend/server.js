@@ -187,7 +187,7 @@ app.get(
         answer.clothing = rowsArticle[0];
 
         db.query(
-          `SELECT id, id_clothing, id_user, url FROM picture WHERE id_clothing=${articleId} AND is_proof=1`,
+          `SELECT id, id_clothing, id_user, url FROM picture WHERE id_clothing=${articleId} AND is_proof=0`,
           (err, initialPics) => {
             if (err) {
               console.log(err);
@@ -201,7 +201,7 @@ app.get(
             picsUsersId.push(picUsers);
 
             db.query(
-              `SELECT id, id_clothing, id_user, url FROM picture WHERE id_clothing=${articleId} AND is_proof=0`,
+              `SELECT id, id_clothing, id_user, url FROM picture WHERE id_clothing=${articleId} AND is_proof=1`,
               (err, proofPics) => {
                 if (err) {
                   console.log(err);
