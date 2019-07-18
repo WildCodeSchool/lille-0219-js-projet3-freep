@@ -38,7 +38,7 @@ class Message extends React.Component {
         () => {
           axios
             .get(
-              `https://backend.freep-app.fr/message/${
+              `${backend}/message/${
                 this.state.profile
               }/${P2}`,
               {
@@ -78,7 +78,7 @@ class Message extends React.Component {
     const user = JSON.parse(localStorage.getItem("user"));
 
     axios
-      .post(`https://backend.freep-app.fr/message/${P1}/${P2}`, {
+      .post(`${backend}/message/${P1}/${P2}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         },

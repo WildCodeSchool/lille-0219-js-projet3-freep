@@ -17,7 +17,7 @@ class PartnerPage extends React.Component {
     const profileId = JSON.parse(localStorage.getItem("user")).user.id;
     const user = JSON.parse(localStorage.getItem("user"));
     axios
-      .get(`https://backend.freep-app.fr/partenaire/${profileId}`, {
+      .get(`${backend}/partenaire/${profileId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }

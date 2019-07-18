@@ -31,7 +31,7 @@ class Borrow extends React.Component {
     e.preventDefault();
     const borrowId = this.props.borrowId;
     axios
-      .delete(`https://backend.freep-app.fr/emprunt/${borrowId}`)
+      .delete(`${backend}/emprunt/${borrowId}`)
       .then(() => {
         this.setState({
           hidden: true
@@ -51,7 +51,7 @@ class Borrow extends React.Component {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
       .post(
-        `https://backend.freep-app.fr/${currentUser}/${clothingId}/uploadProof`
+        `${backend}/${currentUser}/${clothingId}/uploadProof`
       )
       .then(() => {
         alert("Votre photo a bien été envoyée");
