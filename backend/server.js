@@ -121,38 +121,36 @@ app.post("/uploadClothe/:currentUser", (req, res) => {
 
 app.post(
   "/uploadClothePictures/:currentUser",
-  upload.array("clothePicture", 3),
+  upload.single("clothePicture"),
   (req, res) => {
-    let filePaths = req.body.filePaths;
-
     const currentUser = req.params.currentUser;
-    let upload_len = filePaths.length;
-    let upload_res = [];
+    const file = req.file.path;
+    console.log(req.file);
 
-    for (let i = 0; i <= upload_len + 1; i++) {
-      let filePath = filePaths[i];
-      cloudinary.uploader.upload(filePath, (error, result) => {
-        if (upload_res.length === upload_len) {
-          resolve(upload_res);
-          const path = result.url;
+    cloudinary.uploader.upload(file, { tags: "basic_sample" }, (err, image) => {
+      if (err) {
+        console.warn(err);
+      }
+      console.log(image);
+      const path = image.url;
+      db.query(
+        `SELECT clothing.id FROM clothing WHERE id_user = ${currentUser} ORDER BY created_at DESC LIMIT 1`,
+        (err, rows) => {
+          if (err) throw err;
+          const id_clothing = rows[0].id;
+          console.log("id_clothing: " + id_clothing);
+          console.log("path : " + path);
           db.query(
-            `SELECT clothing.id FROM clothing WHERE id_user = ${currentUser} ORDER BY created_at DESC LIMIT 1`,
-            (err, rows) => {
+            `INSERT INTO picture ( id_clothing, id_user, is_proof, created_at, url)
+                    VALUES (${id_clothing}, ${currentUser}, 0, Now(), '${path}');`,
+            (err, rows, fields) => {
               if (err) throw err;
-              const id_clothing = rows[0].id;
-              db.query(
-                `INSERT INTO pictures ( id_clothing, id_user, is_proof, created_at, url)
-                    VALUES (${id_clothing}, ${currentUser}, 0, Now(), ${path});`,
-                (err, rows, fields) => {
-                  if (err) throw err;
-                  res.status(200).send(rows);
-                }
-              );
+              res.status(200).send(rows);
             }
           );
         }
-      });
-    }
+      );
+    });
   }
 );
 

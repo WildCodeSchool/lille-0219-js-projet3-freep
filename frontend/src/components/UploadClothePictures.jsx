@@ -7,18 +7,18 @@ class UploadClothePictures extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pictures: []
+      picture: null
     };
   }
 
   handleSubmitPictures(e) {
     e.preventDefault();
-    this.picturesUpload(this.state.pictures);
+    this.picturesUpload(this.state.picture);
   }
 
-  picturesUpload(files) {
+  picturesUpload(file) {
     const formData = new FormData();
-    formData.append("clothePicture", files);
+    formData.append("clothePicture", file);
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     return axios
       .post(
@@ -32,12 +32,11 @@ class UploadClothePictures extends React.Component {
       )
       .then(response => {
         console.log(response.data);
-        this.props.toggleModalPicture();
       });
   }
 
   onChangePictures(e) {
-    this.setState({ pictures: e.target.files });
+    this.setState({ picture: e.target.files[0] });
   }
 
   render() {
@@ -53,7 +52,6 @@ class UploadClothePictures extends React.Component {
           <Input
             type="file"
             name="clothePicture"
-            multiple
             onChange={e => {
               this.onChangePictures(e);
             }}
