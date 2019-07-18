@@ -49,7 +49,7 @@ class UploadClothePictures extends React.Component {
             this.handleSubmitPictures(e);
           }}
         >
-          <h2>Prête ton vêtement !</h2>
+          <h2>Envoie tes photos !</h2>
           <Input
             type="file"
             name="clothePicture"
