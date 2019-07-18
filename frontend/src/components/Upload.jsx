@@ -8,14 +8,9 @@ import {
   FormGroup,
   Label,
   Input,
-  CustomInput,
-  Modal,
-  ModalHeader
+  CustomInput
 } from "reactstrap";
 import axios from "axios";
-import UploadClothePictures from "./UploadClothePictures";
-import { connect } from "react-redux";
-import { setResultsActions } from "../Redux/actions";
 
 class Uploader extends React.Component {
   constructor(props) {
@@ -24,9 +19,7 @@ class Uploader extends React.Component {
       type: null,
       brand: null,
       size: null,
-      description: null,
-      isOpen: false,
-      modalPicture: false
+      description: null
     };
   }
 
@@ -49,9 +42,7 @@ class Uploader extends React.Component {
           size: data.size,
           description: data.description
         });
-        dispatch(setResultsActions(res.data));
-        console.log("data: " + res.data);
-        this.props.modalClothe();
+        this.props.history.push("/uploadclothepicture");
       });
   }
 
@@ -173,31 +164,9 @@ class Uploader extends React.Component {
               </Button>
             </Col>
           </Row>
-          <Row className="uploader-container">
-            <Col md="4" className="text-center">
-              <Modal
-                isOpen={this.state.modalPicture}
-                toggle={() => this.toggleModalPicture()}
-              >
-                <ModalHeader
-                  toggle={() => this.toggleModalPicture()}
-                  className="pr-5"
-                />
-                <UploadClothePictures
-                  toggleModalPicture={() => this.toggleModalPicture}
-                />
-              </Modal>
-            </Col>
-          </Row>
         </Form>
       </React.Fragment>
     );
   }
 }
-
-const mapStateToProps = state => ({
-  modalClothe: state.resultsModalClothe
-});
-
-const UploaderContainer = connect(mapStateToProps)(Uploader);
-export default UploaderContainer;
+export default Uploader;
