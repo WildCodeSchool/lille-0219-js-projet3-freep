@@ -690,7 +690,7 @@ app.post("/search", (req, res) => {
       };
       db.query(
         "SELECT user.id, user.nickname, user.avatar FROM user WHERE user.nickname LIKE ?",
-        "%" + keyword,
+        "%" + keyword + "%",
         (err, ResultUsers) => {
           if (err) {
             console.log(err);
