@@ -176,6 +176,7 @@ app.get(
   (req, res) => {
     const articleId = req.params.id;
     let answer = {};
+    let picsUsersId = [];
     db.query(
       `SELECT id, id_user, type, size, gender, description, is_deposit FROM clothing WHERE id=${articleId}`,
       (err, rowsArticle) => {
@@ -186,50 +187,71 @@ app.get(
         answer.clothing = rowsArticle[0];
 
         db.query(
-          `SELECT id, id_clothing, id_user, is_proof, url FROM picture WHERE id_clothing=${articleId}`,
-          (err, rowsPics) => {
+          `SELECT id, id_clothing, id_user, url FROM picture WHERE id_clothing=${articleId} AND is_proof=1`,
+          (err, initialPics) => {
             if (err) {
               console.log(err);
               return res.status(500).send("error when getting picture route");
             }
-            answer.pictures = rowsPics;
+            answer.initialPics = initialPics;
 
-            const picUsers = rowsPics.map(pic => {
+            const picUsers = initialPics.map(pic => {
               return pic.id_user;
             });
+            picsUsersId.push(picUsers);
 
             db.query(
-              `SELECT DATEDIFF(NOW(), created_at) AS date_diff,
-              TIME(DATE_ADD(created_at,INTERVAL 2 hour)) as hour_send, id, id_user, id_clothing, content
-               FROM comment WHERE id_clothing=${articleId} ORDER BY created_at DESC`,
-              (err, rowsComments) => {
+              `SELECT id, id_clothing, id_user, url FROM picture WHERE id_clothing=${articleId} AND is_proof=0`,
+              (err, proofPics) => {
                 if (err) {
                   console.log(err);
                   return res
                     .status(500)
-                    .send("error when getting comment route");
+                    .send("error when getting picture route");
                 }
-                answer.comments = rowsComments;
-                const commUsers = rowsComments.map(comm => {
-                  return comm.id_user;
+                answer.proofPics = proofPics;
+
+                const proofPicsArray = proofPics.map(pic => {
+                  return pic.id_user;
                 });
 
-                let listeUsers = picUsers.concat(commUsers);
-                listeUsers.push(rowsArticle[0].id_user);
-
-                const uniqUsers = Array.from(new Set(listeUsers));
+                picsUsersId.push(proofPicsArray);
 
                 db.query(
-                  `SELECT id, nickname, avatar FROM user WHERE id IN (${uniqUsers})`,
-                  (err, rowsUsers) => {
+                  `SELECT DATEDIFF(NOW(), created_at) AS date_diff,
+              TIME(DATE_ADD(created_at,INTERVAL 2 hour)) as hour_send, id, id_user, id_clothing, content
+               FROM comment WHERE id_clothing=${articleId} ORDER BY created_at DESC`,
+                  (err, rowsComments) => {
                     if (err) {
                       console.log(err);
                       return res
                         .status(500)
                         .send("error when getting comment route");
                     }
-                    answer.users = rowsUsers;
-                    res.status(200).send(answer);
+                    answer.comments = rowsComments;
+                    const commUsers = rowsComments.map(comm => {
+                      return comm.id_user;
+                    });
+
+                    let listeUsers = picUsers.concat(commUsers);
+                    listeUsers.push(rowsArticle[0].id_user);
+
+                    const uniqUsers = Array.from(new Set(listeUsers));
+
+                    db.query(
+                      `SELECT id, nickname, avatar FROM user WHERE id IN (${uniqUsers})`,
+                      (err, rowsUsers) => {
+                        if (err) {
+                          console.log(err);
+                          return res
+                            .status(500)
+                            .send("error when getting comment route");
+                        }
+                        answer.users = rowsUsers;
+                        res.status(200).send(answer);
+                        console.log(answer);
+                      }
+                    );
                   }
                 );
               }
@@ -642,11 +664,8 @@ app.put("/follow/:followId", (req, res) => {
   );
 });
 
-app.listen(portNumber, () => {
-  console.log(`API root available at: http://localhost:${portNumber}/`);
-});
-
 //Search
+
 app.post("/search", (req, res) => {
   const keyword = req.body.keyword;
   db.query(
@@ -678,4 +697,8 @@ app.post("/search", (req, res) => {
       );
     }
   );
+});
+
+app.listen(portNumber, () => {
+  console.log(`API root available at: http://localhost:${portNumber}/`);
 });

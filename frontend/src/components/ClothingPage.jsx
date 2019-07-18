@@ -27,7 +27,8 @@ class ClothingPage extends React.Component {
     this.state = {
       clothing: {},
       users: [],
-      pictures: [],
+      initialPics: [],
+      proofPics: [],
       commentsArray: [],
       comment: "",
       loading: true,
@@ -49,7 +50,8 @@ class ClothingPage extends React.Component {
         this.setState({
           clothing: data.clothing,
           users: data.users,
-          pictures: data.pictures,
+          initialPics: data.initialPics,
+          proofPics: data.proofPics,
           commentsArray: data.comments,
           loading: false
         });
@@ -163,6 +165,8 @@ class ClothingPage extends React.Component {
         console.log(`Nope! ${err}`);
       });
   }
+
+  // cancel filter, ask for initial pics || proof pics
 
   render() {
     const { width } = this.state;
