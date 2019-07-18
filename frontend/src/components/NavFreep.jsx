@@ -1,4 +1,6 @@
 import React from "react";
+import logo from "../pictures/logo.png";
+import magnifier from "../pictures/loupe.png";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
 import { Tag, PlusCircle, Mail, Shuffle, User } from "react-feather";
@@ -109,7 +111,7 @@ class NavFreep extends React.Component {
       >
         <Navbar color="light" light expand="md">
           <Link to="/accueil">
-            <img className="logo" src="../pictures/logo.png" alt="logo" />
+            <img className="logo" src={logo} alt="logo" />
           </Link>
           <div className="navText">
             <span className="navCatch">La garde robe qui rapporte</span>
@@ -126,11 +128,7 @@ class NavFreep extends React.Component {
                 />
                 <input type="submit" />
                 <Link to={`/search`}>
-                  <img
-                    className="magnifier"
-                    src="../pictures/loupe.png"
-                    alt="magnifier"
-                  />
+                  <img className="magnifier" src={magnifier} alt="magnifier" />
                 </Link>
               </label>
             </form>
