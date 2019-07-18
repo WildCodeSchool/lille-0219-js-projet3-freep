@@ -5,6 +5,7 @@ import Messaging from "./Messaging";
 import axios from "axios";
 import "../style/Messaging.scss";
 import Loader from "./Loader";
+import { backend } from "../conf";
 
 class MessagingPage extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class MessagingPage extends React.Component {
     const user = JSON.parse(localStorage.getItem("user"));
     axios
       .get(
-        `http://localhost:5050/messagerie/${currentUser}
+        `https://backend.freep-app.fr/messagerie/${currentUser}
       `,
         {
           headers: {

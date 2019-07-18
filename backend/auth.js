@@ -23,7 +23,6 @@ router.post("/users", (req, res) => {
       }', "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png", NOW(), '${
         user.location
       }')`,
-      user,
       (err, rows, fields) => {
         if (err) throw err;
         msg = "Answer recorded!";
