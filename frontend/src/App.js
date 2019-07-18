@@ -37,24 +37,22 @@ function App() {
       <Container>
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route path="/users/:userId" component={ClothingPage} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/registration" exact component={Registration} />
-          <Route path="/loader" component={Loader} />
-          <Route path="/emprunt/:userId" component={BorrowPage} />
-          <PrivateRoute path="/search" component={Search} />
           <Route exact path="/inscription" component={Registration} />
+          <PrivateRoute path="/search" component={Search} />
           <PrivateRoute path="/accueil" component={HomePage} />
           <PrivateRoute path="/profil/:profileId" component={Profile} />
+          <PrivateRoute path="/profil" />
           <PrivateRoute path="/modification" component={EditProfile} />
           <PrivateRoute path="/message/:P1/:P2" component={Message} />
           <PrivateRoute path="/emprunt/:userId" component={BorrowPage} />
+          <PrivateRoute path="/emprunt" />
           <PrivateRoute path="/article/:articleId" component={ClothingPage} />
           <PrivateRoute path="/partenaire" component={PartnerPage} />
           <PrivateRoute
             path="/messagerie/:idReader"
             component={MessagingPage}
           />
+          <PrivateRoute path="/messagerie" />
         </Switch>
         <Footer />
       </Container>
