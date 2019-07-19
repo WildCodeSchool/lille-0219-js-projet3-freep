@@ -55,7 +55,7 @@ class Borrow extends React.Component {
     const clothingId = this.props.clothePage;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     return axios
-      .post(`${backend}/${currentUser}/${clothingId}`, formData, {
+      .post(`${backend}/uploadProof/${currentUser}/${clothingId}`, formData, {
         headers: {
           "content-type": "multipart/form-data"
         }
