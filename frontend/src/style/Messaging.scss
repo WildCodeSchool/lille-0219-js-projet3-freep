@@ -10,13 +10,10 @@
   src: url("ITCAvantGardeStd-Bold.otf");
 }
 
-.imgAvatar {
-  width: 8rem;
-}
-
 .name {
   font-size: calc(1rem + 1vw);
   color: goldenrod;
+  font-family: "AvantGarde bold";
 }
 
 .titleMessage {
@@ -35,7 +32,6 @@
   border: 0;
   box-shadow: $box-shadow;
   border-radius: $radius-sm;
-  margin: 2vh 10vh;
   &:hover {
     transform: translateY(2px);
   }
@@ -48,11 +44,14 @@
 
 .message-card {
   border-radius: $radius-sm;
-  margin: 2vh 10vh;
   width: 75%;
   border: 0;
 }
 
+.message-card,
+.messaging-card {
+  margin: 2vh calc(1rem + 5vw);
+}
 .myself {
   margin-left: 15vw;
 }
