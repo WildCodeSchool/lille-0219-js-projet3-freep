@@ -1,1 +1,4 @@
-const mailtoAddress = "";
+module.exports = {
+  serverAddress: "http://backend:port/",
+  mailtoAddress: ""
+};

@@ -6,6 +6,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { setResultsActions } from "../Redux/actions";
 import classnames from "classnames";
+import { backend } from "../conf";
 
 class NavFreep extends React.Component {
   constructor(props) {
@@ -80,7 +81,7 @@ class NavFreep extends React.Component {
   handleSubmit = e => {
     if (e) e.preventDefault();
     axios
-      .post(`http://localhost:5050/search`, {
+      .post(`${backend}/search`, {
         keyword: this.state.searchResult
       })
       .then(res => {

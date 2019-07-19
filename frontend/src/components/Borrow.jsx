@@ -15,6 +15,7 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../style/Borrow.scss";
+import { backend } from "../conf";
 
 class Borrow extends React.Component {
   constructor(props) {
@@ -30,11 +31,13 @@ class Borrow extends React.Component {
   handleDelete(e) {
     e.preventDefault();
     const borrowId = this.props.borrowId;
-    axios.delete(`http://localhost:5050/emprunt/${borrowId}`).then(() => {
-      this.setState({
-        hidden: true
+    axios
+      .delete(`${backend}/emprunt/${borrowId}`)
+      .then(() => {
+        this.setState({
+          hidden: true
+        });
       });
-    });
   }
 
   toggleModalBorrow() {

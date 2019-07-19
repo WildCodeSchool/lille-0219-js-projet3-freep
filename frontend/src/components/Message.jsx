@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import { ArrowLeft } from "react-feather";
 import "../style/Messaging.scss";
+import { backend } from "../conf";
 
 class Message extends React.Component {
   constructor(props) {
@@ -36,11 +37,16 @@ class Message extends React.Component {
         },
         () => {
           axios
-            .get(`http://localhost:5050/message/${this.state.profile}/${P2}`, {
-              headers: {
-                Authorization: `Bearer ${user.token}`
+            .get(
+              `${backend}/message/${
+                this.state.profile
+              }/${P2}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${user.token}`
+                }
               }
-            })
+            )
             .then(({ data }) => {
               this.setState({
                 messageArray: data
@@ -72,7 +78,7 @@ class Message extends React.Component {
     const user = JSON.parse(localStorage.getItem("user"));
 
     axios
-      .post(`http://localhost:5050/message/${P1}/${P2}`, {
+      .post(`${backend}/message/${P1}/${P2}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         },
