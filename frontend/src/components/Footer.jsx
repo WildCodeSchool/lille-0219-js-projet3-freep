@@ -59,7 +59,13 @@ class Footer extends React.Component {
             CGU
           </Col>
           <Col xs="4" sm="3" className="p-0">
-            <a href={mailtoAddress}>Nous contacter</a>
+            <a
+              href={`mailto:${mailtoAddress}?subject=Une%20Freepeuse%20veut%20vous%20contacter&body=Bonjour,%20je%20vous%20contacte`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Nous contacter
+            </a>
           </Col>
           <Col xs="6" sm="3" className="p-0">
             Qui sommes-nous ?
