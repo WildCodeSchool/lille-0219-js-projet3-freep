@@ -1,8 +1,13 @@
 @import "../index.scss";
 
 @font-face {
-  font-family: "Montserrat";
-  src: url("Montserrat-Regular.ttf");
+  font-family: "AvantGarde";
+  src: url("ITCAvantGardeStd-Bk.otf");
+}
+
+@font-face {
+  font-family: "AvantGarde bold";
+  src: url("ITCAvantGardeStd-Bold.otf");
 }
 
 .imgAvatar {
@@ -17,7 +22,7 @@
 .titleMessage {
   font-size: 3rem;
   color: goldenrod;
-  font-family: "Dancing script", cursive;
+  font-family: "AvantGarde bold", cursive;
 }
 
 .link,
@@ -80,7 +85,7 @@
     }
   }
   label {
-    font-family: "Dancing script", sans-serif;
+    font-family: "AvantGarde bold", sans-serif;
     color: goldenrod;
     font-size: calc(1.5rem + 0.6vw);
     width: 100%;
