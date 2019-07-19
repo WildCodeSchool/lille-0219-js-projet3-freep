@@ -6,6 +6,8 @@
   background: $gradient;
   object-fit: cover;
   min-width: 80px;
-  width: 10vw;
+  width: 15vh;
+  min-height: 80px;
+  height: 15vh;
   box-shadow: $box-shadow;
 }
