@@ -87,7 +87,7 @@ class Photo extends React.Component {
               className={liked ? "liked" : "notLiked"}
             />
             <div className={dep ? "deposit" : "no-deposit"}>ℂ</div>
-            <ReportButton />
+            <ReportButton link={link} />
           </Row>
         </div>
       </Card>

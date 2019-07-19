@@ -5,6 +5,7 @@ import { Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const Comment = props => {
+  const link = props.comment.id_clothing;
   return (
     <Row className="px-3 py-1 my-2 align-items-center">
       <Link to={`/profil/${props.profile.id}`}>
@@ -28,7 +29,7 @@ const Comment = props => {
         {props.comment.content}
       </Col>
       <Col xs="1" className="align-items-left">
-        <ReportButton />
+        <ReportButton link={link} />
       </Col>
     </Row>
   );
