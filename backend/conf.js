@@ -12,6 +12,13 @@ const db = mysql.createPool({
 
 const jwtSecret = process.env.JWT_SECRET || "secret";
 const saltRounds = process.env.SALT_ROUNDS || 256;
+const cloudinary = require("cloudinary");
+
+cloudinary.config({
+  cloud_name: "dlxzd7tqf",
+  api_key: "923592476985338",
+  api_secret: "8-vl6Uy_EJr9RsQ3r4Don5c4Q1A"
+});
 
 const key = {
   facebook: {
@@ -25,5 +32,6 @@ module.exports = {
   db,
   jwtSecret,
   saltRounds,
-  key
+  key,
+  cloudinary
 };
