@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { Row, Col } from "reactstrap";
 import "../style/EditProfile.css";
 import axios from "axios";
+import { backend } from "../conf";
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +20,7 @@ class EditProfile extends React.Component {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
 
     axios
-      .get(`http://localhost:5050/modification/${currentUser}`)
+      .get(`${backend}/modification/${currentUser}`)
       .then(({ data }) => {
         this.setState({
           id: data.id,
@@ -45,7 +46,7 @@ class EditProfile extends React.Component {
     const currentUser = this.state.id;
     event.preventDefault();
     axios
-      .put(`http://localhost:5050/modification/${currentUser}`, {
+      .put(`${backend}/modification/${currentUser}`, {
         nickname: this.state.nickname,
         location: this.state.location,
         description: this.state.description

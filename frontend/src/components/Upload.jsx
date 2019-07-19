@@ -12,6 +12,7 @@ import {
   CustomInput
 } from "reactstrap";
 import axios from "axios";
+import { backend } from "../conf";
 
 class Uploader extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class Uploader extends React.Component {
     e.preventDefault();
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .post(`http://localhost:5050/${currentUser}/uploadPicture`)
+      .post(`${backend}/${currentUser}/uploadPicture`)
       .then(() => {
         alert("Votre photo a bien été envoyée");
       });
