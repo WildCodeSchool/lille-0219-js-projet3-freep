@@ -30,7 +30,7 @@ class Uploader extends React.Component {
 
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .post(`http://localhost:5050/uploadClothe/${currentUser}`, {
+      .post(`${backend}/uploadClothe/${currentUser}`, {
         type: type,
         brand: brand,
         size: size,

@@ -31,13 +31,11 @@ class Borrow extends React.Component {
   handleDelete(e) {
     e.preventDefault();
     const borrowId = this.props.borrowId;
-    axios
-      .delete(`${backend}/emprunt/${borrowId}`)
-      .then(() => {
-        this.setState({
-          hidden: true
-        });
+    axios.delete(`${backend}/emprunt/${borrowId}`).then(() => {
+      this.setState({
+        hidden: true
       });
+    });
   }
 
   toggleModalBorrow() {
@@ -57,15 +55,11 @@ class Borrow extends React.Component {
     const clothingId = this.props.clothePage;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     return axios
-      .post(
-        `http://localhost:5050/uploadProof/${currentUser}/${clothingId}`,
-        formData,
-        {
-          headers: {
-            "content-type": "multipart/form-data"
-          }
+      .post(`${backend}/${currentUser}/${clothingId}`, formData, {
+        headers: {
+          "content-type": "multipart/form-data"
         }
-      )
+      })
       .then(response => {
         console.log(response.data);
       });

@@ -2,6 +2,7 @@ import React from "react";
 import "../style/Upload.scss";
 import { Button, Form, Input } from "reactstrap";
 import axios from "axios";
+import { backend } from "../conf";
 
 class UploadClothePictures extends React.Component {
   constructor(props) {
@@ -21,15 +22,11 @@ class UploadClothePictures extends React.Component {
     formData.append("clothePicture", file);
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     return axios
-      .post(
-        `http://localhost:5050/uploadClothePictures/${currentUser}`,
-        formData,
-        {
-          headers: {
-            "content-type": "multipart/form-data"
-          }
+      .post(`${backend}/uploadClothePictures/${currentUser}`, formData, {
+        headers: {
+          "content-type": "multipart/form-data"
         }
-      )
+      })
       .then(response => {
         console.log(response.data);
       });
