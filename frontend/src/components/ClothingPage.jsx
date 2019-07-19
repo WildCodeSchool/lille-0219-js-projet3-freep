@@ -108,7 +108,7 @@ class ClothingPage extends React.Component {
   }
 
   next() {
-    const pictures = this.state.pictures;
+    const pictures = this.state.initialPics;
     if (this.animating) return;
     const nextIndex =
       this.state.activeIndex === pictures.length - 1
@@ -118,7 +118,7 @@ class ClothingPage extends React.Component {
   }
 
   previous() {
-    const pictures = this.state.pictures;
+    const pictures = this.state.initialPics;
     if (this.animating) return;
     const nextIndex =
       this.state.activeIndex === 0
@@ -189,8 +189,8 @@ class ClothingPage extends React.Component {
                       return (
                         <CarouselItem
                           key={key}
-                          onExiting={this.onExiting}
-                          onExited={this.onExited}
+                          onExiting={() => this.onExiting()}
+                          onExited={() => this.onExited()}
                         >
                           <Photo
                             key={key}
@@ -206,24 +206,24 @@ class ClothingPage extends React.Component {
                     return (
                       <Carousel
                         activeIndex={activeIndex}
-                        next={this.next}
-                        previous={this.previous}
+                        next={() => this.next()}
+                        previous={() => this.previous()}
                       >
                         <CarouselIndicators
                           items={initialPics}
                           activeIndex={activeIndex}
-                          onClickHandler={this.goToIndex}
+                          onClickHandler={() => this.goToIndex()}
                         />
                         {slides}
                         <CarouselControl
                           direction="prev"
                           directionText="Previous"
-                          onClickHandler={this.previous}
+                          onClickHandler={() => this.previous()}
                         />
                         <CarouselControl
                           direction="next"
                           directionText="Next"
-                          onClickHandler={this.next}
+                          onClickHandler={() => this.next()}
                         />
                       </Carousel>
                     );
