@@ -18,6 +18,11 @@
   font-size: 1.25rem;
 }
 
-.location {
+.location,
+.location a {
   color: #808080;
+  text-decoration: none;
+  &:hover {
+    color: #505050;
+  }
 }

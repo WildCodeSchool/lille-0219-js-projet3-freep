@@ -1,5 +1,5 @@
 import React from "react";
-import mailtoAddress from "../conf.js";
+import { mailtoAddress } from "../conf.js";
 import {
   ButtonDropdown,
   DropdownToggle,

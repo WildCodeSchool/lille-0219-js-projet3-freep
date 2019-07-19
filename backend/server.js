@@ -443,7 +443,7 @@ app.get(
             profileData.pictures = rowsPics;
 
             db.query(
-              `SELECT DISTINCT(id_user) FROM social WHERE content_type = "follow" AND id_content=${profileId} `,
+              `SELECT DISTINCT(id_user) FROM social WHERE id_follow=${profileId}`,
               (err, rowsFollowers) => {
                 if (err) {
                   console.log(err);
@@ -454,7 +454,7 @@ app.get(
                 profileData.followers = rowsFollowers;
 
                 db.query(
-                  `SELECT DISTINCT(id_content) FROM social WHERE content_type = "follow" AND id_user=${profileId} `,
+                  `SELECT DISTINCT(id_follow) FROM social WHERE id_user=${profileId} `,
                   (err, rowsFollowings) => {
                     if (err) {
                       console.log(err);
@@ -463,7 +463,7 @@ app.get(
                     profileData.followings = rowsFollowings;
 
                     db.query(
-                      `SELECT id FROM clothing WHERE id_user = ${profileId}`,
+                      `SELECT id FROM clothing WHERE id_user=${profileId}`,
                       (err, rowsPosts) => {
                         if (err) {
                           console.log(err);
@@ -573,13 +573,13 @@ app.get(
 app.get("/like/:idAuthor", (req, res) => {
   const authorId = req.params.idAuthor;
   db.query(
-    `SELECT DISTINCT(id_content) FROM social WHERE id_user = ${authorId} AND content_type = "like"`,
+    `SELECT DISTINCT(id_like) FROM social WHERE id_user=${authorId}`,
     (err, rows) => {
       if (err) {
         return res.status(500).send("error when getting like route");
       }
       let likesArray = rows.map(row => {
-        return row.id_content;
+        return row.id_like;
       });
       res.status(200).send(likesArray);
     }
@@ -590,7 +590,7 @@ app.post("/like/:idPicture", (req, res) => {
   const pictureId = req.params.idPicture;
   const authorId = req.body.idAuthor;
   db.query(
-    `INSERT INTO social (id_user, content_type, id_content, created_at) VALUES (${authorId}, "like", ${pictureId}, NOW())`,
+    `INSERT INTO social (id_user, id_like, created_at) VALUES (${authorId}, ${pictureId}, NOW())`,
     (err, rows) => {
       if (err) {
         return res.status(500).send("error when posting like route");
@@ -604,7 +604,7 @@ app.put("/like/:idPicture", (req, res) => {
   const pictureId = req.params.idPicture;
   const authorId = req.body.idAuthor;
   db.query(
-    `DELETE FROM social WHERE id_user=${authorId} AND content_type="like" AND id_content=${pictureId}`,
+    `DELETE FROM social WHERE id_user=${authorId} AND id_like=${pictureId}`,
     (err, rows) => {
       if (err) {
         return res.status(500).send("error when deleting like route");
@@ -620,14 +620,14 @@ app.post("/follow/:followId", (req, res) => {
   const followId = req.params.followId;
   const authorId = req.body.idAuthor;
   db.query(
-    `INSERT INTO social (id_user, content_type, id_content, created_at) VALUES (${authorId}, 'follow', ${followId}, NOW())`,
+    `INSERT INTO social (id_user, id_follow, created_at) VALUES (${authorId}, ${followId}, NOW())`,
     (err, rows) => {
       if (err) {
         console.log(err);
         res.status(500).send("error when getting social route");
       }
       db.query(
-        `SELECT DISTINCT(id_user) FROM social WHERE content_type="follow" AND id_content = ${followId}`,
+        `SELECT DISTINCT(id_user) FROM social WHERE id_follow=${followId}`,
         (err, rows) => {
           if (err) {
             console.log(err);
@@ -644,14 +644,14 @@ app.put("/follow/:followId", (req, res) => {
   const followId = req.params.followId;
   const authorId = req.body.idAuthor;
   db.query(
-    `DELETE FROM social WHERE id_user=${authorId} AND content_type="follow" AND id_content=${followId}`,
+    `DELETE FROM social WHERE id_user=${authorId} AND id_follow=${followId}`,
     (err, rows) => {
       if (err) {
         console.log(err);
         res.status(500).send("error when getting social route");
       }
       db.query(
-        `SELECT DISTINCT(id_user) FROM social WHERE content_type="follow" AND id_content = ${followId}`,
+        `SELECT DISTINCT(id_user) FROM social WHERE id_follow=${followId}`,
         (err, rows) => {
           if (err) {
             console.log(err);
@@ -662,6 +662,32 @@ app.put("/follow/:followId", (req, res) => {
       );
     }
   );
+});
+
+// My Profile
+
+app.get("/modification/:myProfile", (req, res) => {
+  const myProfile = req.params.myProfile;
+  db.query(
+    `SELECT id, nickname, location, description FROM user WHERE id = ${myProfile}`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when editing my profile");
+      }
+      res.status(200).send(rows[0]);
+    }
+  );
+});
+
+app.put("/modification/:myProfile", (req, res) => {
+  const myProfile = req.params.myProfile;
+  const body = req.body;
+  db.query(`UPDATE user SET ? WHERE id = ${myProfile}`, [body], (err, rows) => {
+    if (err) {
+      return res.status(500).send("error when editing my profile");
+    }
+    res.status(200).send(rows);
+  });
 });
 
 //Search

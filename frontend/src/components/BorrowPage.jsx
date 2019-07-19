@@ -5,6 +5,7 @@ import Loader from "./Loader";
 import { Col } from "reactstrap";
 import "../style/Borrow.scss";
 import Masonry from "react-masonry-component";
+import { backend } from "../conf";
 
 class BorrowPage extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class BorrowPage extends React.Component {
       userId: this.props.match.params.userId
     });
     axios
-      .get(`http://localhost:5050/emprunt/${this.props.match.params.userId}`, {
+      .get(`${backend}/emprunt/${this.props.match.params.userId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }

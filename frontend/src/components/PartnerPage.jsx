@@ -3,6 +3,7 @@ import Partner from "./Partner";
 import { Card, CardBody } from "reactstrap";
 import "../style/PartnerPage.scss";
 import axios from "axios";
+import { backend } from "../conf";
 
 class PartnerPage extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class PartnerPage extends React.Component {
     const profileId = JSON.parse(localStorage.getItem("user")).user.id;
     const user = JSON.parse(localStorage.getItem("user"));
     axios
-      .get(`http://localhost:5050/partenaire/${profileId}`, {
+      .get(`${backend}/partenaire/${profileId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }

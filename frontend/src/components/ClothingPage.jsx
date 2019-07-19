@@ -20,6 +20,7 @@ import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
 import Masonry from "react-masonry-component";
+import { backend } from "../conf";
 
 class ClothingPage extends React.Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class ClothingPage extends React.Component {
     const articleId = this.props.match.params.articleId;
     const user = JSON.parse(localStorage.getItem("user"));
     axios
-      .get(`http://localhost:5050/articles/${articleId}`, {
+      .get(`${backend}/articles/${articleId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }
@@ -84,7 +85,7 @@ class ClothingPage extends React.Component {
     let { comment } = this.state;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .post(`http://localhost:5050/comment/${articleId}`, {
+      .post(`${backend}/comment/${articleId}`, {
         content: comment,
         idAuthor: currentUser
       })
@@ -150,9 +151,7 @@ class ClothingPage extends React.Component {
     const clothingId = this.state.clothing.id;
     const pictureId = this.state.pictures[0].id;
     axios
-      .post(
-        `http://localhost:5050/emprunt/${currentUser}/${clothingId}/${pictureId}`
-      )
+      .post(`${backend}/emprunt/${currentUser}/${clothingId}/${pictureId}`)
       .then(({ data }) => {
         data.id_user = currentUser;
         data.id_clothing = clothingId;
