@@ -12,7 +12,6 @@ import MessagingPage from "./components/MessagingPage";
 import Message from "./components/Message";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
-// import Loader from "./components/Loader";
 import Registration from "./components/Registration";
 import BorrowPage from "./components/BorrowPage";
 import EditProfile from "./components/EditProfile";
@@ -20,8 +19,6 @@ import Search from "./components/Search";
 import { connect } from "react-redux";
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
-  // const token = localStorage.getItem("user");
-  // const { user } = this.props;
   return (
     <Route
       {...rest}
@@ -48,6 +45,7 @@ const App = ({ user }) => (
         <PrivateRoute path="/article/:articleId" component={ClothingPage} />
         <PrivateRoute path="/partenaire" component={PartnerPage} />
         <PrivateRoute path="/messagerie/:idReader" component={MessagingPage} />
+        <PrivateRoute path="/modification" component={EditProfile} />
       </Switch>
       <Footer />
     </Container>
