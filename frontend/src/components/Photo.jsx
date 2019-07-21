@@ -24,13 +24,11 @@ class Photo extends React.Component {
     });
 
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-    axios
-      .get(`${backend}/like/${currentUser}`)
-      .then(({ data }) => {
-        this.setState({
-          picturesLiked: data
-        });
+    axios.get(`${backend}/like/${currentUser}`).then(({ data }) => {
+      this.setState({
+        picturesLiked: data
       });
+    });
   }
 
   handleClick = () => {
@@ -63,7 +61,7 @@ class Photo extends React.Component {
     const picture = this.props.picture;
     const link = this.props.link;
     const deposit = this.state.deposit;
-    const dep = deposit && deposit.indexOf(link) !== -1 ? false : true;
+    const dep = deposit && deposit.indexOf(link) !== -1 ? true : false;
     const picturesLiked = this.state.picturesLiked;
     const pictureId = this.props.pictureId;
     const liked =
