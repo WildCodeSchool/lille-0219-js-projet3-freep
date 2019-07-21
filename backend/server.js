@@ -249,7 +249,6 @@ app.get(
                         }
                         answer.users = rowsUsers;
                         res.status(200).send(answer);
-                        console.log(answer);
                       }
                     );
                   }
