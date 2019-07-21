@@ -209,11 +209,6 @@ class ClothingPage extends React.Component {
                         next={() => this.next()}
                         previous={() => this.previous()}
                       >
-                        <CarouselIndicators
-                          items={initialPics}
-                          activeIndex={activeIndex}
-                          onClickHandler={() => this.goToIndex()}
-                        />
                         {slides}
                         <CarouselControl
                           direction="prev"
