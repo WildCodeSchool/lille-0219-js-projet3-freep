@@ -7,7 +7,7 @@ const initialState = {
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER:
-      return { ...state, isLoggedIn: true };
+      return { state: action.user, isLoggedIn: true };
     default:
       return state;
   }
