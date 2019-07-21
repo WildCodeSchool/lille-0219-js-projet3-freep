@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Row, Card, CardImg } from "reactstrap";
 import ReportButton from "./ReportButton";
 import axios from "axios";
+import { backend } from "../conf";
 
 class Photo extends React.Component {
   constructor(props) {
@@ -16,18 +17,20 @@ class Photo extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:5050/deposit/`).then(({ data }) => {
+    axios.get(`${backend}/deposit/`).then(({ data }) => {
       this.setState({
         deposit: data.deposit
       });
     });
 
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-    axios.get(`http://localhost:5050/like/${currentUser}`).then(({ data }) => {
-      this.setState({
-        picturesLiked: data
+    axios
+      .get(`${backend}/like/${currentUser}`)
+      .then(({ data }) => {
+        this.setState({
+          picturesLiked: data
+        });
       });
-    });
   }
 
   handleClick = () => {
@@ -35,7 +38,7 @@ class Photo extends React.Component {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     if (!this.state.isLiked) {
       axios
-        .post(`http://localhost:5050/like/${pictureId}`, {
+        .post(`${backend}/like/${pictureId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {
@@ -45,7 +48,7 @@ class Photo extends React.Component {
         });
     } else {
       axios
-        .put(`http://localhost:5050/like/${pictureId}`, {
+        .put(`${backend}/like/${pictureId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {
@@ -79,7 +82,7 @@ class Photo extends React.Component {
               className={liked ? "liked" : "notLiked"}
             />
             <div className={dep ? "deposit" : "no-deposit"}>ℂ</div>
-            <ReportButton />
+            <ReportButton link={link} />
           </Row>
         </div>
       </Card>

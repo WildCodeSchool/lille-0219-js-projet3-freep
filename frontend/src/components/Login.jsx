@@ -7,6 +7,7 @@ import axios from "axios";
 import { Heart } from "react-feather";
 import { loggedInUserActions } from "../Redux/actions";
 import { connect } from "react-redux";
+import { backend } from "../conf";
 
 class Login extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class Login extends Component {
     let { email, password } = this.state;
     const { history } = this.props;
     axios
-      .post(`http://localhost:5050/auth/login`, {
+      .post(`${backend}/auth/login`, {
         email,
         password
       })
@@ -107,7 +108,7 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.loginReducer
   };
 };
 

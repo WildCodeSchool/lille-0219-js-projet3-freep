@@ -15,6 +15,7 @@ import Login from "./components/Login";
 // import Loader from "./components/Loader";
 import Registration from "./components/Registration";
 import BorrowPage from "./components/BorrowPage";
+import EditProfile from "./components/EditProfile";
 import Search from "./components/Search";
 import { connect } from "react-redux";
 
@@ -24,9 +25,7 @@ const PrivateRoute = ({ component: Component, user, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={props =>
-        user.isLoggedIn ? <Component {...props} /> : <Redirect to="/" />
-      }
+      render={props => (user ? <Component {...props} /> : <Redirect to="/" />)}
     />
   );
 };
@@ -39,13 +38,9 @@ const App = ({ user }) => (
     <Container>
       <Switch>
         <Route exact path="/" component={Login} />
-        {/* <Route path="/users/:userId" component={ClothingPage} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/registration" exact component={Registration} />
-          <Route path="/loader" component={Loader} />
-          <Route path="/emprunt/:userId" component={BorrowPage} /> */}
-        <PrivateRoute path="/search" component={Search} />
         <Route exact path="/inscription" component={Registration} />
+        {/* <Route path="/emprunt/:userId" component={BorrowPage} /> */}
+        <PrivateRoute path="/search" component={Search} />
         <PrivateRoute path="/accueil" component={HomePage} user={user} />
         <PrivateRoute path="/profil/:profileId" component={Profile} />
         <PrivateRoute path="/message/:P1/:P2" component={Message} />
@@ -61,7 +56,7 @@ const App = ({ user }) => (
 
 const mapStateToProps = state => {
   return {
-    user: state.loginReducer.user
+    user: state.loginReducer.isLoggedIn
   };
 };
 
