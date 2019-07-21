@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "../style/Borrow.scss";
 import { backend } from "../conf";
+import { Camera, Trash2, UploadCloud } from "react-feather";
 
 class Borrow extends React.Component {
   constructor(props) {
@@ -30,13 +31,11 @@ class Borrow extends React.Component {
   handleDelete(e) {
     e.preventDefault();
     const borrowId = this.props.borrowId;
-    axios
-      .delete(`${backend}/emprunt/${borrowId}`)
-      .then(() => {
-        this.setState({
-          hidden: true
-        });
+    axios.delete(`${backend}/emprunt/${borrowId}`).then(() => {
+      this.setState({
+        hidden: true
       });
+    });
   }
 
   toggleModalBorrow() {
@@ -50,9 +49,7 @@ class Borrow extends React.Component {
     const clothingId = this.props.clothePage;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .post(
-        `${backend}/${currentUser}/${clothingId}/uploadProof`
-      )
+      .post(`${backend}/${currentUser}/${clothingId}/uploadProof`)
       .then(() => {
         alert("Votre photo a bien été envoyée");
       });
@@ -60,8 +57,8 @@ class Borrow extends React.Component {
 
   render() {
     return (
-      <div className={this.state.hidden ? "hidden" : ""}>
-        <Card className="borrowCard">
+      <div className={this.state.hidden ? "hidden" : "borrow-card-parent"}>
+        <Card className="borrowCard my-3">
           <CardBody>
             <Link to={`/article/${this.props.clothePage}`} className="link">
               <CardImg
@@ -70,35 +67,45 @@ class Borrow extends React.Component {
                 className="borrowPicture"
               />
             </Link>
-            <CardFooter className="row justify-content-center px-0 py-2 mx-auto">
+            <footer className="row btn-footer">
               <Col xs="5" className="m-1 p-0 d-flex justify-content-center">
                 <Button
                   onClick={() => {
                     this.toggleModalBorrow();
                   }}
                   className="borrowButton"
+                  title="J'ai emprunté ce vêtement, j'envoie une photo et je gagne 1 point !"
                 >
-                  J'ai emprunté ce vêtement
+                  <Camera width="22px" />
                 </Button>
                 <Modal
                   isOpen={this.state.modal}
                   toggle={() => {
                     this.toggleModalBorrow();
                   }}
+                  className="proofPics-modal"
                 >
                   <ModalHeader
                     toggle={() => {
                       this.toggleModalBorrow();
                     }}
-                  />
+                    className="d-flex align-items-center"
+                  >
+                    Envoie ta photo, gagne 1 point !
+                  </ModalHeader>
                   <Form
                     onSubmit={e => {
                       this.handleSubmit(e);
                     }}
                     encType="multipart/form-data"
                   >
-                    <Input type="file" name="myFile" />
-                    <Button type="submit">Envoyer</Button>
+                    <div className="input-box border">
+                      <Input type="file" name="myFile" />
+                      <UploadCloud />
+                    </div>
+                    <Button type="submit" className="upload-btn m-auto">
+                      Envoyer
+                    </Button>
                   </Form>
                 </Modal>
               </Col>
@@ -108,11 +115,13 @@ class Borrow extends React.Component {
                     this.handleDelete(e);
                   }}
                   className="borrowButton"
+                  title="Je veux annuler cet emprunt"
                 >
-                  Annuler l'emprunt
+                  <Trash2 width="22px" />
                 </Button>
               </Col>
-            </CardFooter>
+            </footer>
+            {/* <CardFooter className="row justify-content-center px-0 py-2 mx-auto" /> */}
           </CardBody>
         </Card>
       </div>

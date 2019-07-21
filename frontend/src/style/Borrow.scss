@@ -1,14 +1,20 @@
 @import "../index.scss";
 
 h1 {
-  font-size: 3rem;
-  color: goldenrod;
   font-family: "AvantGarde bold";
   margin: 5vh auto;
+}
+h5 {
+  margin: 0 auto;
 }
 
 .hidden {
   display: none !important;
+}
+
+.borrow-card-parent {
+  box-shadow: $box-shadow;
+  border-radius: $radius-lg;
 }
 
 .borrowCard {
@@ -16,30 +22,94 @@ h1 {
   box-shadow: $box-shadow;
   padding: 5px;
   background: $gradient;
-  margin: 0.5rem;
   .card-body {
     padding: 0 !important;
-  }
-  .card-footer {
-    background: $wh;
-    border: none;
-    .borrowButton {
-      font-size: 0.7rem !important;
-      font-style: normal;
-      background: #ad3a70cc;
-      border: none;
-      &:hover {
-        box-shadow: $box-shadow;
-      }
-    }
+    transition: $transition;
   }
   &:hover .card-img {
     transition: $transition;
     filter: saturate(0);
   }
-  &:hover .card-footer .borrowButton {
-    transition: $transition;
-    background: $gradient;
-    color: $wh;
+}
+
+.btn-footer {
+  position: absolute;
+  bottom: 5px;
+  border-radius: 0 0 5px 5px;
+  left: 20px;
+  background: rgba($bl, 0.7);
+  right: 20px;
+  justify-content: space-around;
+  height: 4rem;
+  button {
+    background: none;
+    border: none;
+    svg {
+      transition: 0.15s;
+    }
+    &:hover {
+      background: none;
+      svg {
+        stroke: #fa678c;
+      }
+    }
+    .btn:focus,
+    .btn-secondary:focus {
+      box-shadow: none !important;
+      border: none !important;
+    }
+  }
+}
+
+.proofPics-modal {
+  max-width: 450px !important;
+  .modal-header {
+    display: flex;
+    justify-content: center;
+  }
+  .modal-content {
+    height: 450px;
+  }
+  .input-box {
+    width: 100px;
+    height: 100px;
+  }
+  form {
+    svg {
+      stroke: #fa678c;
+      margin: 0 auto;
+      stroke-width: 1;
+    }
+  }
+  input {
+    opacity: 0;
+    z-index: 2000;
+    cursor: pointer;
+  }
+  form svg,
+  input,
+  .upload-btn,
+  .input-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: $radius-sm;
+  }
+  form svg,
+  input {
+    height: 65px;
+    width: 65px;
+  }
+  .upload-btn {
+    width: 30%;
+    top: 80%;
+    background: #ad3a70cc;
+    border: none;
+    &:hover {
+      background: #ad3a70;
+      border: none !important;
+      box-shadow: $box-shadow;
+    }
   }
 }
