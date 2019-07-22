@@ -22,53 +22,14 @@ class Photo extends React.Component {
         deposit: data.deposit
       });
     });
-
-    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-    axios
-      .get(`${backend}/like/${currentUser}`)
-      .then(({ data }) => {
-        this.setState({
-          picturesLiked: data
-        });
-      });
   }
-
-  handleClick = () => {
-    const pictureId = this.props.pictureId;
-    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-    if (!this.state.isLiked) {
-      axios
-        .post(`${backend}/like/${pictureId}`, {
-          idAuthor: currentUser
-        })
-        .then(({ data }) => {
-          this.setState({
-            isLiked: true
-          });
-        });
-    } else {
-      axios
-        .put(`${backend}/like/${pictureId}`, {
-          idAuthor: currentUser
-        })
-        .then(({ data }) => {
-          this.setState({
-            isLiked: false
-          });
-        });
-    }
-  };
 
   render() {
     const picture = this.props.picture;
     const link = this.props.link;
     const deposit = this.state.deposit;
     const dep = deposit && deposit.indexOf(link) !== -1 ? false : true;
-    const picturesLiked = this.state.picturesLiked;
-    const pictureId = this.props.pictureId;
-    const liked =
-      picturesLiked && picturesLiked.indexOf(pictureId) !== -1 ? true : false;
-
+    const liked = this.props.liked;
     return (
       <Card className="m-2 picture-card">
         <Link to={`/article/${link}`}>
@@ -78,8 +39,8 @@ class Photo extends React.Component {
           <Row className="p-0 card-buttons align-items-center">
             <Heart
               width="19"
-              onClick={this.handleClick}
               className={liked ? "liked" : "notLiked"}
+              onClick={this.props.handleClick}
             />
             <div className={dep ? "deposit" : "no-deposit"}>ℂ</div>
             <ReportButton link={link} />

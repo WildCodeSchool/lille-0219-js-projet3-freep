@@ -551,7 +551,7 @@ app.get(
 app.get("/like/:idAuthor", (req, res) => {
   const authorId = req.params.idAuthor;
   db.query(
-    `SELECT DISTINCT(id_like) FROM social WHERE id_user=${authorId}`,
+    `SELECT DISTINCT(id_like) FROM social WHERE id_user=${authorId} AND NOT id_like = 'NULL'`,
     (err, rows) => {
       if (err) {
         return res.status(500).send("error when getting like route");
@@ -573,7 +573,19 @@ app.post("/like/:idPicture", (req, res) => {
       if (err) {
         return res.status(500).send("error when posting like route");
       }
-      res.status(200).send(rows);
+      db.query(
+        `SELECT DISTINCT(id_like) FROM social WHERE id_user=${authorId} AND NOT id_like = 'NULL'`,
+        (err, picsRows) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).send("error when getting social route");
+          }
+          const choupette = picsRows.map(pic => {
+            return pic.id_like;
+          });
+          res.status(200).send(choupette);
+        }
+      );
     }
   );
 });
@@ -611,7 +623,7 @@ app.post("/follow/:followId", (req, res) => {
             console.log(err);
             res.status(500).send("error when getting social route");
           }
-          res.status(200).send(rows);
+          res.status(200).send(rows.id_like);
         }
       );
     }
