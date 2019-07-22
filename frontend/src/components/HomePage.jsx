@@ -19,7 +19,7 @@ class HomePage extends React.Component {
   componentDidMount() {
     const user = JSON.parse(localStorage.getItem("user"));
     axios
-      .get(`https://backend.freep-app.fr/articles/`, {
+      .get(`${backend}/articles/`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }

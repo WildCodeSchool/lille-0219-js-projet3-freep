@@ -52,7 +52,7 @@ class Registration extends Component {
     const { history } = this.props;
     if (password === confirmPassword) {
       axios
-        .post(`https://backend.freep-app.fr/auth/users`, {
+        .post(`${backend}/auth/users`, {
           firstname,
           lastname,
           nickname,

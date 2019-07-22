@@ -38,7 +38,7 @@ class Message extends React.Component {
         () => {
           axios
             .get(
-              `https://backend.freep-app.fr/message/${
+              `${backend}/message/${
                 this.state.profile
               }/${P2}`,
               {
@@ -73,12 +73,11 @@ class Message extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const { content_form } = this.state;
-    const P1 = this.props.match.params.P1;
     const P2 = this.props.match.params.P2;
     const user = JSON.parse(localStorage.getItem("user"));
 
     axios
-      .post(`https://backend.freep-app.fr/message/${P1}/${P2}`, {
+      .post(`http://localhost:5050/message/${this.state.profile}/${P2}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         },

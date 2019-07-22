@@ -13,7 +13,6 @@ router.post("/users", (req, res) => {
     if (err)
       return res.status(418).json({ status: "Teapot", error: err, hash: hash });
     user.password = hash;
-    console.log(user);
 
     db.query(
       `INSERT INTO user (nickname, email, password, firstname, lastname, avatar, created_at, location) VALUES ('${

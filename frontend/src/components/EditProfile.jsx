@@ -1,8 +1,8 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Row, Col } from "reactstrap";
-import "../style/EditProfile.css";
+import { Row, Col, Modal, ModalHeader, Input } from "reactstrap";
+import "../style/EditProfile.scss";
 import axios from "axios";
 import { backend } from "../conf";
 class EditProfile extends React.Component {
@@ -12,23 +12,25 @@ class EditProfile extends React.Component {
       id: "",
       nickname: "",
       location: "",
-      description: ""
+      description: "",
+      avatar: "",
+      file: null,
+      modal: false
     };
   }
 
   componentDidMount() {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
 
-    axios
-      .get(`https://backend.freep-app.fr/modification/${currentUser}`)
-      .then(({ data }) => {
-        this.setState({
-          id: data.id,
-          nickname: data.nickname,
-          location: data.location,
-          description: data.description
-        });
+    axios.get(`${backend}/modification/${currentUser}`).then(({ data }) => {
+      this.setState({
+        id: data.id,
+        nickname: data.nickname,
+        location: data.location,
+        description: data.description,
+        avatar: data.avatar
       });
+    });
   }
 
   validateForm() {
@@ -46,7 +48,7 @@ class EditProfile extends React.Component {
     const currentUser = this.state.id;
     event.preventDefault();
     axios
-      .put(`https://backend.freep-app.fr/modification/${currentUser}`, {
+      .put(`${backend}/modification/${currentUser}`, {
         nickname: this.state.nickname,
         location: this.state.location,
         description: this.state.description
@@ -59,10 +61,41 @@ class EditProfile extends React.Component {
       });
   }
 
+  toggleModalAvatar() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  }
+
+  handleAvatar(e) {
+    e.preventDefault();
+    this.fileUpload(this.state.file);
+  }
+
+  fileUpload(file) {
+    const formData = new FormData();
+    formData.append("avatar", file);
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    return axios
+      .post(`${backend}/uploadAvatar/${currentUser}`, formData, {
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      })
+      .then(response => {
+        console.log(response.data);
+      });
+  }
+
+  onChange(e) {
+    this.setState({ file: e.target.files[0] });
+  }
+
   render() {
     const nickname = this.state.nickname;
     const location = this.state.location;
     const description = this.state.description;
+    const avatar = this.state.avatar;
     return (
       <React.Fragment>
         <Form
@@ -74,14 +107,7 @@ class EditProfile extends React.Component {
           <Row>
             <Col lg="6">
               <Form.Group controlId="nickname">
-                <h1
-                  style={{
-                    fontSize: "20px",
-                    color: "goldenrod",
-                    fontFamily: "DancingScript"
-                  }}
-                  htmlFor="nickname"
-                >
+                <h1 className="titleInput" htmlFor="nickname">
                   Nom d'utilisateur *
                 </h1>
                 <Form.Control
@@ -97,14 +123,7 @@ class EditProfile extends React.Component {
             </Col>
             <Col lg="6">
               <Form.Group controlId="location">
-                <h1
-                  style={{
-                    fontSize: "20px",
-                    color: "goldenrod",
-                    fontFamily: "DancingScript"
-                  }}
-                  htmlFor="location"
-                >
+                <h1 className="titleInput" htmlFor="location">
                   Ville
                 </h1>
                 <Form.Control
@@ -119,16 +138,48 @@ class EditProfile extends React.Component {
             </Col>
           </Row>
           <Row>
+            <Col lg="3">
+              <Form.Group controlId="avatar">
+                <h1 className="titleInput">Avatar</h1>
+              </Form.Group>
+              <img
+                src={avatar}
+                alt="avatar"
+                className="rounded-circle photo mx-auto"
+                onClick={() => {
+                  this.toggleModalAvatar();
+                }}
+              />
+              <Modal
+                isOpen={this.state.modal}
+                toggle={() => {
+                  this.toggleModalAvatar();
+                }}
+              >
+                <ModalHeader
+                  toggle={() => {
+                    this.toggleModalAvatar();
+                  }}
+                />
+                <Form
+                  onSubmit={e => {
+                    this.handleAvatar(e);
+                  }}
+                >
+                  <Input
+                    type="file"
+                    name="avatar"
+                    onChange={e => {
+                      this.onChange(e);
+                    }}
+                  />
+                  <Button type="submit">Envoyer</Button>
+                </Form>
+              </Modal>
+            </Col>
             <Col>
               <Form.Group controlId="description">
-                <h1
-                  style={{
-                    fontSize: "20px",
-                    color: "goldenrod",
-                    fontFamily: "DancingScript"
-                  }}
-                  htmlFor="description"
-                >
+                <h1 className="titleInput" htmlFor="description">
                   Description
                 </h1>
                 <Form.Control
@@ -144,14 +195,7 @@ class EditProfile extends React.Component {
               </Form.Group>
             </Col>
           </Row>
-          <h1
-            style={{
-              fontSize: "20px",
-              color: "goldenrod",
-              fontFamily: "DancingScript"
-            }}
-            htmlFor="description"
-          >
+          <h1 className="titleInput" htmlFor="description">
             * Champ obligatoire
           </h1>
           <Button

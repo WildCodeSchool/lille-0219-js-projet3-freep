@@ -1,9 +1,9 @@
 import React from "react";
+import logo from "../pictures/logo.png";
+import magnifier from "../pictures/loupe.png";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
 import { Tag, PlusCircle, Mail, Shuffle, User } from "react-feather";
-import { Modal, ModalHeader } from "reactstrap";
-import Uploader from "./Upload";
 import axios from "axios";
 import { connect } from "react-redux";
 import { setResultsActions } from "../Redux/actions";
@@ -83,7 +83,7 @@ class NavFreep extends React.Component {
   handleSubmit = e => {
     if (e) e.preventDefault();
     axios
-      .post(`https://backend.freep-app.fr/search`, {
+      .post(`${backend}/search`, {
         keyword: this.state.searchResult
       })
       .then(res => {
@@ -110,7 +110,7 @@ class NavFreep extends React.Component {
       >
         <Navbar color="light" light expand="md">
           <Link to="/accueil">
-            <img className="logo" src="../pictures/logo.png" alt="logo" />
+            <img className="logo" src={logo} alt="logo" />
           </Link>
           <div className="navText">
             <span className="navCatch">La garde robe qui rapporte</span>
@@ -127,39 +127,19 @@ class NavFreep extends React.Component {
                 />
                 <input type="submit" />
                 <Link to={`/search`}>
-                  <img
-                    className="magnifier"
-                    src="../pictures/loupe.png"
-                    alt="magnifier"
-                  />
+                  <img className="magnifier" src={magnifier} alt="magnifier" />
                 </Link>
               </label>
             </form>
             <Nav className="ml-auto text-center" navbar>
               {isMobile ? (
-                <NavLink to="" title="Propose ton vêtement !">
-                  <PlusCircle
-                    className="img"
-                    color="#222"
-                    onClick={this.toggleModal}
-                  />
+                <NavLink to="/upload" title="Propose ton vêtement !">
+                  <PlusCircle className="img" color="#222" />
                   <p>Upload</p>
-                  <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
-                    <ModalHeader toggle={this.toggleModal} className="pr-5" />
-                    <Uploader />
-                  </Modal>
                 </NavLink>
               ) : (
-                <NavLink to="" title="Propose ton vêtement !">
-                  <PlusCircle
-                    className="img"
-                    color="#222"
-                    onClick={this.toggleModal}
-                  />
-                  <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
-                    <ModalHeader toggle={this.toggleModal} className="pr-5" />
-                    <Uploader />
-                  </Modal>
+                <NavLink to="/upload" title="Propose ton vêtement !">
+                  <PlusCircle className="img" color="#222" />
                 </NavLink>
               )}
               {isMobile ? (

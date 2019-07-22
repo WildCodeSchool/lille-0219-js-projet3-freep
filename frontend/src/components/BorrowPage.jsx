@@ -5,6 +5,7 @@ import Loader from "./Loader";
 import { Col } from "reactstrap";
 import "../style/Borrow.scss";
 import Masonry from "react-masonry-component";
+import { backend } from "../conf";
 
 class BorrowPage extends React.Component {
   constructor(props) {
@@ -21,16 +22,11 @@ class BorrowPage extends React.Component {
       userId: this.props.match.params.userId
     });
     axios
-      .get(
-        `https://backend.freep-app.fr/emprunt/${
-          this.props.match.params.userId
-        }`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`
-          }
+      .get(`${backend}/emprunt/${this.props.match.params.userId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
         }
-      )
+      })
       .then(({ data }) => {
         this.setState({
           borrowArray: data,

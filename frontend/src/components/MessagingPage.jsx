@@ -21,7 +21,7 @@ class MessagingPage extends React.Component {
     const user = JSON.parse(localStorage.getItem("user"));
     axios
       .get(
-        `https://backend.freep-app.fr/messagerie/${currentUser}
+        `${backend}/messagerie/${currentUser}
       `,
         {
           headers: {

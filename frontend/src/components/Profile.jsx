@@ -31,7 +31,7 @@ class Profile extends React.Component {
     const profileId = this.props.match.params.profileId;
     const currentFollowers = JSON.parse(localStorage.getItem("followers"));
     axios
-      .get(`https://backend.freep-app.fr/profil/${profileId}`, {
+      .get(`${backend}/profil/${profileId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }
@@ -66,7 +66,7 @@ class Profile extends React.Component {
 
     if (!this.state.isFollowed) {
       axios
-        .post(`https://backend.freep-app.fr/follow/${profileId}`, {
+        .post(`${backend}/follow/${profileId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {
@@ -78,7 +78,7 @@ class Profile extends React.Component {
         });
     } else {
       axios
-        .put(`https://backend.freep-app.fr/follow/${profileId}`, {
+        .put(`${backend}/follow/${profileId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {

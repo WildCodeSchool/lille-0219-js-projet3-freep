@@ -17,7 +17,7 @@ class Photo extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`https://backend.freep-app.fr/deposit/`).then(({ data }) => {
+    axios.get(`${backend}/deposit/`).then(({ data }) => {
       this.setState({
         deposit: data.deposit
       });
@@ -25,7 +25,7 @@ class Photo extends React.Component {
 
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .get(`https://backend.freep-app.fr/like/${currentUser}`)
+      .get(`${backend}/like/${currentUser}`)
       .then(({ data }) => {
         this.setState({
           picturesLiked: data
@@ -38,7 +38,7 @@ class Photo extends React.Component {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     if (!this.state.isLiked) {
       axios
-        .post(`https://backend.freep-app.fr/like/${pictureId}`, {
+        .post(`${backend}/like/${pictureId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {
@@ -48,7 +48,7 @@ class Photo extends React.Component {
         });
     } else {
       axios
-        .put(`https://backend.freep-app.fr/like/${pictureId}`, {
+        .put(`${backend}/like/${pictureId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {
@@ -82,7 +82,7 @@ class Photo extends React.Component {
               className={liked ? "liked" : "notLiked"}
             />
             <div className={dep ? "deposit" : "no-deposit"}>ℂ</div>
-            <ReportButton />
+            <ReportButton link={link} />
           </Row>
         </div>
       </Card>

@@ -17,6 +17,8 @@ import Registration from "./components/Registration";
 import BorrowPage from "./components/BorrowPage";
 import EditProfile from "./components/EditProfile";
 import Search from "./components/Search";
+import UploadClothePictures from "./components/UploadClothePictures";
+import Uploader from "./components/Upload";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const token = localStorage.getItem("user");
@@ -53,6 +55,8 @@ function App() {
             component={MessagingPage}
           />
           <PrivateRoute path="/messagerie" />
+          <Route path="/upload" component={Uploader} />
+          <Route path="/uploadclothepicture" component={UploadClothePictures} />
         </Switch>
         <Footer />
       </Container>
