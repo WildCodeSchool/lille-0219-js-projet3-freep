@@ -17,16 +17,17 @@ class Uploader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: null,
-      brand: null,
-      size: null,
-      description: null
+      type: "",
+      brand: "",
+      size: "",
+      description: "",
+      deposit: false
     };
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    let { type, brand, size, description } = this.state;
+    let { type, brand, size, description, deposit } = this.state;
 
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
@@ -34,14 +35,16 @@ class Uploader extends React.Component {
         type: type,
         brand: brand,
         size: size,
-        description: description
+        description: description,
+        deposit: deposit
       })
       .then(({ data }) => {
         this.setState({
           type: data.type,
           brand: data.brand,
           size: data.size,
-          description: data.description
+          description: data.description,
+          deposit: data.deposit
         });
         this.props.history.push("/uploadclothepicture");
       });
@@ -53,11 +56,11 @@ class Uploader extends React.Component {
     });
   }
 
-  // onChangeChecked(e) {
-  //   this.setState({
-  //     deposit: e.event.checked
-  //   });
-  // }
+  onChangeChecked(e) {
+    this.setState({
+      deposit: e.target.checked
+    });
+  }
 
   render() {
     return (
@@ -145,21 +148,22 @@ class Uploader extends React.Component {
                   />
                 </Col>
               </FormGroup>
-              {/* <FormGroup check>
+              <FormGroup check>
                 <Label check className="offset-2">
                   <Input
                     type="checkbox"
                     name="deposit"
                     id="deposit"
-                    onChange={() => {
-                      this.onChangeChecked();
+                    checked={this.state.deposit}
+                    onChange={e => {
+                      this.onChangeChecked(e);
                     }}
                   />
                   <p className="pt-2 pl-2">
                     Tu préfères demander une caution ?
                   </p>
                 </Label>
-              </FormGroup> */}
+              </FormGroup>
               <Button className="col-4 my-3 align-self-center" type="submit">
                 Envoyer
               </Button>

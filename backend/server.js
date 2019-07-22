@@ -87,6 +87,10 @@ app.post(
         if (err) {
           console.warn(err);
         }
+<<<<<<< HEAD
+=======
+        console.log(image);
+>>>>>>> 22861688be4e8f7e75825672acda00bdf1add804
         const path = image.url;
         db.query(
           `INSERT INTO picture ( id_clothing, id_user, is_proof, created_at, url)
@@ -109,9 +113,10 @@ app.post("/uploadClothe/:currentUser", (req, res) => {
   const size = req.body.size;
   const brand = req.body.brand;
   const description = req.body.description;
+  const deposit = req.body.deposit;
   db.query(
-    `INSERT INTO clothing ( id_user, created_at, type, brand, size, description)
-    VALUES (${currentUser}, Now(), "${type}", "${brand}", "${size}", "${description}");`,
+    `INSERT INTO clothing ( id_user, created_at, type, brand, size, description, is_deposit)
+    VALUES (${currentUser}, Now(), "${type}", "${brand}", "${size}", "${description}", ${deposit});`,
     (err, rows, fields) => {
       if (err) throw err;
       res.status(200).send(rows);
@@ -135,12 +140,21 @@ app.post(
         if (err) {
           console.warn(err);
         }
+<<<<<<< HEAD
+=======
+        console.log(image);
+>>>>>>> 22861688be4e8f7e75825672acda00bdf1add804
         const path = image.url;
         db.query(
           `SELECT clothing.id FROM clothing WHERE id_user = ${currentUser} ORDER BY created_at DESC LIMIT 1`,
           (err, rows) => {
             if (err) throw err;
             const id_clothing = rows[0].id;
+<<<<<<< HEAD
+=======
+            console.log("id_clothing: " + id_clothing);
+            console.log("path : " + path);
+>>>>>>> 22861688be4e8f7e75825672acda00bdf1add804
             db.query(
               `INSERT INTO picture ( id_clothing, id_user, is_proof, created_at, url)
                     VALUES (${id_clothing}, ${currentUser}, 0, Now(), '${path}');`,

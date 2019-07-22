@@ -15,9 +15,15 @@ const saltRounds = process.env.SALT_ROUNDS || 256;
 const cloudinary = require("cloudinary");
 
 cloudinary.config({
+<<<<<<< HEAD
   cloud_name: process.env.CLOUD_NAME || "cloud_name",
   api_key: process.env.API_KEY || "api_key",
   api_secret: process.env.API_SECRET || "api_secret"
+=======
+  cloud_name: "dlxzd7tqf",
+  api_key: "923592476985338",
+  api_secret: "8-vl6Uy_EJr9RsQ3r4Don5c4Q1A"
+>>>>>>> 22861688be4e8f7e75825672acda00bdf1add804
 });
 
 const key = {
