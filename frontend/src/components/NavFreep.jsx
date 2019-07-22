@@ -4,8 +4,6 @@ import magnifier from "../pictures/loupe.png";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
 import { Tag, PlusCircle, Mail, Shuffle, User } from "react-feather";
-import { Modal, ModalHeader } from "reactstrap";
-import Uploader from "./Upload";
 import axios from "axios";
 import { connect } from "react-redux";
 import { setResultsActions } from "../Redux/actions";
@@ -135,29 +133,13 @@ class NavFreep extends React.Component {
             </form>
             <Nav className="ml-auto text-center" navbar>
               {isMobile ? (
-                <NavLink to="" title="Propose ton vêtement !">
-                  <PlusCircle
-                    className="img"
-                    color="#222"
-                    onClick={this.toggleModal}
-                  />
+                <NavLink to="/upload" title="Propose ton vêtement !">
+                  <PlusCircle className="img" color="#222" />
                   <p>Upload</p>
-                  <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
-                    <ModalHeader toggle={this.toggleModal} className="pr-5" />
-                    <Uploader />
-                  </Modal>
                 </NavLink>
               ) : (
-                <NavLink to="" title="Propose ton vêtement !">
-                  <PlusCircle
-                    className="img"
-                    color="#222"
-                    onClick={this.toggleModal}
-                  />
-                  <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
-                    <ModalHeader toggle={this.toggleModal} className="pr-5" />
-                    <Uploader />
-                  </Modal>
+                <NavLink to="/upload" title="Propose ton vêtement !">
+                  <PlusCircle className="img" color="#222" />
                 </NavLink>
               )}
               {isMobile ? (
