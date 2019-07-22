@@ -12,7 +12,7 @@ passport.use(
     },
     (email, password, done) => {
       db.query(
-        "SELECT id, email, password, nickname FROM user WHERE email=?",
+        "SELECT id, email, password, nickname, avatar, loation FROM user WHERE email=?",
         [email, password],
         (err, usersRows) => {
           if (!usersRows)

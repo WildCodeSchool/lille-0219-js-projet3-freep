@@ -8,7 +8,7 @@ const multer = require("multer");
 const path = require("path");
 
 app.use(cors());
-app.use(express.static("./uploadPictures"));
+app.use(express.static("./tmp"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
@@ -17,7 +17,7 @@ app.use("/auth", require("./auth"));
 // Initialize upload
 
 const storage = multer.diskStorage({
-  destination: "./uploadPictures/",
+  destination: "./tmp/",
   filename: function(req, file, cb) {
     cb(
       null,
@@ -79,23 +79,25 @@ app.post(
     const clothingId = req.params.clothingId;
     const currentUser = req.params.currentUser;
     const file = req.file.path;
-    console.log(req.file);
 
-    cloudinary.uploader.upload(file, { tags: "basic_sample" }, (err, image) => {
-      if (err) {
-        console.warn(err);
-      }
-      console.log(image);
-      const path = image.url;
-      db.query(
-        `INSERT INTO picture ( id_clothing, id_user, is_proof, created_at, url)
-          VALUES (${clothingId}, ${currentUser}, 1, Now(), "${path}");`,
-        (err, rows, fields) => {
-          if (err) throw err;
-          res.status(200);
+    cloudinary.v2.uploader.upload(
+      file,
+      { tags: "basic_sample" },
+      (err, image) => {
+        if (err) {
+          console.warn(err);
         }
-      );
-    });
+        const path = image.url;
+        db.query(
+          `INSERT INTO picture ( id_clothing, id_user, is_proof, created_at, url)
+          VALUES (${clothingId}, ${currentUser}, 1, Now(), "${path}");`,
+          (err, rows, fields) => {
+            if (err) throw err;
+            res.status(200);
+          }
+        );
+      }
+    );
   }
 );
 
@@ -125,32 +127,32 @@ app.post(
   (req, res) => {
     const currentUser = req.params.currentUser;
     const file = req.file.path;
-    console.log(req.file);
 
-    cloudinary.uploader.upload(file, { tags: "basic_sample" }, (err, image) => {
-      if (err) {
-        console.warn(err);
-      }
-      console.log(image);
-      const path = image.url;
-      db.query(
-        `SELECT clothing.id FROM clothing WHERE id_user = ${currentUser} ORDER BY created_at DESC LIMIT 1`,
-        (err, rows) => {
-          if (err) throw err;
-          const id_clothing = rows[0].id;
-          console.log("id_clothing: " + id_clothing);
-          console.log("path : " + path);
-          db.query(
-            `INSERT INTO picture ( id_clothing, id_user, is_proof, created_at, url)
-                    VALUES (${id_clothing}, ${currentUser}, 0, Now(), '${path}');`,
-            (err, rows, fields) => {
-              if (err) throw err;
-              res.status(200).send(rows);
-            }
-          );
+    cloudinary.v2.uploader.upload(
+      file,
+      { tags: "basic_sample" },
+      (err, image) => {
+        if (err) {
+          console.warn(err);
         }
-      );
-    });
+        const path = image.url;
+        db.query(
+          `SELECT clothing.id FROM clothing WHERE id_user = ${currentUser} ORDER BY created_at DESC LIMIT 1`,
+          (err, rows) => {
+            if (err) throw err;
+            const id_clothing = rows[0].id;
+            db.query(
+              `INSERT INTO picture ( id_clothing, id_user, is_proof, created_at, url)
+                    VALUES (${id_clothing}, ${currentUser}, 0, Now(), '${path}');`,
+              (err, rows, fields) => {
+                if (err) throw err;
+                res.status(200).send(rows);
+              }
+            );
+          }
+        );
+      }
+    );
   }
 );
 
@@ -666,7 +668,7 @@ app.put("/follow/:followId", (req, res) => {
 app.get("/modification/:myProfile", (req, res) => {
   const myProfile = req.params.myProfile;
   db.query(
-    `SELECT id, nickname, location, description FROM user WHERE id = ${myProfile}`,
+    `SELECT id, nickname, location, description, avatar FROM user WHERE id = ${myProfile}`,
     (err, rows) => {
       if (err) {
         return res.status(500).send("error when editing my profile");
@@ -685,6 +687,30 @@ app.put("/modification/:myProfile", (req, res) => {
     }
     res.status(200).send(rows);
   });
+});
+
+// Upload avatar
+app.post("/uploadAvatar/:currentUser", upload.single("avatar"), (req, res) => {
+  const currentUser = req.params.currentUser;
+  const file = req.file.path;
+
+  cloudinary.v2.uploader.upload(
+    file,
+    { tags: "basic_sample" },
+    (err, image) => {
+      if (err) {
+        console.warn(err);
+      }
+      const path = image.url;
+      db.query(
+        `UPDATE user SET avatar = '${path}' where id = ${currentUser}`,
+        (err, rows, fields) => {
+          if (err) throw err;
+          res.status(200);
+        }
+      );
+    }
+  );
 });
 
 app.listen(portNumber, () => {
