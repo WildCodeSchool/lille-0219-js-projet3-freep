@@ -22,15 +22,15 @@ class Photo extends React.Component {
         deposit: data.deposit
       });
     });
+  }
 
+  componentWillUpdate() {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-    axios
-      .get(`${backend}/like/${currentUser}`)
-      .then(({ data }) => {
-        this.setState({
-          picturesLiked: data
-        });
+    axios.get(`${backend}/like/${currentUser}`).then(({ data }) => {
+      this.setState({
+        picturesLiked: data
       });
+    });
   }
 
   handleClick = () => {
