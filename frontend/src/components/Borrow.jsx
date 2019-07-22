@@ -22,6 +22,7 @@ class Borrow extends React.Component {
     super(props);
     this.state = {
       hidden: false,
+      file: null,
       modal: false,
       isOpen: false
     };
@@ -30,13 +31,11 @@ class Borrow extends React.Component {
   handleDelete(e) {
     e.preventDefault();
     const borrowId = this.props.borrowId;
-    axios
-      .delete(`${backend}/emprunt/${borrowId}`)
-      .then(() => {
-        this.setState({
-          hidden: true
-        });
+    axios.delete(`${backend}/emprunt/${borrowId}`).then(() => {
+      this.setState({
+        hidden: true
       });
+    });
   }
 
   toggleModalBorrow() {
@@ -47,15 +46,27 @@ class Borrow extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.fileUpload(this.state.file);
+  }
+
+  fileUpload(file) {
+    const formData = new FormData();
+    formData.append("proof", file);
     const clothingId = this.props.clothePage;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-    axios
-      .post(
-        `${backend}/${currentUser}/${clothingId}/uploadProof`
-      )
-      .then(() => {
-        alert("Votre photo a bien été envoyée");
+    return axios
+      .post(`${backend}/uploadProof/${currentUser}/${clothingId}`, formData, {
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      })
+      .then(response => {
+        console.log(response.data);
       });
+  }
+
+  onChange(e) {
+    this.setState({ file: e.target.files[0] });
   }
 
   render() {
@@ -95,10 +106,22 @@ class Borrow extends React.Component {
                     onSubmit={e => {
                       this.handleSubmit(e);
                     }}
-                    encType="multipart/form-data"
                   >
-                    <Input type="file" name="myFile" />
-                    <Button type="submit">Envoyer</Button>
+                    <Input
+                      type="file"
+                      name="proof"
+                      onChange={e => {
+                        this.onChange(e);
+                      }}
+                    />
+                    <Button
+                      type="submit"
+                      onClick={() => {
+                        this.toggleModalBorrow();
+                      }}
+                    >
+                      Envoyer
+                    </Button>
                   </Form>
                 </Modal>
               </Col>
