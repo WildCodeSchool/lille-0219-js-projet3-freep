@@ -148,9 +148,7 @@ class ClothingPage extends React.Component {
     const clothingId = this.state.clothing.id;
     const pictureId = this.state.pictures[0].id;
     axios
-      .post(
-        `${backend}/emprunt/${currentUser}/${clothingId}/${pictureId}`
-      )
+      .post(`${backend}/emprunt/${currentUser}/${clothingId}/${pictureId}`)
       .then(({ data }) => {
         data.id_user = currentUser;
         data.id_clothing = clothingId;
@@ -281,6 +279,11 @@ class ClothingPage extends React.Component {
                     </Link>
                     <div className="pt-4">
                       <div>{clothing.description}</div>
+                      <div className="pt-2">
+                        {clothing.type ? clothing.type + " - " : ""}
+                        {clothing.brand ? clothing.brand + " - " : ""}
+                        {clothing.size ? clothing.size : ""}
+                      </div>
                       <Row className="pt-4 pr-3">
                         <Col xs="8" className="borrow-phrase">
                           Tu veux emprunter ce vêtement?
