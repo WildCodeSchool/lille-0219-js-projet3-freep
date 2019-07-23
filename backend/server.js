@@ -722,7 +722,7 @@ app.listen(portNumber, () => {
 app.post("/search", (req, res) => {
   const keyword = req.body.keyword;
   db.query(
-    "SELECT clothing.id, clothing.type, clothing.description,picture.url FROM clothing INNER JOIN picture ON picture.id_clothing = clothing.id WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
+    "SELECT clothing.id, clothing.type, clothing.description,picture.url, clothing.size FROM clothing INNER JOIN picture ON picture.id_clothing = clothing.id WHERE clothing.type LIKE ? OR clothing.description LIKE ?",
     ["%" + keyword + "%", "%" + keyword + "%"],
     (err, ResultClothing) => {
       if (err) {
