@@ -188,6 +188,7 @@ class EditProfile extends React.Component {
                   rows="5"
                   type="text"
                   value={description}
+                  maxLength="255"
                   onChange={event => {
                     this.handleChange(event);
                   }}

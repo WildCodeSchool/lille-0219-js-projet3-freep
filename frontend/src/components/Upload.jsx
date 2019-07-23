@@ -142,6 +142,7 @@ class Uploader extends React.Component {
                     id="description"
                     value={this.state.description}
                     placeholder="Plus on a de détails, plus on aime !"
+                    maxLength="128"
                     onChange={e => {
                       this.onChangeFields(e);
                     }}
