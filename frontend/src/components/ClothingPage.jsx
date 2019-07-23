@@ -90,6 +90,9 @@ class ClothingPage extends React.Component {
         let comments = this.state.commentsArray;
         data.hour_send = "l'instant";
         comments.unshift(data);
+        const user = JSON.parse(localStorage.getItem("user")).user;
+        let users = this.state.users;
+        users.push(user);
         this.setState({
           loading: false,
           commentsArray: comments,
