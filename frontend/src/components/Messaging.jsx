@@ -56,19 +56,19 @@ class Messaging extends React.Component {
         >
           <CardBody>
             <Row className="align-items-center px-3 message-text">
-              <Col xs="3">
+              <Col md="3">
                 {this.state.recipe.map((recipe, i) => {
                   return (
                     <img
                       src={recipe.avatar}
                       alt="Avatar"
-                      className="imgAvatar avatar rounded-circle"
+                      className="imgAvatar avatar rounded-circle mx-auto my-5"
                       key={`b+${i}`}
                     />
                   );
                 })}
               </Col>
-              <Col xs="9" className="d-flex my-5 flex-column">
+              <Col md="9" className="d-flex my-3 flex-column">
                 <Row className="align-items-center">
                   {this.state.recipe.map((recipe, i) => {
                     return (
@@ -86,12 +86,11 @@ class Messaging extends React.Component {
                 {this.state.recipe.map((recipe, i) => {
                   return (
                     <React.Fragment key={`h+${i}`}>
-                      <p className="bodyText text-justify px-5">
+                      <p className="bodyText text-md-justify px-md-5">
                         {recipe.id !== this.props.id_author
-                          ? "Toi" + " : "
-                          : recipe.nickname + " : "}
+                          ? "Toi" + " : " + this.props.message
+                          : recipe.nickname + " : " + this.props.message}
                       </p>
-                      <p>{this.props.message}</p>
                     </React.Fragment>
                   );
                 })}

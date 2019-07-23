@@ -258,7 +258,8 @@ app.get(
       INNER JOIN user ON user.id = message.id_author
       WHERE (id_author=${req.params.id_reader} OR id_reader=${
           req.params.id_reader
-        }) AND isLast=1;`,
+        }) AND isLast=1
+        ORDER BY message.created_at DESC;`,
         (err, rows) => {
           if (err) {
             console.log(err);
