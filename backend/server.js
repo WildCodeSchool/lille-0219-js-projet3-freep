@@ -443,7 +443,7 @@ app.get(
             profileData.pictures = rowsPics;
 
             db.query(
-              `SELECT DISTINCT(id_user) FROM social WHERE id_follow=${profileId}`,
+              `SELECT DISTINCT(id_user) FROM social WHERE id_follow=${profileId} AND id_follow IS NOT NULL`,
               (err, rowsFollowers) => {
                 if (err) {
                   console.log(err);
@@ -451,7 +451,9 @@ app.get(
                     .status(500)
                     .send("error when getting social route");
                 }
-                profileData.followers = rowsFollowers;
+                profileData.followers = rowsFollowers.map(follower => {
+                  return follower.id_user;
+                });
 
                 db.query(
                   `SELECT DISTINCT(id_follow) FROM social WHERE id_user=${profileId} `,
@@ -573,7 +575,7 @@ app.get(
 app.get("/like/:idAuthor", (req, res) => {
   const authorId = req.params.idAuthor;
   db.query(
-    `SELECT DISTINCT(id_like) FROM social WHERE id_user=${authorId}`,
+    `SELECT DISTINCT(id_like) FROM social WHERE id_user=${authorId} and id_like is not null`,
     (err, rows) => {
       if (err) {
         return res.status(500).send("error when getting like route");
