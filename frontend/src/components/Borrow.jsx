@@ -54,11 +54,6 @@ class Borrow extends React.Component {
     formData.append("proof", file);
     const clothingId = this.props.clothePage;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-
-    axios
-      .post(`${backend}/${currentUser}/${clothingId}/uploadProof`)
-      .then(() => {
-        alert("Votre photo a bien été envoyée");
     return axios
       .post(`${backend}/uploadProof/${currentUser}/${clothingId}`, formData, {
         headers: {
@@ -72,6 +67,10 @@ class Borrow extends React.Component {
 
   onChange(e) {
     this.setState({ file: e.target.files[0] });
+  }
+
+  validateForm() {
+    return this.state.file !== null;
   }
 
   render() {
@@ -124,11 +123,14 @@ class Borrow extends React.Component {
                         this.onChange(e);
                       }}
                     />
+                    <UploadCloud />
                     <Button
                       type="submit"
                       onClick={() => {
                         this.toggleModalBorrow();
                       }}
+                      className="upload-btn"
+                      disabled={!this.validateForm()}
                     >
                       Envoyer
                     </Button>
