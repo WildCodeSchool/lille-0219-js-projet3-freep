@@ -130,6 +130,7 @@ class EditProfile extends React.Component {
                   tabIndex="2"
                   type="text"
                   value={location}
+                  maxLength="255"
                   onChange={event => {
                     this.handleChange(event);
                   }}
