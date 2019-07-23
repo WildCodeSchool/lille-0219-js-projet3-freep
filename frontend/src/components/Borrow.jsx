@@ -5,7 +5,6 @@ import {
   Card,
   CardBody,
   CardImg,
-  CardFooter,
   Button,
   Form,
   Input,
@@ -121,7 +120,6 @@ class Borrow extends React.Component {
                 </Button>
               </Col>
             </footer>
-            {/* <CardFooter className="row justify-content-center px-0 py-2 mx-auto" /> */}
           </CardBody>
         </Card>
       </div>
