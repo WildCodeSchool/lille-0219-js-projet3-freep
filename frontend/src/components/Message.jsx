@@ -21,6 +21,7 @@ class Message extends React.Component {
     super(props);
     this.state = {
       messageArray: [{}],
+      recipient: [{}],
       content_form: "",
       profile: null
     };
@@ -37,19 +38,15 @@ class Message extends React.Component {
         },
         () => {
           axios
-            .get(
-              `${backend}/message/${
-                this.state.profile
-              }/${P2}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${user.token}`
-                }
+            .get(`${backend}/message/${this.state.profile}/${P2}`, {
+              headers: {
+                Authorization: `Bearer ${user.token}`
               }
-            )
+            })
             .then(({ data }) => {
               this.setState({
-                messageArray: data
+                messageArray: data.Results,
+                recipient: data.recipe
               });
             });
         }
@@ -101,6 +98,9 @@ class Message extends React.Component {
     const currentUser = this.state.profile;
     return (
       <Row className="messages-container p-0 m-0">
+        {this.state.recipient.map((recipe, i) => {
+          return <p key={`n+${i}`}>{recipe.nickname}</p>;
+        })}
         <Button
           className="back-message-btn d-flex"
           onClick={e => {
