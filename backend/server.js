@@ -218,9 +218,7 @@ app.get(
                 picsUsersId.push(proofPicsArray);
 
                 db.query(
-                  `SELECT DATEDIFF(NOW(), created_at) AS date_diff,
-              TIME(DATE_ADD(created_at,INTERVAL 2 hour)) as hour_send, id, id_user, id_clothing, content
-               FROM comment WHERE id_clothing=${articleId} ORDER BY created_at DESC`,
+                  `SELECT DATEDIFF(NOW(), created_at) AS date_diff, TIME(DATE_ADD(created_at,INTERVAL 2 hour)) as hour_send, id, id_user, id_clothing, content FROM comment WHERE id_clothing=${articleId} ORDER BY created_at DESC`,
                   (err, rowsComments) => {
                     if (err) {
                       console.log(err);
