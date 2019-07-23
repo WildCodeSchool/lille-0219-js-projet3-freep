@@ -1,14 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const { portNumber, db } = require("./conf");
+const { portNumber, db, cloudinary } = require("./conf");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
 
 app.use(cors());
-app.use(express.static("./uploadPictures"));
+app.use(express.static("./tmp"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
@@ -17,7 +17,7 @@ app.use("/auth", require("./auth"));
 // Initialize upload
 
 const storage = multer.diskStorage({
-  destination: "./uploadPictures/",
+  destination: "./tmp/",
   filename: function(req, file, cb) {
     cb(
       null,
@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
   }
 });
 
-// Allow 1 file
+// Upload Function
 
 const upload = multer({
   storage: storage,
@@ -34,13 +34,7 @@ const upload = multer({
   fileFilter: function(req, file, cb) {
     checkFileType(file, cb);
   }
-}).single("myFile");
-
-// Allow multiple files
-
-const uploadClothe = multer({
-  storage: storage
-}).array("pictureClotheUpload", 3);
+});
 
 // Allow extensions
 
@@ -78,62 +72,90 @@ app.get(
 );
 
 // Upload a proof-picture
+app.post(
+  "/uploadProof/:currentUser/:clothingId",
+  upload.single("proof"),
+  (req, res) => {
+    const clothingId = req.params.clothingId;
+    const currentUser = req.params.currentUser;
+    const file = req.file.path;
 
-app.post("/currentUser/:clothingId/:uploadProof", (req, res) => {
-  const path = req.file.path;
-  const clothingId = req.params.clothingId;
+    cloudinary.v2.uploader.upload(
+      file,
+      { tags: "basic_sample" },
+      (err, image) => {
+        if (err) {
+          console.warn(err);
+        }
+        const path = image.url;
+        db.query(
+          `INSERT INTO picture ( id_clothing, id_user, is_proof, created_at, url)
+          VALUES (${clothingId}, ${currentUser}, 1, Now(), "${path}");`,
+          (err, rows, fields) => {
+            if (err) throw err;
+            res.status(200);
+          }
+        );
+      }
+    );
+  }
+);
+
+// Upload a Clothe
+
+app.post("/uploadClothe/:currentUser", (req, res) => {
   const currentUser = req.params.currentUser;
-  upload(req, res, err => {
-    if (err) {
-      console.log(err);
-      return res
-        .status(500)
-        .send("error when upload a proof picture: File too large");
-    } else {
-      console.log(req.file);
-      res.send(req.file);
+  const type = req.body.type;
+  const size = req.body.size;
+  const brand = req.body.brand;
+  const description = req.body.description;
+  const deposit = req.body.deposit;
+  db.query(
+    `INSERT INTO clothing ( id_user, created_at, type, brand, size, description, is_deposit)
+    VALUES (${currentUser}, Now(), "${type}", "${brand}", "${size}", "${description}", ${deposit});`,
+    (err, rows, fields) => {
+      if (err) throw err;
+      res.status(200).send(rows);
     }
-  });
+  );
 });
 
 // Upload clothes pictures
 
-app.post("/currentUser/:uploadPicture", (req, res) => {
-  const path = req.file.path;
-  const currentUser = req.params.currentUser;
-  const type = req.body.type;
-  const brand = req.body.brand;
-  const size = req.body.size;
-  const description = req.body.description;
-  const deposit = req.body.deposit;
+app.post(
+  "/uploadClothePictures/:currentUser",
+  upload.single("clothePicture"),
+  (req, res) => {
+    const currentUser = req.params.currentUser;
+    const file = req.file.path;
 
-  uploadClothe(req, res, err => {
-    if (err) {
-      console.log(err);
-      return res
-        .status(500)
-        .send("error when upload a proof picture: File too large");
-    } else {
-      console.log(req.file);
-      res.send(req.file);
-    }
-  });
-  db.query(
-    `INSERT INTO clothing ( id_user, type, brand, size, description, is_deposit, created_at)
-    VALUES ( ${currentUser}, ${type}, ${brand}, ${size}, ${description}, ${deposit}, Now());`,
-    (err, rows, fields) => {
-      if (err) throw err;
-      db.query(
-        `INSERT INTO pictures ( id_clothing, id_user, is_proof, created_at, url)
-        VALUES (${clothingId}, ${currentUser}, 0, Now(), ${path});`,
-        (err, rows, fields) => {
-          if (err) throw err;
-          res.status(200).send(rows);
+    cloudinary.v2.uploader.upload(
+      file,
+      { tags: "basic_sample" },
+      (err, image) => {
+        if (err) {
+          console.warn(err);
         }
-      );
-    }
-  );
-});
+        const path = image.url;
+        db.query(
+          `SELECT clothing.id FROM clothing WHERE id_user = ${currentUser} ORDER BY created_at DESC LIMIT 1`,
+          (err, rows) => {
+            if (err) throw err;
+            const id_clothing = rows[0].id;
+            db.query(
+              `INSERT INTO picture ( id_clothing, id_user, is_proof, created_at, url)
+                    VALUES (${id_clothing}, ${currentUser}, 0, Now(), '${path}');`,
+              (err, rows, fields) => {
+                if (err) throw err;
+                res.status(200).send(rows);
+              }
+            );
+          }
+        );
+      }
+    );
+  }
+);
 
 // Clothing-deposit
 
@@ -666,7 +688,7 @@ app.put("/follow/:followId", (req, res) => {
 app.get("/modification/:myProfile", (req, res) => {
   const myProfile = req.params.myProfile;
   db.query(
-    `SELECT id, nickname, location, description FROM user WHERE id = ${myProfile}`,
+    `SELECT id, nickname, location, description, avatar FROM user WHERE id = ${myProfile}`,
     (err, rows) => {
       if (err) {
         return res.status(500).send("error when editing my profile");
@@ -685,6 +707,30 @@ app.put("/modification/:myProfile", (req, res) => {
     }
     res.status(200).send(rows);
   });
+});
+
+// Upload avatar
+app.post("/uploadAvatar/:currentUser", upload.single("avatar"), (req, res) => {
+  const currentUser = req.params.currentUser;
+  const file = req.file.path;
+
+  cloudinary.v2.uploader.upload(
+    file,
+    { tags: "basic_sample" },
+    (err, image) => {
+      if (err) {
+        console.warn(err);
+      }
+      const path = image.url;
+      db.query(
+        `UPDATE user SET avatar = '${path}' where id = ${currentUser}`,
+        (err, rows, fields) => {
+          if (err) throw err;
+          res.status(200);
+        }
+      );
+    }
+  );
 });
 
 //Search
@@ -706,7 +752,7 @@ app.post("/search", (req, res) => {
       };
       db.query(
         "SELECT user.id, user.nickname, user.avatar FROM user WHERE user.nickname LIKE ?",
-        "%" + keyword,
+        "%" + keyword + "%",
         (err, ResultUsers) => {
           if (err) {
             console.log(err);
