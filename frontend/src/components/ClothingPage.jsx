@@ -149,7 +149,7 @@ class ClothingPage extends React.Component {
   handleAdd(e) {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     const clothingId = this.state.clothing.id;
-    const pictureId = this.state.pictures[0].id;
+    const pictureId = this.state.initialPics[0].id;
     axios
       .post(`${backend}/emprunt/${currentUser}/${clothingId}/${pictureId}`)
       .then(({ data }) => {
