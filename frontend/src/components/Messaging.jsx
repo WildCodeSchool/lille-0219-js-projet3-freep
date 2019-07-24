@@ -5,6 +5,7 @@ import "../style/Messaging.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { backend } from "../conf";
+import "../style/Avatar.scss";
 
 class Messaging extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Messaging extends React.Component {
     this.state = {
       P2: null,
       profile: undefined,
-      recipe: []
+      recipent: []
     };
   }
   componentDidMount() {
@@ -39,7 +40,7 @@ class Messaging extends React.Component {
             })
             .then(({ data }) => {
               this.setState({
-                recipe: data
+                recipent: data
               });
             });
         }
@@ -57,12 +58,12 @@ class Messaging extends React.Component {
           <CardBody>
             <Row className="align-items-center px-3 message-text">
               <Col md="3">
-                {this.state.recipe.map((recipe, i) => {
+                {this.state.recipent.map((recipent, i) => {
                   return (
                     <img
-                      src={recipe.avatar}
+                      src={recipent.avatar}
                       alt="Avatar"
-                      className="imgAvatar avatar rounded-circle mx-auto my-5"
+                      className="avatar rounded-circle mx-auto my-5"
                       key={`b+${i}`}
                     />
                   );
@@ -70,10 +71,10 @@ class Messaging extends React.Component {
               </Col>
               <Col md="9" className="d-flex my-3 flex-column">
                 <Row className="align-items-center">
-                  {this.state.recipe.map((recipe, i) => {
+                  {this.state.recipent.map((recipent, i) => {
                     return (
                       <Col key={`j+${i}`}>
-                        <p className="name">{recipe.nickname}</p>
+                        <p className="name">{recipent.nickname}</p>
                       </Col>
                     );
                   })}
@@ -83,13 +84,13 @@ class Messaging extends React.Component {
                     </p>
                   </Col>
                 </Row>
-                {this.state.recipe.map((recipe, i) => {
+                {this.state.recipent.map((recipent, i) => {
                   return (
                     <React.Fragment key={`h+${i}`}>
                       <p className="bodyText text-md-justify px-md-5">
-                        {recipe.id !== this.props.id_author
+                        {recipent.id !== this.props.id_author
                           ? "Toi : " + this.props.message
-                          : recipe.nickname + " : " + this.props.message}
+                          : recipent.nickname + " : " + this.props.message}
                       </p>
                     </React.Fragment>
                   );

@@ -45,8 +45,8 @@ class Message extends React.Component {
             })
             .then(({ data }) => {
               this.setState({
-                messageArray: data.Results,
-                recipient: data.recipe
+                messageArray: data.results,
+                recipient: data.recipent
               });
             });
         }

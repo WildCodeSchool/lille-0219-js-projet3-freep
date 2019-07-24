@@ -377,18 +377,18 @@ app.get(
           return res.status(500).send("error message route");
         }
         let messageData = {
-          Results: rows
+          results: rows
         };
         db.query(
           `SELECT nickname, avatar FROM user WHERE id=${P2};`,
-          (err, recipe) => {
+          (err, recipent) => {
             if (err) {
               console.log(err);
               return res
                 .status(500)
                 .send("error when getting search route on users");
             }
-            messageData.recipe = recipe;
+            messageData.recipent = recipent;
             res.status(200).send(messageData);
           }
         );
