@@ -6,6 +6,8 @@ import "../style/EditProfile.scss";
 import "../style/Avatar.scss";
 import axios from "axios";
 import { backend } from "../conf";
+import { UploadCloud } from "react-feather";
+
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -92,6 +94,10 @@ class EditProfile extends React.Component {
     this.setState({ file: e.target.files[0] });
   }
 
+  validateUploadForm() {
+    return this.state.file !== null;
+  }
+
   render() {
     const nickname = this.state.nickname;
     const location = this.state.location;
@@ -147,7 +153,7 @@ class EditProfile extends React.Component {
               <img
                 src={avatar}
                 alt="avatar"
-                className="avatar mx-auto"
+                className="avatar mx-auto photo"
                 onClick={() => {
                   this.toggleModalAvatar();
                 }}
@@ -157,12 +163,16 @@ class EditProfile extends React.Component {
                 toggle={() => {
                   this.toggleModalAvatar();
                 }}
+                className="proofPics-modal"
               >
                 <ModalHeader
                   toggle={() => {
                     this.toggleModalAvatar();
                   }}
-                />
+                  className="d-flex align-items-center"
+                >
+                  Modifie ton avatar !
+                </ModalHeader>
                 <Form
                   onSubmit={e => {
                     this.handleAvatar(e);
@@ -175,7 +185,14 @@ class EditProfile extends React.Component {
                       this.onChange(e);
                     }}
                   />
-                  <Button type="submit">Envoyer</Button>
+                  <UploadCloud />
+                  <Button
+                    type="submit"
+                    className="upload-btn"
+                    disabled={!this.validateUploadForm()}
+                  >
+                    Envoyer
+                  </Button>
                 </Form>
               </Modal>
             </Col>

@@ -299,7 +299,8 @@ app.get(
       INNER JOIN user ON user.id = message.id_author
       WHERE (id_author=${req.params.id_reader} OR id_reader=${
           req.params.id_reader
-        }) AND isLast=1;`,
+        }) AND isLast=1
+        ORDER BY message.created_at DESC;`,
         (err, rows) => {
           if (err) {
             console.log(err);
@@ -359,23 +360,38 @@ app.get(
     const P2 = req.params.P2;
     db.query(
       `SELECT 
-    TIME(DATE_ADD(message.created_at,INTERVAL 2 hour)) as hour_send,
-    content, 
-    DATEDIFF(NOW(), message.created_at) AS date_diff,
-    nickname, id_author,
-    avatar
-    FROM message
-    INNER JOIN user ON user.id = message.id_author
-      WHERE
-      (id_author = ${P1} OR id_reader = ${P1})
-      AND (id_author = ${P2} OR id_reader = ${P2})
-      ORDER BY message.created_at DESC;`,
+       TIME(DATE_ADD(message.created_at,INTERVAL 2 hour)) as hour_send,
+         content, 
+       DATEDIFF(NOW(), message.created_at) AS date_diff,
+        nickname, id_author,
+      avatar
+      FROM message
+       INNER JOIN user ON user.id = message.id_author
+         WHERE
+         (id_author = ${P1} OR id_reader = ${P1})
+          AND (id_author = ${P2} OR id_reader = ${P2})
+          ORDER BY message.created_at DESC;`,
       (err, rows) => {
         if (err) {
           console.log(err);
-          res.status(500).send("error when getting message route");
+          return res.status(500).send("error message route");
         }
-        res.status(200).send(rows);
+        let messageData = {
+          results: rows
+        };
+        db.query(
+          `SELECT nickname, avatar FROM user WHERE id=${P2};`,
+          (err, recipent) => {
+            if (err) {
+              console.log(err);
+              return res
+                .status(500)
+                .send("error when getting search route on users");
+            }
+            messageData.recipent = recipent;
+            res.status(200).send(messageData);
+          }
+        );
       }
     );
   }
@@ -766,6 +782,19 @@ app.post("/search", (req, res) => {
           res.status(200).send(SearchResult);
         }
       );
+    }
+  );
+});
+
+app.get("/recipe/:id", (req, res) => {
+  const id_recipe = req.params.id;
+  db.query(
+    `SELECT id, nickname, avatar FROM user WHERE id = ${id_recipe}`,
+    (err, rows) => {
+      if (err) {
+        return res.status(500).send("error when get informations");
+      }
+      res.status(200).send(rows);
     }
   );
 });
