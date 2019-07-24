@@ -74,7 +74,7 @@ class Message extends React.Component {
     const user = JSON.parse(localStorage.getItem("user"));
 
     axios
-      .post(`http://localhost:5050/message/${this.state.profile}/${P2}`, {
+      .post(`${backend}/message/${this.state.profile}/${P2}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         },
