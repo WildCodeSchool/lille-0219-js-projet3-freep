@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Row, Col, Modal, ModalHeader, Input } from "reactstrap";
 import "../style/EditProfile.scss";
+import "../style/Avatar.scss";
 import axios from "axios";
 import { backend } from "../conf";
 class EditProfile extends React.Component {
@@ -146,7 +147,7 @@ class EditProfile extends React.Component {
               <img
                 src={avatar}
                 alt="avatar"
-                className="rounded-circle photo mx-auto"
+                className="avatar mx-auto"
                 onClick={() => {
                   this.toggleModalAvatar();
                 }}
