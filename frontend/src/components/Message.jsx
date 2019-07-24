@@ -129,14 +129,12 @@ class Message extends React.Component {
         </Form>
         {this.state.recipient.map((recipe, i) => {
           return (
-            <Row className="message-text">
+            <Row key={`n+${i}`} className="message-text">
               <Col
                 md={{ size: 10, offset: 5 }}
                 className="px-25 my-3 d-flex align-items-center"
               >
-                <p key={`n+${i}`} className="recipe name">
-                  {recipe.nickname}
-                </p>
+                <p className="name">{recipe.nickname}</p>
               </Col>
             </Row>
           );

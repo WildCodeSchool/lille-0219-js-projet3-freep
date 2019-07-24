@@ -88,7 +88,7 @@ class Messaging extends React.Component {
                     <React.Fragment key={`h+${i}`}>
                       <p className="bodyText text-md-justify px-md-5">
                         {recipe.id !== this.props.id_author
-                          ? "Toi" + " : " + this.props.message
+                          ? "Toi : " + this.props.message
                           : recipe.nickname + " : " + this.props.message}
                       </p>
                     </React.Fragment>
