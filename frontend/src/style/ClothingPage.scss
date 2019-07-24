@@ -1,8 +1,9 @@
 @import "../index.scss";
 
 h2,
-h4 {
-  font-family: "dancing script";
+h4,
+.profile-name {
+  font-family: "AvantGarde bold";
   color: $secondary-color;
 }
 
@@ -59,11 +60,6 @@ h4 {
       text-decoration: none;
     }
   }
-}
-
-.no-comment-text {
-  font-family: "Dancing script", cursive;
-  font-size: 125%;
 }
 
 .comment-form input {
