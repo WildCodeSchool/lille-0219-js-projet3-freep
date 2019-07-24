@@ -3,6 +3,7 @@ import "../style/Upload.scss";
 import { Button, Form, Input } from "reactstrap";
 import axios from "axios";
 import { backend } from "../conf";
+import { UploadCloud } from "react-feather";
 
 class UploadClothePictures extends React.Component {
   constructor(props) {
@@ -37,27 +38,43 @@ class UploadClothePictures extends React.Component {
     this.setState({ picture: e.target.files[0] });
   }
 
+  validateForm() {
+    return this.state.file !== null;
+  }
+
   render() {
     return (
       <React.Fragment>
-        <Form
-          className="d-flex flex-column mt-5"
-          onSubmit={e => {
-            this.handleSubmitPictures(e);
-          }}
-        >
-          <h2>Envoie tes photos !</h2>
-          <Input
-            type="file"
-            name="clothePicture"
-            onChange={e => {
-              this.onChangePictures(e);
-            }}
-          />
-          <Button className="col-4 my-3 align-self-center" type="submit">
-            Envoyer
-          </Button>
-        </Form>
+        <div className="d-flex justify-content-center">
+          <div className="d-flex proofPics-modal justify-content-center align-items-center">
+            <Form
+              className="d-flex flex-column mt-5 justify-content-center"
+              onSubmit={e => {
+                this.handleSubmitPictures(e);
+              }}
+            >
+              <h2>Envoie tes photos !</h2>
+              <Input
+                type="file"
+                name="clothePicture"
+                onChange={e => {
+                  this.onChangePictures(e);
+                }}
+              />
+              <UploadCloud />
+              <Button
+                type="submit"
+                onClick={() => {
+                  this.toggleModalBorrow();
+                }}
+                className="upload-btn col-4 my-3 align-self-center"
+                disabled={!this.validateForm()}
+              >
+                Envoyer
+              </Button>
+            </Form>
+          </div>
+        </div>
       </React.Fragment>
     );
   }
