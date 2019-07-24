@@ -21,6 +21,7 @@ class Message extends React.Component {
     super(props);
     this.state = {
       messageArray: [{}],
+      recipient: [{}],
       content_form: "",
       profile: null
     };
@@ -44,7 +45,8 @@ class Message extends React.Component {
             })
             .then(({ data }) => {
               this.setState({
-                messageArray: data
+                messageArray: data.Results,
+                recipient: data.recipe
               });
             });
         }
@@ -125,6 +127,20 @@ class Message extends React.Component {
             <Button className="col-6 mt-4 mx-auto message-btn">Envoyer</Button>
           </FormGroup>
         </Form>
+        {this.state.recipient.map((recipe, i) => {
+          return (
+            <Row className="message-text">
+              <Col
+                md={{ size: 10, offset: 5 }}
+                className="px-25 my-3 d-flex align-items-center"
+              >
+                <p key={`n+${i}`} className="recipe name">
+                  {recipe.nickname}
+                </p>
+              </Col>
+            </Row>
+          );
+        })}
         {this.state.messageArray.length === 0 ? (
           <p>Vous n'avez pas de message.</p>
         ) : (
@@ -146,7 +162,7 @@ class Message extends React.Component {
                     <img
                       src={message.avatar}
                       alt="Avatar"
-                      className="imgAvatar avatar rounded-circle m-auto"
+                      className="imgAvatar avatar rounded-circle"
                     />
                   </Col>
                   <Col md="9" className="px-5 my-3">
