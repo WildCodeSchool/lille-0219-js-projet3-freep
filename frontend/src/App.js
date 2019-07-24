@@ -12,7 +12,6 @@ import MessagingPage from "./components/MessagingPage";
 import Message from "./components/Message";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
-import Loader from "./components/Loader";
 import Registration from "./components/Registration";
 import BorrowPage from "./components/BorrowPage";
 import EditProfile from "./components/EditProfile";
