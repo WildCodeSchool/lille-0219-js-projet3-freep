@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Row, Col, Modal, ModalHeader, Input } from "reactstrap";
 import "../style/EditProfile.scss";
+import "../style/Avatar.scss";
 import axios from "axios";
 import { backend } from "../conf";
 class EditProfile extends React.Component {
@@ -130,6 +131,7 @@ class EditProfile extends React.Component {
                   tabIndex="2"
                   type="text"
                   value={location}
+                  maxLength="255"
                   onChange={event => {
                     this.handleChange(event);
                   }}
@@ -145,7 +147,7 @@ class EditProfile extends React.Component {
               <img
                 src={avatar}
                 alt="avatar"
-                className="rounded-circle photo mx-auto"
+                className="avatar mx-auto"
                 onClick={() => {
                   this.toggleModalAvatar();
                 }}
@@ -188,6 +190,7 @@ class EditProfile extends React.Component {
                   rows="5"
                   type="text"
                   value={description}
+                  maxLength="255"
                   onChange={event => {
                     this.handleChange(event);
                   }}
