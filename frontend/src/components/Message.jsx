@@ -115,7 +115,7 @@ class Message extends React.Component {
             this.handleSubmit(e);
           }}
         >
-          <FormGroup className="d-flex flex-column py-0 m-0 text-center">
+          <FormGroup className="d-flex flex-column py-0 m-0 text-center sending">
             <Label for="new-message">Nouveau Message</Label>
             <Input
               type="textarea"
@@ -147,14 +147,14 @@ class Message extends React.Component {
             >
               <CardBody>
                 <Row className="message-text">
-                  <Col xs="3" className="d-flex align-items-center">
+                  <Col md="3" className="d-flex align-items-center">
                     <img
                       src={message.avatar}
                       alt="Avatar"
                       className="imgAvatar avatar rounded-circle"
                     />
                   </Col>
-                  <Col xs="9" className="px-5 my-3">
+                  <Col md="9" className="px-5 my-3">
                     <Row className="align-items-center">
                       <Col xs="6">
                         <p className="name">{message.nickname}</p>
