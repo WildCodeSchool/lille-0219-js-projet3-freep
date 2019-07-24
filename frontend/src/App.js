@@ -54,8 +54,11 @@ function App() {
             component={MessagingPage}
           />
           <PrivateRoute path="/messagerie" />
-          <Route path="/upload" component={Uploader} />
-          <Route path="/uploadclothepicture" component={UploadClothePictures} />
+          <PrivateRoute path="/upload" component={Uploader} />
+          <PrivateRoute
+            path="/uploadclothepicture"
+            component={UploadClothePictures}
+          />
         </Switch>
         <Footer />
       </Container>
