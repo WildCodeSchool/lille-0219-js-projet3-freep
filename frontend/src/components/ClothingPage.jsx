@@ -19,6 +19,7 @@ import Comment from "./Comment";
 import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
+import Masonry from "react-masonry-component";
 import { backend } from "../conf";
 
 class ClothingPage extends React.Component {
@@ -27,7 +28,8 @@ class ClothingPage extends React.Component {
     this.state = {
       clothing: {},
       users: [],
-      pictures: [],
+      initialPics: [],
+      proofPics: [],
       commentsArray: [],
       comment: "",
       loading: true,
@@ -49,7 +51,8 @@ class ClothingPage extends React.Component {
         this.setState({
           clothing: data.clothing,
           users: data.users,
-          pictures: data.pictures,
+          initialPics: data.initialPics,
+          proofPics: data.proofPics,
           commentsArray: data.comments,
           loading: false
         });
@@ -105,7 +108,7 @@ class ClothingPage extends React.Component {
   }
 
   next() {
-    const pictures = this.state.pictures;
+    const pictures = this.state.initialPics;
     if (this.animating) return;
     const nextIndex =
       this.state.activeIndex === pictures.length - 1
@@ -115,7 +118,7 @@ class ClothingPage extends React.Component {
   }
 
   previous() {
-    const pictures = this.state.pictures;
+    const pictures = this.state.initialPics;
     if (this.animating) return;
     const nextIndex =
       this.state.activeIndex === 0
@@ -146,11 +149,9 @@ class ClothingPage extends React.Component {
   handleAdd(e) {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     const clothingId = this.state.clothing.id;
-    const pictureId = this.state.pictures[0].id;
+    const pictureId = this.state.initialPics[0].id;
     axios
-      .post(
-        `${backend}/emprunt/${currentUser}/${clothingId}/${pictureId}`
-      )
+      .post(`${backend}/emprunt/${currentUser}/${clothingId}/${pictureId}`)
       .then(({ data }) => {
         data.id_user = currentUser;
         data.id_clothing = clothingId;
@@ -169,7 +170,8 @@ class ClothingPage extends React.Component {
     const isMobile = width <= 640;
     const { activeIndex } = this.state;
     const clothing = this.state.clothing;
-    const pictures = this.state.pictures;
+    const initialPics = this.state.initialPics;
+    const proofPics = this.state.proofPics;
     const comments = this.state.commentsArray;
     const auth = this.getUser(clothing.id_user);
 
@@ -183,11 +185,12 @@ class ClothingPage extends React.Component {
               <section>
                 {(() => {
                   if (isMobile) {
-                    const slides = pictures.map((picture, key) => {
+                    const slides = initialPics.map((picture, key) => {
                       return (
                         <CarouselItem
-                          onExiting={this.onExiting}
-                          onExited={this.onExited}
+                          key={key}
+                          onExiting={() => this.onExiting()}
+                          onExited={() => this.onExited()}
                         >
                           <Photo
                             key={key}
@@ -203,37 +206,34 @@ class ClothingPage extends React.Component {
                     return (
                       <Carousel
                         activeIndex={activeIndex}
-                        next={this.next}
-                        previous={this.previous}
+                        next={() => this.next()}
+                        previous={() => this.previous()}
                       >
-                        <CarouselIndicators
-                          items={pictures}
-                          activeIndex={activeIndex}
-                          onClickHandler={this.goToIndex}
-                        />
                         {slides}
                         <CarouselControl
                           direction="prev"
                           directionText="Previous"
-                          onClickHandler={this.previous}
+                          onClickHandler={() => this.previous()}
                         />
                         <CarouselControl
                           direction="next"
                           directionText="Next"
-                          onClickHandler={this.next}
+                          onClickHandler={() => this.next()}
                         />
                       </Carousel>
                     );
                   } else {
                     return (
                       <Row className="justify-content-center">
-                        {pictures.map((picture, key) => {
+                        {initialPics.map((picture, key) => {
                           return (
-                            <Col xs="6" md="4" key={key}>
+                            <Col xs="6" key={key}>
                               <Photo
+                                key={key}
                                 picture={picture.url}
-                                pictureId={picture.id}
+                                alt={picture.altText}
                                 link={picture.id_clothing}
+                                pictureId={picture.id}
                               />
                             </Col>
                           );
@@ -245,10 +245,10 @@ class ClothingPage extends React.Component {
               </section>
               <section>
                 <h2 className="text-center">Elles l'ont porté récemment</h2>
-                <Row className="justify-content-center">
-                  {pictures.map((picture, key) => {
+                <Masonry className="justify-content-center">
+                  {proofPics.map((picture, key) => {
                     return (
-                      <Col xs="6" md="6" key={key}>
+                      <Col xs="6" key={key}>
                         <Photo
                           picture={picture.url}
                           pictureId={picture.id}
@@ -257,7 +257,7 @@ class ClothingPage extends React.Component {
                       </Col>
                     );
                   })}
-                </Row>
+                </Masonry>
               </section>
             </Col>
             <Col lg="6" className="comments-container pr-3">

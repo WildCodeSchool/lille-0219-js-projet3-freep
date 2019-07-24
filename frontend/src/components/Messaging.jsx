@@ -13,14 +13,14 @@ const Messaging = props => {
       >
         <CardBody>
           <Row className="align-items-center px-3 message-text">
-            <Col xs="3">
+            <Col md="3">
               <img
                 src={props.avatar}
                 alt="Avatar"
-                className="imgAvatar avatar rounded-circle"
+                className="imgAvatar avatar rounded-circle mx-auto my-5"
               />
             </Col>
-            <Col xs="9" className="d-flex my-5 flex-column">
+            <Col md="9" className="d-flex my-3 flex-column">
               <Row className="align-items-center">
                 <Col>
                   <p className="name">{props.nickname}</p>
@@ -31,7 +31,9 @@ const Messaging = props => {
                   </p>
                 </Col>
               </Row>
-              <p className="bodyText text-justify px-5">{props.message}</p>
+              <p className="bodyText text-md-justify px-md-5">
+                {props.message}
+              </p>
             </Col>
           </Row>
         </CardBody>

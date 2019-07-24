@@ -37,16 +37,11 @@ class Message extends React.Component {
         },
         () => {
           axios
-            .get(
-              `${backend}/message/${
-                this.state.profile
-              }/${P2}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${user.token}`
-                }
+            .get(`${backend}/message/${this.state.profile}/${P2}`, {
+              headers: {
+                Authorization: `Bearer ${user.token}`
               }
-            )
+            })
             .then(({ data }) => {
               this.setState({
                 messageArray: data
@@ -147,14 +142,14 @@ class Message extends React.Component {
             >
               <CardBody>
                 <Row className="message-text">
-                  <Col xs="3" className="d-flex align-items-center">
+                  <Col md="3" className="d-flex align-items-center">
                     <img
                       src={message.avatar}
                       alt="Avatar"
-                      className="imgAvatar avatar rounded-circle"
+                      className="imgAvatar avatar rounded-circle m-auto"
                     />
                   </Col>
-                  <Col xs="9" className="px-5 my-3">
+                  <Col md="9" className="px-5 my-3">
                     <Row className="align-items-center">
                       <Col xs="6">
                         <p className="name">{message.nickname}</p>
