@@ -94,6 +94,7 @@ class Registration extends Component {
                 <Form.Control
                   autoFocus
                   type="text"
+                  maxLength="255"
                   value={this.state.firstname}
                   onChange={this.handleChange}
                 />
@@ -105,6 +106,7 @@ class Registration extends Component {
                 <Form.Control
                   autoFocus
                   type="text"
+                  maxLength="255"
                   value={this.state.lastname}
                   onChange={this.handleChange}
                 />
@@ -127,6 +129,7 @@ class Registration extends Component {
                 <Form.Control
                   autoFocus
                   type="text"
+                  maxLength="255"
                   value={this.state.location}
                   onChange={this.handleChange}
                 />
@@ -138,6 +141,7 @@ class Registration extends Component {
                 <Form.Control
                   autoFocus
                   type="email"
+                  maxLength="255"
                   value={this.state.email}
                   onChange={this.handleChange}
                 />
@@ -160,6 +164,7 @@ class Registration extends Component {
                   value={this.state.confirmPassword}
                   onChange={this.handleChange}
                   type="password"
+                  maxLength="255"
                 />
               </Form.Group>
             </Col>

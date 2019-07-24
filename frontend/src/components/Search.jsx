@@ -2,7 +2,7 @@ import React from "react";
 import "../style/Avatar.scss";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Heart, Target, CloudLightning } from "react-feather";
+import { Heart, Target } from "react-feather";
 import { Col, Row, Card, CardImg } from "reactstrap";
 import ReportButton from "./ReportButton";
 import Masonry from "react-masonry-component";
@@ -23,7 +23,12 @@ class Search extends React.Component {
           <Col Col sm="6" md="4" lg="3">
             <Card className="m-2">
               <Link to={`/article/` + el.id}>
-                <CardImg src={el.url} alt="clothes" className="Photo" />
+                <CardImg
+                  src={el.url}
+                  alt="clothes"
+                  className="Photo"
+                  title={el.type + ` taille ` + el.size}
+                />
               </Link>
               <div className="overlay">
                 <Row className="p-0 card-buttons align-items-center">
@@ -39,7 +44,12 @@ class Search extends React.Component {
         {this.props.users.map(e => (
           <React.Fragment>
             <Link to={`/profil/` + e.id}>
-              <img src={e.avatar} className="avatar m-3" alt="Avatar" />
+              <img
+                src={e.avatar}
+                className="avatar m-3"
+                alt="Avatar"
+                title={e.nickname}
+              />
             </Link>
           </React.Fragment>
         ))}

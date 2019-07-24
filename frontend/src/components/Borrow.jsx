@@ -5,7 +5,6 @@ import {
   Card,
   CardBody,
   CardImg,
-  CardFooter,
   Button,
   Form,
   Input,
@@ -16,6 +15,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "../style/Borrow.scss";
 import { backend } from "../conf";
+import { Camera, Trash2, UploadCloud } from "react-feather";
 
 class Borrow extends React.Component {
   constructor(props) {
@@ -69,10 +69,14 @@ class Borrow extends React.Component {
     this.setState({ file: e.target.files[0] });
   }
 
+  validateForm() {
+    return this.state.file !== null;
+  }
+
   render() {
     return (
-      <div className={this.state.hidden ? "hidden" : ""}>
-        <Card className="borrowCard">
+      <div className={this.state.hidden ? "hidden" : "borrow-card-parent"}>
+        <Card className="borrowCard my-3">
           <CardBody>
             <Link to={`/article/${this.props.clothePage}`} className="link">
               <CardImg
@@ -81,27 +85,32 @@ class Borrow extends React.Component {
                 className="borrowPicture"
               />
             </Link>
-            <CardFooter className="row justify-content-center px-0 py-2 mx-auto">
+            <footer className="row btn-footer">
               <Col xs="5" className="m-1 p-0 d-flex justify-content-center">
                 <Button
                   onClick={() => {
                     this.toggleModalBorrow();
                   }}
                   className="borrowButton"
+                  title="J'ai emprunté ce vêtement, j'envoie une photo et je gagne 1 point !"
                 >
-                  J'ai emprunté ce vêtement
+                  <Camera width="22px" />
                 </Button>
                 <Modal
                   isOpen={this.state.modal}
                   toggle={() => {
                     this.toggleModalBorrow();
                   }}
+                  className="proofPics-modal"
                 >
                   <ModalHeader
                     toggle={() => {
                       this.toggleModalBorrow();
                     }}
-                  />
+                    className="d-flex align-items-center"
+                  >
+                    Envoie ta photo, gagne 1 point !
+                  </ModalHeader>
                   <Form
                     onSubmit={e => {
                       this.handleSubmit(e);
@@ -114,11 +123,14 @@ class Borrow extends React.Component {
                         this.onChange(e);
                       }}
                     />
+                    <UploadCloud />
                     <Button
                       type="submit"
                       onClick={() => {
                         this.toggleModalBorrow();
                       }}
+                      className="upload-btn"
+                      disabled={!this.validateForm()}
                     >
                       Envoyer
                     </Button>
@@ -131,11 +143,12 @@ class Borrow extends React.Component {
                     this.handleDelete(e);
                   }}
                   className="borrowButton"
+                  title="Je veux annuler cet emprunt"
                 >
-                  Annuler l'emprunt
+                  <Trash2 width="22px" />
                 </Button>
               </Col>
-            </CardFooter>
+            </footer>
           </CardBody>
         </Card>
       </div>

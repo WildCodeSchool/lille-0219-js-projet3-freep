@@ -19,17 +19,16 @@ const Comment = props => {
         </Col>
       </Link>
       <Col
-        md="2"
-        xs="1"
-        className="align-content-center profile-name comments-profile m-0"
+        xs="2"
+        className="align-content-center profile-name comments-profile m-0 p-0"
       >
         {profile.nickname}
       </Col>
-      <Col xs="5" md="5" className="align-items-center comment">
+      <Col xs="6" className="align-items-center comment p-0 m-0">
         <p className="text-muted font-italic m-0">{props.timeStamp}</p>
         {props.comment.content}
       </Col>
-      <Col xs="1" className="align-items-left">
+      <Col xs="1" className="align-items-left p-0">
         <ReportButton link={link} />
       </Col>
     </Row>
