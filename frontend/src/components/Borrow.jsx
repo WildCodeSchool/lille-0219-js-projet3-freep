@@ -92,7 +92,7 @@ class Borrow extends React.Component {
                     this.toggleModalBorrow();
                   }}
                   className="borrowButton"
-                  title="J'ai emprunté ce vêtement, j'envoie une photo et je gagne 1 point !"
+                  title="J'ai emprunté ce vêtement, j'envoie une photo de ma tenue !"
                 >
                   <Camera width="22px" />
                 </Button>
@@ -109,7 +109,7 @@ class Borrow extends React.Component {
                     }}
                     className="d-flex align-items-center"
                   >
-                    Envoie ta photo, gagne 1 point !
+                    Envoie ta photo, récompense la Freepeuse !
                   </ModalHeader>
                   <Form
                     onSubmit={e => {

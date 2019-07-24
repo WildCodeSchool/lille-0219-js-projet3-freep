@@ -57,24 +57,11 @@
 }
 
 .message-form {
-  position: fixed;
-  bottom: 5vh;
-  right: 0;
-  width: 300px;
-  z-index: 6000;
+  width: 95vh;
   background: white;
   box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.05);
   padding: 3vh;
-  animation: appear-right 1.5s;
-  @keyframes appear-right {
-    0%,
-    66% {
-      transform: translate(40vw);
-    }
-    to {
-      transform: translate(0);
-    }
-  }
+
   textarea {
     border: none;
     border-radius: $radius-sm;
@@ -86,12 +73,19 @@
   label {
     font-family: "AvantGarde bold", sans-serif;
     color: goldenrod;
-    font-size: calc(1.5rem + 0.6vw);
     width: 100%;
   }
 }
 
-.message-form button,
+.message-form button {
+  background: #ad3a70cc;
+  border: none;
+  &:hover {
+    background: $gradient;
+    box-shadow: $box-shadow;
+  }
+}
+
 .messages-container button {
   background: #ad3a70cc;
   border: none;

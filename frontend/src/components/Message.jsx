@@ -98,35 +98,17 @@ class Message extends React.Component {
     const currentUser = this.state.profile;
     return (
       <Row className="messages-container p-0 m-0">
-        <Button
-          className="back-message-btn d-flex"
-          onClick={e => {
-            this.handlePrev(e);
-          }}
-        >
-          <ArrowLeft className="mx-2" /> Messagerie
-        </Button>
-        <Form
-          className="message-form"
-          onSubmit={e => {
-            this.handleSubmit(e);
-          }}
-        >
-          <FormGroup className="d-flex flex-column py-0 m-0 text-center">
-            <Label for="new-message">Nouveau Message</Label>
-            <Input
-              type="textarea"
-              name="content_form"
-              id="content_field"
-              style={{ height: 200 }}
-              value={this.state.content_form}
-              onChange={e => {
-                this.handleChange(e);
-              }}
-            />
-            <Button className="col-6 mt-4 mx-auto message-btn">Envoyer</Button>
-          </FormGroup>
-        </Form>
+        <Row className="col-12">
+          <Button
+            className="back-message-btn d-flex"
+            onClick={e => {
+              this.handlePrev(e);
+            }}
+          >
+            <ArrowLeft className="mx-2" /> Messagerie
+          </Button>
+        </Row>
+        <Row className="justify-content-center" />
         {this.state.recipient.map((recipe, i) => {
           return (
             <Row key={`n+${i}`} className="message-text">
@@ -135,6 +117,35 @@ class Message extends React.Component {
                 className="px-25 my-3 d-flex align-items-center"
               >
                 <p className="name">{recipe.nickname}</p>
+              </Col>
+              <Col
+                md={{ size: 12, offset: 2 }}
+                className="px-25 my-3 d-flex align-items-center"
+              >
+                <Form
+                  className="message-form"
+                  onSubmit={e => {
+                    this.handleSubmit(e);
+                  }}
+                >
+                  <FormGroup className="d-flex flex-column py-0 m-0 text-center">
+                    <Label for="new-message">Nouveau Message</Label>
+
+                    <Input
+                      type="textarea"
+                      name="content_form"
+                      id="content_field"
+                      value={this.state.content_form}
+                      onChange={e => {
+                        this.handleChange(e);
+                      }}
+                    />
+
+                    <Button className="col-6 mt-4 mx-auto message-btn">
+                      Envoyer
+                    </Button>
+                  </FormGroup>
+                </Form>
               </Col>
             </Row>
           );
@@ -146,41 +157,42 @@ class Message extends React.Component {
         )}
         {this.state.messageArray.map((message, i) => {
           return (
-            <Card
-              className={
-                message.id_author === currentUser
-                  ? "message-card myself"
-                  : "message-card"
-              }
-              key={i}
-            >
-              <CardBody>
-                <Row className="message-text">
-                  <Col md="3" className="d-flex align-items-center">
-                    <img
-                      src={message.avatar}
-                      alt="Avatar"
-                      className="imgAvatar avatar rounded-circle"
-                    />
-                  </Col>
-                  <Col md="9" className="px-5 my-3">
-                    <Row className="align-items-center">
-                      <Col xs="6">
-                        <p className="name">{message.nickname}</p>
-                      </Col>
-                      <Col xs="6" className="text-right font-italic">
-                        <p className="messageDate timeStamp text-muted">
-                          {message.date_diff >= 1
-                            ? "Il y a " + message.date_diff + " jours."
-                            : "Envoyé à " + message.hour_send + "."}
-                        </p>
-                      </Col>
-                    </Row>
-                    <p className="text-justify">{message.content}</p>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
+            <React.Fragment key={i}>
+              <Card
+                className={
+                  message.id_author === currentUser
+                    ? "message-card myself"
+                    : "message-card"
+                }
+              >
+                <CardBody>
+                  <Row className="message-text">
+                    <Col md="3" className="d-flex align-items-center">
+                      <img
+                        src={message.avatar}
+                        alt="Avatar"
+                        className="imgAvatar avatar rounded-circle"
+                      />
+                    </Col>
+                    <Col md="9" className="px-5 my-3">
+                      <Row className="align-items-center">
+                        <Col xs="8">
+                          <p className="name">{message.nickname}</p>
+                        </Col>
+                        <Col xs="7" className="text-right font-italic">
+                          <p className="messageDate timeStamp text-muted">
+                            {message.date_diff >= 1
+                              ? "Il y a " + message.date_diff + " jours."
+                              : "Envoyé à " + message.hour_send + "."}
+                          </p>
+                        </Col>
+                      </Row>
+                      <p className="text-justify">{message.content}</p>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+            </React.Fragment>
           );
         })}
       </Row>
