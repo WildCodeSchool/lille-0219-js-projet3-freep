@@ -6,7 +6,6 @@ import {
   Carousel,
   CarouselItem,
   CarouselControl,
-  CarouselIndicators,
   Button,
   Form,
   FormGroup,
