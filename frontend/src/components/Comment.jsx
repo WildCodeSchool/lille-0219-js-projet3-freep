@@ -6,14 +6,14 @@ import { Link } from "react-router-dom";
 
 const Comment = props => {
   const link = props.comment.id_clothing;
-  const currentUser = JSON.parse(localStorage.getItem("user")).user;
+  const profile = props.profile;
   return (
     <Row className="px-3 py-1 my-2 align-items-center">
-      <Link to={`/profil/${props.profile.id}`}>
-        <Col xs="2">
+      <Link to={`/profil/${profile.id}`}>
+        <Col md="2" xs="1">
           <img
-            src={currentUser.avatar}
-            alt={`user-${currentUser.id}`}
+            src={profile.avatar}
+            alt={`user-${profile.id}`}
             className="comment-avatar"
           />
         </Col>
@@ -22,7 +22,7 @@ const Comment = props => {
         xs="2"
         className="align-content-center profile-name comments-profile m-0 p-0"
       >
-        {currentUser.nickname}
+        {profile.nickname}
       </Col>
       <Col xs="6" className="align-items-center comment p-0 m-0">
         <p className="text-muted font-italic m-0">{props.timeStamp}</p>
