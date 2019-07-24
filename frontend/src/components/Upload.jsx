@@ -62,6 +62,14 @@ class Uploader extends React.Component {
     });
   }
 
+  validateForm() {
+    return (
+      this.state.type !== "" &&
+      this.state.brand !== "" &&
+      this.state.description !== ""
+    );
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -167,7 +175,11 @@ class Uploader extends React.Component {
                   </p>
                 </Label>
               </FormGroup>
-              <Button className="col-4 my-3 align-self-center" type="submit">
+              <Button
+                className="col-4 my-3 align-self-center"
+                type="submit"
+                disabled={!this.validateForm()}
+              >
                 Envoyer
               </Button>
             </Col>

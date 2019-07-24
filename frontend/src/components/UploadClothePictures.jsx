@@ -39,7 +39,7 @@ class UploadClothePictures extends React.Component {
   }
 
   validateForm() {
-    return this.state.file !== null;
+    return this.state.picture !== null;
   }
 
   render() {
@@ -64,9 +64,6 @@ class UploadClothePictures extends React.Component {
               <UploadCloud />
               <Button
                 type="submit"
-                onClick={() => {
-                  this.toggleModalBorrow();
-                }}
                 className="upload-btn col-4 my-3 align-self-center"
                 disabled={!this.validateForm()}
               >
