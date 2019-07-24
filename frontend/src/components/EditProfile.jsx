@@ -1,9 +1,13 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Row, Col } from "reactstrap";
-import "../style/EditProfile.css";
+import { Row, Col, Modal, ModalHeader, Input } from "reactstrap";
+import "../style/EditProfile.scss";
+import "../style/Avatar.scss";
 import axios from "axios";
+import { backend } from "../conf";
+import { UploadCloud } from "react-feather";
+
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -11,23 +15,25 @@ class EditProfile extends React.Component {
       id: "",
       nickname: "",
       location: "",
-      description: ""
+      description: "",
+      avatar: "",
+      file: null,
+      modal: false
     };
   }
 
   componentDidMount() {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
 
-    axios
-      .get(`http://localhost:5050/modification/${currentUser}`)
-      .then(({ data }) => {
-        this.setState({
-          id: data.id,
-          nickname: data.nickname,
-          location: data.location,
-          description: data.description
-        });
+    axios.get(`${backend}/modification/${currentUser}`).then(({ data }) => {
+      this.setState({
+        id: data.id,
+        nickname: data.nickname,
+        location: data.location,
+        description: data.description,
+        avatar: data.avatar
       });
+    });
   }
 
   validateForm() {
@@ -45,7 +51,7 @@ class EditProfile extends React.Component {
     const currentUser = this.state.id;
     event.preventDefault();
     axios
-      .put(`http://localhost:5050/modification/${currentUser}`, {
+      .put(`${backend}/modification/${currentUser}`, {
         nickname: this.state.nickname,
         location: this.state.location,
         description: this.state.description
@@ -58,10 +64,45 @@ class EditProfile extends React.Component {
       });
   }
 
+  toggleModalAvatar() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  }
+
+  handleAvatar(e) {
+    e.preventDefault();
+    this.fileUpload(this.state.file);
+  }
+
+  fileUpload(file) {
+    const formData = new FormData();
+    formData.append("avatar", file);
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    return axios
+      .post(`${backend}/uploadAvatar/${currentUser}`, formData, {
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      })
+      .then(response => {
+        console.log(response.data);
+      });
+  }
+
+  onChange(e) {
+    this.setState({ file: e.target.files[0] });
+  }
+
+  validateUploadForm() {
+    return this.state.file !== null;
+  }
+
   render() {
     const nickname = this.state.nickname;
     const location = this.state.location;
     const description = this.state.description;
+    const avatar = this.state.avatar;
     return (
       <React.Fragment>
         <Form
@@ -73,14 +114,7 @@ class EditProfile extends React.Component {
           <Row>
             <Col lg="6">
               <Form.Group controlId="nickname">
-                <h1
-                  style={{
-                    fontSize: "20px",
-                    color: "goldenrod",
-                    fontFamily: "DancingScript"
-                  }}
-                  htmlFor="nickname"
-                >
+                <h1 className="titleInput" htmlFor="nickname">
                   Nom d'utilisateur *
                 </h1>
                 <Form.Control
@@ -96,20 +130,14 @@ class EditProfile extends React.Component {
             </Col>
             <Col lg="6">
               <Form.Group controlId="location">
-                <h1
-                  style={{
-                    fontSize: "20px",
-                    color: "goldenrod",
-                    fontFamily: "DancingScript"
-                  }}
-                  htmlFor="location"
-                >
+                <h1 className="titleInput" htmlFor="location">
                   Ville
                 </h1>
                 <Form.Control
                   tabIndex="2"
                   type="text"
                   value={location}
+                  maxLength="255"
                   onChange={event => {
                     this.handleChange(event);
                   }}
@@ -118,16 +146,59 @@ class EditProfile extends React.Component {
             </Col>
           </Row>
           <Row>
+            <Col lg="3">
+              <Form.Group controlId="avatar">
+                <h1 className="titleInput">Avatar</h1>
+              </Form.Group>
+              <img
+                src={avatar}
+                alt="avatar"
+                className="avatar mx-auto photo"
+                onClick={() => {
+                  this.toggleModalAvatar();
+                }}
+              />
+              <Modal
+                isOpen={this.state.modal}
+                toggle={() => {
+                  this.toggleModalAvatar();
+                }}
+                className="proofPics-modal"
+              >
+                <ModalHeader
+                  toggle={() => {
+                    this.toggleModalAvatar();
+                  }}
+                  className="d-flex align-items-center"
+                >
+                  Modifie ton avatar !
+                </ModalHeader>
+                <Form
+                  onSubmit={e => {
+                    this.handleAvatar(e);
+                  }}
+                >
+                  <Input
+                    type="file"
+                    name="avatar"
+                    onChange={e => {
+                      this.onChange(e);
+                    }}
+                  />
+                  <UploadCloud />
+                  <Button
+                    type="submit"
+                    className="upload-btn"
+                    disabled={!this.validateUploadForm()}
+                  >
+                    Envoyer
+                  </Button>
+                </Form>
+              </Modal>
+            </Col>
             <Col>
               <Form.Group controlId="description">
-                <h1
-                  style={{
-                    fontSize: "20px",
-                    color: "goldenrod",
-                    fontFamily: "DancingScript"
-                  }}
-                  htmlFor="description"
-                >
+                <h1 className="titleInput" htmlFor="description">
                   Description
                 </h1>
                 <Form.Control
@@ -136,6 +207,7 @@ class EditProfile extends React.Component {
                   rows="5"
                   type="text"
                   value={description}
+                  maxLength="255"
                   onChange={event => {
                     this.handleChange(event);
                   }}
@@ -143,14 +215,7 @@ class EditProfile extends React.Component {
               </Form.Group>
             </Col>
           </Row>
-          <h1
-            style={{
-              fontSize: "20px",
-              color: "goldenrod",
-              fontFamily: "DancingScript"
-            }}
-            htmlFor="description"
-          >
+          <h1 className="titleInput" htmlFor="description">
             * Champ obligatoire
           </h1>
           <Button

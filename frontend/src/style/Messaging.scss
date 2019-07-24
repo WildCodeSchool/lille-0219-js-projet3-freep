@@ -1,23 +1,25 @@
 @import "../index.scss";
 
 @font-face {
-  font-family: "Montserrat";
-  src: url("Montserrat-Regular.ttf");
+  font-family: "AvantGarde";
+  src: url("ITCAvantGardeStd-Bk.otf");
 }
 
-.imgAvatar {
-  width: 8rem;
+@font-face {
+  font-family: "AvantGarde bold";
+  src: url("ITCAvantGardeStd-Bold.otf");
 }
 
 .name {
   font-size: calc(1rem + 1vw);
   color: goldenrod;
+  font-family: "AvantGarde bold";
 }
 
 .titleMessage {
   font-size: 3rem;
   color: goldenrod;
-  font-family: "Dancing script", cursive;
+  font-family: "AvantGarde bold", cursive;
 }
 
 .link,
@@ -30,7 +32,6 @@
   border: 0;
   box-shadow: $box-shadow;
   border-radius: $radius-sm;
-  margin: 2vh 10vh;
   &:hover {
     transform: translateY(2px);
   }
@@ -43,34 +44,24 @@
 
 .message-card {
   border-radius: $radius-sm;
-  margin: 2vh 10vh;
   width: 75%;
   border: 0;
 }
 
+.message-card,
+.messaging-card {
+  margin: 2vh calc(1rem + 5vw);
+}
 .myself {
   margin-left: 15vw;
 }
 
 .message-form {
-  position: fixed;
-  bottom: 5vh;
-  right: 0;
-  width: 300px;
-  z-index: 6000;
+  width: 95vh;
   background: white;
   box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.05);
   padding: 3vh;
-  animation: appear-right 1.5s;
-  @keyframes appear-right {
-    0%,
-    66% {
-      transform: translate(40vw);
-    }
-    to {
-      transform: translate(0);
-    }
-  }
+
   textarea {
     border: none;
     border-radius: $radius-sm;
@@ -80,14 +71,21 @@
     }
   }
   label {
-    font-family: "Dancing script", sans-serif;
+    font-family: "AvantGarde bold", sans-serif;
     color: goldenrod;
-    font-size: calc(1.5rem + 0.6vw);
     width: 100%;
   }
 }
 
-.message-form button,
+.message-form button {
+  background: #ad3a70cc;
+  border: none;
+  &:hover {
+    background: $gradient;
+    box-shadow: $box-shadow;
+  }
+}
+
 .messages-container button {
   background: #ad3a70cc;
   border: none;

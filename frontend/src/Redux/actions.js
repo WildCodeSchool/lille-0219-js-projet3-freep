@@ -5,4 +5,7 @@ const setResultsActions = results => ({
   results
 });
 
-module.exports = { SET_RESULTS, setResultsActions };
+module.exports = {
+  SET_RESULTS,
+  setResultsActions
+};

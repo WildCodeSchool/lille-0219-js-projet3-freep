@@ -13,7 +13,6 @@ router.post("/users", (req, res) => {
     if (err)
       return res.status(418).json({ status: "Teapot", error: err, hash: hash });
     user.password = hash;
-    console.log(user);
 
     db.query(
       `INSERT INTO user (nickname, email, password, firstname, lastname, avatar, created_at, location) VALUES ('${
@@ -23,7 +22,6 @@ router.post("/users", (req, res) => {
       }', "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png", NOW(), '${
         user.location
       }')`,
-      user,
       (err, rows, fields) => {
         if (err) throw err;
         msg = "Answer recorded!";

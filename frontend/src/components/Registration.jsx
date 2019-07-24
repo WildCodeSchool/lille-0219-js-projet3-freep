@@ -6,6 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Heart } from "react-feather";
 import { Row, Col } from "reactstrap";
+import { backend } from "../conf";
 
 class Registration extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class Registration extends Component {
     const { history } = this.props;
     if (password === confirmPassword) {
       axios
-        .post("http://localhost:5050/auth/users", {
+        .post(`${backend}/auth/users`, {
           firstname,
           lastname,
           nickname,
@@ -93,6 +94,7 @@ class Registration extends Component {
                 <Form.Control
                   autoFocus
                   type="text"
+                  maxLength="255"
                   value={this.state.firstname}
                   onChange={this.handleChange}
                 />
@@ -104,6 +106,7 @@ class Registration extends Component {
                 <Form.Control
                   autoFocus
                   type="text"
+                  maxLength="255"
                   value={this.state.lastname}
                   onChange={this.handleChange}
                 />
@@ -126,6 +129,7 @@ class Registration extends Component {
                 <Form.Control
                   autoFocus
                   type="text"
+                  maxLength="255"
                   value={this.state.location}
                   onChange={this.handleChange}
                 />
@@ -137,6 +141,7 @@ class Registration extends Component {
                 <Form.Control
                   autoFocus
                   type="email"
+                  maxLength="255"
                   value={this.state.email}
                   onChange={this.handleChange}
                 />
@@ -159,6 +164,7 @@ class Registration extends Component {
                   value={this.state.confirmPassword}
                   onChange={this.handleChange}
                   type="password"
+                  maxLength="255"
                 />
               </Form.Group>
             </Col>

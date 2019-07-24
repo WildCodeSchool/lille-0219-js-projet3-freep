@@ -49,13 +49,14 @@ svg {
 }
 
 .deposit {
-  color: transparent;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  color: $wh;
+  padding-top: 4px;
 }
 
 .no-deposit {
-  color: white;
-  font-size: 1.5rem;
+  color: transparent;
+  font-size: 1.3rem;
 }
 
 .picture-frame {

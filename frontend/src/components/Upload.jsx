@@ -1,5 +1,4 @@
 import React from "react";
-import ImageUploader from "react-images-upload";
 import "../style/Upload.scss";
 import {
   Row,
@@ -12,28 +11,63 @@ import {
   CustomInput
 } from "reactstrap";
 import axios from "axios";
+import { backend } from "../conf";
 
 class Uploader extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { pictures: [], uploadArray: [] };
-    this.onDrop = this.onDrop.bind(this);
-  }
-
-  onDrop(picture) {
-    this.setState({
-      pictures: this.state.pictures.concat(picture)
-    });
+    this.state = {
+      type: "",
+      brand: "",
+      size: "",
+      description: "",
+      deposit: false
+    };
   }
 
   handleSubmit(e) {
     e.preventDefault();
+    let { type, brand, size, description, deposit } = this.state;
+
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     axios
-      .post(`http://localhost:5050/${currentUser}/uploadPicture`)
-      .then(() => {
-        alert("Votre photo a bien été envoyée");
+      .post(`${backend}/uploadClothe/${currentUser}`, {
+        type: type,
+        brand: brand,
+        size: size,
+        description: description,
+        deposit: deposit
+      })
+      .then(({ data }) => {
+        this.setState({
+          type: data.type,
+          brand: data.brand,
+          size: data.size,
+          description: data.description,
+          deposit: data.deposit
+        });
+        this.props.history.push("/uploadclothepicture");
       });
+  }
+
+  onChangeFields(e) {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  }
+
+  onChangeChecked(e) {
+    this.setState({
+      deposit: e.target.checked
+    });
+  }
+
+  validateForm() {
+    return (
+      this.state.type !== "" &&
+      this.state.brand !== "" &&
+      this.state.description !== ""
+    );
   }
 
   render() {
@@ -44,43 +78,31 @@ class Uploader extends React.Component {
           onSubmit={e => {
             this.handleSubmit(e);
           }}
-          encType="multipart/form-data"
         >
           <Row className="uploader-container">
-            <Col md="4" className="text-center">
-              <h2>Prête ton vêtement !</h2>
-              <ImageUploader
-                className="my-5"
-                withIcon={true}
-                buttonText="Choisir l'image"
-                onChange={this.onDrop}
-                imgExtension={[".jpg", ".jpeg"]}
-                maxFileSize={5242880}
-                withPreview={true}
-                label="Max 5Mo | extensions : .jpg .jpeg "
-                labelClass="mb-4"
-                buttonClassName="image-upload-button"
-                name="pictureClotheUpload"
-              />
-            </Col>
             <Col md="7" className="offset-1">
               <h2>Décris-nous ta tenue !</h2>
 
               <FormGroup row>
-                <Label for="clothing_title" sm={2}>
+                <Label htmlFor="type" sm={2}>
                   Type
                 </Label>
                 <Col sm={10}>
                   <Input
                     type="text"
                     name="type"
-                    id="clothing-title"
+                    id="type"
+                    value={this.state.type}
+                    maxLength="32"
                     placeholder="Veste ? Pantalon ?"
+                    onChange={e => {
+                      this.onChangeFields(e);
+                    }}
                   />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="brand" sm={2}>
+                <Label htmlFor="brand" sm={2}>
                   Marque
                 </Label>
                 <Col sm={10}>
@@ -88,27 +110,39 @@ class Uploader extends React.Component {
                     type="text"
                     name="brand"
                     id="brand"
+                    value={this.state.brand}
+                    maxLength="64"
                     placeholder="Zara ? Le comptoir des cotonniers ?"
+                    onChange={e => {
+                      this.onChangeFields(e);
+                    }}
                   />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="size" sm={2}>
+                <Label htmlFor="size" sm={2}>
                   Taille
                 </Label>
                 <Col sm={10}>
-                  <CustomInput type="select" name="size" id="size">
-                    <option>S</option>
-                    <option>M</option>
-                    <option>L</option>
-                    <option>XL</option>
-                    <option>XXL</option>
-                    <option>XXXL+</option>
+                  <CustomInput
+                    type="select"
+                    name="size"
+                    id="size"
+                    onChange={e => {
+                      this.onChangeFields(e);
+                    }}
+                  >
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                    <option value="XXL">XXL</option>
+                    <option value="XXXL+">XXXL+</option>
                   </CustomInput>
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="description" sm={2}>
+                <Label htmlFor="description" sm={2}>
                   Description
                 </Label>
                 <Col sm={10}>
@@ -116,19 +150,36 @@ class Uploader extends React.Component {
                     type="textarea"
                     name="description"
                     id="description"
+                    value={this.state.description}
                     placeholder="Plus on a de détails, plus on aime !"
+                    maxLength="128"
+                    onChange={e => {
+                      this.onChangeFields(e);
+                    }}
                   />
                 </Col>
               </FormGroup>
               <FormGroup check>
                 <Label check className="offset-2">
-                  <Input type="checkbox" name="deposit" />
+                  <Input
+                    type="checkbox"
+                    name="deposit"
+                    id="deposit"
+                    checked={this.state.deposit}
+                    onChange={e => {
+                      this.onChangeChecked(e);
+                    }}
+                  />
                   <p className="pt-2 pl-2">
                     Tu préfères demander une caution ?
                   </p>
                 </Label>
               </FormGroup>
-              <Button className="col-4 my-3 align-self-center" type="submit">
+              <Button
+                className="col-4 my-3 align-self-center"
+                type="submit"
+                disabled={!this.validateForm()}
+              >
                 Envoyer
               </Button>
             </Col>

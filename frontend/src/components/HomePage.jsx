@@ -4,6 +4,7 @@ import Photo from "./Photo";
 import axios from "axios";
 import Loader from "./Loader";
 import Masonry from "react-masonry-component";
+import { backend } from "../conf";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class HomePage extends React.Component {
   componentDidMount() {
     const user = JSON.parse(localStorage.getItem("user"));
     axios
-      .get(`http://localhost:5050/articles/`, {
+      .get(`${backend}/articles/`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }

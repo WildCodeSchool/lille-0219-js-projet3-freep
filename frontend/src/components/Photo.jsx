@@ -4,28 +4,29 @@ import { Link } from "react-router-dom";
 import { Row, Card, CardImg } from "reactstrap";
 import ReportButton from "./ReportButton";
 import axios from "axios";
+import { backend } from "../conf";
 
 class Photo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       deposit: null,
-      isLiked: null,
+      isLiked: false,
       picturesLiked: null
     };
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:5050/deposit/`).then(({ data }) => {
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
+    axios.get(`${backend}/deposit/`).then(({ data }) => {
       this.setState({
         deposit: data.deposit
       });
     });
-
-    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-    axios.get(`http://localhost:5050/like/${currentUser}`).then(({ data }) => {
+    axios.get(`${backend}/like/${currentUser}`).then(({ data }) => {
       this.setState({
-        picturesLiked: data
+        picturesLiked: data,
+        isLiked: data.indexOf(this.props.pictureId) !== -1
       });
     });
   }
@@ -35,7 +36,7 @@ class Photo extends React.Component {
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     if (!this.state.isLiked) {
       axios
-        .post(`http://localhost:5050/like/${pictureId}`, {
+        .post(`${backend}/like/${pictureId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {
@@ -45,7 +46,7 @@ class Photo extends React.Component {
         });
     } else {
       axios
-        .put(`http://localhost:5050/like/${pictureId}`, {
+        .put(`${backend}/like/${pictureId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {
@@ -54,13 +55,18 @@ class Photo extends React.Component {
           });
         });
     }
+    axios.get(`${backend}/like/${currentUser}`).then(({ data }) => {
+      this.setState({
+        picturesLiked: data
+      });
+    });
   };
 
   render() {
     const picture = this.props.picture;
     const link = this.props.link;
     const deposit = this.state.deposit;
-    const dep = deposit && deposit.indexOf(link) !== -1 ? false : true;
+    const dep = deposit && deposit.indexOf(link) !== -1 ? true : false;
     const picturesLiked = this.state.picturesLiked;
     const pictureId = this.props.pictureId;
     const liked =
@@ -69,17 +75,22 @@ class Photo extends React.Component {
     return (
       <Card className="m-2 picture-card">
         <Link to={`/article/${link}`}>
-          <CardImg src={picture} alt="clothes" className="Photo" />
+          <CardImg
+            src={picture}
+            style={{ minHeight: "180px" }}
+            alt="clothes"
+            className="Photo"
+          />
         </Link>
         <div className="overlay">
           <Row className="p-0 card-buttons align-items-center">
             <Heart
               width="19"
               onClick={this.handleClick}
-              className={liked ? "liked" : "notLiked"}
+              className={this.state.isLiked ? "liked" : "notLiked"}
             />
             <div className={dep ? "deposit" : "no-deposit"}>ℂ</div>
-            <ReportButton />
+            <ReportButton link={link} />
           </Row>
         </div>
       </Card>

@@ -9,6 +9,7 @@ import "../style/Profile.scss";
 import Loader from "./Loader";
 import { Map } from "react-feather";
 import Masonry from "react-masonry-component";
+import { backend } from "../conf";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -25,12 +26,11 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     const user = JSON.parse(localStorage.getItem("user"));
+    const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
     const profileId = this.props.match.params.profileId;
-    const currentFollowers = JSON.parse(localStorage.getItem("followers"));
     axios
-      .get(`http://localhost:5050/profil/${profileId}`, {
+      .get(`${backend}/profil/${profileId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`
         }
@@ -39,52 +39,38 @@ class Profile extends React.Component {
         this.setState({
           user: data.profile,
           pictures: data.pictures,
-          followers: data.followers,
           followings: data.followings,
+          followers: data.followers,
           posts: data.posts,
-          loading: false
+          loading: false,
+          isFollowed: data.followers.indexOf(currentUser) !== -1
         });
-        localStorage.setItem("followers", JSON.stringify(this.state.followers));
       });
-
-    if (currentFollowers > 0) {
-      for (let i = 0; i < currentFollowers.length; i++) {
-        const followersId = currentFollowers[i].id_user;
-        if (currentUser === followersId) {
-          this.setState({
-            isFollowed: true
-          });
-        }
-      }
-    }
   }
 
   handleClick() {
     const profileId = this.props.match.params.profileId;
     const currentUser = JSON.parse(localStorage.getItem("user")).user.id;
-
     if (!this.state.isFollowed) {
       axios
-        .post(`http://localhost:5050/follow/${profileId}`, {
+        .post(`${backend}/follow/${profileId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {
-          localStorage.setItem("followers", JSON.stringify(data));
           this.setState({
-            followers: data,
-            isFollowed: true
+            isFollowed: true,
+            followers: data
           });
         });
     } else {
       axios
-        .put(`http://localhost:5050/follow/${profileId}`, {
+        .put(`${backend}/follow/${profileId}`, {
           idAuthor: currentUser
         })
         .then(({ data }) => {
-          localStorage.setItem("followers", JSON.stringify(data));
           this.setState({
-            followers: data,
-            isFollowed: false
+            isFollowed: false,
+            followers: data
           });
         });
     }
