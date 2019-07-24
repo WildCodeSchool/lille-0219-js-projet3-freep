@@ -130,6 +130,7 @@ class EditProfile extends React.Component {
                   tabIndex="2"
                   type="text"
                   value={location}
+                  maxLength="255"
                   onChange={event => {
                     this.handleChange(event);
                   }}
@@ -188,6 +189,7 @@ class EditProfile extends React.Component {
                   rows="5"
                   type="text"
                   value={description}
+                  maxLength="255"
                   onChange={event => {
                     this.handleChange(event);
                   }}

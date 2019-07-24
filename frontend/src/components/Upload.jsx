@@ -85,6 +85,7 @@ class Uploader extends React.Component {
                     name="type"
                     id="type"
                     value={this.state.type}
+                    maxLength="32"
                     placeholder="Veste ? Pantalon ?"
                     onChange={e => {
                       this.onChangeFields(e);
@@ -102,6 +103,7 @@ class Uploader extends React.Component {
                     name="brand"
                     id="brand"
                     value={this.state.brand}
+                    maxLength="64"
                     placeholder="Zara ? Le comptoir des cotonniers ?"
                     onChange={e => {
                       this.onChangeFields(e);
@@ -142,6 +144,7 @@ class Uploader extends React.Component {
                     id="description"
                     value={this.state.description}
                     placeholder="Plus on a de détails, plus on aime !"
+                    maxLength="128"
                     onChange={e => {
                       this.onChangeFields(e);
                     }}
